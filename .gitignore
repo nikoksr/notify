@@ -1,0 +1,12 @@
+bin/
+build/
+debug.test
+.idea/
+.vscode/
+*.log
+.gh-docker-token
+.env
+
+# Server specific
+server/certs/
+tmp/
