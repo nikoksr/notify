@@ -1,55 +1,57 @@
 package mail
 
 import (
+	"net/smtp"
+	"net/textproto"
+
+	"github.com/jordan-wright/email"
 	"github.com/pkg/errors"
-	gomail "gopkg.in/mail.v2"
 )
 
-const (
-	headerFrom      = "From"
-	headerTo        = "To"
-	headerSubject   = "Subject"
-	bodyContentType = "text/plain"
-)
-
+// Mail struct holds necessary data to send emails.
 type Mail struct {
-	client            *gomail.Dialer
+	senderAddress     string
+	smtpHostAddr      string
+	smtpAuth          smtp.Auth
 	receiverAddresses []string
 }
 
-func New(host, userName, password string, port int) (*Mail, error) {
-	client := gomail.NewDialer(host, port, userName, password)
-
-	m := &Mail{
-		client:            client,
+// New returns a new instance of a Mail notification service.
+func New(senderAddress, smtpHostAddress string) *Mail {
+	return &Mail{
+		senderAddress:     senderAddress,
+		smtpHostAddr:      smtpHostAddress,
 		receiverAddresses: []string{},
 	}
-
-	return m, nil
 }
 
+// AuthenticateSMTP authenticates you to send emails via smtp.
+// Example values: "", "test@gmail.com", "password123", "smtp.gmail.com"
+func (m *Mail) AuthenticateSMTP(identity, userName, password, host string) {
+	m.smtpAuth = smtp.PlainAuth(identity, userName, password, host)
+}
+
+// AddReceivers takes email addresses and adds them to the internal address list. The Send method will send
+// a given message to all those addresses.
 func (m *Mail) AddReceivers(addresses ...string) {
 	m.receiverAddresses = append(m.receiverAddresses, addresses...)
 }
 
+// Send takes a message subject and a message body and sends them to all previously set chats. Message body supports
+// html as markup language.
 func (m Mail) Send(subject, message string) error {
-	msg := gomail.NewMessage()
+	msg := &email.Email{
+		To:      m.receiverAddresses,
+		From:    m.senderAddress,
+		Subject: subject,
+		// Text:    []byte("Text Body is, of course, supported!"),
+		HTML:    []byte(message),
+		Headers: textproto.MIMEHeader{},
+	}
 
-	// Set E-Mail sender
-	msg.SetHeader(headerFrom, m.client.Host)
-
-	// Set E-Mail receivers
-	msg.SetHeader(headerTo, m.receiverAddresses...)
-
-	// Set E-Mail subject
-	msg.SetHeader(headerSubject, subject)
-
-	// Set E-Mail body
-	msg.SetBody(bodyContentType, message)
-
-	err := m.client.DialAndSend(msg)
+	err := msg.Send(m.smtpHostAddr, m.smtpAuth)
 	if err != nil {
-		err = errors.Wrap(err, "failed to dial and send mail")
+		err = errors.Wrap(err, "failed to send mail")
 	}
 
 	return err

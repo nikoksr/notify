@@ -4,55 +4,30 @@ import (
 	"github.com/nikoksr/notify/service/pseudo"
 )
 
-func (n *Notifier) useService(service Service) {
+// useService adds a given service to the notifiers services list. If the list still contains
+// a pseudo service we remove it before adding the 'real' service.
+func (n *Notify) useService(service Notifier) {
 	if service == nil {
 		return
 	}
 
 	// Remove pseudo service in case a 'real' service will be added
-	if len(n.services) > 0 {
-		_, isPseudo := n.services[0].(*pseudo.Pseudo)
+	if len(n.notifiers) > 0 {
+		_, isPseudo := n.notifiers[0].(*pseudo.Pseudo)
 		if isPseudo {
-			n.services = n.services[1:]
+			n.notifiers = n.notifiers[1:]
 		}
 	}
 
-	n.services = append(n.services, service)
+	n.notifiers = append(n.notifiers, service)
 }
 
-// usePseudo adds a pseudo Service to the Service list.
-func (n *Notifier) usePseudo() {
+// usePseudo adds a pseudo notification service to the notifiers services list.
+func (n *Notify) usePseudo() {
 	n.useService(pseudo.New())
 }
 
-func (n *Notifier) UseService(service Service) {
+// UseService adds a given service to the notifiers services list.
+func (n *Notify) UseService(service Notifier) {
 	n.useService(service)
 }
-
-/*
-func (n *Notifier) UseTelegram(apiToken string, chatID int64) error {
-	telegramService, err := telegram.New(apiToken)
-	if err != nil {
-		return err
-	}
-
-	telegramService.AddReceivers(chatID)
-
-	n.useService(telegramService)
-
-	return nil
-}
-
-func (n *Notifier) UseDiscordService(apiToken, channelID string) error {
-	discordService, err := discord.New(apiToken)
-	if err != nil {
-		return err
-	}
-
-	discordService.AddReceivers(channelID)
-
-	n.useService(discordService)
-
-	return nil
-}
-*/

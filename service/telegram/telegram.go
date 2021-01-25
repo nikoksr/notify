@@ -5,16 +5,16 @@ import (
 	"github.com/pkg/errors"
 )
 
-const (
-	defaultParseMode = tgbotapi.ModeHTML
-)
+const defaultParseMode = tgbotapi.ModeHTML
 
+// Telegram struct holds necessary data to communicate with the Telegram API.
 type Telegram struct {
 	client   *tgbotapi.BotAPI
 	listener *tgbotapi.BotAPI
 	chatIDs  []int64
 }
 
+// New returns a new instance of a Telegram notification service.
 func New(apiToken string) (*Telegram, error) {
 	client, err := tgbotapi.NewBotAPI(apiToken)
 	if err != nil {
@@ -29,10 +29,14 @@ func New(apiToken string) (*Telegram, error) {
 	return t, nil
 }
 
+// AddReceivers takes Telegram chat IDs and adds them to the internal chat ID list. The Send method will send
+// a given message to all those chats.
 func (t *Telegram) AddReceivers(chatIDs ...int64) {
 	t.chatIDs = append(t.chatIDs, chatIDs...)
 }
 
+// Send takes a message subject and a message body and sends them to all previously set chats. Message body supports
+// html as markup language.
 func (t Telegram) Send(subject, message string) error {
 	fullMessage := subject + "\n" + message // Treating subject as message title
 

@@ -4,31 +4,32 @@ import (
 	"github.com/pkg/errors"
 )
 
-type Notifier struct {
-	Disabled bool
-	services []Service
+const defaultDisabled = false // Notifier is enabled by default
+
+// Notify is the central struct for managing notification services and sending messages to them.
+type Notify struct {
+	Disabled  bool
+	notifiers []Notifier
 }
 
-const defaultDisabled = false
-
+// ErrSendNotification signals that the notifier failed to send a notification.
 var ErrSendNotification = errors.New("Send notification")
 
-// Service implements a Listen and a Send method. The Listen method makes the notification Service listens
-// for external commands and will answer to these commands if supported. For example, our telegram Notifier listens for
-// commands like /info and will answer with basic information about the server. The Send command simply sends a
-// message string to the internal destination Service. E.g for telegram it sends the message to the specified group
-// chat.
-type Service interface {
+// Notifier defines the behavior for notification services. The Send command simply sends a message string to the
+// internal destination Notifier. E.g for telegram it sends the message to the specified group chat.
+type Notifier interface {
 	Send(string, string) error
 }
 
-func New() *Notifier {
-	notifier := &Notifier{
+// New returns a new instance of Notify. Defaulting to being not disabled and using the pseudo notification
+// service under the hood.
+func New() *Notify {
+	notifier := &Notify{
 		Disabled: defaultDisabled,
 	}
 
-	// Use the pseudo Service to prevent from nil reference bugs when using the Notifier Service. In case no services
-	// are provided or the creation of all other services failed, the pseudo Service will be used under the hood
+	// Use the pseudo Notifier to prevent from nil reference bugs when using the Notify Notifier. In case no notifiers
+	// are provided or the creation of all other notifiers failed, the pseudo Notifier will be used under the hood
 	// doing nothing but preventing nil-reference errors.
 	notifier.usePseudo()
 
