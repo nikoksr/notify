@@ -11,19 +11,72 @@ type Discord struct {
 	channelIDs []string
 }
 
-// New takes a Discord API token and returns a new instance of a Discord notification service.
-func New(apiToken string) (*Discord, error) {
-	client, err := discordgo.New("Bot " + apiToken)
-	if err != nil {
-		return nil, err
-	}
-
-	d := &Discord{
-		client:     client,
+// New returns a new instance of a Discord notification service.
+func New() *Discord {
+	return &Discord{
+		client:     &discordgo.Session{},
 		channelIDs: []string{},
 	}
+}
 
-	return d, nil
+// authenticate will try and authenticate to discord.
+func (d *Discord) authenticate(credentials ...string) error {
+	client, err := discordgo.New(credentials)
+	if err != nil {
+		return err
+	}
+
+	d.client = client
+
+	return nil
+}
+
+// AuthenticateWithCredentials authenticates you to Discord via your email and password. Note that this
+// is highly discouraged by Discord. Please use an authentication token.
+// For more info, see here: https://pkg.go.dev/github.com/bwmarrin/discordgo@v0.22.1#New
+func (d *Discord) AuthenticateWithCredentials(email, password string) error {
+	return d.authenticate(email, password)
+}
+
+// AuthenticateWithCredentialsFull authenticates you to Discord via your email, password and access token.
+// This is what discord recommends.
+// For more info, see here: https://pkg.go.dev/github.com/bwmarrin/discordgo@v0.22.1#New
+func (d *Discord) AuthenticateWithCredentialsFull(email, password, token string, isOAuthToken bool) error {
+	if isOAuthToken {
+		token = parseOAuthToken(token)
+	} else {
+		token = parseBotToken(token)
+	}
+
+	return d.authenticate(email, password, token)
+}
+
+// AuthenticateWithBotToken authenticates you as a bot to Discord via the given access token.
+// For more info, see here: https://pkg.go.dev/github.com/bwmarrin/discordgo@v0.22.1#New
+func (d *Discord) AuthenticateWithBotToken(token string) error {
+	token = parseBotToken(token)
+
+	return d.authenticate(token)
+}
+
+// AuthenticateWithBotToken authenticates you to Discord via the given OAUTH2 token.
+// For more info, see here: https://pkg.go.dev/github.com/bwmarrin/discordgo@v0.22.1#New
+func (d *Discord) AuthenticateWithOAuth2Token(token string) error {
+	token = parseOAuthToken(token)
+
+	return d.authenticate(token)
+}
+
+// parseBotToken parses a regular token to a bot token that is understandable for discord.
+// For more info, see here: https://pkg.go.dev/github.com/bwmarrin/discordgo@v0.22.1#New
+func parseBotToken(token string) string {
+	return "Bot " + token
+}
+
+// parseBotToken parses a regular token to a OAUTH2 token that is understandable for discord.
+// For more info, see here: https://pkg.go.dev/github.com/bwmarrin/discordgo@v0.22.1#New
+func parseOAuthToken(token string) string {
+	return "Bearer " + token
 }
 
 // AddReceivers takes Telegram channel IDs and adds them to the internal channel ID list. The Send method will send
