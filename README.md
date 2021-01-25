@@ -1,4 +1,4 @@
-<h1 align="center">Welcome to notify 👋</h1>
+<h1 align="center">Welcome to notify (WIP) 👋</h1>
 <p>
   <a href="#" target="_blank">
     <img alt="GitHub tag (latest SemVer)" src="https://img.shields.io/github/v/tag/nikoksr/notify">
