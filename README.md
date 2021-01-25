@@ -30,7 +30,7 @@ telegramService, _ := telegram.New("your_telegram_api_token")
 
 // Passing a telegram chat id as receiver for our messages.
 // Basically where should our message be sent to?
-telegramService.AddReceivers(-0123456789)
+telegramService.AddReceivers(-1234567890)
 
 // Tell our notifier to use the telegram service. You can repeat the above process
 // for as many services as you like and just tell the notifier to use them.
@@ -38,7 +38,7 @@ telegramService.AddReceivers(-0123456789)
 notifier.UseService(telegramService)
 
 // Send a test message
-notifier.Send(
+_ = notifier.Send(
 	"Message Subject/Title",
 	"The actual message. Hello, you awesome gophers! :)",
 )
