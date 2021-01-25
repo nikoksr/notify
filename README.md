@@ -1,7 +1,7 @@
 <h1 align="center">Welcome to notify 👋</h1>
 <p>
   <a href="#" target="_blank">
-    <img alt="GitHub release (latest SemVer)" src="https://img.shields.io/github/v/release/nikoksr/notify">
+    <img alt="GitHub tag (latest SemVer)" src="https://img.shields.io/github/v/tag/nikoksr/notify">
   </a>
   <a href="#" target="_blank">
     <img alt="Lines of code" src="https://img.shields.io/tokei/lines/github/nikoksr/notify">
