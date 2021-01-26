@@ -1,25 +1,39 @@
-<h1 align="center">Welcome to notify (WIP) 👋</h1>
-<p>
-  <a href="#" target="_blank">
-    <img alt="GitHub tag (latest SemVer)" src="https://img.shields.io/github/v/tag/nikoksr/notify">
-  </a>
-  <a href="#" target="_blank">
-    <img alt="Lines of code" src="https://img.shields.io/tokei/lines/github/nikoksr/notify">
-  </a>
-  <a href="#" target="_blank">
-    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
-  </a>
-</p>
+<div align="center">
+<img
+    width=40%
+    src="assets/gopher-letter.svg"
+    alt="notify logo"
+/>
 
-> A dead simple Go library for sending notifications to various messaging platforms.
+![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/nikoksr/notify?color=success&label=version&sort=semver)
+[![Go Report Card](https://goreportcard.com/badge/github.com/nikoksr/notify)](https://goreportcard.com/report/github.com/nikoksr/notify)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/2ba9840a93e44e748f6b2fdb19b65b13)](https://www.codacy.com/gh/nikoksr/notify/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=nikoksr/notify&amp;utm_campaign=Badge_Grade)
+[![Maintainability](https://api.codeclimate.com/v1/badges/b3afd7bf115341995077/maintainability)](https://codeclimate.com/github/nikoksr/notify/maintainability)
+[![go.dev reference](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white&style=flat)](https://pkg.go.dev/github.com/nikoksr/notify)
 
-## Install
+</div>
+
+> <p align="center">A dead simple Go library for sending notifications to various messaging platforms.</p>
+
+<h1></h1>
+
+## About <a id="about"></a>
+
+*Notify* arose from my own need for one of my api server running in production to be able to notify me when, for example, an error occurred. The library is kept as simple as possible to allow a quick integration and easy usage.
+
+## Disclaimer <a id="disclaimer"></a>
+
+Any misuse of this library is your own liability and responsibility and cannot be attributed to the authors of this library.  See [license](LICENSE) for more.
+
+Spamming through the use of this library **may get you permanently banned** on most supported platforms.
+
+## Install <a id="install"></a>
 
 ```sh
 go get -u github.com/nikoksr/notify
 ```
 
-## Example usage
+## Example usage <a id="usage"></a>
 
 ```go
 // The notifier we're gonna send our messages to
@@ -44,31 +58,30 @@ _ = notifier.Send(
 )
 ```
 
-## Roadmap
+## Roadmap <a id="roadmap"></a>
 
-* [ ] Add tests
-* [ ] Add more notification services
+- [ ] Add tests
+- [ ] Add more notification services
 
-## Libraries in use
+## Credits <a id="credits"></a>
 
-* [github.com/bwmarrin/discordgo](github.com/bwmarrin/discordgo)
-* [github.com/jordan-wright/email](github.com/jordan-wright/email)
-* [github.com/go-telegram-bot-api/telegram-bot-api](github.com/go-telegram-bot-api/telegram-bot-api)
+- Discord support: [bwmarrin/discordgo](github.com/bwmarrin/discordgo)
+- Email support: [jordan-wright/email](github.com/jordan-wright/email)
+- Telegram support: [go-telegram-bot-api/telegram-bot-api](github.com/go-telegram-bot-api/telegram-bot-api)
+- Logo: [MariaLetta/free-gophers-pack](https://github.com/MariaLetta/free-gophers-pack)
 
-## Author
+## Author <a id="author"></a>
 
-👤 **Niko Köser**
+**Niko Köser**
 
 * Twitter: [@nikoksr](https://twitter.com/nikoksr)
 * Github: [@nikoksr](https://github.com/nikoksr)
 
-## 🤝 Contributing
+## Contributing <a id="contributing"></a>
 
 Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/nikoksr/notify/issues). You can also take a look at the [contributing guide](https://github.com/nikoksr/notify/blob/main/CONTRIBUTING.md).
 
-## Show your support
+## Show your support <a id="support"></a>
 
 Give a ⭐️ if this project helped you!
 
-***
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
