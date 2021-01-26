@@ -59,7 +59,7 @@ func (d *Discord) AuthenticateWithBotToken(token string) error {
 	return d.authenticate(token)
 }
 
-// AuthenticateWithBotToken authenticates you to Discord via the given OAUTH2 token.
+// AuthenticateWithOAuth2Token authenticates you to Discord via the given OAUTH2 token.
 // For more info, see here: https://pkg.go.dev/github.com/bwmarrin/discordgo@v0.22.1#New
 func (d *Discord) AuthenticateWithOAuth2Token(token string) error {
 	token = parseOAuthToken(token)
