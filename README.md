@@ -13,7 +13,7 @@
 
 </div>
 
-> <p align="center">A dead simple Go library for sending notifications to various messaging platforms.</p>
+> <p align="center">A dead simple Go library for sending notifications to various messaging services.</p>
 
 <h1></h1>
 
@@ -66,7 +66,7 @@ _ = notifier.Send(
 
 ## Roadmap <a id="roadmap"></a>
 
-- [ ] Add tests
+- [ ] Add tests (see [#1](https://github.com/nikoksr/notify/issues/1))
 - [ ] Add more notification services
 
 ## Credits <a id="credits"></a>
