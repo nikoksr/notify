@@ -1,5 +1,6 @@
 package pseudo
 
+// Pseudo struct represents a dummy notification service.
 type Pseudo struct{}
 
 // New returns a new instance of a Pseudo notification service. This is used internally to initialize
