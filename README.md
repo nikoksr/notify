@@ -58,6 +58,12 @@ _ = notifier.Send(
 )
 ```
 
+## Supported services <a id="supported_services"></a>
+
+- *Discord*
+- *Email*
+- *Telegram*
+
 ## Roadmap <a id="roadmap"></a>
 
 - [ ] Add tests
@@ -65,9 +71,9 @@ _ = notifier.Send(
 
 ## Credits <a id="credits"></a>
 
-- Discord support: [bwmarrin/discordgo](github.com/bwmarrin/discordgo)
-- Email support: [jordan-wright/email](github.com/jordan-wright/email)
-- Telegram support: [go-telegram-bot-api/telegram-bot-api](github.com/go-telegram-bot-api/telegram-bot-api)
+- Discord support: [bwmarrin/discordgo](https://github.com/bwmarrin/discordgo)
+- Email support: [jordan-wright/email](https://github.com/jordan-wright/email)
+- Telegram support: [go-telegram-bot-api/telegram-bot-api](https://github.com/go-telegram-bot-api/telegram-bot-api)
 - Logo: [MariaLetta/free-gophers-pack](https://github.com/MariaLetta/free-gophers-pack)
 
 ## Author <a id="author"></a>
