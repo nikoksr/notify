@@ -26,6 +26,8 @@ func (d *Discord) authenticate(credentials ...string) error {
 		return err
 	}
 
+	client.Identify.Intents = discordgo.IntentsGuildMessageTyping
+
 	d.client = client
 
 	return nil
