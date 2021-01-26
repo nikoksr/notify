@@ -32,6 +32,7 @@ func (s *Slack) AddReceivers(channelIDs ...string) {
 }
 
 // Send takes a message subject and a message body and sends them to all previously set channels.
+// you will need a slack app with the chat:write.public and chat:write permissions.
 func (s Slack) Send(subject, message string) error {
 	fullMessage := subject + "\n" + message // Treating subject as message title
 
