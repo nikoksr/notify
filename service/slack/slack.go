@@ -1,4 +1,4 @@
-package telegram
+package slack
 
 import (
 	"github.com/pkg/errors"
