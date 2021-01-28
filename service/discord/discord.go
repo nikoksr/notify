@@ -81,7 +81,7 @@ func parseOAuthToken(token string) string {
 	return "Bearer " + token
 }
 
-// AddReceivers takes Telegram channel IDs and adds them to the internal channel ID list. The Send method will send
+// AddReceivers takes Discord channel IDs and adds them to the internal channel ID list. The Send method will send
 // a given message to all those channels.
 func (d *Discord) AddReceivers(channelIDs ...string) {
 	d.channelIDs = append(d.channelIDs, channelIDs...)
