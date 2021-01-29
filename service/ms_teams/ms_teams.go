@@ -25,7 +25,7 @@ func New(apiToken string) (*MSTeams, error) {
 	return m, nil
 }
 
-// DisableWebhookValidation disables the validation webhook URLs, including the validation of known prefixes so that
+// DisableWebhookValidation disables the validation of webhook URLs, including the validation of known prefixes so that
 // custom/private webhook URL endpoints can be used (e.g., testing purposes).
 // For more information about telegram api token:
 //    -> https://github.com/atc0005/go-teams-notify#example-disable-webhook-url-prefix-validation
