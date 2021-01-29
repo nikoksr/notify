@@ -38,13 +38,12 @@ func (s Slack) Send(subject, message string) error {
 	fullMessage := subject + "\n" + message // Treating subject as message title
 
 	for _, channelID := range s.channelIDs {
-
 		id, timestamp, err := s.client.PostMessage(
 			channelID,
 			slack.MsgOptionText(fullMessage, false),
 		)
 		if err != nil {
-			return errors.Wrapf(err, "failed to send message to Slack channel '%d' at time '%s'", id, timestamp)
+			return errors.Wrapf(err, "failed to send message to Slack channel '%s' at time '%s'", id, timestamp)
 		}
 	}
 
