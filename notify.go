@@ -25,13 +25,9 @@ type Notifier interface {
 // service under the hood.
 func New() *Notify {
 	notifier := &Notify{
-		Disabled: defaultDisabled,
+		Disabled:  defaultDisabled,
+		notifiers: []Notifier{},
 	}
-
-	// Use the pseudo Notifier to prevent from nil reference bugs when using the Notify Notifier. In case no notifiers
-	// are provided or the creation of all other notifiers failed, the pseudo Notifier will be used under the hood
-	// doing nothing but preventing nil-reference errors.
-	notifier.usePseudo()
 
 	return notifier
 }
