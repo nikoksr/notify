@@ -1,6 +1,8 @@
 package telegram
 
 import (
+	"strconv"
+
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 	"github.com/pkg/errors"
 )
@@ -33,8 +35,12 @@ func New(apiToken string) (*Telegram, error) {
 
 // AddReceivers takes Telegram chat IDs and adds them to the internal chat ID list. The Send method will send
 // a given message to all those chats.
-func (t *Telegram) AddReceivers(chatIDs ...int64) {
-	t.chatIDs = append(t.chatIDs, chatIDs...)
+func (t *Telegram) AddReceivers(chatIDs ...string) {
+	for _, v := range chatIDs {
+		if chatID, err := strconv.ParseInt(v, 10, 64); err != nil {
+			t.chatIDs = append(t.chatIDs, chatID)
+		}
+	}
 }
 
 // Send takes a message subject and a message body and sends them to all previously set chats. Message body supports
