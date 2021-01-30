@@ -75,13 +75,14 @@ func (t Twitter) Send(subject, message string) error {
 
 	for _, twitterID := range t.twitterIDs {
 
+		directMessageTarget := &twitter.DirectMessageTarget{
+			RecipientID: twitterID,
+		}
 		directMessageEvent := &twitter.DirectMessageEvent{
 			Type: "message_create",
 			Message: &twitter.DirectMessageEventMessage{
-				Target: &twitter.DirectMessageTarget{
-					RecipientID: twitterID,
-				},
-				Data: directMessageData,
+				Target: directMessageTarget,
+				Data:   directMessageData,
 			},
 		}
 
