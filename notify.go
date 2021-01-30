@@ -15,10 +15,17 @@ type Notify struct {
 // ErrSendNotification signals that the notifier failed to send a notification.
 var ErrSendNotification = errors.New("Send notification")
 
-// Notifier defines the behavior for notification services. The Send command simply sends a message string to the
-// internal destination Notifier. E.g for telegram it sends the message to the specified group chat.
+// Notifier defines the behavior for notification services. It implements Send and AddReciever
+//
+// The Send command simply sends a message string to the internal destination Notifier.
+//  E.g for telegram it sends the message to the specified group chat.
+//
+// The AddRecievers method takes one or many interfaces (ints, strings etc.) depending
+// on the underlying notifier. When sending, these form the targets.
+// e.g. slack channels, telegram chats, email addresses.
 type Notifier interface {
 	Send(string, string) error
+	AddRecievers(...interface{})
 }
 
 // New returns a new instance of Notify. Defaulting to being not disabled and using the pseudo notification
