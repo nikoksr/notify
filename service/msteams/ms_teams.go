@@ -14,7 +14,7 @@ type MSTeams struct {
 // New returns a new instance of a MSTeams notification service.
 // For more information about telegram api token:
 //    -> https://github.com/atc0005/go-teams-notify#example-basic
-func New(apiToken string) (*MSTeams, error) {
+func New(apiToken string) *MSTeams {
 	client := goteamsnotify.NewClient()
 
 	m := &MSTeams{
@@ -22,7 +22,7 @@ func New(apiToken string) (*MSTeams, error) {
 		webHooks: []string{},
 	}
 
-	return m, nil
+	return m
 }
 
 // DisableWebhookValidation disables the validation of webhook URLs, including the validation of known prefixes so that
