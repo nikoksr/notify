@@ -64,11 +64,8 @@ _ = notifier.Send(
 - *Email*
 - *Microsoft Teams*
 - *Slack*
-<<<<<<< HEAD
 - *Twitter*
-=======
 - *Telegram*
->>>>>>> main
 
 ## Roadmap <a id="roadmap"></a>
 
