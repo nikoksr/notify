@@ -14,7 +14,7 @@ type MSTeams struct {
 // New returns a new instance of a MSTeams notification service.
 // For more information about telegram api token:
 //    -> https://github.com/atc0005/go-teams-notify#example-basic
-func New(apiToken string) *MSTeams {
+func New() *MSTeams {
 	client := goteamsnotify.NewClient()
 
 	m := &MSTeams{
