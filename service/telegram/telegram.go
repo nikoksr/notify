@@ -9,9 +9,8 @@ const defaultParseMode = tgbotapi.ModeHTML
 
 // Telegram struct holds necessary data to communicate with the Telegram API.
 type Telegram struct {
-	client   *tgbotapi.BotAPI
-	listener *tgbotapi.BotAPI
-	chatIDs  []int64
+	client  *tgbotapi.BotAPI
+	chatIDs []int64
 }
 
 // New returns a new instance of a Telegram notification service.
