@@ -13,7 +13,7 @@ type Notify struct {
 }
 
 // ErrSendNotification signals that the notifier failed to send a notification.
-var ErrSendNotification = errors.New("Send notification")
+var ErrSendNotification = errors.New("send notification")
 
 // Notifier defines the behavior for notification services. The Send command simply sends a message string to the
 // internal destination Notifier. E.g for telegram it sends the message to the specified group chat.

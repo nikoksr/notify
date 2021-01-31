@@ -14,7 +14,7 @@ type Slack struct {
 // New returns a new instance of a Slack notification service.
 // For more information about slack api token:
 //    -> https://pkg.go.dev/github.com/slack-go/slack#New
-func New(apiToken string) (*Slack, error) {
+func New(apiToken string) *Slack {
 	client := slack.New(apiToken)
 
 	s := &Slack{
@@ -22,7 +22,7 @@ func New(apiToken string) (*Slack, error) {
 		channelIDs: []string{},
 	}
 
-	return s, nil
+	return s
 }
 
 // AddReceivers takes Slack channel IDs and adds them to the internal channel ID list. The Send method will send
@@ -38,13 +38,12 @@ func (s Slack) Send(subject, message string) error {
 	fullMessage := subject + "\n" + message // Treating subject as message title
 
 	for _, channelID := range s.channelIDs {
-
 		id, timestamp, err := s.client.PostMessage(
 			channelID,
 			slack.MsgOptionText(fullMessage, false),
 		)
 		if err != nil {
-			return errors.Wrapf(err, "failed to send message to Slack channel '%d' at time '%s'", id, timestamp)
+			return errors.Wrapf(err, "failed to send message to Slack channel '%s' at time '%s'", id, timestamp)
 		}
 	}
 
