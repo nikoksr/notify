@@ -10,6 +10,7 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/37fdff3c275c4a72a3a061f2d0ec5553)](https://www.codacy.com/gh/nikoksr/notify/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=nikoksr/notify&amp;utm_campaign=Badge_Grade)
 [![Maintainability](https://api.codeclimate.com/v1/badges/b3afd7bf115341995077/maintainability)](https://codeclimate.com/github/nikoksr/notify/maintainability)
 [![go.dev reference](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white&style=flat)](https://pkg.go.dev/github.com/nikoksr/notify)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fnikoksr%2Fnotify.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fnikoksr%2Fnotify?ref=badge_shield)
 
 </div>
 
@@ -95,3 +96,7 @@ Contributions, issues and feature requests are welcome!<br />Feel free to check 
 
 Give a ⭐️ if this project helped you!
 
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fnikoksr%2Fnotify.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fnikoksr%2Fnotify?ref=badge_large)
