@@ -48,7 +48,8 @@ func New(credentials Credentials) (*Twitter, error) {
 
 	// we can retrieve the user and verify if the credentials
 	// we have used successfully allow us to log in!
-	if _, _, err := client.Accounts.VerifyCredentials(verifyParams); err != nil {
+	_, _, err := client.Accounts.VerifyCredentials(verifyParams)
+	if err != nil {
 		return nil, err
 	}
 
