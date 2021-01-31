@@ -83,7 +83,7 @@ _ = notifier.Send(
 - Slack support: [slack-go/slack](https://github.com/slack-go/slack)
 - Telegram support: [go-telegram-bot-api/telegram-bot-api](https://github.com/go-telegram-bot-api/telegram-bot-api)
 - Logo: [MariaLetta/free-gophers-pack](https://github.com/MariaLetta/free-gophers-pack)
-- Twitter: [github.com/dghubble/go-twitter/twitter](github.com/dghubble/go-twitter/twitter)
+- Twitter: [dghubble/go-twitter/twitter](https://github.com/dghubble/go-twitter/twitter)
 
 ## Author <a id="author"></a>
 
@@ -99,4 +99,3 @@ Contributions, issues and feature requests are welcome!<br />Feel free to check 
 ## Show your support <a id="support"></a>
 
 Give a ⭐️ if this project helped you!
-
