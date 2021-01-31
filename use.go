@@ -1,7 +1,6 @@
 package notify
 
-// useService adds a given service to the notifiers services list. If the list still contains
-// a pseudo service we remove it before adding the 'real' service.
+// useService adds a given service to the notifiers services list.
 func (n *Notify) useService(service Notifier) {
 	if service == nil {
 		return

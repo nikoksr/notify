@@ -36,7 +36,8 @@ func New(apiToken string) (*Telegram, error) {
 // a given message to all those chats.
 func (t *Telegram) AddReceivers(chatIDs ...string) {
 	for _, v := range chatIDs {
-		if chatID, err := strconv.ParseInt(v, 10, 64); err != nil {
+		chatID, err := strconv.ParseInt(v, 10, 64)
+		if err != nil {
 			t.chatIDs = append(t.chatIDs, chatID)
 		}
 	}
