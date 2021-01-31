@@ -5,7 +5,6 @@ automerge_label = "automerge"
 blacklist_title_regex = "^WIP.*"
 method = "merge"
 delete_branch_on_merge = true
-block_on_reviews_requested = false
 notify_on_conflict = true
 optimistic_updates = true
 
