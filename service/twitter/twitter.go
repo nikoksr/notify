@@ -91,7 +91,8 @@ func (t Twitter) Send(subject, message string) error {
 			Event: directMessageEvent,
 		}
 
-		if _, _, err := t.client.DirectMessages.EventsNew(directMessageParams); err != nil {
+		_, _, err := t.client.DirectMessages.EventsNew(directMessageParams)
+		if err != nil {
 			return errors.Wrapf(err, "failed to send direct message to twitter ID '%d'", twitterID)
 		}
 	}
