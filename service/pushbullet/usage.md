@@ -39,20 +39,61 @@ func main() {
     notifier.UseService(service)
 
     // Send a message
-    _ = notifier.Send(
+    err = notifier.Send(
         "Hello\n",
         "I am a bot written in Go!",
     )
 
-    // Code isn't working and need to debug? Use this code below:
-    // x := notifier.Send(
-    //  "Hello:\n",
-    //  "I am a bot written in Go!",
-    // )
+    if err != nil {
+        panic(err)
+    }
 
-    // if x != nil {
-    //  fmt.Println(x)
-    // }
+}
+```
+
+
+# Steps for Pushbullet SMS
+
+1. Follow the above instructions, ensuring that Pushbullet is installed on an Android device.
+2. Enable 'SMS Sync' is turned on (under the SMS tab on the Android app)
+
+## Sample Code
+
+```go
+package main
+
+import (
+    "github.com/nikoksr/notify"
+    "github.com/nikoksr/notify/service/pushbullet"
+)
+
+func main() {
+
+    notifier := notify.New()
+
+    // Provide your Access Token and Pushbullet nickname for your mobile device
+    service, err := pushbullet.NewSMS("AccessToken", "PhoneNickname")
+    if err != nil {
+        panic(err)
+    }
+
+    // Passing a phone number as receiver for our messages.
+    service.AddReceivers("PhoneNumber")
+
+    // Tell our notifier to use the Pushbullet service. You can repeat the above process
+    // for as many services as you like and just tell the notifier to use them.
+    notifier.UseService(service)
+
+    // Send a message
+    err = notifier.Send(
+        "Hello\n",
+        "I am a bot written in Go!",
+    )
+
+    if err != nil {
+        panic(err)
+    }
+
 
 }
 ```
