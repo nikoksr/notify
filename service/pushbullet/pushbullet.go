@@ -37,11 +37,8 @@ func (pb *Pushbullet) AddReceivers(deviceNicknames ...string) {
 // (android, chrome, firefox, windows)
 // see https://www.pushbullet.com/apps
 func (pb Pushbullet) Send(subject, message string) error {
-
 	for _, deviceNickname := range pb.deviceNicknames {
-
 		dev, err := pb.client.Device(deviceNickname)
-
 		if err != nil {
 			// Unregistered devices should not result in a failure for all others
 			continue
