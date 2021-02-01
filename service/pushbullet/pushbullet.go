@@ -28,7 +28,6 @@ func New(apiToken string) *Pushbullet {
 // AddReceivers takes Pushbullet device nicknames and adds them to the internal deviceNicknames list.
 // The Send method will send a given message to all those devices.
 func (pb *Pushbullet) AddReceivers(deviceNicknames ...string) {
-
 	pb.deviceNicknames = append(pb.deviceNicknames, deviceNicknames...)
 }
 
