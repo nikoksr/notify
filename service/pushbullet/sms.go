@@ -38,7 +38,6 @@ func NewSMS(apiToken string, deviceNickname string) (*SMS, error) {
 // AddReceivers takes phone numbers and adds them to the internal phoneNumbers list. The Send method will send
 // a given message to all registered phone numbers.
 func (sms *SMS) AddReceivers(phoneNumbers ...string) {
-
 	sms.phoneNumbers = append(sms.phoneNumbers, phoneNumbers...)
 }
 
