@@ -39,8 +39,7 @@ func (pb Pushbullet) Send(subject, message string) error {
 	for _, deviceNickname := range pb.deviceNicknames {
 		dev, err := pb.client.Device(deviceNickname)
 		if err != nil {
-			// Unregistered devices should not result in a failure for all others
-			continue
+			return errors.Wrapf(err, "failed to find Pushbullet device with nickname '%s'", deviceNickname)
 		}
 
 		err = dev.PushNote(subject, message)
