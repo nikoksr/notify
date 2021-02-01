@@ -5,6 +5,7 @@ go 1.15
 require (
 	github.com/atc0005/go-teams-notify/v2 v2.4.2
 	github.com/bwmarrin/discordgo v0.23.1
+	github.com/cschomburg/go-pushbullet v0.0.0-20171206132031-67759df45fbb
 	github.com/go-telegram-bot-api/telegram-bot-api v4.6.4+incompatible
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	github.com/pkg/errors v0.9.1
