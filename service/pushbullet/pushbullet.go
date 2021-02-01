@@ -25,20 +25,10 @@ func New(apiToken string) *Pushbullet {
 	return pb
 }
 
-// AddReceivers takes Pushbullet device nicknames and adds them to the internal deviceNicknames list. 
-// The Send method will send a given message to all those devices a matching one be registered.
-// We only add registered devices.
+// AddReceivers takes Pushbullet device nicknames and adds them to the internal deviceNicknames list.
+// The Send method will send a given message to all those devices.
 func (pb *Pushbullet) AddReceivers(deviceNicknames ...string) {
 
-	devices := []string{}
-	for _, deviceNickname := range deviceNicknames {
-
-		_, err := pb.client.Device(deviceNickname)
-		if err != nil {
-			continue
-		}
-		devices = append(devices, deviceNickname)
-	}
 	pb.deviceNicknames = append(pb.deviceNicknames, deviceNicknames...)
 }
 
@@ -53,7 +43,8 @@ func (pb Pushbullet) Send(subject, message string) error {
 		dev, err := pb.client.Device(deviceNickname)
 
 		if err != nil {
-			return errors.Wrapf(err, "failed to find Pushbullet device with nickname '%s'", deviceNickname)
+			// Unregistered devices should not result in a failure for all others
+			continue
 		}
 
 		err = dev.PushNote(subject, message)
