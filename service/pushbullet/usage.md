@@ -9,8 +9,8 @@ Ensure that you have already navigated to your GOPATH and installed the followin
 
 These are general and very high level instructions
 
-1. Create a PushBullet account
-2. Download pushbullet on any devices which are to receive notifications
+1. Create a Pushbullet account
+2. Download Pushbullet on any devices which are to receive notifications
 3. Copy your *Access Token* for usage below form https://www.pushbullet.com/#settings
 4. Copy the *Device Nickname* of the device you want to post a message to. See https://www.pushbullet.com/#settings/devices
 

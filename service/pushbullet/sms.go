@@ -54,7 +54,7 @@ func (sms SMS) Send(subject, message string) error {
 
 		err = sms.client.PushSMS(user.Iden, sms.deviceIdentifier, phoneNumber, fullMessage)
 		if err != nil {
-			return errors.Wrapf(err, "failed to send SMS message to %s via PushBullet", phoneNumber)
+			return errors.Wrapf(err, "failed to send SMS message to %s via Pushbullet", phoneNumber)
 		}
 	}
 
