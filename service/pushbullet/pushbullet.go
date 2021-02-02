@@ -50,7 +50,6 @@ func (pb Pushbullet) Send(subject, message string) error {
 		if err != nil {
 			err = errors.Wrapf(err, "failed to send message to Pushbullet device with nickname '%s'", deviceNickname)
 			msgErr.Append(err)
-			continue
 		}
 	}
 	return msgErr.Errors()
