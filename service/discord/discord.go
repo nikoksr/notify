@@ -2,6 +2,7 @@ package discord
 
 import (
 	"github.com/bwmarrin/discordgo"
+	"github.com/nikoksr/notify/msgerrors"
 	"github.com/pkg/errors"
 )
 
@@ -90,13 +91,14 @@ func (d *Discord) AddReceivers(channelIDs ...string) {
 // Send takes a message subject and a message body and sends them to all previously set chats.
 func (d Discord) Send(subject, message string) error {
 	fullMessage := subject + "\n" + message // Treating subject as message title
-
+	msgErr := msgerrors.New()
 	for _, channelID := range d.channelIDs {
 		_, err := d.client.ChannelMessageSend(channelID, fullMessage)
 		if err != nil {
-			return errors.Wrapf(err, "failed to send message to Discord channel '%s'", channelID)
+			err = errors.Wrapf(err, "failed to send message to Discord channel '%s'", channelID)
+			msgErr.Append(err)
 		}
 	}
 
-	return nil
+	return msgErr.Errors()
 }

@@ -2,6 +2,7 @@ package msteams
 
 import (
 	goteamsnotify "github.com/atc0005/go-teams-notify/v2"
+	"github.com/nikoksr/notify/msgerrors"
 	"github.com/pkg/errors"
 )
 
@@ -47,13 +48,13 @@ func (m MSTeams) Send(subject, message string) error {
 	msgCard := goteamsnotify.NewMessageCard()
 	msgCard.Title = subject
 	msgCard.Text = message
-
+	msgErr := msgerrors.New()
 	for _, webHook := range m.webHooks {
 		err := m.client.Send(webHook, msgCard)
 		if err != nil {
-			return errors.Wrapf(err, "failed to send message to Microsoft Teams via webhook '%s'", webHook)
+			err := errors.Wrapf(err, "failed to send message to Microsoft Teams via webhook '%s'", webHook)
+			msgErr.Append(err)
 		}
 	}
-
-	return nil
+	return msgErr.Errors()
 }

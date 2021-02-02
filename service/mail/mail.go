@@ -53,8 +53,8 @@ func (m Mail) Send(subject, message string) error {
 
 	err := msg.Send(m.smtpHostAddr, m.smtpAuth)
 	if err != nil {
-		err = errors.Wrap(err, "failed to send mail")
+		return errors.Wrap(err, "failed to send mail")
 	}
 
-	return err
+	return nil
 }

@@ -1,6 +1,7 @@
 package slack
 
 import (
+	"github.com/nikoksr/notify/msgerrors"
 	"github.com/pkg/errors"
 	"github.com/slack-go/slack"
 )
@@ -36,16 +37,16 @@ func (s *Slack) AddReceivers(channelIDs ...string) {
 // see https://api.slack.com/
 func (s Slack) Send(subject, message string) error {
 	fullMessage := subject + "\n" + message // Treating subject as message title
-
+	msgErr := msgerrors.New()
 	for _, channelID := range s.channelIDs {
 		id, timestamp, err := s.client.PostMessage(
 			channelID,
 			slack.MsgOptionText(fullMessage, false),
 		)
 		if err != nil {
-			return errors.Wrapf(err, "failed to send message to Slack channel '%s' at time '%s'", id, timestamp)
+			err = errors.Wrapf(err, "failed to send message to Slack channel '%s' at time '%s'", id, timestamp)
+			msgErr.Append(err)
 		}
 	}
-
-	return nil
+	return msgErr.Errors()
 }

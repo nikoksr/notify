@@ -4,6 +4,7 @@ import (
 	"strconv"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
+	"github.com/nikoksr/notify/msgerrors"
 	"github.com/pkg/errors"
 )
 
@@ -50,14 +51,14 @@ func (t Telegram) Send(subject, message string) error {
 
 	msg := tgbotapi.NewMessage(0, fullMessage)
 	msg.ParseMode = defaultParseMode
-
+	msgErr := msgerrors.New()
 	for _, chatID := range t.chatIDs {
 		msg.ChatID = chatID
 		_, err := t.client.Send(msg)
 		if err != nil {
-			return errors.Wrapf(err, "failed to send message to Telegram chat '%d'", chatID)
+			err = errors.Wrapf(err, "failed to send message to Telegram chat '%d'", chatID)
+			msgErr.Append(err)
 		}
 	}
-
-	return nil
+	return msgErr.Errors()
 }

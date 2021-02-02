@@ -2,6 +2,7 @@ package pushbullet
 
 import (
 	"github.com/cschomburg/go-pushbullet"
+	"github.com/nikoksr/notify/msgerrors"
 	"github.com/pkg/errors"
 )
 
@@ -49,13 +50,13 @@ func (sms SMS) Send(subject, message string) error {
 	if err != nil {
 		return errors.Wrapf(err, "failed to find valid pushbullet user")
 	}
-
+	msgErr := msgerrors.New()
 	for _, phoneNumber := range sms.phoneNumbers {
 		err = sms.client.PushSMS(user.Iden, sms.deviceIdentifier, phoneNumber, fullMessage)
 		if err != nil {
-			return errors.Wrapf(err, "failed to send SMS message to %s via Pushbullet", phoneNumber)
+			err = errors.Wrapf(err, "failed to send SMS message to %s via Pushbullet", phoneNumber)
+			msgErr.Append(err)
 		}
 	}
-
-	return nil
+	return msgErr.Errors()
 }
