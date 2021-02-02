@@ -5,7 +5,6 @@ func (n *Notify) useService(service Notifier) {
 	if service == nil {
 		return
 	}
-
 	n.notifiers = append(n.notifiers, service)
 }
 

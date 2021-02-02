@@ -66,6 +66,7 @@ _ = notifier.Send(
 - *Microsoft Teams*
 - *Slack*
 - *Telegram*
+- *Pushbullet*
 
 ## Roadmap <a id="roadmap"></a>
 
@@ -79,6 +80,7 @@ _ = notifier.Send(
 - Microsoft Teams support: [atc0005/go-teams-notify](https://github.com/atc0005/go-teams-notify)
 - Slack support: [slack-go/slack](https://github.com/slack-go/slack)
 - Telegram support: [go-telegram-bot-api/telegram-bot-api](https://github.com/go-telegram-bot-api/telegram-bot-api)
+- Pushbullet support: [cschomburg/go-pushbullet](https://github.com/cschomburg/go-pushbullet)
 - Logo: [MariaLetta/free-gophers-pack](https://github.com/MariaLetta/free-gophers-pack)
 
 ## Author <a id="author"></a>
