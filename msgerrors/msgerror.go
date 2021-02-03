@@ -25,8 +25,8 @@ func (m *MsgError) Append(err error) {
 }
 
 // Error provides the string output of our error
-// This is similar to (error).Error() from the
-// core errors package
+// This allows MsgError to implement the core "error"
+// interface
 func (m *MsgError) Error() string {
 	if len(m.err) == 0 {
 		return ""
