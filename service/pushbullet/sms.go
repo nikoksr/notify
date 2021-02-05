@@ -18,7 +18,7 @@ type SMS struct {
 // (https://help.pushbullet.com/articles/how-do-i-send-text-messages-from-my-computer/).
 // For more information about Pushbullet api token:
 //    -> https://docs.pushbullet.com/#api-overview
-func NewSMS(apiToken string, deviceNickname string) (*SMS, error) {
+func NewSMS(apiToken, deviceNickname string) (*SMS, error) {
 	client := pushbullet.New(apiToken)
 
 	dev, err := client.Device(deviceNickname)
