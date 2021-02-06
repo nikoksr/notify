@@ -50,7 +50,7 @@ telegramService.AddReceivers("-1234567890")
 // Tell our notifier to use the telegram service. You can repeat the above process
 // for as many services as you like and just tell the notifier to use them.
 // Its kinda like using middlewares for api servers.
-notifier.UseService(telegramService)
+notifier.UseServices(telegramService)
 
 // Send a test message
 _ = notifier.Send(
