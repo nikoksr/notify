@@ -38,7 +38,7 @@ func New(apiToken string) (*Telegram, error) {
 func (t *Telegram) AddReceivers(chatIDs ...string) {
 	for _, v := range chatIDs {
 		chatID, err := strconv.ParseInt(v, 10, 64)
-		if err != nil {
+		if err == nil {
 			t.chatIDs = append(t.chatIDs, chatID)
 		}
 	}

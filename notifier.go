@@ -6,7 +6,7 @@ package notify
 //  E.g for telegram it sends the message to the specified group chat.
 //
 // The AddReceivers takes one or many strings and
-// adds these to the list of destinations for recieving messages
+// adds these to the list of destinations for receiving messages
 // e.g. slack channels, telegram chats, email addresses.
 type Notifier interface {
 	Send(string, string) error
