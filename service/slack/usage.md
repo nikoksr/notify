@@ -38,7 +38,7 @@ func main() {
 
     // Tell our notifier to use the Slack service. You can repeat the above process
     // for as many services as you like and just tell the notifier to use them.
-    notifier.UseService(slackService)
+    notifier.UseServices(slackService)
 
     // Send a message
     _ = notifier.Send(
