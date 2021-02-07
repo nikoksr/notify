@@ -36,7 +36,7 @@ func main() {
 
     // Tell our notifier to use the Pushbullet service. You can repeat the above process
     // for as many services as you like and just tell the notifier to use them.
-    notifier.UseService(service)
+    notifier.UseServices(service)
 
     // Send a message
     err = notifier.Send(
@@ -81,7 +81,7 @@ func main() {
 
     // Tell our notifier to use the Pushbullet service. You can repeat the above process
     // for as many services as you like and just tell the notifier to use them.
-    notifier.UseService(service)
+    notifier.UseServices(service)
 
     // Send a message
     err = notifier.Send(
