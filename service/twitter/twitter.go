@@ -69,13 +69,11 @@ func (t *Twitter) AddReceivers(twitterIDs ...string) {
 // Send takes a message subject and a message body and sends them to all previously set twitterIDs as a DM.
 // See https://developer.twitter.com/en/docs/twitter-api/v1/direct-messages/sending-and-receiving/api-reference/new-event
 func (t Twitter) Send(subject, message string) error {
-
 	directMessageData := &twitter.DirectMessageData{
 		Text: subject + "\n" + message,
 	}
 
 	for _, twitterID := range t.twitterIDs {
-
 		directMessageTarget := &twitter.DirectMessageTarget{
 			RecipientID: twitterID,
 		}
