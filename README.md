@@ -65,6 +65,7 @@ _ = notifier.Send(
 - *Email*
 - *Microsoft Teams*
 - *Slack*
+- *Twitter*
 - *Telegram*
 - *Pushbullet*
 
@@ -82,6 +83,7 @@ _ = notifier.Send(
 - Telegram support: [go-telegram-bot-api/telegram-bot-api](https://github.com/go-telegram-bot-api/telegram-bot-api)
 - Pushbullet support: [cschomburg/go-pushbullet](https://github.com/cschomburg/go-pushbullet)
 - Logo: [MariaLetta/free-gophers-pack](https://github.com/MariaLetta/free-gophers-pack)
+- Twitter: [dghubble/go-twitter/twitter](https://github.com/dghubble/go-twitter/twitter)
 
 ## Author <a id="author"></a>
 
