@@ -6,7 +6,7 @@ updates:
       interval: "daily"
       time: "08:00"
     labels:
-      - "dependencies"
+      - "type/deps"
       - "automerge"
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -14,5 +14,5 @@ updates:
       interval: "daily"
       time: "08:00"
     labels:
-      - "dependencies"
+      - "type/deps"
       - "automerge"
