@@ -1,0 +1,78 @@
+package plivo
+
+import (
+	"errors"
+	"testing"
+
+	plivo "github.com/plivo/plivo-go"
+	"github.com/stretchr/testify/require"
+)
+
+func TestNew(t *testing.T) {
+	assert := require.New(t)
+
+	// nil ClientOptions
+	svc, err := New(nil, &MessageOptions{})
+	assert.NotNil(err)
+	assert.Nil(svc)
+
+	// nil MessageOptions
+	svc, err = New(&ClientOptions{}, nil)
+	assert.NotNil(err)
+	assert.Nil(svc)
+
+	// empty source
+	svc, err = New(&ClientOptions{}, &MessageOptions{})
+	assert.NotNil(err)
+	assert.Nil(svc)
+
+	// success
+	svc, err = New(&ClientOptions{}, &MessageOptions{Source: "12345"})
+	assert.Nil(err)
+	assert.NotNil(svc)
+}
+
+func TestAddReceivers(t *testing.T) {
+	assert := require.New(t)
+
+	svc, err := New(&ClientOptions{}, &MessageOptions{Source: "12345"})
+	assert.Nil(err)
+	assert.NotNil(svc)
+
+	nums := []string{"1", "2", "3", "4", "5"}
+	svc.AddReceivers(nums...)
+
+	assert.Equal(svc.destinations, nums)
+}
+
+func TestSend(t *testing.T) {
+	assert := require.New(t)
+
+	svc, err := New(&ClientOptions{}, &MessageOptions{Source: "12345"})
+	assert.Nil(err)
+	assert.NotNil(svc)
+
+	// no receivers added
+	err = svc.Send("message", "test")
+	assert.NotNil(err)
+
+	// test plivo client returning error
+	mockClient := new(mockPlivoMsgClient)
+	mockClient.On("Create", plivo.MessageCreateParams{Src: "12345", Dst: "67890", Text: "message\ntest"}).
+		Return(nil, errors.New("some error"))
+	svc.client = mockClient
+	svc.AddReceivers("67890")
+	err = svc.Send("message", "test")
+	assert.NotNil(err)
+	mockClient.AssertExpectations(t)
+
+	// test success and multiple receivers
+	mockClient = new(mockPlivoMsgClient)
+	mockClient.On("Create", plivo.MessageCreateParams{Src: "12345", Dst: "67890<09876", Text: "message\ntest"}).
+		Return(nil, nil)
+	svc.client = mockClient
+	svc.AddReceivers("09876")
+	err = svc.Send("message", "test")
+	assert.Nil(err)
+	mockClient.AssertExpectations(t)
+}
