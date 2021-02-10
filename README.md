@@ -63,6 +63,7 @@ _ = notifier.Send(
 
 - *Discord*
 - *Email*
+- *Mailgun*
 - *Microsoft Teams*
 - *Plivo*
 - *Pushbullet*
