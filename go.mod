@@ -11,6 +11,7 @@ require (
 	github.com/go-telegram-bot-api/telegram-bot-api v4.6.4+incompatible
 	github.com/google/go-querystring v1.0.0 // indirect
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
+	github.com/mailgun/mailgun-go/v4 v4.3.3
 	github.com/pkg/errors v0.9.1
 	github.com/plivo/plivo-go v5.5.1+incompatible
 	github.com/sirupsen/logrus v1.7.0 // indirect
