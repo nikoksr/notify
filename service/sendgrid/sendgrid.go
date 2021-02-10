@@ -9,7 +9,7 @@ import (
 	"github.com/sendgrid/sendgrid-go/helpers/mail"
 )
 
-// SendGrid struct holds necessary data to communicate with the Slack API.
+// SendGrid struct holds necessary data to communicate with the SendGrid API.
 type SendGrid struct {
 	client            *sendgrid.Client
 	senderAddress     string
