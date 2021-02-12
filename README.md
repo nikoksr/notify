@@ -67,6 +67,7 @@ _ = notifier.Send(
 - *Microsoft Teams*
 - *Plivo*
 - *Pushbullet*
+- *SendGrid*
 - *Slack*
 - *Telegram*
 - *Twitter*
