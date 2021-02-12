@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/pkg/errors"
-
 	"github.com/sendgrid/sendgrid-go"
 	"github.com/sendgrid/sendgrid-go/helpers/mail"
 )
