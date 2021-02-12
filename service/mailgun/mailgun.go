@@ -18,10 +18,8 @@ type Mailgun struct {
 // You will need a Mailgun API key and domain name.
 // See https://documentation.mailgun.com/en/latest/
 func New(domain, apiKey, senderAddress string, opts ...Option) *Mailgun {
-	client := mailgun.NewMailgun(domain, apiKey)
-
 	m := &Mailgun{
-		client:            client,
+		client:            mailgun.NewMailgun(domain, apiKey),
 		senderAddress:     senderAddress,
 		receiverAddresses: []string{},
 	}
@@ -44,8 +42,7 @@ func (m *Mailgun) AddReceivers(addresses ...string) {
 func (m Mailgun) Send(subject, message string) error {
 	mailMessage := m.client.NewMessage(m.senderAddress, subject, message, m.receiverAddresses...)
 
-	_, _, err := m.client.Send(context.Background(), mailMessage)
-	if err != nil {
+	if _, _, err := m.client.Send(context.Background(), mailMessage); err != nil {
 		return errors.Wrap(err, "failed to send mail using Mailgun service")
 	}
 
