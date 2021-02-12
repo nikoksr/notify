@@ -39,28 +39,28 @@ func (s *SendGrid) AddReceivers(addresses ...string) {
 // html as markup language.
 func (s SendGrid) Send(subject, message string) error {
 	from := mail.NewEmail(s.senderName, s.senderAddress)
-	c := mail.NewContent("text/html", message)
+	content := mail.NewContent("text/html", message)
 
 	// Create a new personalization instance to be able to add multiple receiver addresses.
-	p := mail.NewPersonalization()
-	p.Subject = subject
+	personalization := mail.NewPersonalization()
+	personalization.Subject = subject
 
 	for _, receiverAddress := range s.receiverAddresses {
-		p.AddTos(mail.NewEmail(receiverAddress, receiverAddress))
+		personalization.AddTos(mail.NewEmail(receiverAddress, receiverAddress))
 	}
 
-	m := mail.NewV3Mail()
-	m.AddPersonalizations(p)
-	m.AddContent(c)
-	m.SetFrom(from)
+	mailMessage := mail.NewV3Mail()
+	mailMessage.AddPersonalizations(personalization)
+	mailMessage.AddContent(content)
+	mailMessage.SetFrom(from)
 
-	resp, err := s.client.Send(m)
+	resp, err := s.client.Send(mailMessage)
 	if err != nil {
 		return errors.Wrap(err, "failed to send mail using SendGrid service")
 	}
 
 	if resp.StatusCode != http.StatusAccepted {
-		return errors.New("failed to send mail using SendGrid service")
+		return errors.New("the SendGrid endpoint did not accept the message")
 	}
 
 	return nil
