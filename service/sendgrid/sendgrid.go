@@ -21,10 +21,8 @@ type SendGrid struct {
 // You will need a SendGrid API key.
 // See https://sendgrid.com/docs/for-developers/sending-email/api-getting-started/
 func New(apiKey, senderAddress, senderName string) *SendGrid {
-	client := sendgrid.NewSendClient(apiKey)
-
 	return &SendGrid{
-		client:            client,
+		client:            sendgrid.NewSendClient(apiKey),
 		senderAddress:     senderAddress,
 		senderName:        senderName,
 		receiverAddresses: []string{},
@@ -48,8 +46,7 @@ func (s SendGrid) Send(subject, message string) error {
 	p.Subject = subject
 
 	for _, receiverAddress := range s.receiverAddresses {
-		receiverEmail := mail.NewEmail(receiverAddress, receiverAddress)
-		p.AddTos(receiverEmail)
+		p.AddTos(mail.NewEmail(receiverAddress, receiverAddress))
 	}
 
 	m := mail.NewV3Mail()
