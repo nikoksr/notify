@@ -42,7 +42,8 @@ func (m *Mailgun) AddReceivers(addresses ...string) {
 func (m Mailgun) Send(subject, message string) error {
 	mailMessage := m.client.NewMessage(m.senderAddress, subject, message, m.receiverAddresses...)
 
-	if _, _, err := m.client.Send(context.Background(), mailMessage); err != nil {
+	_, _, err := m.client.Send(context.Background(), mailMessage)
+	if err != nil {
 		return errors.Wrap(err, "failed to send mail using Mailgun service")
 	}
 
