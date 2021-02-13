@@ -33,9 +33,7 @@ func New(username, password string) (*Instagram, error) {
 // AddReceivers takes Instagram usernames and adds them to the internal usernames list.
 // The Send method will send a given message to all those users.
 func (i *Instagram) AddReceivers(usernames ...string) {
-	for _, username := range usernames {
-		i.usernames = append(i.usernames, username)
-	}
+	i.usernames = append(i.usernames, usernames...)
 }
 
 // Send takes a message subject and a message body and sends them to all previously set users.
