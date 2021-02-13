@@ -1,3 +1,6 @@
+//go:generate go install github.com/golangci/golangci-lint/cmd/golangci-lint
+//go:generate go install mvdan.cc/gofumpt/gofumports
+//go:generate go install github.com/daixiang0/gci
 package notify
 
 import (
@@ -15,7 +18,7 @@ type Notify struct {
 // ErrSendNotification signals that the notifier failed to send a notification.
 var ErrSendNotification = errors.New("send notification")
 
-// New returns a new instance of Notify. Defaulting to being not disabled
+// New returns a new instance of Notify. Defaulting to being not disabled.
 func New() *Notify {
 	notifier := &Notify{
 		Disabled:  defaultDisabled,
