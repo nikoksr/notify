@@ -55,7 +55,7 @@ func (i Instagram) Send(subject, message string) error {
 				return errors.Wrapf(err, "failed to send message to Instagram user '%s'", username)
 			}
 		} else {
-			cause := errors.New(fmt.Sprintf("the closest username found is '%s'", user.Username))
+			cause := fmt.Errorf("the closest username found is '%s'", user.Username)
 			return errors.Wrapf(cause, "failed to find the user with username '%s'", username)
 		}
 	}
