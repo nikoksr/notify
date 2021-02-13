@@ -20,7 +20,7 @@
 
 ## About <a id="about"></a>
 
-*Notify* arose from my own need for one of my api server running in production to be able to notify me when, for example, an error occurred. The library is kept as simple as possible to allow a quick integration and easy usage.
+*Notify* was born out of my own need to have my API servers running in production be able to notify me when critical errors occur. Of course, _Notify_ can be used for any other purpose as well. The library is kept as simple as possible for quick integration and ease of use.
 
 ## Disclaimer <a id="disclaimer"></a>
 
@@ -37,24 +37,24 @@ go get -u github.com/nikoksr/notify
 ## Example usage <a id="usage"></a>
 
 ```go
-// The notifier we're gonna send our messages to
+// Create our notifications distributor.
 notifier := notify.New()
 
-// Create a telegram service. Ignoring error for demo simplicity
+// Create a telegram service. Ignoring error for demo simplicity.
 telegramService, _ := telegram.New("your_telegram_api_token")
 
 // Passing a telegram chat id as receiver for our messages.
-// Basically where should our message be sent to?
-telegramService.AddReceivers("-1234567890")
+// Basically where should our message be sent?
+telegramService.AddReceivers(-1234567890)
 
 // Tell our notifier to use the telegram service. You can repeat the above process
 // for as many services as you like and just tell the notifier to use them.
-// Its kinda like using middlewares for api servers.
+// Inspired by http middlewares used in higher level libraries.
 notifier.UseServices(telegramService)
 
-// Send a test message
+// Send a test message.
 _ = notifier.Send(
-	"Message Subject/Title",
+	"Subject/Title",
 	"The actual message. Hello, you awesome gophers! :)",
 )
 ```
@@ -64,26 +64,34 @@ _ = notifier.Send(
 - *Discord*
 - *Email*
 - *Instagram*
+- *Mailgun*
 - *Microsoft Teams*
+- *Plivo*
+- *Pushbullet*
+- *SendGrid*
 - *Slack*
 - *Telegram*
-- *Pushbullet*
+- *Twitter*
 
 ## Roadmap <a id="roadmap"></a>
 
 - [ ] Add tests (see [#1](https://github.com/nikoksr/notify/issues/1))
-- [ ] Add more notification services
+- [ ] Add more notification services (Issues and PRs are welcome!)
 
 ## Credits <a id="credits"></a>
 
 - Discord support: [bwmarrin/discordgo](https://github.com/bwmarrin/discordgo)
 - Email support: [jordan-wright/email](https://github.com/jordan-wright/email)
 - Instagram support: [ahmdrz/goinsta](https://github.com/ahmdrz/goinsta)
+- Logo: [MariaLetta/free-gophers-pack](https://github.com/MariaLetta/free-gophers-pack)
+- Mailgun support: [mailgun/mailgun-go](https://github.com/mailgun/mailgun-go)
 - Microsoft Teams support: [atc0005/go-teams-notify](https://github.com/atc0005/go-teams-notify)
+- Plivo support: [plivo/plivo-go](https://github.com/plivo/plivo-go)
+- Pushbullet support: [cschomburg/go-pushbullet](https://github.com/cschomburg/go-pushbullet)
+- SendGrid support: [sendgrid/sendgrid-go](https://github.com/sendgrid/sendgrid-go)
 - Slack support: [slack-go/slack](https://github.com/slack-go/slack)
 - Telegram support: [go-telegram-bot-api/telegram-bot-api](https://github.com/go-telegram-bot-api/telegram-bot-api)
-- Pushbullet support: [cschomburg/go-pushbullet](https://github.com/cschomburg/go-pushbullet)
-- Logo: [MariaLetta/free-gophers-pack](https://github.com/MariaLetta/free-gophers-pack)
+- Twitter: [dghubble/go-twitter](https://github.com/dghubble/go-twitter)
 
 ## Author <a id="author"></a>
 
@@ -98,7 +106,7 @@ Contributions, issues and feature requests are welcome!<br />Feel free to check 
 
 ## Show your support <a id="support"></a>
 
-Give a ⭐️ if this project helped you!
+Give a ⭐️ if you like this project!
 
 ## License <a id="license"></a>
 
