@@ -63,6 +63,7 @@ _ = notifier.Send(
 
 - *Discord*
 - *Email*
+- *Instagram*
 - *Microsoft Teams*
 - *Slack*
 - *Telegram*
@@ -77,6 +78,7 @@ _ = notifier.Send(
 
 - Discord support: [bwmarrin/discordgo](https://github.com/bwmarrin/discordgo)
 - Email support: [jordan-wright/email](https://github.com/jordan-wright/email)
+- Instagram support: [ahmdrz/goinsta](https://github.com/ahmdrz/goinsta)
 - Microsoft Teams support: [atc0005/go-teams-notify](https://github.com/atc0005/go-teams-notify)
 - Slack support: [slack-go/slack](https://github.com/slack-go/slack)
 - Telegram support: [go-telegram-bot-api/telegram-bot-api](https://github.com/go-telegram-bot-api/telegram-bot-api)
