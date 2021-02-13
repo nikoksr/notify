@@ -54,7 +54,7 @@ func (i Instagram) Send(subject, message string) error {
 			// But seems like Inbox.New works for further messages, and Instagram.Conversation doesn't show any conversations.
 			err = i.client.Inbox.New(&user, fullMessage)
 			if err != nil {
-				return errors.Wrapf(err, "failed to send message to Instagram user '%d'", username)
+				return errors.Wrapf(err, "failed to send message to Instagram user '%s'", username)
 			}
 		} else {
 			cause := errors.New(fmt.Sprintf("the closest username found is '%s'", user.Username))
