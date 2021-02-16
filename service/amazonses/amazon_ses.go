@@ -1,72 +1,74 @@
 package amazonses
 
 import (
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/credentials"
-	"github.com/aws/aws-sdk-go/aws/session"
-	"github.com/aws/aws-sdk-go/service/ses"
+	"context"
+
+	"github.com/aws/aws-sdk-go-v2/aws"
+	"github.com/aws/aws-sdk-go-v2/config"
+	"github.com/aws/aws-sdk-go-v2/credentials"
+	"github.com/aws/aws-sdk-go-v2/service/ses"
+	"github.com/aws/aws-sdk-go-v2/service/ses/types"
 	"github.com/pkg/errors"
 )
 
 // AmazonSES struct holds necessary data to communicate with the Amazon Simple Email Service API.
 type AmazonSES struct {
-	client            *ses.SES
-	senderAddress     string
-	receiverAddresses []*string
+	client            *ses.Client
+	senderAddress     *string
+	receiverAddresses []string
 }
 
 // New returns a new instance of a AmazonSES notification service.
 // You will need an Amazon Simple Email Service API access key and secret.
-// See https://docs.aws.amazon.com/ses/latest/DeveloperGuide/get-aws-keys.html
+// See https://aws.github.io/aws-sdk-go-v2/docs/getting-started/
 func New(accessKeyID, secretKey, region, senderAddress string) (*AmazonSES, error) {
-	config := &aws.Config{
-		Credentials: credentials.NewStaticCredentials(accessKeyID, secretKey, ""),
-		Region:      aws.String(region),
-	}
+	credProvider := credentials.NewStaticCredentialsProvider(accessKeyID, secretKey, "")
 
-	sess, err := session.NewSession(config)
+	cfg, err := config.LoadDefaultConfig(
+		context.Background(),
+		config.WithCredentialsProvider(credProvider),
+		config.WithRegion(region),
+	)
 	if err != nil {
 		return nil, err
 	}
 
 	return &AmazonSES{
-		client:            ses.New(sess),
-		senderAddress:     senderAddress,
-		receiverAddresses: []*string{},
+		client:            ses.NewFromConfig(cfg),
+		senderAddress:     aws.String(senderAddress),
+		receiverAddresses: []string{},
 	}, nil
 }
 
 // AddReceivers takes email addresses and adds them to the internal address list. The Send method will send
 // a given message to all those addresses.
 func (a *AmazonSES) AddReceivers(addresses ...string) {
-	for _, address := range addresses {
-		a.receiverAddresses = append(a.receiverAddresses, aws.String(address))
-	}
+	a.receiverAddresses = append(a.receiverAddresses, addresses...)
 }
 
 // Send takes a message subject and a message body and sends them to all previously set chats. Message body supports
 // html as markup language.
 func (a AmazonSES) Send(subject, message string) error {
 	input := &ses.SendEmailInput{}
-	input.SetSource(a.senderAddress)
-	input.SetDestination(&ses.Destination{
+	input.Source = a.senderAddress
+	input.Destination = &types.Destination{
 		ToAddresses: a.receiverAddresses,
-	})
-	input.SetMessage(&ses.Message{
-		Body: &ses.Body{
-			Html: &ses.Content{
+	}
+	input.Message = &types.Message{
+		Body: &types.Body{
+			Html: &types.Content{
 				Data: aws.String(message),
 			},
-			// Text: &ses.Content{
+			// Text: &types.Content{
 			//     Data:    aws.String(message),
 			// },
 		},
-		Subject: &ses.Content{
+		Subject: &types.Content{
 			Data: aws.String(subject),
 		},
-	})
+	}
 
-	_, err := a.client.SendEmail(input)
+	_, err := a.client.SendEmail(context.Background(), input)
 	if err != nil {
 		return errors.Wrap(err, "failed to send mail using Amazon SES service")
 	}
