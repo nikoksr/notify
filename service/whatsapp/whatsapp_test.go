@@ -27,10 +27,6 @@ func TestSend(t *testing.T) {
 		contacts: []string{},
 	}
 
-	// no receivers added
-	err := svc.Send("subject", "message")
-	assert.NotNil(err)
-
 	// test whatsapp client returning error
 	mockClient := new(mockWhatsappClient)
 	mockClient.On("Send", whatsapp.TextMessage{
@@ -41,7 +37,7 @@ func TestSend(t *testing.T) {
 	}).Return("", errors.New("some error"))
 	svc.client = mockClient
 	svc.AddReceivers("Contact1")
-	err = svc.Send("subject", "message")
+	err := svc.Send("subject", "message")
 	assert.NotNil(err)
 	mockClient.AssertExpectations(t)
 

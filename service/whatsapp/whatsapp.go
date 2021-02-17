@@ -4,6 +4,7 @@ import (
 	"encoding/gob"
 	"fmt"
 	"os"
+	"path/filepath"
 	"time"
 
 	qrcodeTerminal "github.com/Baozisoftware/qrcode-terminal-go"
@@ -12,9 +13,11 @@ import (
 )
 
 const (
-	qrLoginWaitTimeSeconds = 3
-	clientTimeout          = 5
+	qrLoginWaitTime = 3 * time.Second
+	clientTimeout   = 5 * time.Second
 )
+
+var sessionFilePath = filepath.Join(os.TempDir(), "whatsappSession.gob")
 
 // whatsappClient abstracts go-whatsapp for writing unit tests
 type whatsappClient interface {
@@ -31,7 +34,7 @@ type Service struct {
 
 // New returns a new instance of a WhatsApp notification service.
 func New() (*Service, error) {
-	client, err := whatsapp.NewConn(clientTimeout * time.Second)
+	client, err := whatsapp.NewConn(clientTimeout)
 	if err != nil {
 		return nil, err
 	}
@@ -96,7 +99,7 @@ func (s *Service) LoginWithQRCode() error {
 		return fmt.Errorf("error saving session: %v", err)
 	}
 
-	<-time.After(qrLoginWaitTimeSeconds * time.Second)
+	<-time.After(qrLoginWaitTime)
 
 	return nil
 }
@@ -104,11 +107,20 @@ func (s *Service) LoginWithQRCode() error {
 // readSession helps load saved WhatsApp session from local file system.
 func readSession() (whatsapp.Session, error) {
 	session := whatsapp.Session{}
-	file, err := os.Open(os.TempDir() + "/whatsappSession.gob")
+	file, err := os.Open(sessionFilePath)
 	if err != nil {
 		return session, err
 	}
-	defer file.Close()
+	defer func() {
+		cerr := file.Close()
+		if cerr != nil {
+			if err != nil {
+				err = errors.Wrap(err, cerr.Error())
+			} else {
+				err = cerr
+			}
+		}
+	}()
 
 	decoder := gob.NewDecoder(file)
 	err = decoder.Decode(&session)
@@ -121,11 +133,20 @@ func readSession() (whatsapp.Session, error) {
 
 // writeSession helps save WhatsApp session to local file system.
 func writeSession(session *whatsapp.Session) error {
-	file, err := os.Create(os.TempDir() + "/whatsappSession.gob")
+	file, err := os.Create(sessionFilePath)
 	if err != nil {
 		return err
 	}
-	defer file.Close()
+	defer func() {
+		cerr := file.Close()
+		if cerr != nil {
+			if err != nil {
+				err = errors.Wrap(err, cerr.Error())
+			} else {
+				err = cerr
+			}
+		}
+	}()
 
 	encoder := gob.NewEncoder(file)
 	err = encoder.Encode(*session)
@@ -144,22 +165,18 @@ func (s *Service) AddReceivers(contacts ...string) {
 
 // Send takes a message subject and a message body and sends them to all previously set contacts.
 func (s *Service) Send(subject, message string) error {
-	if len(s.contacts) == 0 {
-		return fmt.Errorf("no contacts added as receivers")
+	msg := whatsapp.TextMessage{
+		Text: subject + "\n" + message,
 	}
 
-	msgText := subject + "\n" + message
-	for _, c := range s.contacts {
-		contact := c + "@s.whatsapp.net"
-		msg := whatsapp.TextMessage{
-			Info: whatsapp.MessageInfo{
-				RemoteJid: contact,
-			},
-			Text: msgText,
+	for _, contact := range s.contacts {
+		msg.Info = whatsapp.MessageInfo{
+			RemoteJid: contact + "@s.whatsapp.net",
 		}
 
-		if _, err := s.client.Send(msg); err != nil {
-			return errors.Wrapf(err, "failed to send message to WhatsApp contact '%s'", c)
+		_, err := s.client.Send(msg)
+		if err != nil {
+			return errors.Wrapf(err, "failed to send message to WhatsApp contact '%s'", contact)
 		}
 	}
 
