@@ -3,7 +3,7 @@ package whatsapp
 import (
 	"testing"
 
-	whatsapp "github.com/Rhymen/go-whatsapp"
+	"github.com/Rhymen/go-whatsapp"
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/require"
 )

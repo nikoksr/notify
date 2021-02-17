@@ -8,7 +8,17 @@ You will need a registered WhatsApp phone number to be used as source for sendin
 
 ## Usage
 
-In the current implementation, authentication requires scanning QR code from terminal using a registered WhatsApp device. Please refer [Login (go-whatsapp)](https://github.com/Rhymen/go-whatsapp#login) and [sigalor/whatsapp-web-reveng](https://github.com/sigalor/whatsapp-web-reveng) for more details.
+In the current implementation, authentication is implemented using 2 ways:
+
+1. Scanning QR code from terminal using a registered WhatsApp device.
+
+    - Go to WhatsApp on your device.
+    - Click on the ellipsis icon (3 vertical dots) on top right, then click on "WhatsApp Web".
+    - Click on the "+" icon and scan the QR code from terminal.
+
+> Refer: [Login (go-whatsapp)](https://github.com/Rhymen/go-whatsapp#login) and [sigalor/whatsapp-web-reveng](https://github.com/sigalor/whatsapp-web-reveng) for more details.
+
+2. Providing the Session credentials explicitly.
 
 ```go
 package main
@@ -24,6 +34,11 @@ func main() {
         whatsappSvc, err := whatsapp.New()
         if err != nil {
                 log.Fatalf("whatsapp.New() failed: %s", err.Error())
+        }
+
+        err = whatsappSvc.LoginWithQRCode()
+        if err != nil {
+                log.Fatalf("whatsappSvc.LoginWithQRCode() failed: %s", err.Error())
         }
 
         whatsappSvc.AddReceivers("Contact1")

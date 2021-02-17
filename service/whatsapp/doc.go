@@ -18,6 +18,11 @@ Usage:
 			log.Fatalf("whatsapp.New() failed: %s", err.Error())
 		}
 
+		err = whatsappSvc.LoginWithQRCode()
+		if err != nil {
+			log.Fatalf("whatsappSvc.LoginWithQRCode() failed: %s", err.Error())
+		}
+
 		whatsappSvc.AddReceivers("Contact1")
 
 		notifier := notify.New()

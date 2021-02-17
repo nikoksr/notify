@@ -7,17 +7,19 @@ import (
 	"time"
 
 	qrcodeTerminal "github.com/Baozisoftware/qrcode-terminal-go"
-	whatsapp "github.com/Rhymen/go-whatsapp"
+	"github.com/Rhymen/go-whatsapp"
 	"github.com/pkg/errors"
 )
 
 const (
-	loginWaitTimeSeconds = 3
-	clientTimeout        = 5
+	qrLoginWaitTimeSeconds = 3
+	clientTimeout          = 5
 )
 
 // whatsappClient abstracts go-whatsapp for writing unit tests
 type whatsappClient interface {
+	Login(qrChan chan<- string) (whatsapp.Session, error)
+	RestoreWithSession(session whatsapp.Session) (whatsapp.Session, error)
 	Send(msg interface{}) (string, error)
 }
 
@@ -34,13 +36,6 @@ func New() (*Service, error) {
 		return nil, err
 	}
 
-	err = login(client)
-	if err != nil {
-		return nil, err
-	}
-
-	<-time.After(loginWaitTimeSeconds * time.Second)
-
 	s := &Service{
 		client:   client,
 		contacts: []string{},
@@ -48,12 +43,37 @@ func New() (*Service, error) {
 	return s, nil
 }
 
-// login helps with the WhatsApp authentication process.
+// LoginWithSessionCredentials provides helper for authentication using whatsapp.Session credentials.
+func (s *Service) LoginWithSessionCredentials(clientID, clientToken, serverToken, wid string, encKey, macKey []byte) error {
+	session := whatsapp.Session{
+		ClientId:    clientID,
+		ClientToken: clientToken,
+		ServerToken: serverToken,
+		Wid:         wid,
+		EncKey:      encKey,
+		MacKey:      macKey,
+	}
+
+	session, err := s.client.RestoreWithSession(session)
+	if err != nil {
+		return fmt.Errorf("restoring session failed: %v", err)
+	}
+
+	// Save the updated session for future use without login.
+	err = writeSession(&session)
+	if err != nil {
+		return fmt.Errorf("error saving session: %v", err)
+	}
+
+	return nil
+}
+
+// LoginWithQRCode provides helper for authentication using QR code on terminal.
 // Refer: https://github.com/Rhymen/go-whatsapp#login for more information.
-func login(client *whatsapp.Conn) error {
+func (s *Service) LoginWithQRCode() error {
 	session, err := readSession()
 	if err == nil {
-		session, err = client.RestoreWithSession(session)
+		session, err = s.client.RestoreWithSession(session)
 		if err != nil {
 			return fmt.Errorf("restoring session failed: %v", err)
 		}
@@ -65,7 +85,7 @@ func login(client *whatsapp.Conn) error {
 			terminal.Get(<-qr).Print()
 		}()
 
-		session, err = client.Login(qr)
+		session, err = s.client.Login(qr)
 		if err != nil {
 			return fmt.Errorf("error during login: %v", err)
 		}
@@ -75,6 +95,8 @@ func login(client *whatsapp.Conn) error {
 	if err != nil {
 		return fmt.Errorf("error saving session: %v", err)
 	}
+
+	<-time.After(qrLoginWaitTimeSeconds * time.Second)
 
 	return nil
 }
