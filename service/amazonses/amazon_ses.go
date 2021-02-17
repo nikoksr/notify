@@ -49,22 +49,23 @@ func (a *AmazonSES) AddReceivers(addresses ...string) {
 // Send takes a message subject and a message body and sends them to all previously set chats. Message body supports
 // html as markup language.
 func (a AmazonSES) Send(subject, message string) error {
-	input := &ses.SendEmailInput{}
-	input.Source = a.senderAddress
-	input.Destination = &types.Destination{
-		ToAddresses: a.receiverAddresses,
-	}
-	input.Message = &types.Message{
-		Body: &types.Body{
-			Html: &types.Content{
-				Data: aws.String(message),
-			},
-			// Text: &types.Content{
-			//     Data:    aws.String(message),
-			// },
+	input := &ses.SendEmailInput{
+		Source: a.senderAddress,
+		Destination: &types.Destination{
+			ToAddresses: a.receiverAddresses,
 		},
-		Subject: &types.Content{
-			Data: aws.String(subject),
+		Message: &types.Message{
+			Body: &types.Body{
+				Html: &types.Content{
+					Data: aws.String(message),
+				},
+				// Text: &types.Content{
+				//     Data:    aws.String(message),
+				// },
+			},
+			Subject: &types.Content{
+				Data: aws.String(subject),
+			},
 		},
 	}
 
