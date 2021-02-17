@@ -61,6 +61,7 @@ _ = notifier.Send(
 
 ## Supported services <a id="supported_services"></a>
 
+- *Amazon SES*
 - *Discord*
 - *Email*
 - *Mailgun*
@@ -80,6 +81,7 @@ _ = notifier.Send(
 
 ## Credits <a id="credits"></a>
 
+- Amazon SES support: [aws/aws-sdk-go](https://github.com/aws/aws-sdk-go)
 - Discord support: [bwmarrin/discordgo](https://github.com/bwmarrin/discordgo)
 - Email support: [jordan-wright/email](https://github.com/jordan-wright/email)
 - Logo: [MariaLetta/free-gophers-pack](https://github.com/MariaLetta/free-gophers-pack)
