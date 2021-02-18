@@ -1,6 +1,7 @@
 package mail
 
 import (
+	"context"
 	"net/smtp"
 	"net/textproto"
 
@@ -41,7 +42,14 @@ func (m *Mail) AddReceivers(addresses ...string) {
 
 // Send takes a message subject and a message body and sends them to all previously set chats. Message body supports
 // html as markup language.
-func (m Mail) Send(subject, message string) error {
+func (m Mail) Send(ctx context.Context, subject, message string) error {
+	// TODO: Is this necessary? Or do we just do nothing with ctx?
+	select {
+	case <-ctx.Done():
+		return nil
+	default:
+	}
+
 	msg := &email.Email{
 		To:      m.receiverAddresses,
 		From:    m.senderAddress,

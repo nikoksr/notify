@@ -1,6 +1,7 @@
 package plivo
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"strings"
@@ -26,7 +27,7 @@ type MessageOptions struct {
 	CallbackMethod string // The HTTP method to be used when calling CallbackURL - GET or POST(default)
 }
 
-// plivoMsgClient abstracts Plivo SDK for writing unit tests
+// mockPlivoMsgClient abstracts Plivo SDK for writing unit tests
 type plivoMsgClient interface {
 	Create(plivo.MessageCreateParams) (*plivo.MessageCreateResponseBody, error)
 }
@@ -75,7 +76,14 @@ func (s *Service) AddReceivers(phoneNumbers ...string) {
 }
 
 // Send sends a SMS via Plivo to all previously added receivers.
-func (s *Service) Send(subject, message string) error {
+func (s *Service) Send(ctx context.Context, subject, message string) error {
+	// TODO: Same question here.
+	select {
+	case <-ctx.Done():
+		return nil
+	default:
+	}
+
 	text := subject + "\n" + message
 
 	var dst string

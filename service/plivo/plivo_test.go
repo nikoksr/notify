@@ -1,6 +1,7 @@
 package plivo
 
 import (
+	"context"
 	"errors"
 	"testing"
 
@@ -53,7 +54,8 @@ func TestSend(t *testing.T) {
 	assert.NotNil(svc)
 
 	// no receivers added
-	err = svc.Send("message", "test")
+	ctx := context.Background()
+	err = svc.Send(ctx, "message", "test")
 	assert.NotNil(err)
 
 	// test plivo client returning error
@@ -62,7 +64,7 @@ func TestSend(t *testing.T) {
 		Return(nil, errors.New("some error"))
 	svc.client = mockClient
 	svc.AddReceivers("67890")
-	err = svc.Send("message", "test")
+	err = svc.Send(ctx, "message", "test")
 	assert.NotNil(err)
 	mockClient.AssertExpectations(t)
 
@@ -72,7 +74,7 @@ func TestSend(t *testing.T) {
 		Return(nil, nil)
 	svc.client = mockClient
 	svc.AddReceivers("09876")
-	err = svc.Send("message", "test")
+	err = svc.Send(ctx, "message", "test")
 	assert.Nil(err)
 	mockClient.AssertExpectations(t)
 }

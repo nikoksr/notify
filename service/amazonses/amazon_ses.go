@@ -48,7 +48,7 @@ func (a *AmazonSES) AddReceivers(addresses ...string) {
 
 // Send takes a message subject and a message body and sends them to all previously set chats. Message body supports
 // html as markup language.
-func (a AmazonSES) Send(subject, message string) error {
+func (a AmazonSES) Send(ctx context.Context, subject, message string) error {
 	input := &ses.SendEmailInput{
 		Source: a.senderAddress,
 		Destination: &types.Destination{
@@ -69,7 +69,7 @@ func (a AmazonSES) Send(subject, message string) error {
 		},
 	}
 
-	_, err := a.client.SendEmail(context.Background(), input)
+	_, err := a.client.SendEmail(ctx, input)
 	if err != nil {
 		return errors.Wrap(err, "failed to send mail using Amazon SES service")
 	}

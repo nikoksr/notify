@@ -1,6 +1,7 @@
 package sendgrid
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/pkg/errors"
@@ -36,7 +37,7 @@ func (s *SendGrid) AddReceivers(addresses ...string) {
 
 // Send takes a message subject and a message body and sends them to all previously set chats. Message body supports
 // html as markup language.
-func (s SendGrid) Send(subject, message string) error {
+func (s SendGrid) Send(ctx context.Context, subject, message string) error {
 	from := mail.NewEmail(s.senderName, s.senderAddress)
 	content := mail.NewContent("text/html", message)
 
@@ -52,6 +53,13 @@ func (s SendGrid) Send(subject, message string) error {
 	mailMessage.AddPersonalizations(personalization)
 	mailMessage.AddContent(content)
 	mailMessage.SetFrom(from)
+
+	// TODO: Should we check here or at the beginning of the func?
+	select {
+	case <-ctx.Done():
+		return nil
+	default:
+	}
 
 	resp, err := s.client.Send(mailMessage)
 	if err != nil {

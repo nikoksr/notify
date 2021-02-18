@@ -1,6 +1,8 @@
 package pushbullet
 
 import (
+	"context"
+
 	"github.com/cschomburg/go-pushbullet"
 	"github.com/pkg/errors"
 )
@@ -43,7 +45,7 @@ func (sms *SMS) AddReceivers(phoneNumbers ...string) {
 
 // Send takes a message subject and a message body and sends them to all phone numbers.
 // see https://help.pushbullet.com/articles/how-do-i-send-text-messages-from-my-computer/
-func (sms SMS) Send(subject, message string) error {
+func (sms SMS) Send(ctx context.Context, subject, message string) error {
 	fullMessage := subject + "\n" + message // Treating subject as message title
 	user, err := sms.client.Me()
 	if err != nil {
@@ -51,9 +53,14 @@ func (sms SMS) Send(subject, message string) error {
 	}
 
 	for _, phoneNumber := range sms.phoneNumbers {
-		err = sms.client.PushSMS(user.Iden, sms.deviceIdentifier, phoneNumber, fullMessage)
-		if err != nil {
-			return errors.Wrapf(err, "failed to send SMS message to %s via Pushbullet", phoneNumber)
+		select {
+		case <-ctx.Done():
+			return nil
+		default:
+			err = sms.client.PushSMS(user.Iden, sms.deviceIdentifier, phoneNumber, fullMessage)
+			if err != nil {
+				return errors.Wrapf(err, "failed to send SMS message to %s via Pushbullet", phoneNumber)
+			}
 		}
 	}
 

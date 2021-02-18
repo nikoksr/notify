@@ -54,12 +54,15 @@ notifier.UseServices(telegramService)
 
 // Send a test message.
 _ = notifier.Send(
+	context.Background(),
 	"Subject/Title",
-	"The actual message. Hello, you awesome gophers! :)",
+	"The actual message - Hello, you awesome gophers! :)",
 )
 ```
 
 ## Supported services <a id="supported_services"></a>
+
+> Please create feature requests for missing services (see #3 for example)
 
 - *Amazon SES*
 - *Discord*
@@ -73,11 +76,6 @@ _ = notifier.Send(
 - *Telegram*
 - *Twitter*
 - *WhatsApp*
-
-## Roadmap <a id="roadmap"></a>
-
-- [ ] Add tests (see [#1](https://github.com/nikoksr/notify/issues/1))
-- [ ] Add more notification services (Issues and PRs are welcome!)
 
 ## Credits <a id="credits"></a>
 

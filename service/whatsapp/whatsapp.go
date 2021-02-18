@@ -1,6 +1,7 @@
 package whatsapp
 
 import (
+	"context"
 	"encoding/gob"
 	"fmt"
 	"os"
@@ -19,7 +20,7 @@ const (
 
 var sessionFilePath = filepath.Join(os.TempDir(), "whatsappSession.gob")
 
-// whatsappClient abstracts go-whatsapp for writing unit tests
+// mockWhatsappClient abstracts go-whatsapp for writing unit tests
 type whatsappClient interface {
 	Login(qrChan chan<- string) (whatsapp.Session, error)
 	RestoreWithSession(session whatsapp.Session) (whatsapp.Session, error)
@@ -164,19 +165,24 @@ func (s *Service) AddReceivers(contacts ...string) {
 }
 
 // Send takes a message subject and a message body and sends them to all previously set contacts.
-func (s *Service) Send(subject, message string) error {
+func (s *Service) Send(ctx context.Context, subject, message string) error {
 	msg := whatsapp.TextMessage{
 		Text: subject + "\n" + message,
 	}
 
 	for _, contact := range s.contacts {
-		msg.Info = whatsapp.MessageInfo{
-			RemoteJid: contact + "@s.whatsapp.net",
-		}
+		select {
+		case <-ctx.Done():
+			return nil
+		default:
+			msg.Info = whatsapp.MessageInfo{
+				RemoteJid: contact + "@s.whatsapp.net",
+			}
 
-		_, err := s.client.Send(msg)
-		if err != nil {
-			return errors.Wrapf(err, "failed to send message to WhatsApp contact '%s'", contact)
+			_, err := s.client.Send(msg)
+			if err != nil {
+				return errors.Wrapf(err, "failed to send message to WhatsApp contact '%s'", contact)
+			}
 		}
 	}
 

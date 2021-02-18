@@ -1,6 +1,8 @@
 package msteams
 
 import (
+	"context"
+
 	goteamsnotify "github.com/atc0005/go-teams-notify/v2"
 	"github.com/pkg/errors"
 )
@@ -43,15 +45,20 @@ func (m *MSTeams) AddReceivers(webHooks ...string) {
 // html as markup language.
 // For more information about telegram api token:
 //    -> https://github.com/atc0005/go-teams-notify#example-basic
-func (m MSTeams) Send(subject, message string) error {
+func (m MSTeams) Send(ctx context.Context, subject, message string) error {
 	msgCard := goteamsnotify.NewMessageCard()
 	msgCard.Title = subject
 	msgCard.Text = message
 
 	for _, webHook := range m.webHooks {
-		err := m.client.Send(webHook, msgCard)
-		if err != nil {
-			return errors.Wrapf(err, "failed to send message to Microsoft Teams via webhook '%s'", webHook)
+		select {
+		case <-ctx.Done():
+			return nil
+		default:
+			err := m.client.SendWithContext(ctx, webHook, msgCard)
+			if err != nil {
+				return errors.Wrapf(err, "failed to send message to Microsoft Teams via webhook '%s'", webHook)
+			}
 		}
 	}
 
