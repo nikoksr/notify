@@ -78,7 +78,7 @@ func (t Twitter) Send(ctx context.Context, subject, message string) error {
 	for _, twitterID := range t.twitterIDs {
 		select {
 		case <-ctx.Done():
-			return nil
+			return ctx.Err()
 		default:
 			directMessageTarget := &twitter.DirectMessageTarget{
 				RecipientID: twitterID,

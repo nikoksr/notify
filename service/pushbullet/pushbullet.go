@@ -41,7 +41,7 @@ func (pb Pushbullet) Send(ctx context.Context, subject, message string) error {
 	for _, deviceNickname := range pb.deviceNicknames {
 		select {
 		case <-ctx.Done():
-			return nil
+			return ctx.Err()
 		default:
 			dev, err := pb.client.Device(deviceNickname)
 			if err != nil {

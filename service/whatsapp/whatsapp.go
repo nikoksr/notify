@@ -173,7 +173,7 @@ func (s *Service) Send(ctx context.Context, subject, message string) error {
 	for _, contact := range s.contacts {
 		select {
 		case <-ctx.Done():
-			return nil
+			return ctx.Err()
 		default:
 			msg.Info = whatsapp.MessageInfo{
 				RemoteJid: contact + "@s.whatsapp.net",

@@ -42,7 +42,7 @@ func (s Slack) Send(ctx context.Context, subject, message string) error {
 	for _, channelID := range s.channelIDs {
 		select {
 		case <-ctx.Done():
-			return nil
+			return ctx.Err()
 		default:
 			id, timestamp, err := s.client.PostMessageContext(
 				ctx,

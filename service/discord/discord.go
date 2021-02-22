@@ -96,7 +96,7 @@ func (d Discord) Send(ctx context.Context, subject, message string) error {
 	for _, channelID := range d.channelIDs {
 		select {
 		case <-ctx.Done():
-			return nil
+			return ctx.Err()
 		default:
 			_, err := d.client.ChannelMessageSend(channelID, fullMessage)
 			if err != nil {

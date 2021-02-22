@@ -53,7 +53,7 @@ func (m MSTeams) Send(ctx context.Context, subject, message string) error {
 	for _, webHook := range m.webHooks {
 		select {
 		case <-ctx.Done():
-			return nil
+			return ctx.Err()
 		default:
 			err := m.client.SendWithContext(ctx, webHook, msgCard)
 			if err != nil {

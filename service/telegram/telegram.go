@@ -49,7 +49,7 @@ func (t Telegram) Send(ctx context.Context, subject, message string) error {
 	for _, chatID := range t.chatIDs {
 		select {
 		case <-ctx.Done():
-			return nil
+			return ctx.Err()
 		default:
 			msg.ChatID = chatID
 			_, err := t.client.Send(msg)

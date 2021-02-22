@@ -55,7 +55,7 @@ func (sms SMS) Send(ctx context.Context, subject, message string) error {
 	for _, phoneNumber := range sms.phoneNumbers {
 		select {
 		case <-ctx.Done():
-			return nil
+			return ctx.Err()
 		default:
 			err = sms.client.PushSMS(user.Iden, sms.deviceIdentifier, phoneNumber, fullMessage)
 			if err != nil {
