@@ -27,7 +27,7 @@ type MessageOptions struct {
 	CallbackMethod string // The HTTP method to be used when calling CallbackURL - GET or POST(default)
 }
 
-// mockPlivoMsgClient abstracts Plivo SDK for writing unit tests
+// plivoMsgClient abstracts Plivo SDK for writing unit tests
 type plivoMsgClient interface {
 	Create(plivo.MessageCreateParams) (*plivo.MessageCreateResponseBody, error)
 }
