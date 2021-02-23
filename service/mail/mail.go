@@ -1,6 +1,7 @@
 package mail
 
 import (
+	"context"
 	"net/smtp"
 	"net/textproto"
 
@@ -41,7 +42,7 @@ func (m *Mail) AddReceivers(addresses ...string) {
 
 // Send takes a message subject and a message body and sends them to all previously set chats. Message body supports
 // html as markup language.
-func (m Mail) Send(subject, message string) error {
+func (m Mail) Send(ctx context.Context, subject, message string) error {
 	msg := &email.Email{
 		To:      m.receiverAddresses,
 		From:    m.senderAddress,
@@ -51,9 +52,15 @@ func (m Mail) Send(subject, message string) error {
 		Headers: textproto.MIMEHeader{},
 	}
 
-	err := msg.Send(m.smtpHostAddr, m.smtpAuth)
-	if err != nil {
-		err = errors.Wrap(err, "failed to send mail")
+	var err error
+	select {
+	case <-ctx.Done():
+		err = ctx.Err()
+	default:
+		err = msg.Send(m.smtpHostAddr, m.smtpAuth)
+		if err != nil {
+			err = errors.Wrap(err, "failed to send mail")
+		}
 	}
 
 	return err

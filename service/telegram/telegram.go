@@ -1,6 +1,8 @@
 package telegram
 
 import (
+	"context"
+
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 	"github.com/pkg/errors"
 )
@@ -38,17 +40,22 @@ func (t *Telegram) AddReceivers(chatIDs ...int64) {
 
 // Send takes a message subject and a message body and sends them to all previously set chats. Message body supports
 // html as markup language.
-func (t Telegram) Send(subject, message string) error {
+func (t Telegram) Send(ctx context.Context, subject, message string) error {
 	fullMessage := subject + "\n" + message // Treating subject as message title
 
 	msg := tgbotapi.NewMessage(0, fullMessage)
 	msg.ParseMode = defaultParseMode
 
 	for _, chatID := range t.chatIDs {
-		msg.ChatID = chatID
-		_, err := t.client.Send(msg)
-		if err != nil {
-			return errors.Wrapf(err, "failed to send message to Telegram chat '%d'", chatID)
+		select {
+		case <-ctx.Done():
+			return ctx.Err()
+		default:
+			msg.ChatID = chatID
+			_, err := t.client.Send(msg)
+			if err != nil {
+				return errors.Wrapf(err, "failed to send message to Telegram chat '%d'", chatID)
+			}
 		}
 	}
 

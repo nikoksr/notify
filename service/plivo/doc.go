@@ -29,7 +29,7 @@ Usage:
 		notifier := notify.New()
 		notifier.UseServices(plivoSvc)
 
-		err = notifier.Send("subject", "message")
+		err = notifier.Send(context.Background(), "subject", "message")
 		if err != nil {
 			log.Fatalf("notifier.Send() failed: %s", err.Error())
 		}

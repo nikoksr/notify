@@ -1,6 +1,7 @@
 package whatsapp
 
 import (
+	"context"
 	"testing"
 
 	"github.com/Rhymen/go-whatsapp"
@@ -37,7 +38,8 @@ func TestSend(t *testing.T) {
 	}).Return("", errors.New("some error"))
 	svc.client = mockClient
 	svc.AddReceivers("Contact1")
-	err := svc.Send("subject", "message")
+	ctx := context.Background()
+	err := svc.Send(ctx, "subject", "message")
 	assert.NotNil(err)
 	mockClient.AssertExpectations(t)
 
@@ -57,7 +59,7 @@ func TestSend(t *testing.T) {
 	}).Return("", nil)
 	svc.client = mockClient
 	svc.AddReceivers("Contact1", "Contact2")
-	err = svc.Send("subject", "message")
+	err = svc.Send(ctx, "subject", "message")
 	assert.Nil(err)
 	mockClient.AssertExpectations(t)
 }

@@ -1,6 +1,7 @@
 package plivo
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"strings"
@@ -75,7 +76,7 @@ func (s *Service) AddReceivers(phoneNumbers ...string) {
 }
 
 // Send sends a SMS via Plivo to all previously added receivers.
-func (s *Service) Send(subject, message string) error {
+func (s *Service) Send(ctx context.Context, subject, message string) error {
 	text := subject + "\n" + message
 
 	var dst string
@@ -90,13 +91,19 @@ func (s *Service) Send(subject, message string) error {
 		dst = strings.Join(s.destinations, "<")
 	}
 
-	_, err := s.client.Create(plivo.MessageCreateParams{
-		Dst:    dst,
-		Text:   text,
-		Src:    s.mopts.Source,
-		URL:    s.mopts.CallbackURL,
-		Method: s.mopts.CallbackMethod,
-	})
+	var err error
+	select {
+	case <-ctx.Done():
+		return ctx.Err()
+	default:
+		_, err = s.client.Create(plivo.MessageCreateParams{
+			Dst:    dst,
+			Text:   text,
+			Src:    s.mopts.Source,
+			URL:    s.mopts.CallbackURL,
+			Method: s.mopts.CallbackMethod,
+		})
+	}
 
 	return err
 }

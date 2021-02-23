@@ -1,12 +1,14 @@
 package notify
 
 import (
+	"context"
+
 	"github.com/pkg/errors"
 	"golang.org/x/sync/errgroup"
 )
 
 // Send calls the underlying notification services to send the given subject and message to their respective endpoints.
-func (n Notify) Send(subject, message string) error {
+func (n Notify) Send(ctx context.Context, subject, message string) error {
 	if n.Disabled {
 		return nil
 	}
@@ -17,7 +19,7 @@ func (n Notify) Send(subject, message string) error {
 		if service != nil {
 			s := service
 			eg.Go(func() error {
-				return s.Send(subject, message)
+				return s.Send(ctx, subject, message)
 			})
 		}
 	}

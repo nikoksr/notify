@@ -1,6 +1,8 @@
 package pushbullet
 
 import (
+	"context"
+
 	"github.com/cschomburg/go-pushbullet"
 	"github.com/pkg/errors"
 )
@@ -35,16 +37,21 @@ func (pb *Pushbullet) AddReceivers(deviceNicknames ...string) {
 // you will need Pushbullet installed on the relevant devices
 // (android, chrome, firefox, windows)
 // see https://www.pushbullet.com/apps
-func (pb Pushbullet) Send(subject, message string) error {
+func (pb Pushbullet) Send(ctx context.Context, subject, message string) error {
 	for _, deviceNickname := range pb.deviceNicknames {
-		dev, err := pb.client.Device(deviceNickname)
-		if err != nil {
-			return errors.Wrapf(err, "failed to find Pushbullet device with nickname '%s'", deviceNickname)
-		}
+		select {
+		case <-ctx.Done():
+			return ctx.Err()
+		default:
+			dev, err := pb.client.Device(deviceNickname)
+			if err != nil {
+				return errors.Wrapf(err, "failed to find Pushbullet device with nickname '%s'", deviceNickname)
+			}
 
-		err = dev.PushNote(subject, message)
-		if err != nil {
-			return errors.Wrapf(err, "failed to send message to Pushbullet device with nickname '%s'", deviceNickname)
+			err = dev.PushNote(subject, message)
+			if err != nil {
+				return errors.Wrapf(err, "failed to send message to Pushbullet device with nickname '%s'", deviceNickname)
+			}
 		}
 	}
 

@@ -1,6 +1,7 @@
 package sendgrid
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/pkg/errors"
@@ -36,7 +37,7 @@ func (s *SendGrid) AddReceivers(addresses ...string) {
 
 // Send takes a message subject and a message body and sends them to all previously set chats. Message body supports
 // html as markup language.
-func (s SendGrid) Send(subject, message string) error {
+func (s SendGrid) Send(ctx context.Context, subject, message string) error {
 	from := mail.NewEmail(s.senderName, s.senderAddress)
 	content := mail.NewContent("text/html", message)
 
@@ -53,13 +54,18 @@ func (s SendGrid) Send(subject, message string) error {
 	mailMessage.AddContent(content)
 	mailMessage.SetFrom(from)
 
-	resp, err := s.client.Send(mailMessage)
-	if err != nil {
-		return errors.Wrap(err, "failed to send mail using SendGrid service")
-	}
+	select {
+	case <-ctx.Done():
+		return ctx.Err()
+	default:
+		resp, err := s.client.Send(mailMessage)
+		if err != nil {
+			return errors.Wrap(err, "failed to send mail using SendGrid service")
+		}
 
-	if resp.StatusCode != http.StatusAccepted {
-		return errors.New("the SendGrid endpoint did not accept the message")
+		if resp.StatusCode != http.StatusAccepted {
+			return errors.New("the SendGrid endpoint did not accept the message")
+		}
 	}
 
 	return nil
