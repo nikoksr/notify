@@ -100,8 +100,8 @@ github.com/json-iterator/go v1.1.10/go.mod h1:KdQUCv79m/52Kvf8AW2vK1V8akMuk1QjK/
 github.com/magefile/mage v1.10.0/go.mod h1:z5UZb/iS3GoOSn0JgWuiw7dxlurVYTu+/jHXqQg881A=
 github.com/magefile/mage v1.11.0 h1:C/55Ywp9BpgVVclD3lRnSYCwXTYxmSppIgLeDYlNuls=
 github.com/magefile/mage v1.11.0/go.mod h1:z5UZb/iS3GoOSn0JgWuiw7dxlurVYTu+/jHXqQg881A=
-github.com/mailgun/mailgun-go/v4 v4.3.4 h1:0cpSL0cOryR+UdNuoiCALCboWkdkhs8hNRqM3tp7P1k=
-github.com/mailgun/mailgun-go/v4 v4.3.4/go.mod h1:fWuBI2iaS/pSSyo6+EBpHjatQO3lV8onwqcRy7joSJI=
+github.com/mailgun/mailgun-go/v4 v4.4.0 h1:uC1PrrU5mZ3gv8YvKQRdp4YFgM6Ro0NdoL1PIMzuya0=
+github.com/mailgun/mailgun-go/v4 v4.4.0/go.mod h1:fWuBI2iaS/pSSyo6+EBpHjatQO3lV8onwqcRy7joSJI=
 github.com/mattn/go-colorable v0.1.1/go.mod h1:FuOcm+DKB9mbwrcAfNl7/TZVBZ6rcnceauSikq3lYCQ=
 github.com/mattn/go-colorable v0.1.8 h1:c1ghPdyEDarC70ftn0y+A/Ee++9zz8ljHG1b13eJ0s8=
 github.com/mattn/go-colorable v0.1.8/go.mod h1:u6P/XSegPjTcexA+o6vUJrdnUu04hMope9wVRipJSqc=
