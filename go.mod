@@ -21,7 +21,7 @@ require (
 	github.com/kr/text v0.2.0 // indirect
 	github.com/line/line-bot-sdk-go v7.8.0+incompatible
 	github.com/magefile/mage v1.11.0 // indirect
-	github.com/mailgun/mailgun-go/v4 v4.3.4
+	github.com/mailgun/mailgun-go/v4 v4.4.1
 	github.com/mattn/go-colorable v0.1.8 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.1 // indirect
