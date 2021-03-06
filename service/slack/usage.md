@@ -42,12 +42,14 @@ func main() {
 
     // Send a message
     _ = notifier.Send(
+        context.Background(),
         "Hello :wave:\n",
         "I am a bot written in Go!",
     )
 
     // Code isn't working and need to debug? Use this code below:
     // x := notifier.Send(
+    //  context.Background(),
     //  "Hello :wave:\n",
     //  "I am a bot written in Go!",
     // )
