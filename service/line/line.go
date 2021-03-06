@@ -25,6 +25,7 @@ func New(channelSecret, channelAccessToken string) (*Line, error) {
 	l := &Line{
 		client: bot,
 	}
+
 	return l, nil
 }
 
@@ -40,15 +41,14 @@ func (l *Line) Send(ctx context.Context, subject, message string) error {
 		Text: subject + "\n" + message,
 	}
 
-	for _, destinationID := range l.receiverIDs {
+	for _, receiverID := range l.receiverIDs {
 		select {
 		case <-ctx.Done():
 			return ctx.Err()
-
 		default:
-			_, err := l.client.PushMessage(destinationID, lineMessage).WithContext(ctx).Do()
+			_, err := l.client.PushMessage(receiverID, lineMessage).WithContext(ctx).Do()
 			if err != nil {
-				return errors.Wrapf(err, "failed to send message to line. destination id: '%s'", destinationID)
+				return errors.Wrapf(err, "failed to send message to LINE contact '%s'", receiverID)
 			}
 		}
 	}

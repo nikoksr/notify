@@ -26,12 +26,14 @@ func main() {
   lineService.AddReceivers("userID1", "groupID1")
 
   notifier := notify.New()
+
   // Tell our notifier to use the line service. You can repeat the above process
   // for as many services as you like and just tell the notifier to use them.
   notifier.UseServices(lineService)
 
   // Send a message
-  err := notifier.Send(context.Background(),
+  err := notifier.Send(
+    context.Background(),
     "Welcome",
     "I am a bot written in Go!",
   )
