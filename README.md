@@ -67,6 +67,7 @@ _ = notifier.Send(
 - *Amazon SES*
 - *Discord*
 - *Email*
+- *Line*
 - *Mailgun*
 - *Microsoft Teams*
 - *Plivo*
@@ -82,6 +83,7 @@ _ = notifier.Send(
 - Amazon SES support: [aws/aws-sdk-go](https://github.com/aws/aws-sdk-go)
 - Discord support: [bwmarrin/discordgo](https://github.com/bwmarrin/discordgo)
 - Email support: [jordan-wright/email](https://github.com/jordan-wright/email)
+- Line support: [line/line-bot-sdk-go](https://github.com/line/line-bot-sdk-go)
 - Logo: [MariaLetta/free-gophers-pack](https://github.com/MariaLetta/free-gophers-pack)
 - Mailgun support: [mailgun/mailgun-go](https://github.com/mailgun/mailgun-go)
 - Microsoft Teams support: [atc0005/go-teams-notify](https://github.com/atc0005/go-teams-notify)
