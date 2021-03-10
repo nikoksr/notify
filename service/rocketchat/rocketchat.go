@@ -16,7 +16,7 @@ type RocketChat struct {
 }
 
 // New returns a new instance of a RocketChat notification service.
-// serverUrl is the endpoint of server i.e "localhost" , scheme is protocol i.e "http/https"
+// serverURL is the endpoint of server i.e "localhost" , scheme is protocol i.e "http/https"
 // userID and token of the user sending the message.
 func New(serverURL, scheme, userID, token string) (*RocketChat, error) {
 	u := url.URL{
@@ -41,10 +41,10 @@ func New(serverURL, scheme, userID, token string) (*RocketChat, error) {
 	return &rc, nil
 }
 
-// AddReceivers takes Slack channel IDs and adds them to the internal channel ID list. The Send method will send
-// a given message to all those channels.
-func (r *RocketChat) AddReceivers(chatIDs ...string) {
-	r.chNames = append(r.chNames, chatIDs...)
+// AddReceivers takes rocketchat channel names and adds them to the internal channel list. The Send method will send
+// a given message to all channels in the list.
+func (r *RocketChat) AddReceivers(chNames ...string) {
+	r.chNames = append(r.chNames, chNames...)
 }
 
 // Send takes a message subject and a message body and sends them to all previously set channels.
