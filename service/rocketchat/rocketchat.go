@@ -39,7 +39,6 @@ func New(serverURL, scheme, userID, token string) (*RocketChat, error) {
 	}
 
 	return &rc, nil
-
 }
 
 // AddReceivers takes Slack channel IDs and adds them to the internal channel ID list. The Send method will send
@@ -69,6 +68,5 @@ func (r *RocketChat) Send(ctx context.Context, subject, message string) error {
 			}
 		}
 	}
-
 	return nil
 }
