@@ -11,7 +11,7 @@ import (
 
 // RocketChat struct holds necessary data to communicate with the RocketChat API.
 type RocketChat struct {
-	client  *rest.Client
+	client       *rest.Client
 	channelNames []string
 }
 
@@ -34,7 +34,7 @@ func New(serverURL, scheme, userID, token string) (*RocketChat, error) {
 	}
 
 	rc := RocketChat{
-		client:  c,
+		client:       c,
 		channelNames: []string{},
 	}
 
