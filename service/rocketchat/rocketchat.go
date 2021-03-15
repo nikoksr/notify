@@ -12,7 +12,7 @@ import (
 // RocketChat struct holds necessary data to communicate with the RocketChat API.
 type RocketChat struct {
 	client  *rest.Client
-	chNames []string
+	channelNames []string
 }
 
 // New returns a new instance of a RocketChat notification service.
@@ -35,7 +35,7 @@ func New(serverURL, scheme, userID, token string) (*RocketChat, error) {
 
 	rc := RocketChat{
 		client:  c,
-		chNames: []string{},
+		channelNames: []string{},
 	}
 
 	return &rc, nil
@@ -43,8 +43,8 @@ func New(serverURL, scheme, userID, token string) (*RocketChat, error) {
 
 // AddReceivers takes rocketchat channel names and adds them to the internal channel list. The Send method will send
 // a given message to all channels in the list.
-func (r *RocketChat) AddReceivers(chNames ...string) {
-	r.chNames = append(r.chNames, chNames...)
+func (r *RocketChat) AddReceivers(channelNames ...string) {
+	r.channelNames = append(r.channelNames, channelNames...)
 }
 
 // Send takes a message subject and a message body and sends them to all previously set channels.
@@ -53,18 +53,18 @@ func (r *RocketChat) AddReceivers(chNames ...string) {
 func (r *RocketChat) Send(ctx context.Context, subject, message string) error {
 	fullMessage := subject + "\n" + message // Treating subject as message title
 
-	for _, chName := range r.chNames {
+	for _, channelName := range r.channelNames {
 		select {
 		case <-ctx.Done():
 			return ctx.Err()
 		default:
 			msg := models.PostMessage{
-				Channel: chName,
+				Channel: channelName,
 				Text:    fullMessage,
 			}
 			_, err := r.client.PostMessage(&msg)
 			if err != nil {
-				return errors.Wrapf(err, "failed to send message to RocketChat channel '%s'", chName)
+				return errors.Wrapf(err, "failed to send message to RocketChat channel '%s'", channelName)
 			}
 		}
 	}
