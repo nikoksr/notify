@@ -72,6 +72,7 @@ _ = notifier.Send(
 - *Microsoft Teams*
 - *Plivo*
 - *Pushbullet*
+- *RocketChat*
 - *SendGrid*
 - *Slack*
 - *Telegram*
@@ -89,6 +90,7 @@ _ = notifier.Send(
 - Microsoft Teams support: [atc0005/go-teams-notify](https://github.com/atc0005/go-teams-notify)
 - Plivo support: [plivo/plivo-go](https://github.com/plivo/plivo-go)
 - Pushbullet support: [cschomburg/go-pushbullet](https://github.com/cschomburg/go-pushbullet)
+- RocketChat Support: [RocketChat/Rocket.Chat.Go.SDK](https://github.com/RocketChat/Rocket.Chat.Go.SDK)
 - SendGrid support: [sendgrid/sendgrid-go](https://github.com/sendgrid/sendgrid-go)
 - Slack support: [slack-go/slack](https://github.com/slack-go/slack)
 - Telegram support: [go-telegram-bot-api/telegram-bot-api](https://github.com/go-telegram-bot-api/telegram-bot-api)
