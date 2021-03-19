@@ -15,8 +15,9 @@ github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20210112200207-10ab4d695d60 h1:p
 github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20210112200207-10ab4d695d60/go.mod h1:rjP7sIipbZcagro/6TCk6X0ZeFT2eyudH5+fve/cbBA=
 github.com/atc0005/go-teams-notify/v2 v2.4.2 h1:3KQ8e8LN4kwuWWHpnCNTXA15JdLRaNWcCS1VS0a4SO0=
 github.com/atc0005/go-teams-notify/v2 v2.4.2/go.mod h1:BSlh1HBcgWcGoNM3Abm36WMPcj+k8Wf0ZLZx6lBx2qk=
-github.com/aws/aws-sdk-go-v2 v1.2.1 h1:055XAi+MtmhyYX161p+jWRibkCb9YpI2ymXZiW1dwVY=
 github.com/aws/aws-sdk-go-v2 v1.2.1/go.mod h1:hTQc/9pYq5bfFACIUY9tc/2SYWd9Vnmw+testmuQeRY=
+github.com/aws/aws-sdk-go-v2 v1.3.0 h1:2B/SbB1oOJe8RSl/TIgE11BDE4sX7Z+JupLxTdA2Rjs=
+github.com/aws/aws-sdk-go-v2 v1.3.0/go.mod h1:hTQc/9pYq5bfFACIUY9tc/2SYWd9Vnmw+testmuQeRY=
 github.com/aws/aws-sdk-go-v2/config v1.1.2 h1:H2r6cwMvvINFpEC55Y7jcNaR/oc7zYIChrG2497wmBI=
 github.com/aws/aws-sdk-go-v2/config v1.1.2/go.mod h1:77yIk+qmCS/94JlxbwV1d+YEyu6Z8FBlCGcSz3TdM6A=
 github.com/aws/aws-sdk-go-v2/credentials v1.1.2 h1:YoNqfhxAJGZI+lStIbqgx30UcCqQ86fr7FjTLUvrFOc=
