@@ -78,6 +78,7 @@ _ = notifier.Send(
 - *Telegram*
 - *Twitter*
 - *WhatsApp*
+- *WeChat*
 
 ## Credits <a id="credits"></a>
 
@@ -96,6 +97,7 @@ _ = notifier.Send(
 - Telegram support: [go-telegram-bot-api/telegram-bot-api](https://github.com/go-telegram-bot-api/telegram-bot-api)
 - Twitter: [dghubble/go-twitter](https://github.com/dghubble/go-twitter)
 - WhatsApp: [Rhymen/go-whatsapp](https://github.com/Rhymen/go-whatsapp)
+- WeChat: [silenceper/wechat](https://github.com/silenceper/wechat)
 
 ## Author <a id="author"></a>
 
