@@ -23,10 +23,15 @@ type Config struct {
     EncodingAESKey 	string
 }
 
+// wechatMessageManager abstracts go-wechat's message.Manager for writing unit tests
+type wechatMessageManager interface {
+    Send(msg *message.CustomerMessage) error
+}
+
 // Service encapsulates the WeChat client along with internal state for storing users.
 type Service struct {
     config 			Config
-    messageManager	*message.Manager
+    messageManager	wechatMessageManager
     userIDs 		[]string
 }
 
