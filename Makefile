@@ -27,7 +27,7 @@ test:
 
 # gofumports and gci all go files
 fmt:
-	find . -name '*.go' -not -wholename './vendor/*' | while read -r file; do gofumports -w "$$file"; done
+	find . -name '*.go' -not -wholename './vendor/*' | while read -r file; do gofumpt -w "$$file"; done
 	gci -w -local github.com/nikoksr/notify .
 .PHONY: fmt
 
