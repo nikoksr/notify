@@ -37,7 +37,7 @@ type Service struct {
 // New returns a new instance of a WeChat notification service.
 func New(cfg Config) *Service {
 	wc := wechat.NewWechat()
-	wcCfg := &config.Config{
+	clientConfig := &config.Config{
 		AppID:          cfg.AppID,
 		AppSecret:      cfg.AppSecret,
 		Token:          cfg.Token,
