@@ -45,7 +45,7 @@ func New(cfg Config) *Service {
 		Cache:          cache.NewMemory(),
 	}
 
-	oa := wc.GetOfficialAccount(wcCfg)
+	account := wc.GetOfficialAccount(wcCfg)
 
 	return &Service{
 		config:         cfg,
