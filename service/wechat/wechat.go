@@ -42,7 +42,7 @@ func New(cfg Config) *Service {
 		AppSecret:      cfg.AppSecret,
 		Token:          cfg.Token,
 		EncodingAESKey: cfg.EncodingAESKey,
-		Cache:          cache.NewMemory(),
+		Cache:          cfg.Cache,
 	}
 
 	account := wc.GetOfficialAccount(wcCfg)
