@@ -20,6 +20,7 @@ type Config struct {
 	AppSecret      string
 	Token          string
 	EncodingAESKey string
+	Cache          cache.Cache
 }
 
 // wechatMessageManager abstracts go-wechat's message.Manager for writing unit tests
@@ -29,15 +30,15 @@ type wechatMessageManager interface {
 
 // Service encapsulates the WeChat client along with internal state for storing users.
 type Service struct {
-	config         Config
+	config         *Config
 	messageManager wechatMessageManager
 	userIDs        []string
 }
 
 // New returns a new instance of a WeChat notification service.
-func New(cfg Config) *Service {
-	client := wechat.NewWechat()
-	clientConfig := &config.Config{
+func New(cfg *Config) *Service {
+	wc := wechat.NewWechat()
+	wcCfg := &config.Config{
 		AppID:          cfg.AppID,
 		AppSecret:      cfg.AppSecret,
 		Token:          cfg.Token,
@@ -45,7 +46,7 @@ func New(cfg Config) *Service {
 		Cache:          cfg.Cache,
 	}
 
-	account := wc.GetOfficialAccount(wcCfg)
+	oa := wc.GetOfficialAccount(wcCfg)
 
 	return &Service{
 		config:         cfg,

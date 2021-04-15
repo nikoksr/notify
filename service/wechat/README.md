@@ -33,49 +33,50 @@ You also need a user subscribed to your Official Account. You can use your own:
 
 ## Usage
 
-
 ```go
 package main
 
 import (
-        "log"
-        "context"
-        "fmt"
-        "net/http"
-        "github.com/nikoksr/notify"
-        "github.com/nikoksr/notify/service/wechat"
+  "github.com/silenceper/wechat/v2/cache"
+  "log"
+  "context"
+  "fmt"
+  "net/http"
+  "github.com/nikoksr/notify"
+  "github.com/nikoksr/notify/service/wechat"
 )
 
 func main() {
 
-        wechatSvc := wechat.New(wechat.Config{
-          AppID:     		"abcdefghi",
-          AppSecret: 		"jklmnopqr",
-          Token:     		"mytoken",
-          EncodingAESKey: "IGNORED-IN-SANDBOX",
-        })
+  wechatSvc := wechat.New(&wechat.Config{
+    AppID:          "abcdefghi",
+    AppSecret:      "jklmnopqr",
+    Token:          "mytoken",
+    EncodingAESKey: "IGNORED-IN-SANDBOX",
+    Cache:          cache.NewMemory(),
+  })
 
-        // do this only once, or when settings are updated
-        devMode := true
-        wechatSvc.WaitForOneOffVerification(":7999", devMode, func(r *http.Request, verified bool) {
-          if !verified {
-            fmt.Println("unknown or failed verification call")
-          } else {
-            fmt.Println("verification call done")
-          }
-        })
+  // do this only once, or when settings are updated
+  devMode := true
+  wechatSvc.WaitForOneOffVerification(":7999", devMode, func(r *http.Request, verified bool) {
+    if !verified {
+      fmt.Println("unknown or failed verification call")
+    } else {
+      fmt.Println("verification call done")
+    }
+  })
 
-        wechatSvc.AddReceivers("some-user-openid")
+  wechatSvc.AddReceivers("some-user-openid")
 
-        notifier := notify.New()
-        notifier.UseServices(wechatSvc)
+  notifier := notify.New()
+  notifier.UseServices(wechatSvc)
 
-        err := notifier.Send(context.Background(), "subject", "message")
-        if err != nil {
-                log.Fatalf("notifier.Send() failed: %s", err.Error())
-        }
+  err := notifier.Send(context.Background(), "subject", "message")
+  if err != nil {
+    log.Fatalf("notifier.Send() failed: %s", err.Error())
+  }
 
-        log.Println("notification sent")
+  log.Println("notification sent")
 }
 ```
 
