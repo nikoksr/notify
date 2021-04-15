@@ -96,8 +96,8 @@ _ = notifier.Send(
 - Slack support: [slack-go/slack](https://github.com/slack-go/slack)
 - Telegram support: [go-telegram-bot-api/telegram-bot-api](https://github.com/go-telegram-bot-api/telegram-bot-api)
 - Twitter: [dghubble/go-twitter](https://github.com/dghubble/go-twitter)
-- WhatsApp: [Rhymen/go-whatsapp](https://github.com/Rhymen/go-whatsapp)
 - WeChat: [silenceper/wechat](https://github.com/silenceper/wechat)
+- WhatsApp: [Rhymen/go-whatsapp](https://github.com/Rhymen/go-whatsapp)
 
 ## Author <a id="author"></a>
 
