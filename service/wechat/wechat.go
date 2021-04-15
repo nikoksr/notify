@@ -134,7 +134,8 @@ func (s *Service) Send(ctx context.Context, subject, content string) error {
 			return ctx.Err()
 		default:
 			text := fmt.Sprintf("%s\n%s", subject, content)
-			if err := s.messageManager.Send(message.NewCustomerTextMessage(userID, text)); err != nil {
+			err := s.messageManager.Send(message.NewCustomerTextMessage(userID, text))
+			if err != nil {
 				return errors.Wrapf(err, "failed to send message to WeChat user '%s'", userID)
 			}
 		}
