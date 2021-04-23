@@ -106,7 +106,7 @@ func (s *Service) WaitForOneOffVerification(serverURL string, devMode bool, call
 	var err error
 	go func() {
 		if innerErr := srv.ListenAndServe(); innerErr != http.ErrServerClosed {
-			err = errors.Wrapf(innerErr, "failed to start verification listener '%s'", addr)
+			err = errors.Wrapf(innerErr, "failed to start verification listener '%s'", serverURL)
 		}
 	}()
 
