@@ -63,11 +63,8 @@ func New(cfg *Config) *Service {
 // Set devMode to true when using the sandbox.
 //
 // See https://developers.weixin.qq.com/doc/offiaccount/en/Basic_Information/Access_Overview.html
-func (s *Service) WaitForOneOffVerification(
-	addr string,
-	devMode bool,
-	callback func(r *http.Request, verified bool)) error {
-	srv := &http.Server{Addr: addr}
+func (s *Service) WaitForOneOffVerification(serverURL string, devMode bool, callback verificationCallbackFunc) error {
+	srv := &http.Server{Addr: serverURL}
 	verificationDone := &sync.WaitGroup{}
 	verificationDone.Add(1)
 
