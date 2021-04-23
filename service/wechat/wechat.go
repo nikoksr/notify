@@ -14,6 +14,8 @@ import (
 	"github.com/silenceper/wechat/v2/util"
 )
 
+type verificationCallbackFunc func(r *http.Request, verified bool)
+
 // Config is the Service configuration.
 type Config struct {
 	AppID          string
