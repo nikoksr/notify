@@ -13,8 +13,8 @@ github.com/Rhymen/go-whatsapp/examples/sendImage v0.0.0-20190325075644-cc2581bbf
 github.com/Rhymen/go-whatsapp/examples/sendTextMessages v0.0.0-20190325075644-cc2581bbf24d/go.mod h1:suwzklatySS3Q0+NCxCDh5hYfgXdQUWU1DNcxwAxStM=
 github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20210112200207-10ab4d695d60 h1:prBTRx78AQnXzivNT9Crhu564W/zPPr3ibSlpT9xKcE=
 github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20210112200207-10ab4d695d60/go.mod h1:rjP7sIipbZcagro/6TCk6X0ZeFT2eyudH5+fve/cbBA=
-github.com/atc0005/go-teams-notify/v2 v2.4.2 h1:3KQ8e8LN4kwuWWHpnCNTXA15JdLRaNWcCS1VS0a4SO0=
-github.com/atc0005/go-teams-notify/v2 v2.4.2/go.mod h1:BSlh1HBcgWcGoNM3Abm36WMPcj+k8Wf0ZLZx6lBx2qk=
+github.com/atc0005/go-teams-notify/v2 v2.5.0 h1:WKkrbYe2gfT76rltlWTjg8Eukvz0tvzAqs2jyC3pQe0=
+github.com/atc0005/go-teams-notify/v2 v2.5.0/go.mod h1:BSlh1HBcgWcGoNM3Abm36WMPcj+k8Wf0ZLZx6lBx2qk=
 github.com/aws/aws-sdk-go-v2 v1.3.2/go.mod h1:7OaACgj2SX3XGWnrIjGlJM22h6yD6MEWKvm7levnnM8=
 github.com/aws/aws-sdk-go-v2 v1.3.4 h1:+XY8285OZTxWstzoHHvMewMULowmFSUs2PnU31OSr9I=
 github.com/aws/aws-sdk-go-v2 v1.3.4/go.mod h1:7OaACgj2SX3XGWnrIjGlJM22h6yD6MEWKvm7levnnM8=
