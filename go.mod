@@ -7,10 +7,10 @@ require (
 	github.com/Rhymen/go-whatsapp v0.1.1
 	github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20210112200207-10ab4d695d60
 	github.com/atc0005/go-teams-notify/v2 v2.4.2
-	github.com/aws/aws-sdk-go-v2 v1.2.1
-	github.com/aws/aws-sdk-go-v2/config v1.1.2
-	github.com/aws/aws-sdk-go-v2/credentials v1.1.2
-	github.com/aws/aws-sdk-go-v2/service/ses v1.1.2
+	github.com/aws/aws-sdk-go-v2 v1.3.4
+	github.com/aws/aws-sdk-go-v2/config v1.1.6
+	github.com/aws/aws-sdk-go-v2/credentials v1.1.6
+	github.com/aws/aws-sdk-go-v2/service/ses v1.2.2
 	github.com/bwmarrin/discordgo v0.23.2
 	github.com/cenkalti/backoff v2.2.1+incompatible // indirect
 	github.com/cschomburg/go-pushbullet v0.0.0-20171206132031-67759df45fbb
@@ -21,7 +21,7 @@ require (
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	github.com/kr/text v0.2.0 // indirect
 	github.com/line/line-bot-sdk-go v7.8.0+incompatible
-	github.com/mailgun/mailgun-go/v4 v4.4.1
+	github.com/mailgun/mailgun-go/v4 v4.5.1
 	github.com/mattn/go-colorable v0.1.8 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.1 // indirect
@@ -30,9 +30,10 @@ require (
 	github.com/plivo/plivo-go v5.5.1+incompatible
 	github.com/sendgrid/rest v2.6.3+incompatible // indirect
 	github.com/sendgrid/sendgrid-go v3.8.0+incompatible
+	github.com/silenceper/wechat/v2 v2.0.5
 	github.com/sirupsen/logrus v1.8.1 // indirect
 	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e // indirect
-	github.com/slack-go/slack v0.8.1
+	github.com/slack-go/slack v0.9.0
 	github.com/stretchr/objx v0.3.0 // indirect
 	github.com/stretchr/testify v1.7.0
 	github.com/technoweenie/multipartstreamer v1.0.1 // indirect
