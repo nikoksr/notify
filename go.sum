@@ -15,8 +15,9 @@ github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20210112200207-10ab4d695d60 h1:p
 github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20210112200207-10ab4d695d60/go.mod h1:rjP7sIipbZcagro/6TCk6X0ZeFT2eyudH5+fve/cbBA=
 github.com/atc0005/go-teams-notify/v2 v2.4.2 h1:3KQ8e8LN4kwuWWHpnCNTXA15JdLRaNWcCS1VS0a4SO0=
 github.com/atc0005/go-teams-notify/v2 v2.4.2/go.mod h1:BSlh1HBcgWcGoNM3Abm36WMPcj+k8Wf0ZLZx6lBx2qk=
-github.com/aws/aws-sdk-go-v2 v1.2.1 h1:055XAi+MtmhyYX161p+jWRibkCb9YpI2ymXZiW1dwVY=
 github.com/aws/aws-sdk-go-v2 v1.2.1/go.mod h1:hTQc/9pYq5bfFACIUY9tc/2SYWd9Vnmw+testmuQeRY=
+github.com/aws/aws-sdk-go-v2 v1.3.4 h1:+XY8285OZTxWstzoHHvMewMULowmFSUs2PnU31OSr9I=
+github.com/aws/aws-sdk-go-v2 v1.3.4/go.mod h1:7OaACgj2SX3XGWnrIjGlJM22h6yD6MEWKvm7levnnM8=
 github.com/aws/aws-sdk-go-v2/config v1.1.2 h1:H2r6cwMvvINFpEC55Y7jcNaR/oc7zYIChrG2497wmBI=
 github.com/aws/aws-sdk-go-v2/config v1.1.2/go.mod h1:77yIk+qmCS/94JlxbwV1d+YEyu6Z8FBlCGcSz3TdM6A=
 github.com/aws/aws-sdk-go-v2/credentials v1.1.2 h1:YoNqfhxAJGZI+lStIbqgx30UcCqQ86fr7FjTLUvrFOc=
@@ -31,8 +32,9 @@ github.com/aws/aws-sdk-go-v2/service/sso v1.1.2 h1:9BnjX/ALn5uLo2DbgkwMpUkPL1VLQ
 github.com/aws/aws-sdk-go-v2/service/sso v1.1.2/go.mod h1:5yU1oE3+CVYYLUsaHt2AVU3CJJZ6ER4pwsrRD1L2KSc=
 github.com/aws/aws-sdk-go-v2/service/sts v1.1.2 h1:7Kxqov7uQeP8WUEO0iHz3j9Bh0E1rJrn6cf/OGfcDds=
 github.com/aws/aws-sdk-go-v2/service/sts v1.1.2/go.mod h1:zu7rotIY9P4Aoc6ytqLP9jeYrECDHUODB5Gbp+BSHl8=
-github.com/aws/smithy-go v1.2.0 h1:0PoGBWXkXDIyVdPaZW9gMhaGzj3UOAgTdiVoHuuZAFA=
 github.com/aws/smithy-go v1.2.0/go.mod h1:SObp3lf9smib00L/v3U2eAKG8FyQ7iLrJnQiAmR5n+E=
+github.com/aws/smithy-go v1.3.1 h1:xJFO4pK0y9J8fCl34uGsSJX5KNnGbdARDlA5BPhXnwE=
+github.com/aws/smithy-go v1.3.1/go.mod h1:SObp3lf9smib00L/v3U2eAKG8FyQ7iLrJnQiAmR5n+E=
 github.com/bradfitz/gomemcache v0.0.0-20190913173617-a41fca850d0b h1:L/QXpzIa3pOvUGt1D1lA5KjYhPBAN/3iWdP7xeFS9F0=
 github.com/bradfitz/gomemcache v0.0.0-20190913173617-a41fca850d0b/go.mod h1:H0wQNHz2YrLsuXOZozoeDmnHXkNCRmMW0gwFWDfEZDA=
 github.com/bwmarrin/discordgo v0.23.2 h1:BzrtTktixGHIu9Tt7dEE6diysEF9HWnXeHuoJEt2fH4=
