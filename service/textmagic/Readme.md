@@ -4,7 +4,8 @@
 
 ## Prerequisites
 
-You will need to have a [TextMagic](https://www.textmagic.com/) account and `UserName` and `API KEY` from TextMagic.
+You will need to have a [TextMagic](https://www.textmagic.com/) account and
+`UserName` and `API KEY` from TextMagic.[(api-keys)](https://my.textmagic.com/online/api/rest-api/keys)
 
 
 ```go
