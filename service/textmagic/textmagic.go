@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-// TMagicClient allow you to configure a TextMagic SDK client.
+// TMagicService allow you to configure a TextMagic SDK client.
 type TMagicService struct {
 	UserName           string
 	APIKey             string
