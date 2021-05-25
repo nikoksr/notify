@@ -9,7 +9,7 @@ require (
 	github.com/atc0005/go-teams-notify/v2 v2.5.0
 	github.com/aws/aws-sdk-go-v2 v1.6.0
 	github.com/aws/aws-sdk-go-v2/config v1.1.6
-	github.com/aws/aws-sdk-go-v2/credentials v1.1.6
+	github.com/aws/aws-sdk-go-v2/credentials v1.2.1
 	github.com/aws/aws-sdk-go-v2/internal/ini v1.0.0 // indirect
 	github.com/aws/aws-sdk-go-v2/service/ses v1.2.2
 	github.com/bwmarrin/discordgo v0.23.2
