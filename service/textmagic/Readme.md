@@ -20,12 +20,13 @@ import (
 )
 
 func main() {
-  textMagic := textmagic.NewTextMagicClient("YOUR_USER_NAME", "YOUR_API_KEY")
 
-  textMagic.AddReceivers("Destination1-Phone-Number")
+  textMagicService := textmagic.New("YOUR_USER_NAME", "YOUR_API_KEY")
+
+  textMagicService.AddReceivers("Destination1-Phone-Number")
 
   notifier := notify.New()
-  notifier.UseServices(textMagic)
+  notifier.UseServices(textMagicService)
 
   err := notifier.Send(context.Background(), "subject", "message")
   if err != nil {

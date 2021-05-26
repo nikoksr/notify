@@ -2,53 +2,50 @@ package textmagic
 
 import (
 	"context"
-	tm "github.com/textmagic/textmagic-rest-go-v2/v2"
+	textMagic "github.com/textmagic/textmagic-rest-go-v2/v2"
 	"strings"
 )
 
-//TMagicService allow you to configure a TextMagic SDK client.
-type TMagicService struct {
-	UserName           string
-	APIKey             string
-	destinations       []string
-	TextMagicAPIClient *tm.APIClient
+// Service allow you to configure a TextMagic SDK client.
+type Service struct {
+	userName     string
+	apiKey       string
+	phoneNumbers []string
+	client       *textMagic.APIClient
 }
 
-//NewTextMagicClient creates a new text magic client
-func NewTextMagicClient(userName, apiKey string) *TMagicService {
+// New creates a new text magic client. Use your user-name and API key from
+// https://my.textmagic.com/online/api/rest-api/keys.
+func New(userName, apiKey string) *Service {
 
-	config := tm.NewConfiguration()
-	client := tm.NewAPIClient(config)
+	config := textMagic.NewConfiguration()
+	client := textMagic.NewAPIClient(config)
 
-	return &TMagicService{
-		TextMagicAPIClient: client,
-		UserName:           userName,
-		APIKey:             apiKey,
+	return &Service{
+		client:   client,
+		userName: userName,
+		apiKey:   apiKey,
 	}
 }
 
-// AddReceivers adds the given destination phone numbers to the notifier.
-func (s *TMagicService) AddReceivers(phoneNumbers ...string) {
-	s.destinations = append(s.destinations, phoneNumbers...)
+// AddReceivers adds the given phone numbers to the notifier.
+func (s *Service) AddReceivers(phoneNumbers ...string) {
+	s.phoneNumbers = append(s.phoneNumbers, phoneNumbers...)
 }
 
 // Send sends a SMS via TextMagic to all previously added receivers.
-func (s *TMagicService) Send(ctx context.Context, subject, message string) error {
+func (s *Service) Send(ctx context.Context, subject, message string) error {
 
-	// put your Username and API Key from https://my.textmagic.com/online/api/rest-api/keys page.
-	auth := context.WithValue(context.Background(), tm.ContextBasicAuth, tm.BasicAuth{
-		UserName: s.UserName,
-		Password: s.APIKey,
+	auth := context.WithValue(ctx, textMagic.ContextBasicAuth, textMagic.BasicAuth{
+		UserName: s.userName,
+		Password: s.apiKey,
 	})
 
 	text := subject + "\n" + message
-	_, _, err := s.TextMagicAPIClient.TextMagicApi.SendMessage(auth, tm.SendMessageInputObject{
+	_, _, err := s.client.TextMagicApi.SendMessage(auth, textMagic.SendMessageInputObject{
 		Text:   text,
-		Phones: strings.Join(s.destinations, ","),
+		Phones: strings.Join(s.phoneNumbers, ","),
 	})
-	if err != nil {
-		return err
-	}
 
-	return nil
+	return err
 }
