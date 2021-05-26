@@ -7,7 +7,7 @@ linters-settings:
     lines: 100
     statements: 50
   gci:
-    local-prefixes: github.com/golangci/golangci-lint
+    local-prefixes: github.com/CapstoneLabs/client-services-v2
   goconst:
     min-len: 2
     min-occurrences: 2
@@ -34,7 +34,7 @@ linters-settings:
     settings:
       mnd:
         # don't include the "operation" and "assign"
-        checks: argument,case,condition,return
+        checks: [argument,case,condition,return]
   govet:
     check-shadowing: true
     settings:
@@ -82,14 +82,13 @@ linters:
     - gosimple
     - govet
     - ineffassign
-    - interfacer
     - lll
     - misspell
     - nakedret
     - noctx
     - nolintlint
     - rowserrcheck
-    - scopelint
+    - exportloopref
     - staticcheck
     - structcheck
     - stylecheck
@@ -126,6 +125,9 @@ issues:
       text: "unnecessaryDefer:"
 
 run:
+  skip-dirs:
+    - internal/pkg/db/db
+
 # golangci.com configuration
 # https://github.com/golangci/golangci/wiki/Configuration
 service:
