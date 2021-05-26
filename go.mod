@@ -38,13 +38,11 @@ require (
 	github.com/stretchr/testify v1.7.0
 	github.com/technoweenie/multipartstreamer v1.0.1 // indirect
 	github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.1696
-  golang.org/x/crypto v0.0.0-20210513164829-c07d793c2f9a // indirect
-  golang.org/x/net v0.0.0-20210525063256-abc453219eb5 // indirect
-  golang.org/x/oauth2 v0.0.0-20210427180440-81ed05c6b58c // indirect
-  golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
-  golang.org/x/sys v0.0.0-20210525143221-35b2ab0089ea // indirect
-	gopkg.in/check.v1 v1.0.0-20200227125254-8fa46927fb4f // indirect
-	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
+	golang.org/x/crypto v0.0.0-20210513164829-c07d793c2f9a // indirect
+	golang.org/x/net v0.0.0-20210525063256-abc453219eb5 // indirect
+	golang.org/x/oauth2 v0.0.0-20210427180440-81ed05c6b58c // indirect
+	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
+	golang.org/x/sys v0.0.0-20210525143221-35b2ab0089ea // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
 )
