@@ -1,0 +1,51 @@
+package textmagic
+
+import (
+	"context"
+	textMagic "github.com/textmagic/textmagic-rest-go-v2/v2"
+	"strings"
+)
+
+// Service allow you to configure a TextMagic SDK client.
+type Service struct {
+	userName     string
+	apiKey       string
+	phoneNumbers []string
+	client       *textMagic.APIClient
+}
+
+// New creates a new text magic client. Use your user-name and API key from
+// https://my.textmagic.com/online/api/rest-api/keys.
+func New(userName, apiKey string) *Service {
+
+	config := textMagic.NewConfiguration()
+	client := textMagic.NewAPIClient(config)
+
+	return &Service{
+		client:   client,
+		userName: userName,
+		apiKey:   apiKey,
+	}
+}
+
+// AddReceivers adds the given phone numbers to the notifier.
+func (s *Service) AddReceivers(phoneNumbers ...string) {
+	s.phoneNumbers = append(s.phoneNumbers, phoneNumbers...)
+}
+
+// Send sends a SMS via TextMagic to all previously added receivers.
+func (s *Service) Send(ctx context.Context, subject, message string) error {
+
+	auth := context.WithValue(ctx, textMagic.ContextBasicAuth, textMagic.BasicAuth{
+		UserName: s.userName,
+		Password: s.apiKey,
+	})
+
+	text := subject + "\n" + message
+	_, _, err := s.client.TextMagicApi.SendMessage(auth, textMagic.SendMessageInputObject{
+		Text:   text,
+		Phones: strings.Join(s.phoneNumbers, ","),
+	})
+
+	return err
+}
