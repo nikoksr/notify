@@ -1,6 +1,3 @@
-//go:generate go install github.com/golangci/golangci-lint/cmd/golangci-lint
-//go:generate go install mvdan.cc/gofumpt/gofumports
-//go:generate go install github.com/daixiang0/gci
 package notify
 
 import (
