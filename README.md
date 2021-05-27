@@ -78,8 +78,8 @@ _ = notifier.Send(
 - *Telegram*
 - *TextMagic*
 - *Twitter*
-- *WhatsApp*
 - *WeChat*
+- *WhatsApp*
 
 ## Credits <a id="credits"></a>
 
