@@ -37,15 +37,15 @@ go get -u github.com/nikoksr/notify
 ## Example usage <a id="usage"></a>
 
 ```go
-// Create our notifications distributor.
-notifier := notify.New()
-
 // Create a telegram service. Ignoring error for demo simplicity.
 telegramService, _ := telegram.New("your_telegram_api_token")
 
 // Passing a telegram chat id as receiver for our messages.
 // Basically where should our message be sent?
 telegramService.AddReceivers(-1234567890)
+
+// Create our notifications distributor.
+notifier := notify.New()
 
 // Tell our notifier to use the telegram service. You can repeat the above process
 // for as many services as you like and just tell the notifier to use them.
@@ -78,8 +78,8 @@ _ = notifier.Send(
 - *Telegram*
 - *TextMagic*
 - *Twitter*
-- *WhatsApp*
 - *WeChat*
+- *WhatsApp*
 
 ## Credits <a id="credits"></a>
 

@@ -7,8 +7,6 @@ export GOPROXY = https://proxy.golang.org,direct
 
 # Install all the build and lint dependencies
 setup:
-	go mod download
-	go generate -v ./...
 	go mod tidy
 .PHONY: setup
 
@@ -25,9 +23,9 @@ test:
 # CODE HEALTH
 ###############################################################################
 
-# gofumports and gci all go files
+# gofumpt and gci all go files
 fmt:
-	find . -name '*.go' -not -wholename './vendor/*' | while read -r file; do gofumpt -w "$$file"; done
+	gofumpt -w .
 	gci -w -local github.com/nikoksr/notify .
 .PHONY: fmt
 
@@ -36,7 +34,7 @@ lint:
 	golangci-lint run ./...
 .PHONY: lint
 
-ci: test lint
+ci: lint test
 .PHONY: ci
 
 .DEFAULT_GOAL := ci
