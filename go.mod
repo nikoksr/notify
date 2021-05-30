@@ -12,9 +12,11 @@ require (
 	github.com/aws/aws-sdk-go-v2/config v1.3.0
 	github.com/aws/aws-sdk-go-v2/credentials v1.2.1
 	github.com/aws/aws-sdk-go-v2/service/ses v1.3.1
+	github.com/aws/aws-sdk-go-v2/service/sns v1.4.1
 	github.com/bwmarrin/discordgo v0.23.2
 	github.com/cenkalti/backoff v2.2.1+incompatible // indirect
 	github.com/cschomburg/go-pushbullet v0.0.0-20171206132031-67759df45fbb
+	github.com/daixiang0/gci v0.2.8 // indirect
 	github.com/dghubble/go-twitter v0.0.0-20201011215211-4b180d0cc78d
 	github.com/dghubble/oauth1 v0.7.0
 	github.com/go-telegram-bot-api/telegram-bot-api v4.6.4+incompatible
@@ -45,4 +47,5 @@ require (
 	golang.org/x/sys v0.0.0-20210525143221-35b2ab0089ea // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
+	mvdan.cc/gofumpt v0.1.1 // indirect
 )
