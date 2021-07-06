@@ -4,7 +4,7 @@
 
 ## Prerequisites
 
-You will need a Twilio account
+You will need a [Twilio](https://www.twilio.com/) account for SID and AuthToken.
 
 ```go
 package main
