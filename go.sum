@@ -48,8 +48,8 @@ github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20210506200512-3b3352a919f0 h1:1
 github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20210506200512-3b3352a919f0/go.mod h1:rjP7sIipbZcagro/6TCk6X0ZeFT2eyudH5+fve/cbBA=
 github.com/antihax/optional v1.0.0 h1:xK2lYat7ZLaVVcIuj82J8kIro4V6kDe0AUDFboUCwcg=
 github.com/antihax/optional v1.0.0/go.mod h1:uupD/76wgC+ih3iEmQUL+0Ugr19nfwCT1kdvxnR2qWY=
-github.com/atc0005/go-teams-notify/v2 v2.5.0 h1:WKkrbYe2gfT76rltlWTjg8Eukvz0tvzAqs2jyC3pQe0=
-github.com/atc0005/go-teams-notify/v2 v2.5.0/go.mod h1:BSlh1HBcgWcGoNM3Abm36WMPcj+k8Wf0ZLZx6lBx2qk=
+github.com/atc0005/go-teams-notify/v2 v2.6.0 h1:YegKDWbjlatR0fP2yHsQYXzTcUGNJXhm1/OiCgbyysc=
+github.com/atc0005/go-teams-notify/v2 v2.6.0/go.mod h1:xo6GejLDHn3tWBA181F8LrllIL0xC1uRsRxq7YNXaaY=
 github.com/aws/aws-sdk-go-v2 v1.6.0/go.mod h1:tI4KhsR5VkzlUa2DZAdwx7wCAYGwkZZ1H31PYrBFx1w=
 github.com/aws/aws-sdk-go-v2 v1.7.0 h1:UYGnoIPIzed+ycmgw8Snb/0HK+KlMD+SndLTneG8ncE=
 github.com/aws/aws-sdk-go-v2 v1.7.0/go.mod h1:tb9wi5s61kTDA5qCkcDbt3KRVV74GGslQkl/DRdX/P4=
