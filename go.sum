@@ -63,8 +63,8 @@ github.com/aws/aws-sdk-go-v2/internal/ini v1.1.0 h1:DJq/vXXF+LAFaa/kQX9C6arlf4xX
 github.com/aws/aws-sdk-go-v2/internal/ini v1.1.0/go.mod h1:qGQ/9IfkZonRNSNLE99/yBJ7EPA/h8jlWEqtJCcaj+Q=
 github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.2.0 h1:g2npzssI/6XsoQaPYCxliMFeC5iNKKvO0aC+/wWOE0A=
 github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.2.0/go.mod h1:a7XLWNKuVgOxjssEF019IiHPv35k8KHBaWv/wJAfi2A=
-github.com/aws/aws-sdk-go-v2/service/ses v1.3.1 h1:eVBxtmEeVVCzWpbx1PtRijqEL2is3SPaaCpKq/Np92U=
-github.com/aws/aws-sdk-go-v2/service/ses v1.3.1/go.mod h1:6WbvZTnH6a1YzeMZDi/hSjTbPB3RekFw5aQKSwKTksk=
+github.com/aws/aws-sdk-go-v2/service/ses v1.4.0 h1:SQOf5Pyjew9CwkyLoU0XHmkMnOV/Quqf8sERFRanREA=
+github.com/aws/aws-sdk-go-v2/service/ses v1.4.0/go.mod h1:08bHuVAInVMMxrPBP0iNcWSv+XlN0T1tEjfDUJNKIRk=
 github.com/aws/aws-sdk-go-v2/service/sso v1.3.0 h1:DMi9w+TpUam7eJ8ksL7svfzpqpqem2MkDAJKW8+I2/k=
 github.com/aws/aws-sdk-go-v2/service/sso v1.3.0/go.mod h1:qWR+TUuvfji9udM79e4CPe87C5+SjMEb2TFXkZaI0Vc=
 github.com/aws/aws-sdk-go-v2/service/sts v1.5.0 h1:Y1K9dHE2CYOWOvaJSIITq4mJfLX43iziThTvqs5FqOg=
@@ -245,8 +245,8 @@ github.com/pkg/errors v0.8.0/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINE
 github.com/pkg/errors v0.8.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
 github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
-github.com/plivo/plivo-go v5.5.2+incompatible h1:dp6ixDiTbrDT8OhBPT4t7WcAH/PYWu0THjAg7v42GH4=
-github.com/plivo/plivo-go v5.5.2+incompatible/go.mod h1:OhnI9crdl6O+D94Lp1lvuwJoA3KUH39J6IM+j3HwCBE=
+github.com/plivo/plivo-go v5.6.0+incompatible h1:6jtRUM66lDX07j3b9VBjRx+mstqC9xlzDh203a6PV4k=
+github.com/plivo/plivo-go v5.6.0+incompatible/go.mod h1:OhnI9crdl6O+D94Lp1lvuwJoA3KUH39J6IM+j3HwCBE=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/prometheus/client_model v0.0.0-20190812154241-14fe0d1b01d4/go.mod h1:xMI15A0UPsDsEKsMN9yxemIoYk6Tm2C1GtYGdfGttqA=
