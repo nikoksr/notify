@@ -28,7 +28,7 @@ require (
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.1 // indirect
 	github.com/pkg/errors v0.9.1
-	github.com/plivo/plivo-go v5.5.2+incompatible
+	github.com/plivo/plivo-go v5.6.0+incompatible
 	github.com/sendgrid/rest v2.6.4+incompatible // indirect
 	github.com/sendgrid/sendgrid-go v3.10.0+incompatible
 	github.com/silenceper/wechat/v2 v2.0.6
