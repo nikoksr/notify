@@ -23,7 +23,7 @@ require (
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	github.com/json-iterator/go v1.1.11 // indirect
 	github.com/line/line-bot-sdk-go v7.8.0+incompatible
-	github.com/mailgun/mailgun-go/v4 v4.5.1
+	github.com/mailgun/mailgun-go/v4 v4.5.2
 	github.com/mattn/go-colorable v0.1.8 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.1 // indirect
