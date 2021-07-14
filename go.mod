@@ -9,9 +9,9 @@ require (
 	github.com/antihax/optional v1.0.0 // indirect
 	github.com/atc0005/go-teams-notify/v2 v2.5.0
 	github.com/aws/aws-sdk-go-v2 v1.7.0
-	github.com/aws/aws-sdk-go-v2/config v1.4.1
-	github.com/aws/aws-sdk-go-v2/credentials v1.3.0
-	github.com/aws/aws-sdk-go-v2/service/ses v1.3.1
+	github.com/aws/aws-sdk-go-v2/config v1.4.1  
+	github.com/aws/aws-sdk-go-v2/credentials v1.3.0  
+	github.com/aws/aws-sdk-go-v2/service/ses v1.4.0
 	github.com/bwmarrin/discordgo v0.23.2
 	github.com/cenkalti/backoff v2.2.1+incompatible // indirect
 	github.com/cschomburg/go-pushbullet v0.0.0-20171206132031-67759df45fbb
