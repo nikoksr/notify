@@ -8,9 +8,9 @@ require (
 	github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20210506200512-3b3352a919f0
 	github.com/antihax/optional v1.0.0 // indirect
 	github.com/atc0005/go-teams-notify/v2 v2.5.0
-	github.com/aws/aws-sdk-go-v2 v1.6.0
-	github.com/aws/aws-sdk-go-v2/config v1.3.0
-	github.com/aws/aws-sdk-go-v2/credentials v1.2.1
+	github.com/aws/aws-sdk-go-v2 v1.7.0
+	github.com/aws/aws-sdk-go-v2/config v1.4.1
+	github.com/aws/aws-sdk-go-v2/credentials v1.3.0
 	github.com/aws/aws-sdk-go-v2/service/ses v1.3.1
 	github.com/bwmarrin/discordgo v0.23.2
 	github.com/cenkalti/backoff v2.2.1+incompatible // indirect
@@ -23,7 +23,7 @@ require (
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	github.com/json-iterator/go v1.1.11 // indirect
 	github.com/line/line-bot-sdk-go v7.8.0+incompatible
-	github.com/mailgun/mailgun-go/v4 v4.5.1
+	github.com/mailgun/mailgun-go/v4 v4.5.2
 	github.com/mattn/go-colorable v0.1.8 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.1 // indirect
