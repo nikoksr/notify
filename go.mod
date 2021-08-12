@@ -9,7 +9,7 @@ require (
 	github.com/antihax/optional v1.0.0 // indirect
 	github.com/atc0005/go-teams-notify/v2 v2.6.0
 	github.com/aws/aws-sdk-go-v2 v1.8.0
-	github.com/aws/aws-sdk-go-v2/config v1.4.1
+	github.com/aws/aws-sdk-go-v2/config v1.6.0
 	github.com/aws/aws-sdk-go-v2/credentials v1.3.2
 	github.com/aws/aws-sdk-go-v2/service/ses v1.5.1
 	github.com/bwmarrin/discordgo v0.23.2
@@ -33,7 +33,7 @@ require (
 	github.com/sendgrid/sendgrid-go v3.10.0+incompatible
 	github.com/silenceper/wechat/v2 v2.0.6
 	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e // indirect
-	github.com/slack-go/slack v0.9.2
+	github.com/slack-go/slack v0.9.4
 	github.com/stretchr/objx v0.3.0 // indirect
 	github.com/stretchr/testify v1.7.0
 	github.com/technoweenie/multipartstreamer v1.0.1 // indirect
