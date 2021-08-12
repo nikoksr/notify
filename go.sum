@@ -280,8 +280,8 @@ github.com/stretchr/testify v1.7.0 h1:nwc3DEeHmmLAfoZucVR881uASk0Mfjw8xYJ99tb5Cc
 github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/technoweenie/multipartstreamer v1.0.1 h1:XRztA5MXiR1TIRHxH2uNxXxaIkKQDeX7m2XsSOlQEnM=
 github.com/technoweenie/multipartstreamer v1.0.1/go.mod h1:jNVxdtShOxzAsukZwTSw6MDx5eUJoiEBsSvzDU9uzog=
-github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.1781 h1:x7Ff7QDRBy7VDeHNx6/5LsVLJrLc1viDoKwPmEiWF5g=
-github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.1781/go.mod h1:PbP69y7uRiNdwtPE3/bVGDaPYA1sr4vuHaGLQAGzeW8=
+github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.1816 h1:/u/AwyDdhQnxPPbKw3PSNGeG9X0wby8m8WXrtQkidEM=
+github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.1816/go.mod h1:PbP69y7uRiNdwtPE3/bVGDaPYA1sr4vuHaGLQAGzeW8=
 github.com/yuin/goldmark v1.1.25/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
 github.com/yuin/goldmark v1.1.27/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
 github.com/yuin/goldmark v1.1.32/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=

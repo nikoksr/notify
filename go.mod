@@ -37,7 +37,7 @@ require (
 	github.com/stretchr/objx v0.3.0 // indirect
 	github.com/stretchr/testify v1.7.0
 	github.com/technoweenie/multipartstreamer v1.0.1 // indirect
-	github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.1781
+	github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.1816
 	golang.org/x/crypto v0.0.0-20210513164829-c07d793c2f9a // indirect
 	golang.org/x/net v0.0.0-20210525063256-abc453219eb5 // indirect
 	golang.org/x/oauth2 v0.0.0-20210427180440-81ed05c6b58c // indirect
