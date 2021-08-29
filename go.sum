@@ -70,6 +70,8 @@ github.com/aws/aws-sdk-go-v2/service/ses v1.5.1 h1:OMBKki6b6jOGKEXwCaPytQTkZEsET
 github.com/aws/aws-sdk-go-v2/service/ses v1.5.1/go.mod h1:WTV5u0smh/MIAK46wpA/L6V+4OvRJaRpVsMrDyEENMc=
 github.com/aws/aws-sdk-go-v2/service/ses v1.5.2 h1:Yc2dofP6vvkhhJKHxT84Axv7TjSkviKie15kO56zqhM=
 github.com/aws/aws-sdk-go-v2/service/ses v1.5.2/go.mod h1:SPZjnywB9xIaaZ/iybfWLC7JZC0H974miiY1vlaevs8=
+github.com/aws/aws-sdk-go-v2/service/ses v1.6.0 h1:AuXtov/p0hepVmUZKeO7gsq/0ybMGxdOIUjka9IHKz4=
+github.com/aws/aws-sdk-go-v2/service/ses v1.6.0/go.mod h1:k6zBMX8ctVHyswYvh0VOv6pl53sLTW7/In8r5PSAZR4=
 github.com/aws/aws-sdk-go-v2/service/sso v1.3.2 h1:b+U3WrF9ON3f32FH19geqmiod4uKcMv/q+wosQjjyyM=
 github.com/aws/aws-sdk-go-v2/service/sso v1.3.2/go.mod h1:J21I6kF+d/6XHVk7kp/cx9YVD2TMD2TbLwtRGVcinXo=
 github.com/aws/aws-sdk-go-v2/service/sts v1.6.1 h1:1Pls85C5CFjhE3aH+h85/hyAk89kQNlAWlEQtIkaFyc=
