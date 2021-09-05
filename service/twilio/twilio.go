@@ -40,7 +40,6 @@ func (s *Service) AddReceivers(contacts ...string) {
 
 // Send takes a messageClient subject and a messageClient body and sends them to all previously set contacts.
 func (s *Service) Send(ctx context.Context, subject, message string) error {
-
 	msg := subject + "\n" + message
 
 	for _, contact := range s.contacts {
@@ -48,7 +47,6 @@ func (s *Service) Send(ctx context.Context, subject, message string) error {
 		case <-ctx.Done():
 			return ctx.Err()
 		default:
-
 			_, err := s.messageClient.SendMessage(s.phone, contact, msg, nil)
 			if err != nil {
 				return errors.Wrapf(err, "failed to send messageClient to Twilio contact '%s'", contact)
