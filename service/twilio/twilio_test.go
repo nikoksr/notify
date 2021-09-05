@@ -3,9 +3,10 @@ package twilio
 import (
 	"context"
 	"errors"
+	"testing"
+
 	"github.com/kevinburke/twilio-go"
 	"github.com/stretchr/testify/require"
-	"testing"
 )
 
 func TestAddReceivers(t *testing.T) {

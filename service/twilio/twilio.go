@@ -2,14 +2,15 @@ package twilio
 
 import (
 	"context"
+	"net/url"
+
 	"github.com/kevinburke/twilio-go"
 	"github.com/pkg/errors"
-	"net/url"
 )
 
 // twilioMessageClient abstracts twilio-go for writing unit tests
 type twilioMessageClient interface {
-	SendMessage(from string, to string, body string, mediaURLs []*url.URL) (*twilio.Message, error)
+	SendMessage(from, to, body string, mediaURLs []*url.URL) (*twilio.Message, error)
 }
 
 // Service encapsulates the Twilio client along with internal state for storing contacts.
