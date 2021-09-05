@@ -77,6 +77,7 @@ _ = notifier.Send(
 - *Slack*
 - *Telegram*
 - *TextMagic*
+- *Twilio*
 - *Twitter*
 - *WeChat*
 - *WhatsApp*
@@ -97,6 +98,7 @@ _ = notifier.Send(
 - Slack support: [slack-go/slack](https://github.com/slack-go/slack)
 - Telegram support: [go-telegram-bot-api/telegram-bot-api](https://github.com/go-telegram-bot-api/telegram-bot-api)
 - TextMagic support: [textmagic/textmagic-rest-go-v2](https://github.com/textmagic/textmagic-rest-go-v2)
+- Twilio support: [kevinburke/twilio-go](https://github.com/kevinburke/twilio-go)
 - Twitter: [dghubble/go-twitter](https://github.com/dghubble/go-twitter)
 - WeChat: [silenceper/wechat](https://github.com/silenceper/wechat)
 - WhatsApp: [Rhymen/go-whatsapp](https://github.com/Rhymen/go-whatsapp)
