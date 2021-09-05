@@ -4,23 +4,29 @@ import (
 	"context"
 	"github.com/kevinburke/twilio-go"
 	"github.com/pkg/errors"
+	"net/url"
 )
 
-// Service encapsulates the WhatsApp client along with internal state for storing contacts.
-type Service struct {
-	client   *twilio.Client
-	phone    string
-	contacts []string
+// twilioMessageClient abstracts twilio-go for writing unit tests
+type twilioMessageClient interface {
+	SendMessage(from string, to string, body string, mediaURLs []*url.URL) (*twilio.Message, error)
 }
 
-// New returns a new instance of a WhatsApp notification service.
+// Service encapsulates the Twilio client along with internal state for storing contacts.
+type Service struct {
+	messageClient twilioMessageClient
+	phone         string
+	contacts      []string
+}
+
+// New returns a new instance of a Twilio message service.
 func New(phoneNo, sid, token string) (*Service, error) {
 	client := twilio.NewClient(sid, token, nil)
 
 	s := &Service{
-		client:   client,
-		contacts: []string{},
-		phone:    phoneNo,
+		messageClient: client.Messages,
+		contacts:      []string{},
+		phone:         phoneNo,
 	}
 	return s, nil
 }
@@ -31,15 +37,21 @@ func (s *Service) AddReceivers(contacts ...string) {
 	s.contacts = append(s.contacts, contacts...)
 }
 
-// Send takes a message subject and a message body and sends them to all previously set contacts.
+// Send takes a messageClient subject and a messageClient body and sends them to all previously set contacts.
 func (s *Service) Send(ctx context.Context, subject, message string) error {
 
 	msg := subject + "\n" + message
 
 	for _, contact := range s.contacts {
-		_, err := s.client.Messages.SendMessage(s.phone, contact, msg, nil)
-		if err != nil {
-			return errors.Wrapf(err, "failed to send message to Twilio contact '%s'", contact)
+		select {
+		case <-ctx.Done():
+			return ctx.Err()
+		default:
+
+			_, err := s.messageClient.SendMessage(s.phone, contact, msg, nil)
+			if err != nil {
+				return errors.Wrapf(err, "failed to send messageClient to Twilio contact '%s'", contact)
+			}
 		}
 	}
 
