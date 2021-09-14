@@ -32,7 +32,7 @@ require (
 	github.com/plivo/plivo-go v7.2.0+incompatible
 	github.com/sendgrid/rest v2.6.4+incompatible // indirect
 	github.com/sendgrid/sendgrid-go v3.10.0+incompatible
-	github.com/silenceper/wechat/v2 v2.0.6
+	github.com/silenceper/wechat/v2 v2.0.9
 	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e // indirect
 	github.com/slack-go/slack v0.9.4
 	github.com/spf13/cast v1.4.0 // indirect
