@@ -273,6 +273,8 @@ github.com/sendgrid/rest v2.6.4+incompatible h1:lq6gAQxLwVBf3mVyCCSHI6mgF+NfaJFJ
 github.com/sendgrid/rest v2.6.4+incompatible/go.mod h1:kXX7q3jZtJXK5c5qK83bSGMdV6tsOE70KbHoqJls4lE=
 github.com/sendgrid/sendgrid-go v3.10.0+incompatible h1:aSYyurHxEZSDy7kxhvZ4fH0inNkEEmRssZNbAmETR2c=
 github.com/sendgrid/sendgrid-go v3.10.0+incompatible/go.mod h1:QRQt+LX/NmgVEvmdRw0VT/QgUn499+iza2FnDca9fg8=
+github.com/sendgrid/sendgrid-go v3.10.1+incompatible h1:CCWVIXyUJ3JDOp6RU23JfnUCetKxxeplAPaMrgreilY=
+github.com/sendgrid/sendgrid-go v3.10.1+incompatible/go.mod h1:QRQt+LX/NmgVEvmdRw0VT/QgUn499+iza2FnDca9fg8=
 github.com/silenceper/wechat/v2 v2.0.6 h1:/cKlckNsVzDLPRqXd11Uw4RQK9AfkAuKIoLbQdXBuDE=
 github.com/silenceper/wechat/v2 v2.0.6/go.mod h1:0cWAenXlYXehZTJv7wnezGrwTNMNycOHYyczkJvD8FY=
 github.com/silenceper/wechat/v2 v2.0.9 h1:JAkeCn5BeBWrWcmaZseapcqsxGQYvmIPbczCVpKf9v8=
