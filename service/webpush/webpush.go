@@ -30,7 +30,6 @@ func New(email, publicKey, privateKey string) *Service {
 // SubService creates a new subservice with a given topic and urgency.
 // Notifications of the same topic will overwrite eachother.
 // If urgent the notification will be marked high urgency.
-
 func (s Service) SubService(topic string, urgent bool) *Service {
 	s.opts.Topic = topic
 	if urgent {
