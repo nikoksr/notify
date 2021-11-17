@@ -9,7 +9,7 @@ require (
 	github.com/antihax/optional v1.0.0 // indirect
 	github.com/atc0005/go-teams-notify/v2 v2.6.0
 	github.com/aws/aws-sdk-go-v2 v1.11.0
-	github.com/aws/aws-sdk-go-v2/config v1.9.0
+	github.com/aws/aws-sdk-go-v2/config v1.10.1
 	github.com/aws/aws-sdk-go-v2/credentials v1.6.1
 	github.com/aws/aws-sdk-go-v2/service/ses v1.7.0
 	github.com/bwmarrin/discordgo v0.23.2
