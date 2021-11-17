@@ -113,6 +113,8 @@ github.com/cenkalti/backoff v2.2.1+incompatible h1:tNowT99t7UNflLxfYYSlKYsBpXdEe
 github.com/cenkalti/backoff v2.2.1+incompatible/go.mod h1:90ReRw6GdpyfrHakVjL/QHaoyV4aDUVVkXQJJJ3NXXM=
 github.com/cenkalti/backoff/v4 v4.1.1 h1:G2HAfAmvm/GcKan2oOQpBXOd2tT2G57ZnZGWa1PxPBQ=
 github.com/cenkalti/backoff/v4 v4.1.1/go.mod h1:scbssz8iZGpm3xbr14ovlUdkxfGXNInqkPWOWmG2CLw=
+github.com/cenkalti/backoff/v4 v4.1.2 h1:6Yo7N8UP2K6LWZnW94DLVSSrbobcWdVzAYOisuDPIFo=
+github.com/cenkalti/backoff/v4 v4.1.2/go.mod h1:scbssz8iZGpm3xbr14ovlUdkxfGXNInqkPWOWmG2CLw=
 github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
 github.com/chzyer/logex v1.1.10/go.mod h1:+Ywpsq7O8HXn0nuIou7OrIPyXbp3wmkHB+jjWRnGsAI=
 github.com/chzyer/readline v0.0.0-20180603132655-2972be24d48e/go.mod h1:nSuG5e5PlCu98SY8svDHJxuZscDgtXS6KTTbou5AhLI=
@@ -131,6 +133,8 @@ github.com/dghubble/go-twitter v0.0.0-20210609183100-2fdbf421508e h1:o0sI/cfhAXd
 github.com/dghubble/go-twitter v0.0.0-20210609183100-2fdbf421508e/go.mod h1:xfg4uS5LEzOj8PgZV7SQYRHbG7jPUnelEiaAVJxmhJE=
 github.com/dghubble/go-twitter v0.0.0-20211002212826-ad02880e616b h1:LbWfjdLiEeLNzNX8ylxqbAFLixA1jwBcwdT12XSo3i0=
 github.com/dghubble/go-twitter v0.0.0-20211002212826-ad02880e616b/go.mod h1:MR6TM9P/md6XOePwjqvsBYvaNO2066MXnbiFASZiCOo=
+github.com/dghubble/go-twitter v0.0.0-20211115160449-93a8679adecb h1:7ENzkH+O3juL+yj2undESLTaAeRllHwCs/b8z6aWSfc=
+github.com/dghubble/go-twitter v0.0.0-20211115160449-93a8679adecb/go.mod h1:qhZBgV9e4WyB1JNjHpcXVkUe3knWUwYuAPB1hITdm50=
 github.com/dghubble/oauth1 v0.7.0 h1:AlpZdbRiJM4XGHIlQ8BuJ/wlpGwFEJNnB4Mc+78tA/w=
 github.com/dghubble/oauth1 v0.7.0/go.mod h1:8pFdfPkv/jr8mkChVbNVuJ0suiHe278BtWI4Tk1ujxk=
 github.com/dghubble/sling v1.3.0 h1:pZHjCJq4zJvc6qVQ5wN1jo5oNZlNE0+8T/h0XeXBUKU=
