@@ -8,7 +8,7 @@ require (
 	github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20210506200512-3b3352a919f0
 	github.com/atc0005/go-teams-notify/v2 v2.6.0
 	github.com/aws/aws-sdk-go-v2 v1.11.2
-	github.com/aws/aws-sdk-go-v2/config v1.10.3
+	github.com/aws/aws-sdk-go-v2/config v1.11.0
 	github.com/aws/aws-sdk-go-v2/credentials v1.6.4
 	github.com/aws/aws-sdk-go-v2/service/ses v1.9.2
 	github.com/bwmarrin/discordgo v0.23.2
@@ -34,7 +34,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.8.2 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/configsources v1.1.2 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.0.2 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/ini v1.3.1 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/ini v1.3.2 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.5.2 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sso v1.6.2 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sts v1.11.1 // indirect
