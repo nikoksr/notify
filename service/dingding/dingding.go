@@ -28,8 +28,7 @@ func New(cfg *Config) *Service {
 }
 
 // Send takes a message subject and a message content and sends them to all previously set users.
-func (s *Service) Send(ctx context.Context, subject string, content string) error {
-
+func (s *Service) Send(ctx context.Context, subject, content string) error {
 	select {
 	case <-ctx.Done():
 		return ctx.Err()
