@@ -12,8 +12,8 @@ func TestService_Send(t *testing.T) {
 	}
 
 	cfg := Config{
-		token:  "xxx",
-		secret: "xxx",
+		Token:  "xxx",
+		Secret: "xxx",
 	}
 
 	arg := args{

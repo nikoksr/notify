@@ -14,12 +14,12 @@ type Service struct {
 }
 
 type Config struct {
-	token  string
-	secret string
+	Token  string
+	Secret string
 }
 
 func New(cfg *Config) *Service {
-	dt := dingtalk.InitDingTalkWithSecret(cfg.token, cfg.secret)
+	dt := dingtalk.InitDingTalkWithSecret(cfg.Token, cfg.Secret)
 	s := Service{
 		config: *cfg,
 		client: dt,
