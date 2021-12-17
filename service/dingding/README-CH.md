@@ -1,13 +1,12 @@
 # dingtalk
 
-## Prerequisites
-To use the service you need to apply for robot of DingTalk Group.
-### create robot of DingTalk group
-1. add `custom` rebot。
-2. look the safe setting, and select the `sign(加签)`
+## 使用
+### 创建钉钉群机器人
+1. 选择添加`自定义`机器人。
+2. 安全设置`加签设置`
    ![Xnip2020-07-05_15-55-24.jpg](https://i.loli.net/2020/07/05/4XqHG2dOwo8StEu.jpg)
 
-## Usage
+### 使用说明
 ```go
 cfg := Config{
   token:  "dddd",

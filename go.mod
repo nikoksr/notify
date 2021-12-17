@@ -1,4 +1,4 @@
-module github.com/doersa/notify
+module github.com/nikoksr/notify
 
 go 1.17
 

@@ -2,22 +2,24 @@ package dingding
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/blinkbean/dingtalk"
 	"github.com/pkg/errors"
 )
 
+// Service encapsulates the DingTalk client.
 type Service struct {
 	config Config
 	client *dingtalk.DingTalk
 }
 
+// Config is the Service configuration.
 type Config struct {
 	Token  string
 	Secret string
 }
 
+// New returns a new instance of a DingTalk notification service.
 func New(cfg *Config) *Service {
 	dt := dingtalk.InitDingTalkWithSecret(cfg.Token, cfg.Secret)
 	s := Service{
@@ -33,7 +35,7 @@ func (s *Service) Send(ctx context.Context, subject, content string) error {
 	case <-ctx.Done():
 		return ctx.Err()
 	default:
-		text := fmt.Sprintf("%s\n%s", subject, content)
+		text := subject + "\n" + content
 		err := s.client.SendTextMessage(text)
 		if err != nil {
 			return errors.Wrapf(err, "failed to send message")
