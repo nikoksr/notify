@@ -10,7 +10,7 @@ require (
 	github.com/aws/aws-sdk-go-v2 v1.11.2
 	github.com/aws/aws-sdk-go-v2/config v1.11.1
 	github.com/aws/aws-sdk-go-v2/credentials v1.6.5
-	github.com/aws/aws-sdk-go-v2/service/ses v1.9.2
+	github.com/aws/aws-sdk-go-v2/service/ses v1.10.0
 	github.com/bwmarrin/discordgo v0.23.2
 	github.com/cschomburg/go-pushbullet v0.0.0-20171206132031-67759df45fbb
 	github.com/dghubble/go-twitter v0.0.0-20211115160449-93a8679adecb
