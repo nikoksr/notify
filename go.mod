@@ -14,7 +14,7 @@ require (
 	github.com/bwmarrin/discordgo v0.23.2
 	github.com/cschomburg/go-pushbullet v0.0.0-20171206132031-67759df45fbb
 	github.com/dghubble/go-twitter v0.0.0-20211115160449-93a8679adecb
-	github.com/dghubble/oauth1 v0.7.0
+	github.com/dghubble/oauth1 v0.7.1
 	github.com/go-telegram-bot-api/telegram-bot-api v4.6.4+incompatible
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	github.com/line/line-bot-sdk-go v7.8.0+incompatible
