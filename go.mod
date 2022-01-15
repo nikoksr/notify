@@ -9,7 +9,7 @@ require (
 	github.com/atc0005/go-teams-notify/v2 v2.6.0
 	github.com/aws/aws-sdk-go-v2 v1.13.0
 	github.com/aws/aws-sdk-go-v2/config v1.12.0
-	github.com/aws/aws-sdk-go-v2/credentials v1.7.0
+	github.com/aws/aws-sdk-go-v2/credentials v1.8.0
 	github.com/aws/aws-sdk-go-v2/service/ses v1.11.0
 	github.com/bwmarrin/discordgo v0.23.2
 	github.com/cschomburg/go-pushbullet v0.0.0-20171206132031-67759df45fbb
@@ -31,13 +31,13 @@ require (
 
 require (
 	github.com/antihax/optional v1.0.0 // indirect
-	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.9.0 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/configsources v1.1.3 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.1.0 // indirect
+	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.10.0 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/configsources v1.1.4 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.2.0 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/ini v1.3.3 // indirect
-	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.6.0 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sso v1.8.0 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sts v1.13.0 // indirect
+	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.7.0 // indirect
+	github.com/aws/aws-sdk-go-v2/service/sso v1.9.0 // indirect
+	github.com/aws/aws-sdk-go-v2/service/sts v1.14.0 // indirect
 	github.com/aws/smithy-go v1.10.0 // indirect
 	github.com/bradfitz/gomemcache v0.0.0-20190913173617-a41fca850d0b // indirect
 	github.com/cenkalti/backoff/v4 v4.1.2 // indirect
