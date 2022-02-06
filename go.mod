@@ -26,6 +26,7 @@ require (
 	github.com/slack-go/slack v0.10.1
 	github.com/stretchr/testify v1.7.0
 	github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.1816
+	github.com/utahta/go-linenotify v0.5.0
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
 )
 
@@ -47,6 +48,7 @@ require (
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/gomodule/redigo v1.8.5 // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
+	github.com/google/uuid v0.0.0-20171113160352-8c31c18f31ed // indirect
 	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/gorilla/websocket v1.4.2 // indirect
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
