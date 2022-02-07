@@ -23,15 +23,18 @@ test:
 # CODE HEALTH
 ###############################################################################
 
-# gofumpt and gci all go files
 fmt:
-	gofumpt -w .
-	gci -w -local github.com/nikoksr/notify .
+	@go install mvdan.cc/gofumpt@latest
+	@gofumpt -w -l .
+
+	@go install github.com/daixiang0/gci@latest
+	@gci write --Section Standard --Section Default --Section "Prefix(github.com/nikoksr/notify)" .
 .PHONY: fmt
 
-# Run all the linters
+
 lint:
-	golangci-lint run ./...
+	@go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+	@golangci-lint run --config .golangci.yml
 .PHONY: lint
 
 ci: lint test
