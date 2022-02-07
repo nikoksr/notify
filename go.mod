@@ -7,23 +7,12 @@ require (
 	github.com/Rhymen/go-whatsapp v0.1.1
 	github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20210506200512-3b3352a919f0
 	github.com/antihax/optional v1.0.0 // indirect
-	github.com/atc0005/go-teams-notify/v2 v2.6.0  
-	github.com/aws/aws-sdk-go-v2 v1.8.0  
-	github.com/aws/aws-sdk-go-v2/config v1.6.0  
-	github.com/aws/aws-sdk-go-v2/credentials v1.3.2  
-	github.com/aws/aws-sdk-go-v2/service/ses v1.5.1  
-  github.com/aws/aws-sdk-go-v2/service/sns v1.4.1  
-	github.com/bwmarrin/discordgo v0.23.2  
-	github.com/cenkalti/backoff v2.2.1+incompatible // indirect  
-	github.com/cschomburg/go-pushbullet v0.0.0-20171206132031-67759df45fbb  
-  github.com/daixiang0/gci v0.2.8 // indirect  
-	github.com/dghubble/go-twitter v0.0.0-20210609183100-2fdbf421508e  
-	github.com/dghubble/oauth1 v0.7.0
 	github.com/atc0005/go-teams-notify/v2 v2.6.0
 	github.com/aws/aws-sdk-go-v2 v1.13.0
 	github.com/aws/aws-sdk-go-v2/config v1.13.1
 	github.com/aws/aws-sdk-go-v2/credentials v1.8.0
 	github.com/aws/aws-sdk-go-v2/service/ses v1.12.0
+	github.com/aws/aws-sdk-go-v2/service/sns v1.4.1
 	github.com/blinkbean/dingtalk v0.0.0-20210905093040-7d935c0f7e19
 	github.com/bwmarrin/discordgo v0.23.2
 	github.com/cschomburg/go-pushbullet v0.0.0-20171206132031-67759df45fbb
@@ -45,7 +34,6 @@ require (
 )
 
 require (
-	github.com/antihax/optional v1.0.0 // indirect
 	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.10.0 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/configsources v1.1.4 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.2.0 // indirect
@@ -86,5 +74,4 @@ require (
 	google.golang.org/protobuf v1.27.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
-	mvdan.cc/gofumpt v0.1.1 // indirect
 )
