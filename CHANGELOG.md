@@ -1,11 +1,23 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [unreleased]
+## [0.19.0] - 2022-02-07
+
+### CI
+
+- Add new pull-request template
+- Fix goimports local prefix
 
 ### Documentation
 
 - Add build commit parser
+- Apply git-cliff's config update
+- Simplify contribution guide
+- Add DingTalk credits and remove FOSSA badge
+
+### Features
+
+- Add DingTalk (#183)
 
 ## [0.18.0] - 2022-02-07
 
