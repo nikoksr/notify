@@ -8,7 +8,7 @@ on:
 jobs:
   generate-changelog:
     name: Generate changelog
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     outputs:
       release_body: ${{ steps.release.outputs.release_body }}
     steps:
@@ -32,10 +32,6 @@ jobs:
           args: -vv --latest --strip header --config .cliff.toml
         env:
           OUTPUT: LATEST-CHANGES.md
-      - name: Touch new file
-        id: touch
-        shell: bash
-        run: touch teeeeeeest.txt
       - name: Set the release body
         id: release
         shell: bash
