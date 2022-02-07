@@ -50,7 +50,6 @@ github.com/antihax/optional v1.0.0 h1:xK2lYat7ZLaVVcIuj82J8kIro4V6kDe0AUDFboUCwc
 github.com/antihax/optional v1.0.0/go.mod h1:uupD/76wgC+ih3iEmQUL+0Ugr19nfwCT1kdvxnR2qWY=
 github.com/atc0005/go-teams-notify/v2 v2.6.0 h1:YegKDWbjlatR0fP2yHsQYXzTcUGNJXhm1/OiCgbyysc=
 github.com/atc0005/go-teams-notify/v2 v2.6.0/go.mod h1:xo6GejLDHn3tWBA181F8LrllIL0xC1uRsRxq7YNXaaY=
-github.com/aws/aws-sdk-go-v2 v1.6.0/go.mod h1:tI4KhsR5VkzlUa2DZAdwx7wCAYGwkZZ1H31PYrBFx1w=
 github.com/aws/aws-sdk-go-v2 v1.13.0 h1:1XIXAfxsEmbhbj5ry3D3vX+6ZcUYvIqSm4CWWEuGZCA=
 github.com/aws/aws-sdk-go-v2 v1.13.0/go.mod h1:L6+ZpqHaLbAaxsqV0L4cvxZY7QupWJB4fhkf8LXvC7w=
 github.com/aws/aws-sdk-go-v2/config v1.13.1 h1:yLv8bfNoT4r+UvUKQKqRtdnvuWGMK5a82l4ru9Jvnuo=
@@ -69,13 +68,12 @@ github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.7.0 h1:4QAOB3KrvI
 github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.7.0/go.mod h1:K/qPe6AP2TGYv4l6n7c88zh9jWBDf6nHhvg1fx/EWfU=
 github.com/aws/aws-sdk-go-v2/service/ses v1.12.0 h1:AsIuaTDMsg0bX5cfGNfU8uxUA1tAhBrojswetpD6PcY=
 github.com/aws/aws-sdk-go-v2/service/ses v1.12.0/go.mod h1:061vZ/X66UM49xth/ZZGvtJdHGgLh8FwgRvt+1YyhJI=
-github.com/aws/aws-sdk-go-v2/service/sns v1.4.1 h1:uc9t63SToTT6v/NG2UT3m+8DNpZF1noCSFbHk8dh9RE=
-github.com/aws/aws-sdk-go-v2/service/sns v1.4.1/go.mod h1:SyRNX444n2Vk3NAEEM0ewyS8qsTeAjig3HPjvlBuhlM=
+github.com/aws/aws-sdk-go-v2/service/sns v1.15.0 h1:L2C+CaTVpa2kO0aijS7pVQFTGzGTmTDPcGQFp7NB/Gs=
+github.com/aws/aws-sdk-go-v2/service/sns v1.15.0/go.mod h1:0cGC7JOcSXhQ1RXsq1InsRQV1WYS9kF5Gr7yZk3Nwxg=
 github.com/aws/aws-sdk-go-v2/service/sso v1.9.0 h1:1qLJeQGBmNQW3mBNzK2CFmrQNmoXWrscPqsrAaU1aTA=
 github.com/aws/aws-sdk-go-v2/service/sso v1.9.0/go.mod h1:vCV4glupK3tR7pw7ks7Y4jYRL86VvxS+g5qk04YeWrU=
 github.com/aws/aws-sdk-go-v2/service/sts v1.14.0 h1:ksiDXhvNYg0D2/UFkLejsaz3LqpW5yjNQ8Nx9Sn2c0E=
 github.com/aws/aws-sdk-go-v2/service/sts v1.14.0/go.mod h1:u0xMJKDvvfocRjiozsoZglVNXRG19043xzp3r2ivLIk=
-github.com/aws/smithy-go v1.4.0/go.mod h1:SObp3lf9smib00L/v3U2eAKG8FyQ7iLrJnQiAmR5n+E=
 github.com/aws/smithy-go v1.10.0 h1:gsoZQMNHnX+PaghNw4ynPsyGP7aUCqx5sY2dlPQsZ0w=
 github.com/aws/smithy-go v1.10.0/go.mod h1:SObp3lf9smib00L/v3U2eAKG8FyQ7iLrJnQiAmR5n+E=
 github.com/blinkbean/dingtalk v0.0.0-20210905093040-7d935c0f7e19 h1:pamuM2sgLJLoMWfchc6y071z8ifalajU7btZmZNhoH4=
