@@ -20,16 +20,16 @@ jobs:
         uses: orhun/git-cliff-action@v1
         id: git-cliff-full
         with:
-          # config: .cliff.toml # Doesn't seem to work
-          args: -vv --config .config.toml
+          config: .cliff.toml
+          args: -vv
         env:
           OUTPUT: CHANGELOG.md
       - name: Generate latest changelog
         uses: orhun/git-cliff-action@v1
         id: git-cliff-latest
         with:
-          # config: .cliff.toml # Doesn't seem to work
-          args: -vv --latest --strip header --config .cliff.toml
+          config: .cliff.toml
+          args: -vv --latest --strip header
         env:
           OUTPUT: LATEST-CHANGES.md
       - name: Set the release body
