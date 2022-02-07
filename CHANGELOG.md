@@ -1,7 +1,18 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [unreleased]
+
+### Documentation
+
+- Add build commit parser
+
 ## [0.18.0] - 2022-02-07
+
+### Build
+
+- Fix linter command and add implicit install commands
+- Add commands to generate changelogs
 
 ### CI
 
@@ -35,11 +46,6 @@ All notable changes to this project will be documented in this file.
 - Update module github.com/aws/aws-sdk-go-v2/config to v1.13.0
 - Update module github.com/aws/aws-sdk-go-v2/service/ses to v1.12.0
 - Update module github.com/aws/aws-sdk-go-v2/config to v1.13.1
-
-### Build
-
-- Fix linter command and add implicit install commands
-- Add commands to generate changelogs
 
 ## [0.17.4] - 2021-11-17
 
@@ -98,6 +104,10 @@ All notable changes to this project will be documented in this file.
 
 ## [0.17.1] - 2021-07-14
 
+### Build
+
+- Simplify Makefile
+
 ### CI
 
 - Refactor github action for linting, testing & building
@@ -121,11 +131,17 @@ All notable changes to this project will be documented in this file.
 
 - Remove go generate directives for installing deps
 
+## [0.17.0] - 2021-05-26
+
+### Bug Fixes
+
+- Fix : resolved issues
+
+
 ### Build
 
-- Simplify Makefile
-
-## [0.17.0] - 2021-05-26
+- Update golangci-lint config
+- Replaced deprecated linter
 
 ### Dependencies
 
@@ -153,11 +169,6 @@ All notable changes to this project will be documented in this file.
 
 - Textmagic service
 
-### Build
-
-- Update golangci-lint config
-- Replaced deprecated linter
-
 ## [0.16.1] - 2021-04-27
 
 ### Dependencies
@@ -169,6 +180,13 @@ All notable changes to this project will be documented in this file.
 - Go get -u ./... & go mod tidy
 
 ## [0.16.0] - 2021-04-27
+
+### Build
+
+- Build-passing commit
+
+- Build-passing commit
+
 
 ### Dependencies
 
@@ -248,6 +266,8 @@ All notable changes to this project will be documented in this file.
 - Fix faulty error return
 - Add context.Context to parameter list of Send method (#51)
 
+## [0.12.0] - 2021-02-17
+
 ## [0.11.0] - 2021-02-17
 
 ### Dependencies
@@ -278,6 +298,8 @@ All notable changes to this project will be documented in this file.
 - Separate out login into LoginWithQRCode and LoginWithSessionCredentials
 - Construct email input on a single initialization
 - Make changes as per review comments
+
+## [0.10.0] - 2021-02-12
 
 ## [0.9.0] - 2021-02-12
 
@@ -336,7 +358,14 @@ All notable changes to this project will be documented in this file.
 
 - Remove unnecessary new-lines
 
+## [0.6.0] - 2021-02-08
+
 ## [0.5.1] - 2021-02-07
+
+### Bug Fixes
+
+- Fix miss-spell & run gofmt -s
+
 
 ### Documentation
 
@@ -352,6 +381,12 @@ All notable changes to this project will be documented in this file.
 
 - Fix a small typo in function comment
 
+### Build
+
+- Add make file and go-generate directives
+- Remove deprecated config option
+- Add dependabot config
+
 ### CI
 
 - Add action to test and lint any PRs
@@ -366,12 +401,8 @@ All notable changes to this project will be documented in this file.
 ### Features
 
 - Added Pushbullet service (tested)
+- Feat(service) Pushbullet SMS - added new service and usage documentation to pushbullet package
 
-### Build
-
-- Add make file and go-generate directives
-- Remove deprecated config option
-- Add dependabot config
 
 ### Patch
 
