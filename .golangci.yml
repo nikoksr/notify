@@ -6,8 +6,6 @@ linters-settings:
   funlen:
     lines: 100
     statements: 50
-  gci:
-    local-prefixes: github.com/CapstoneLabs/client-services-v2
   goconst:
     min-len: 2
     min-occurrences: 2
@@ -27,7 +25,7 @@ linters-settings:
   gocyclo:
     min-complexity: 15
   goimports:
-    local-prefixes: github.com/golangci/golangci-lint
+    local-prefixes: github.com/nikoksr/notify
   revive:
     min-confidence: 0
   gomnd:
