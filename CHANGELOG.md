@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.19.1] - 2022-02-07
+
+### Dependencies
+
+- Update and tidy dependencies (#202)
+
 ## [0.19.0] - 2022-02-07
 
 ### CI
