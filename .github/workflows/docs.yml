@@ -1,0 +1,48 @@
+name: Continuous Deployment
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  generate-changelog:
+    name: Generate changelog
+    runs-on: ubuntu-20.04
+    outputs:
+      release_body: ${{ steps.release.outputs.release_body }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Generate the full changelog
+        uses: orhun/git-cliff-action@v1
+        id: git-cliff-full
+        with:
+          # config: .cliff.toml # Doesn't seem to work
+          args: -vv --config .config.toml
+        env:
+          OUTPUT: CHANGELOG.md
+      - name: Generate latest changelog
+        uses: orhun/git-cliff-action@v1
+        id: git-cliff-latest
+        with:
+          # config: .cliff.toml # Doesn't seem to work
+          args: -vv --latest --strip header --config .cliff.toml
+        env:
+          OUTPUT: LATEST-CHANGES.md
+      - name: Touch new file
+        id: touch
+        shell: bash
+        run: touch teeeeeeest.txt
+      - name: Set the release body
+        id: release
+        shell: bash
+        run: |
+          r=$(cat ${{ steps.git-cliff-latest.outputs.changelog }})
+          r="$(printf "$r" | tail -n +3)"
+          r="${r//'%'/'%25'}"
+          r="${r//$'\n'/'%0A'}"
+          r="${r//$'\r'/'%0D'}"
+          echo "::set-output name=release_body::$r"
