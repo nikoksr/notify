@@ -64,6 +64,7 @@ _ = notifier.Send(
 > Please create feature requests for missing services (see #3 for example)
 
 - *Amazon SES*
+- *Amazon SNS*
 - *DingTalk*
 - *Discord*
 - *Email*
@@ -83,7 +84,8 @@ _ = notifier.Send(
 
 ## Credits <a id="credits"></a>
 
-- Amazon SES support: [aws/aws-sdk-go](https://github.com/aws/aws-sdk-go)
+- Amazon SES support: [aws/aws-sdk-go-v2](https://github.com/aws/aws-sdk-go-v2)
+- Amazon SNS support: [aws/aws-sdk-go-v2](https://github.com/aws/aws-sdk-go-v2)
 - DingTalk support: [blinkbean/dingtalk](https://github.com/blinkbean/dingtalk)
 - Discord support: [bwmarrin/discordgo](https://github.com/bwmarrin/discordgo)
 - Email support: [jordan-wright/email](https://github.com/jordan-wright/email)
