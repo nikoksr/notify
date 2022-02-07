@@ -1,6 +1,20 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.20.0] - 2022-02-07
+
+### Documentation
+
+- Add credits for AWS SNS service
+
+### Features
+
+- Add AWS SNS (#110)
+
+### Miscellaneous Tasks
+
+- Fix minor typo
+
 ## [0.19.1] - 2022-02-07
 
 ### Dependencies
