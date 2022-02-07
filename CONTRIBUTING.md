@@ -2,15 +2,6 @@
 We want to make contributing to this project as easy and transparent as
 possible.
 
-## Project structure
-
-- `service` - Contains definitions for the underlying notification services.
-  - `service/discord` - Discord notification service.
-  - `service/mail` - Email notification service.
-  - `service/msteams` - Microsoft Teams notification service.
-  - `service/slack` - Slack notification service.
-  - `service/telegram` - Telegram notification service
-
 ## Commits
 
 Commit messages should be well formatted, and to make that "standardized", we
