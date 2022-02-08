@@ -17,10 +17,12 @@ var ErrSendNotification = errors.New("send notification")
 
 // New returns a new instance of Notify. Defaulting to being not disabled.
 func New() *Notify {
-	notifier := &Notify{
-		Disabled:  defaultDisabled,
-		notifiers: []Notifier{},
-	}
+	return &Notify{Disabled: defaultDisabled, notifiers: []Notifier{}}
+}
 
-	return notifier
+var std = New()
+
+// Default returns the standard Notify instance used by the package-level send function.
+func Default() *Notify {
+	return std
 }
