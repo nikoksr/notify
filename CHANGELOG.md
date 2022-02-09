@@ -1,6 +1,12 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.21.0] - 2022-02-09
+
+### Features
+
+- Add package-level functions (#208)
+
 ## [0.20.1] - 2022-02-07
 
 ### Dependencies
