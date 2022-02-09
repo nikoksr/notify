@@ -7,8 +7,8 @@ import (
 	"golang.org/x/sync/errgroup"
 )
 
-// Send calls the underlying notification services to send the given subject and message to their respective endpoints.
-func (n Notify) Send(ctx context.Context, subject, message string) error {
+// send calls the underlying notification services to send the given subject and message to their respective endpoints.
+func (n *Notify) send(ctx context.Context, subject, message string) error {
 	if n.Disabled {
 		return nil
 	}
@@ -30,4 +30,14 @@ func (n Notify) Send(ctx context.Context, subject, message string) error {
 	}
 
 	return err
+}
+
+// Send calls the underlying notification services to send the given subject and message to their respective endpoints.
+func (n *Notify) Send(ctx context.Context, subject, message string) error {
+	return n.send(ctx, subject, message)
+}
+
+// Send calls the underlying notification services to send the given subject and message to their respective endpoints.
+func Send(ctx context.Context, subject, message string) error {
+	return std.send(ctx, subject, message)
 }
