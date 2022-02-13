@@ -1,6 +1,16 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.22.0] - 2022-02-13
+
+### Dependencies
+
+- Update module github.com/slack-go/slack to v0.10.2
+
+### Features
+
+- Add syslog (#211)
+
 ## [0.21.0] - 2022-02-09
 
 ### Features

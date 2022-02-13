@@ -49,7 +49,7 @@ changelog-latest:
 .PHONY: changelog-latest
 
 changelog-file:
-	@git cliff --config .cliff.toml --topo-order -o CHANGELOG.md
+	@git cliff --config .cliff.toml -o CHANGELOG.md
 .PHONY: changelog-file
 
 ###############################################################################
