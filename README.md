@@ -27,6 +27,8 @@ Any misuse of this library is your own liability and responsibility and cannot b
 
 Spamming through the use of this library **may get you permanently banned** on most supported platforms.
 
+Since Notify is highly dependent on the consistency of the supported external services and the corresponding latest client libraries, we cannot guarantee its reliability nor its consistency, and therefore you should probably not use or rely on Notify in critical scenarios.
+
 ## Install <a id="install"></a>
 
 ```sh
@@ -58,60 +60,34 @@ _ = notify.Send(
 
 ## Supported services <a id="supported_services"></a>
 
-> Please create feature requests for missing services (see #3 for example)
+> Please create feature requests for missing services (see [#3](https://github.com/nikoksr/notify/issues/3) for example)
 
-- *Amazon SES*
-- *Amazon SNS*
-- *DingTalk*
-- *Discord*
-- *Email*
-- *Line & Line Notify*
-- *Mailgun*
-- *Microsoft Teams*
-- *Plivo*
-- *Pushbullet*
-- *RocketChat*
-- *SendGrid*
-- *Slack*
-- *Telegram*
-- *TextMagic*
-- *Twitter*
-- *WeChat*
-- *WhatsApp*
-
-## Credits <a id="credits"></a>
-
-- Amazon SES support: [aws/aws-sdk-go-v2](https://github.com/aws/aws-sdk-go-v2)
-- Amazon SNS support: [aws/aws-sdk-go-v2](https://github.com/aws/aws-sdk-go-v2)
-- DingTalk support: [blinkbean/dingtalk](https://github.com/blinkbean/dingtalk)
-- Discord support: [bwmarrin/discordgo](https://github.com/bwmarrin/discordgo)
-- Email support: [jordan-wright/email](https://github.com/jordan-wright/email)
-- Line support: [line/line-bot-sdk-go](https://github.com/line/line-bot-sdk-go)
-- Line Notify support: [utahta/go-linenotify](https://github.com/utahta/go-linenotify)
-- Logo: [MariaLetta/free-gophers-pack](https://github.com/MariaLetta/free-gophers-pack)
-- Mailgun support: [mailgun/mailgun-go](https://github.com/mailgun/mailgun-go)
-- Microsoft Teams support: [atc0005/go-teams-notify](https://github.com/atc0005/go-teams-notify)
-- Plivo support: [plivo/plivo-go](https://github.com/plivo/plivo-go)
-- Pushbullet support: [cschomburg/go-pushbullet](https://github.com/cschomburg/go-pushbullet)
-- RocketChat Support: [RocketChat/Rocket.Chat.Go.SDK](https://github.com/RocketChat/Rocket.Chat.Go.SDK)
-- SendGrid support: [sendgrid/sendgrid-go](https://github.com/sendgrid/sendgrid-go)
-- Slack support: [slack-go/slack](https://github.com/slack-go/slack)
-- Telegram support: [go-telegram-bot-api/telegram-bot-api](https://github.com/go-telegram-bot-api/telegram-bot-api)
-- TextMagic support: [textmagic/textmagic-rest-go-v2](https://github.com/textmagic/textmagic-rest-go-v2)
-- Twitter: [dghubble/go-twitter](https://github.com/dghubble/go-twitter)
-- WeChat: [silenceper/wechat](https://github.com/silenceper/wechat)
-- WhatsApp: [Rhymen/go-whatsapp](https://github.com/Rhymen/go-whatsapp)
-
-## Author <a id="author"></a>
-
-**Niko Köser**
-
-* Twitter: [@nikoksr](https://twitter.com/nikoksr)
-* Github: [@nikoksr](https://github.com/nikoksr)
+| Service                                                      | Path                                                                                 | Credits                                                                                         |
+|--------------------------------------------------------------|--------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|
+| [Amazon SES](https://aws.amazon.com/ses)                     | [service/amazonses](https://github.com/nikoksr/notify/tree/main/service/amazonses)   | [aws/aws-sdk-go-v2](https://github.com/aws/aws-sdk-go-v2)                                       |
+| [Amazon SNS](https://aws.amazon.com/sns)                     | [service/amazonsns](https://github.com/nikoksr/notify/tree/main/service/amazonsns)   | [aws/aws-sdk-go-v2](https://github.com/aws/aws-sdk-go-v2)                                       |
+| [DingTalk](https://www.dingtalk.com)                         | [service/dinding](https://github.com/nikoksr/notify/tree/main/service/dingding)      | [blinkbean/dingtalk](https://github.com/blinkbean/dingtalk)                                     |
+| [Discord](https://discord.com)                               | [service/discord](https://github.com/nikoksr/notify/tree/main/service/discord)       | [bwmarrin/discordgo](https://github.com/bwmarrin/discordgo)                                     |
+| [Email](https://wikipedia.org/wiki/Email)                    | [service/mail](https://github.com/nikoksr/notify/tree/main/service/mail)             | [jordan-wright/email](https://github.com/jordan-wright/email)                                   |
+| [Line](https://line.me)                                      | [service/line](https://github.com/nikoksr/notify/tree/main/service/line)             | [line/line-bot-sdk-go](https://github.com/line/line-bot-sdk-go)                                 |
+| [Line Notify](https://notify-bot.line.me)                    | [service/line](https://github.com/nikoksr/notify/tree/main/service/line)             | [utahta/go-linenotify](https://github.com/utahta/go-linenotify)                                 |
+| [Mailgun](https://www.mailgun.com)                           | [service/mailgun](https://github.com/nikoksr/notify/tree/main/service/mailgun)       | [mailgun/mailgun-go](https://github.com/mailgun/mailgun-go)                                     |
+| [Microsoft Teams](https://www.microsoft.com/microsoft-teams) | [service/msteams](https://github.com/nikoksr/notify/tree/main/service/msteams)       | [atc0005/go-teams-notify](https://github.com/atc0005/go-teams-notify)                           |
+| [Plivo](https://www.plivo.com)                               | [service/plivo](https://github.com/nikoksr/notify/tree/main/service/plivo)           | [plivo/plivo-go](https://github.com/plivo/plivo-go)                                             |
+| [Pushbullet](https://www.pushbullet.com)                     | [service/pushbullet](https://github.com/nikoksr/notify/tree/main/service/pushbullet) | [cschomburg/go-pushbullet](https://github.com/cschomburg/go-pushbullet)                         |
+| [RocketChat](https://rocket.chat)                            | [service/rocketchat](https://github.com/nikoksr/notify/tree/main/service/rocketchat) | [RocketChat/Rocket.Chat.Go.SDK](https://github.com/RocketChat/Rocket.Chat.Go.SDK)               |
+| [SendGrid](https://sendgrid.com)                             | [service/sendgrid](https://github.com/nikoksr/notify/tree/main/service/sendgrid)     | [sendgrid/sendgrid-go](https://github.com/sendgrid/sendgrid-go)                                 |
+| [Slack](https://slack.com)                                   | [service/slack](https://github.com/nikoksr/notify/tree/main/service/slack)           | [slack-go/slack](https://github.com/slack-go/slack)                                             |
+| [Syslog](https://wikipedia.org/wiki/Syslog)                  | [service/syslog](https://github.com/nikoksr/notify/tree/main/service/syslog)         | [log/syslog](https://pkg.go.dev/log/syslog)                                                     |
+| [Telegram](https://telegram.org)                             | [service/telegram](https://github.com/nikoksr/notify/tree/main/service/telegram)     | [go-telegram-bot-api/telegram-bot-api](https://github.com/go-telegram-bot-api/telegram-bot-api) |
+| [TextMagic](https://www.textmagic.com)                       | [service/textmagic](https://github.com/nikoksr/notify/tree/main/service/textmagic)   | [textmagic/textmagic-rest-go-v2](https://github.com/textmagic/textmagic-rest-go-v2)             |
+| [Twitter](https://twitter.com)                               | [service/twitter](https://github.com/nikoksr/notify/tree/main/service/twitter)       | [dghubble/go-twitter](https://github.com/dghubble/go-twitter)                                   |
+| [WeChat](https://www.wechat.com)                             | [service/wechat](https://github.com/nikoksr/notify/tree/main/service/wechat)         | [silenceper/wechat](https://github.com/silenceper/wechat)                                       |
+| [WhatsApp](https://www.whatsapp.com)                         | [service/whatsapp](https://github.com/nikoksr/notify/tree/main/service/whatsapp)     | [Rhymen/go-whatsapp](https://github.com/Rhymen/go-whatsapp)                                     |
 
 ## Contributing <a id="contributing"></a>
 
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/nikoksr/notify/issues). You can also take a look at the [contributing guide](https://github.com/nikoksr/notify/blob/main/CONTRIBUTING.md).
+Contributions, issues and feature requests are very welcome! Feel free to check [issues page](https://github.com/nikoksr/notify/issues). Please also take a look at the [contribution guidelines](https://github.com/nikoksr/notify/blob/main/CONTRIBUTING.md).
 
 ## Show your support <a id="support"></a>
 
