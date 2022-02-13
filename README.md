@@ -85,6 +85,10 @@ _ = notify.Send(
 | [WeChat](https://www.wechat.com)                             | [service/wechat](service/wechat)         | [silenceper/wechat](https://github.com/silenceper/wechat)                                       |
 | [WhatsApp](https://www.whatsapp.com)                         | [service/whatsapp](service/whatsapp)     | [Rhymen/go-whatsapp](https://github.com/Rhymen/go-whatsapp)                                     |
 
+## Logo <a id="logo"></a>
+
+The [logo](https://github.com/MariaLetta/free-gophers-pack) was made by the amazing [MariaLetta](https://github.com/MariaLetta).
+
 ## Contributing <a id="contributing"></a>
 
 Contributions, issues and feature requests are very welcome! Feel free to check [issues page](https://github.com/nikoksr/notify/issues). Please also take a look at the [contribution guidelines](https://github.com/nikoksr/notify/blob/main/CONTRIBUTING.md).
