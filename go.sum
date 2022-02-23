@@ -265,6 +265,8 @@ github.com/sendgrid/sendgrid-go v3.10.5+incompatible h1:2f/d7odubrZMkwqSupQDU5ad
 github.com/sendgrid/sendgrid-go v3.10.5+incompatible/go.mod h1:QRQt+LX/NmgVEvmdRw0VT/QgUn499+iza2FnDca9fg8=
 github.com/silenceper/wechat/v2 v2.1.0 h1:cwrsNV9UgUtgurBfnbk/vK1hlYBEFuFak2UujcBavys=
 github.com/silenceper/wechat/v2 v2.1.0/go.mod h1:5MMy/CJMHeeA9VWVbtD+gMszOhaXppjenVhQDu5yeKY=
+github.com/silenceper/wechat/v2 v2.1.2 h1:+QfIMiYfwST2ZloTwmYp0O0p5Y1LYRZxfLWfMuSE30k=
+github.com/silenceper/wechat/v2 v2.1.2/go.mod h1:0OprxYCCp2CZAKw06BBlnaczInTk2KxOLsKeiopshGg=
 github.com/sirupsen/logrus v1.8.1 h1:dJKuHgqk1NNQlqoA6BTlM1Wf9DOH3NBjQyu0h9+AZZE=
 github.com/sirupsen/logrus v1.8.1/go.mod h1:yWOB1SBYBC5VeMP7gHvWumXLIWorT60ONWic61uBYv0=
 github.com/skip2/go-qrcode v0.0.0-20190110000554-dc11ecdae0a9/go.mod h1:PLPIyL7ikehBD1OAjmKKiOEhbvWyHGaNDjquXMcYABo=
