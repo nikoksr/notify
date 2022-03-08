@@ -8,7 +8,7 @@ require (
 	github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20210506200512-3b3352a919f0
 	github.com/antihax/optional v1.0.0 // indirect
 	github.com/atc0005/go-teams-notify/v2 v2.6.1
-	github.com/aws/aws-sdk-go-v2 v1.14.0
+	github.com/aws/aws-sdk-go-v2 v1.15.0
 	github.com/aws/aws-sdk-go-v2/config v1.14.0
 	github.com/aws/aws-sdk-go-v2/credentials v1.9.0
 	github.com/aws/aws-sdk-go-v2/service/ses v1.13.0
@@ -41,7 +41,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.8.0 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sso v1.10.0 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sts v1.15.0 // indirect
-	github.com/aws/smithy-go v1.11.0 // indirect
+	github.com/aws/smithy-go v1.11.1 // indirect
 	github.com/bradfitz/gomemcache v0.0.0-20220106215444-fb4bf637b56d // indirect
 	github.com/cenkalti/backoff/v4 v4.1.2 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
