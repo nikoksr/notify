@@ -352,6 +352,8 @@ github.com/technoweenie/multipartstreamer v1.0.1 h1:XRztA5MXiR1TIRHxH2uNxXxaIkKQ
 github.com/technoweenie/multipartstreamer v1.0.1/go.mod h1:jNVxdtShOxzAsukZwTSw6MDx5eUJoiEBsSvzDU9uzog=
 github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.1816 h1:/u/AwyDdhQnxPPbKw3PSNGeG9X0wby8m8WXrtQkidEM=
 github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.1816/go.mod h1:PbP69y7uRiNdwtPE3/bVGDaPYA1sr4vuHaGLQAGzeW8=
+github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.2457 h1:qv9RHQ3ig3BT9o0e5vbuHuMPTIQTkvoLgTh8nviAPxk=
+github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.2457/go.mod h1:PbP69y7uRiNdwtPE3/bVGDaPYA1sr4vuHaGLQAGzeW8=
 github.com/utahta/go-linenotify v0.5.0 h1:E1tJaB/XhqRY/iz203FD0MaHm10DjQPOq5/Mem2A3Gs=
 github.com/utahta/go-linenotify v0.5.0/go.mod h1:KsvBXil2wx+ByaCR0e+IZKTbp4pDesc7yjzRigLf6pE=
 github.com/yuin/goldmark v1.1.25/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
