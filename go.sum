@@ -60,6 +60,8 @@ github.com/aws/aws-sdk-go-v2 v1.15.0 h1:f9kWLNfyCzCB43eupDAk3/XgJ2EpgktiySD6leqs
 github.com/aws/aws-sdk-go-v2 v1.15.0/go.mod h1:lJYcuZZEHWNIb6ugJjbQY1fykdoobWbOS7kJYb4APoI=
 github.com/aws/aws-sdk-go-v2 v1.16.0 h1:cBAYjiiexRAg9v2z9vb6IdxAa7ef4KCtjW7w7e3GxGo=
 github.com/aws/aws-sdk-go-v2 v1.16.0/go.mod h1:lJYcuZZEHWNIb6ugJjbQY1fykdoobWbOS7kJYb4APoI=
+github.com/aws/aws-sdk-go-v2 v1.16.1 h1:udzee98w8H6ikRgtFdVN9JzzYEbi/quFfSvduZETJIU=
+github.com/aws/aws-sdk-go-v2 v1.16.1/go.mod h1:ytwTPBG6fXTZLxxeeCCWj2/EMYp/xDUgX+OET6TLNNU=
 github.com/aws/aws-sdk-go-v2/config v1.13.1 h1:yLv8bfNoT4r+UvUKQKqRtdnvuWGMK5a82l4ru9Jvnuo=
 github.com/aws/aws-sdk-go-v2/config v1.13.1/go.mod h1:Ba5Z4yL/UGbjQUzsiaN378YobhFo0MLfueXGiOsYtEs=
 github.com/aws/aws-sdk-go-v2/config v1.14.0 h1:Yr8/7R6H8nqqfqgLATrcB83ax6FE2HcDXEB54XPhE98=
@@ -156,6 +158,8 @@ github.com/aws/smithy-go v1.11.0 h1:nOfSDwiiH232f90OuevPnAEQO5ZqH+xnn8uGVsvBCw4=
 github.com/aws/smithy-go v1.11.0/go.mod h1:3xHYmszWVx2c0kIwQeEVf9uSm4fYZt67FBJnwub1bgM=
 github.com/aws/smithy-go v1.11.1 h1:IQ+lPZVkSM3FRtyaDox41R8YS6iwPMYIreejOgPW49g=
 github.com/aws/smithy-go v1.11.1/go.mod h1:3xHYmszWVx2c0kIwQeEVf9uSm4fYZt67FBJnwub1bgM=
+github.com/aws/smithy-go v1.11.2 h1:eG/N+CcUMAvsdffgMvjMKwfyDzIkjM6pfxMJ8Mzc6mE=
+github.com/aws/smithy-go v1.11.2/go.mod h1:3xHYmszWVx2c0kIwQeEVf9uSm4fYZt67FBJnwub1bgM=
 github.com/blinkbean/dingtalk v0.0.0-20210905093040-7d935c0f7e19 h1:pamuM2sgLJLoMWfchc6y071z8ifalajU7btZmZNhoH4=
 github.com/blinkbean/dingtalk v0.0.0-20210905093040-7d935c0f7e19/go.mod h1:9BaLuGSBqY3vT5hstValh48DbsKO7vaHaJnG9pXwbto=
 github.com/bradfitz/gomemcache v0.0.0-20190913173617-a41fca850d0b/go.mod h1:H0wQNHz2YrLsuXOZozoeDmnHXkNCRmMW0gwFWDfEZDA=
