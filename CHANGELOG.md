@@ -1,6 +1,43 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.23.0] - 2022-03-25
+
+### Build
+
+- Apply latest breaking changes to git-cliff config
+
+### Dependencies
+
+- Update module github.com/plivo/plivo-go to v7.6.1
+- Update module github.com/silenceper/wechat/v2 to v2.1.2
+- Update module github.com/aws/aws-sdk-go-v2 to v1.14.0
+- Update module github.com/aws/aws-sdk-go-v2/config to v1.14.0
+- Update module github.com/aws/aws-sdk-go-v2/service/ses to v1.13.0
+- Update module github.com/aws/aws-sdk-go-v2/service/sns to v1.16.0
+- Update module github.com/atc0005/go-teams-notify/v2 to v2.6.1
+- Update module github.com/aws/aws-sdk-go-v2 to v1.15.0
+- Update module github.com/aws/aws-sdk-go-v2/config to v1.15.0
+- Update module github.com/aws/aws-sdk-go-v2/service/ses to v1.14.0
+- Update module github.com/aws/aws-sdk-go-v2/service/sns to v1.17.0
+- Update module github.com/aws/aws-sdk-go-v2/service/sns to v1.17.1
+- Update module github.com/textmagic/textmagic-rest-go-v2/v2 to v2.0.2457
+- Update module github.com/stretchr/testify to v1.7.1
+- Update github.com/dghubble/go-twitter digest to 995614a
+- Update module github.com/aws/aws-sdk-go-v2/config to v1.15.1
+- Update module github.com/aws/aws-sdk-go-v2/service/ses to v1.14.1
+- Update module github.com/aws/aws-sdk-go-v2/service/sns to v1.17.2
+- Update module github.com/aws/aws-sdk-go-v2 to v1.16.1
+- Update module github.com/aws/aws-sdk-go-v2/service/ses to v1.14.2
+- Update module github.com/aws/aws-sdk-go-v2/config to v1.15.2
+- Update golangci/golangci-lint-action action to v3 (#215)
+- Update actions/setup-go action to v3 (#222)
+- Update actions/checkout action to v3 (#223)
+- Update actions/cache action to v3 (#235)
+- Update module github.com/aws/aws-sdk-go-v2/service/sns to v1.17.3 (#243)
+- Update module github.com/plivo/plivo-go to v7.8.0 (#224)
+- Update module github.com/bwmarrin/discordgo to v0.24.0 (#225)
+
 ## [0.22.0] - 2022-02-13
 
 ### Dependencies
