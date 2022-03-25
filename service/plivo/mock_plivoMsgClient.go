@@ -3,7 +3,7 @@
 package plivo
 
 import (
-	plivo "github.com/plivo/plivo-go"
+	plivo "github.com/plivo/plivo-go/v7"
 	mock "github.com/stretchr/testify/mock"
 )
 
