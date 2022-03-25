@@ -5,7 +5,7 @@ import (
 	"errors"
 	"testing"
 
-	plivo "github.com/plivo/plivo-go"
+	plivo "github.com/plivo/plivo-go/v7"
 	"github.com/stretchr/testify/require"
 )
 
