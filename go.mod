@@ -12,7 +12,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/config v1.15.2
 	github.com/aws/aws-sdk-go-v2/credentials v1.11.1
 	github.com/aws/aws-sdk-go-v2/service/ses v1.14.2
-	github.com/aws/aws-sdk-go-v2/service/sns v1.17.2
+	github.com/aws/aws-sdk-go-v2/service/sns v1.17.3
 	github.com/blinkbean/dingtalk v0.0.0-20210905093040-7d935c0f7e19
 	github.com/bwmarrin/discordgo v0.24.0
 	github.com/cschomburg/go-pushbullet v0.0.0-20171206132031-67759df45fbb
@@ -23,7 +23,7 @@ require (
 	github.com/line/line-bot-sdk-go v7.8.0+incompatible
 	github.com/mailgun/mailgun-go/v4 v4.6.0
 	github.com/pkg/errors v0.9.1
-	github.com/plivo/plivo-go v7.6.1+incompatible
+	github.com/plivo/plivo-go/v7 v7.8.0
 	github.com/sendgrid/sendgrid-go v3.10.5+incompatible
 	github.com/silenceper/wechat/v2 v2.1.2
 	github.com/slack-go/slack v0.10.2

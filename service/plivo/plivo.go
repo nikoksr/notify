@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"strings"
 
-	plivo "github.com/plivo/plivo-go"
+	plivo "github.com/plivo/plivo-go/v7"
 )
 
 // ClientOptions allow you to configure a Plivo SDK client.
