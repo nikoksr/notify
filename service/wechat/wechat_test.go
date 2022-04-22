@@ -10,6 +10,8 @@ import (
 )
 
 func TestAddReceivers(t *testing.T) {
+	t.Parallel()
+
 	assert := require.New(t)
 
 	svc := &Service{
@@ -22,6 +24,8 @@ func TestAddReceivers(t *testing.T) {
 }
 
 func TestSend(t *testing.T) {
+	t.Parallel()
+
 	assert := require.New(t)
 
 	svc := &Service{

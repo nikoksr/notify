@@ -25,7 +25,8 @@ type SNSSendMessageClient struct {
 // SendMessage Client specific for SNS using aws sdk v2.
 func (s SNSSendMessageClient) SendMessage(ctx context.Context,
 	params *sns.PublishInput,
-	optFns ...func(*sns.Options)) (*sns.PublishOutput, error) {
+	optFns ...func(*sns.Options),
+) (*sns.PublishOutput, error) {
 	return s.client.Publish(ctx, params, optFns...)
 }
 

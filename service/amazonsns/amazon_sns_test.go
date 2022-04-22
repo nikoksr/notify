@@ -16,12 +16,15 @@ type SNSSendMessageMock struct {
 
 func (m *SNSSendMessageMock) SendMessage(ctx context.Context,
 	params *sns.PublishInput,
-	optFns ...func(*sns.Options)) (*sns.PublishOutput, error) {
+	optFns ...func(*sns.Options),
+) (*sns.PublishOutput, error) {
 	args := m.Called(ctx, params, optFns)
 	return args.Get(0).(*sns.PublishOutput), args.Error(1)
 }
 
 func TestAddReceivers(t *testing.T) {
+	t.Parallel()
+
 	amazonSNS, err := New("", "", "")
 	if err != nil {
 		t.Error(err)
@@ -30,6 +33,8 @@ func TestAddReceivers(t *testing.T) {
 }
 
 func TestSendMessageWithNoTopicsConfigured(t *testing.T) {
+	t.Parallel()
+
 	mockSns := new(SNSSendMessageMock)
 	amazonSNS := AmazonSNS{
 		sendMessageClient: mockSns,
@@ -41,6 +46,8 @@ func TestSendMessageWithNoTopicsConfigured(t *testing.T) {
 }
 
 func TestSendMessageWithSucessAndOneTopicCOnfigured(t *testing.T) {
+	t.Parallel()
+
 	mockSns := new(SNSSendMessageMock)
 	output := sns.PublishOutput{}
 	mockSns.On("SendMessage", mock.Anything, mock.Anything, mock.Anything).
@@ -58,6 +65,8 @@ func TestSendMessageWithSucessAndOneTopicCOnfigured(t *testing.T) {
 }
 
 func TestSendMessageWithSucessAndTwoTopicCOnfigured(t *testing.T) {
+	t.Parallel()
+
 	mockSns := new(SNSSendMessageMock)
 	output := sns.PublishOutput{}
 	mockSns.On("SendMessage", mock.Anything, mock.Anything, mock.Anything).
@@ -78,6 +87,8 @@ func TestSendMessageWithSucessAndTwoTopicCOnfigured(t *testing.T) {
 }
 
 func TestSendMessageWithErrorAndOneQueueConfiguredShouldReturnError(t *testing.T) {
+	t.Parallel()
+
 	mockSns := new(SNSSendMessageMock)
 	output := sns.PublishOutput{}
 	mockSns.On("SendMessage", mock.Anything, mock.Anything, mock.Anything).
@@ -97,6 +108,8 @@ func TestSendMessageWithErrorAndOneQueueConfiguredShouldReturnError(t *testing.T
 }
 
 func TestSendMessageWithErrorAndTwoQueueConfiguredShouldReturnErrorOnFirst(t *testing.T) {
+	t.Parallel()
+
 	mockSns := new(SNSSendMessageMock)
 	output := sns.PublishOutput{}
 	mockSns.On("SendMessage", mock.Anything, mock.Anything, mock.Anything).
