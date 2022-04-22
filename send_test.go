@@ -19,6 +19,7 @@ func TestNotifySend(t *testing.T) {
 	}
 
 	// Nil context
+	//nolint:staticcheck
 	if err := n.Send(nil, "subject", "message"); err != nil {
 		t.Errorf("Send() returned error: %v", err)
 	}
