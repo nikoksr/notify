@@ -5,6 +5,8 @@ import (
 )
 
 const defaultDisabled = false // Notifier is enabled by default
+// Compile-time check to ensure Notify implements Notifier.
+var _ Notifier = (*Notify)(nil)
 
 // Notify is the central struct for managing notification services and sending messages to them.
 type Notify struct {
