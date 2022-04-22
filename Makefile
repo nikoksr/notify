@@ -41,17 +41,5 @@ ci: lint test
 .PHONY: ci
 
 ###############################################################################
-# DEPENDENCIES
-###############################################################################
-
-changelog-latest:
-	@git cliff --config .cliff.toml --latest --strip header
-.PHONY: changelog-latest
-
-changelog-file:
-	@git cliff --config .cliff.toml -o CHANGELOG.md
-.PHONY: changelog-file
-
-###############################################################################
 
 .DEFAULT_GOAL := ci
