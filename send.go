@@ -26,7 +26,6 @@ func (n *Notify) send(ctx context.Context, subject, message string) error {
 		eg.Go(func() error {
 			return service.Send(ctx, subject, message)
 		})
-
 	}
 
 	err := eg.Wait()
