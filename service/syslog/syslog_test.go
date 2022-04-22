@@ -10,6 +10,8 @@ import (
 )
 
 func TestNew(t *testing.T) {
+	t.Parallel()
+
 	assert := require.New(t)
 
 	// Test creating a local writer with invalid log priority.
@@ -38,6 +40,8 @@ func TestNew(t *testing.T) {
 }
 
 func TestSend(t *testing.T) {
+	t.Parallel()
+
 	assert := require.New(t)
 
 	ctx := context.Background()

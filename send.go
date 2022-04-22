@@ -12,16 +12,20 @@ func (n *Notify) send(ctx context.Context, subject, message string) error {
 	if n.Disabled {
 		return nil
 	}
+	if ctx == nil {
+		ctx = context.Background()
+	}
 
 	var eg errgroup.Group
-
 	for _, service := range n.notifiers {
-		if service != nil {
-			s := service
-			eg.Go(func() error {
-				return s.Send(ctx, subject, message)
-			})
+		if service == nil {
+			continue
 		}
+
+		service := service
+		eg.Go(func() error {
+			return service.Send(ctx, subject, message)
+		})
 	}
 
 	err := eg.Wait()
@@ -39,5 +43,5 @@ func (n *Notify) Send(ctx context.Context, subject, message string) error {
 
 // Send calls the underlying notification services to send the given subject and message to their respective endpoints.
 func Send(ctx context.Context, subject, message string) error {
-	return std.send(ctx, subject, message)
+	return std.Send(ctx, subject, message)
 }

@@ -60,13 +60,13 @@ func (s *Service) LoginWithSessionCredentials(clientID, clientToken, serverToken
 
 	session, err := s.client.RestoreWithSession(session)
 	if err != nil {
-		return fmt.Errorf("restoring session failed: %v", err)
+		return fmt.Errorf("restoring session failed: %w", err)
 	}
 
 	// Save the updated session for future use without login.
 	err = writeSession(&session)
 	if err != nil {
-		return fmt.Errorf("error saving session: %v", err)
+		return fmt.Errorf("error saving session: %w", err)
 	}
 
 	return nil
@@ -79,7 +79,7 @@ func (s *Service) LoginWithQRCode() error {
 	if err == nil {
 		session, err = s.client.RestoreWithSession(session)
 		if err != nil {
-			return fmt.Errorf("restoring session failed: %v", err)
+			return fmt.Errorf("restoring session failed: %w", err)
 		}
 	} else {
 		// No saved session found; need to login again.
@@ -91,13 +91,13 @@ func (s *Service) LoginWithQRCode() error {
 
 		session, err = s.client.Login(qr)
 		if err != nil {
-			return fmt.Errorf("error during login: %v", err)
+			return fmt.Errorf("error during login: %w", err)
 		}
 	}
 
 	err = writeSession(&session)
 	if err != nil {
-		return fmt.Errorf("error saving session: %v", err)
+		return fmt.Errorf("error saving session: %w", err)
 	}
 
 	<-time.After(qrLoginWaitTime)
