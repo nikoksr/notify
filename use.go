@@ -21,5 +21,5 @@ func (n *Notify) UseServices(service ...Notifier) {
 
 // UseServices adds the given service(s) to the Notifier's services list.
 func UseServices(service ...Notifier) {
-	std.useServices(service...)
+	std.UseServices(service...)
 }
