@@ -58,6 +58,10 @@ _ = notify.Send(
 )
 ```
 
+## Contributing <a id="contributing"></a>
+
+Contributions, issues and feature requests are very welcome! Feel free to check [issues page](https://github.com/nikoksr/notify/issues). Please also take a look at the [contribution guidelines](https://github.com/nikoksr/notify/blob/main/CONTRIBUTING.md).
+
 ## Supported services <a id="supported_services"></a>
 
 > Please create feature requests for missing services (see [#3](https://github.com/nikoksr/notify/issues/3) for example)
@@ -89,9 +93,12 @@ _ = notify.Send(
 
 The [logo](https://github.com/MariaLetta/free-gophers-pack) was made by the amazing [MariaLetta](https://github.com/MariaLetta).
 
-## Contributing <a id="contributing"></a>
+## Similar projects <a id="similar_projects"></a>
 
-Contributions, issues and feature requests are very welcome! Feel free to check [issues page](https://github.com/nikoksr/notify/issues). Please also take a look at the [contribution guidelines](https://github.com/nikoksr/notify/blob/main/CONTRIBUTING.md).
+> Just to clarify, Notify was not inspired by any other project. I created it as a tiny subpackage of a larger project and only later decided to make it a standalone project. In this section I just want to mention other great projects.
+
+  - [containrrr/shoutrrr](https://github.com/containrrr/shoutrrr)
+  - [caronc/apprise](https://github.com/caronc/apprise)
 
 ## Show your support <a id="support"></a>
 
