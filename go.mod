@@ -26,7 +26,7 @@ require (
 	github.com/plivo/plivo-go/v7 v7.8.0
 	github.com/sendgrid/sendgrid-go v3.10.5+incompatible
 	github.com/silenceper/wechat/v2 v2.1.2
-	github.com/slack-go/slack v0.10.2
+	github.com/slack-go/slack v0.10.3
 	github.com/stretchr/testify v1.7.1
 	github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.2457
 	github.com/utahta/go-linenotify v0.5.0
