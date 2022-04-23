@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"time"
 
 	"github.com/pkg/errors"
 )
@@ -61,17 +62,25 @@ func (p *Service) Send(ctx context.Context, subject, content string) error {
 		if err != nil {
 			return err
 		}
+		req, err := http.NewRequestWithContext(ctx, "POST", p.url, bytes.NewBuffer(data))
+		if err != nil {
+			return errors.Wrap(err, "failed to create bark request")
+		}
 
-		resp, err := http.Post(p.url, "application/json; charset=utf-8", bytes.NewReader(data))
+		req.Header.Set("Content-Type", "application/json; charset=utf-8")
+		httpClient := &http.Client{
+			Timeout: time.Second * 5,
+		}
+		resp, err := httpClient.Do(req)
 		if err != nil {
 			return errors.Wrap(err, "send bark request failed")
 		}
+		defer resp.Body.Close()
+
 		result, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
 			return err
 		}
-		defer resp.Body.Close()
-
 		if resp.StatusCode != http.StatusOK {
 			err = fmt.Errorf("statusCode: %d, body: %v", resp.StatusCode, string(result))
 			return errors.Wrap(err, "send bark message failed")
