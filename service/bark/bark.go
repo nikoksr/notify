@@ -11,14 +11,17 @@ import (
 	"github.com/pkg/errors"
 )
 
+// Service allow you to configure Bark service.
 type Service struct {
 	Server    string
 	DeviceKey string
 	url       string
 }
 
+// DefaultServer is the default server to use for the bark service.
 const DefaultServer = "api.day.app"
 
+// New returns a new instance of Bark service.
 func New(deviceKey, server string) *Service {
 	p := &Service{
 		Server:    server,
@@ -32,6 +35,7 @@ func New(deviceKey, server string) *Service {
 	return p
 }
 
+// Send takes a message subject and a message content and sends them to bark application.
 func (p *Service) Send(ctx context.Context, subject, content string) error {
 	select {
 	case <-ctx.Done():
