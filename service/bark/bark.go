@@ -69,7 +69,7 @@ func NewWithServers(deviceKey string, serverURLs ...string) *Service {
 		client:    defaultHTTPClient(),
 	}
 
-	if len(serverURLs) > 0 {
+	if len(serverURLs) == 0 {
 		serverURLs = append(serverURLs, DefaultServerURL)
 	}
 
