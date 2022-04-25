@@ -1,6 +1,7 @@
 package notify
 
 import (
+	"context"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
@@ -95,5 +96,23 @@ func TestNewWithServices(t *testing.T) {
 		if diff != "" {
 			t.Errorf("NewWithServices(mail.New()) did not correctly use service:\n%s", diff)
 		}
+	}
+}
+
+func TestGlobal(t *testing.T) {
+	t.Parallel()
+
+	ctx := context.Background()
+	if err := Send(ctx, "subject", "message"); err != nil {
+		t.Errorf("Send() with no receivers returned error: %v", err)
+	}
+
+	UseServices(mail.New("", ""), nil)
+	if len(std.notifiers) != 1 {
+		t.Errorf("UseServices(mail.New()) was expected to have 1 notifier but had %d", len(std.notifiers))
+	}
+
+	if err := Send(ctx, "subject", "message"); err == nil {
+		t.Error("Send() with invalid mail returned no error")
 	}
 }
