@@ -1,12 +1,12 @@
+# Folders
 bin/
 build/
-debug.test
 .idea/
 .vscode/
+tmp/
+
+# Files
 *.log
 .gh-docker-token
 .env
-
-# Server specific
-server/certs/
-tmp/
+coverage.out
