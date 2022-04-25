@@ -38,4 +38,25 @@ func TestNotifySend(t *testing.T) {
 	if err := n.Send(ctx, "subject", "message"); err == nil {
 		t.Errorf("Send() invalid mail returned no error: %v", err)
 	}
+
+	// After disabling the Notifier, Send() should return silently.
+	n.WithOptions(Disable)
+
+	if err := n.Send(ctx, "subject", "message"); err != nil {
+		t.Errorf("Send() of disabled Notifier returned error: %v", err)
+	}
+
+	n.WithOptions(Enable)
+
+	// Smuggle in a nil service. This usually never happens, since UseServices filters out nil services. But, it's good
+	// to test anyway.
+	n.notifiers = make([]Notifier, 0)
+	n.notifiers = append(n.notifiers, nil)
+
+	if err := n.Send(ctx, "subject", "message"); err != nil {
+		t.Errorf("Send() of disabled Notifier returned no error: %v", err)
+	}
+	if r := recover(); r != nil {
+		t.Errorf("Send() with nil service panicked: %v", r)
+	}
 }
