@@ -8,18 +8,18 @@ func (n *Notify) useService(service Notifier) {
 }
 
 // useServices adds the given service(s) to the Notifier's services list.
-func (n *Notify) useServices(service ...Notifier) {
-	for _, s := range service {
+func (n *Notify) useServices(services ...Notifier) {
+	for _, s := range services {
 		n.useService(s)
 	}
 }
 
 // UseServices adds the given service(s) to the Notifier's services list.
-func (n *Notify) UseServices(service ...Notifier) {
-	n.useServices(service...)
+func (n *Notify) UseServices(services ...Notifier) {
+	n.useServices(services...)
 }
 
 // UseServices adds the given service(s) to the Notifier's services list.
-func UseServices(service ...Notifier) {
-	std.UseServices(service...)
+func UseServices(services ...Notifier) {
+	std.UseServices(services...)
 }
