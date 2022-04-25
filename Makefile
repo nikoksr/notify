@@ -19,6 +19,10 @@ test:
 	go test -failfast -race -timeout=5m ./...
 .PHONY: test
 
+cover:
+	go test -race -covermode=atomic -coverprofile=coverage.out ./...
+.PHONY: cover
+
 ###############################################################################
 # CODE HEALTH
 ###############################################################################
