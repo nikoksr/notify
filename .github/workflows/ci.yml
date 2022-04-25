@@ -36,8 +36,10 @@ jobs:
           key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
           restore-keys: |
             ${{ runner.os }}-go-
-      - name: Test
-        run: go test -failfast -race ./...
+      - name: Test coverage
+        run: go test -race -covermode=atomic -coverprofile=coverage.out
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2
   lint:
     runs-on: ubuntu-latest
     steps:
