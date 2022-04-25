@@ -115,12 +115,7 @@ func (s *Service) send(ctx context.Context, serverURL, subject, content string) 
 		return errors.Wrap(err, "marshal message")
 	}
 
-	u, err := url.Parse(serverURL)
-	if err != nil {
-		return errors.Wrap(err, "parse bark server url")
-	}
-	u.Path = path.Join(u.Path, "push")
-	pushURL := u.String()
+	pushURL := serverURL + "push"
 
 	// Create new request
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, pushURL, bytes.NewBuffer(messageJSON))
