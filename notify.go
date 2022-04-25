@@ -66,6 +66,15 @@ func New() *Notify {
 	return NewWithOptions()
 }
 
+// NewWithServices returns a new instance of Notify with the given services. By default, the Notify instance is enabled.
+// If no services are provided, it returns a new Notify instance with default options.
+func NewWithServices(services ...Notifier) *Notify {
+	n := New()
+	n.UseServices(services...)
+
+	return n
+}
+
 // Create the package level Notify instance.
 var std = New()
 
