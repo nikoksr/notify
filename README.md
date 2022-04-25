@@ -58,6 +58,15 @@ _ = notify.Send(
 )
 ```
 
+#### Recommendation <a id="recommendation"></a>
+
+In this example, we use the global `Send()` function. Similar to most logging libraries such as
+[zap](https://github.com/uber-go/zap), we provide global functions for convenience. However, as with most logging
+libraries, we also recommend avoiding the use of global functions as much as possible. Instead, use one of our versatile
+constructor functions to create a new local `Notify` instance and pass it down the stream.
+
+Read the [library docs](https://pkg.go.dev/github.com/nikoksr/notify) for more information.
+
 ## Contributing <a id="contributing"></a>
 
 Yes, please! Contributions of all kinds are very welcome! Feel free to check our [open issues](https://github.com/nikoksr/notify/issues). Please also take a look at the [contribution guidelines](https://github.com/nikoksr/notify/blob/main/CONTRIBUTING.md).
