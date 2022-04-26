@@ -33,7 +33,7 @@ require (
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
 )
 
-require github.com/google/go-cmp v0.5.7
+require github.com/google/go-cmp v0.5.8
 
 require (
 	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.12.4 // indirect
