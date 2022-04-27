@@ -65,7 +65,7 @@ In this example, we use the global `Send()` function. Similar to most logging li
 libraries, we also recommend avoiding the use of global functions as much as possible. Instead, use one of our versatile
 constructor functions to create a new local `Notify` instance and pass it down the stream.
 
-Read the [library docs](https://pkg.go.dev/github.com/nikoksr/notify) for more information.
+Read the [library docs](https://pkg.go.dev/github.com/nikoksr/notify#section-documentation) for more information.
 
 ## Contributing <a id="contributing"></a>
 
