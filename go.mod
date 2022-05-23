@@ -21,7 +21,7 @@ require (
 	github.com/go-telegram-bot-api/telegram-bot-api v4.6.4+incompatible
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	github.com/line/line-bot-sdk-go v7.8.0+incompatible
-	github.com/mailgun/mailgun-go/v4 v4.6.1
+	github.com/mailgun/mailgun-go/v4 v4.6.2
 	github.com/pkg/errors v0.9.1
 	github.com/plivo/plivo-go/v7 v7.9.0
 	github.com/sendgrid/sendgrid-go v3.10.5+incompatible
