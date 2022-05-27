@@ -289,6 +289,8 @@ github.com/mailgun/mailgun-go/v4 v4.7.0 h1:G55jdfuCaKNVxYDh7VB/3DaF7JFtkGM75qxbU
 github.com/mailgun/mailgun-go/v4 v4.7.0/go.mod h1:FJlF9rI5cQT+mrwujtJjPMbIVy3Ebor9bKTVsJ0QU40=
 github.com/mailgun/mailgun-go/v4 v4.8.0 h1:eq6gmm4m8WOqUarlU+Y9FPQcIUcvm32lCjIeiH3sxn4=
 github.com/mailgun/mailgun-go/v4 v4.8.0/go.mod h1:FJlF9rI5cQT+mrwujtJjPMbIVy3Ebor9bKTVsJ0QU40=
+github.com/mailgun/mailgun-go/v4 v4.8.1 h1:1+MdKakJuXnW2JJDbyPdO1ngAANOyHyVPxQvFF8Sq6c=
+github.com/mailgun/mailgun-go/v4 v4.8.1/go.mod h1:FJlF9rI5cQT+mrwujtJjPMbIVy3Ebor9bKTVsJ0QU40=
 github.com/mattn/go-colorable v0.1.1/go.mod h1:FuOcm+DKB9mbwrcAfNl7/TZVBZ6rcnceauSikq3lYCQ=
 github.com/mattn/go-colorable v0.1.12 h1:jF+Du6AlPIjs2BiUiQlKOX0rt3SujHxPnksPKZbaA40=
 github.com/mattn/go-colorable v0.1.12/go.mod h1:u5H1YNBxpqRaxsYJYSkiCWKzEfiAb1Gb520KVy5xxl4=
