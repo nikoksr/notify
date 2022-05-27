@@ -36,6 +36,7 @@ require (
 require (
 	github.com/appleboy/go-fcm v0.1.5
 	github.com/google/go-cmp v0.5.8
+	github.com/mattn/go-mastodon v0.0.4
 )
 
 require (
@@ -77,6 +78,7 @@ require (
 	github.com/tidwall/gjson v1.14.1 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.0 // indirect
+	github.com/tomnomnom/linkheader v0.0.0-20180905144013-02ca5825eb80 //indirect
 	golang.org/x/crypto v0.0.0-20220411220226-7b82a4e95df4 // indirect
 	golang.org/x/net v0.0.0-20220225172249-27dd8689420f // indirect
 	golang.org/x/oauth2 v0.0.0-20211104180415-d3ed0bb246c8 // indirect
