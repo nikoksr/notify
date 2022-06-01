@@ -30,7 +30,7 @@ require (
 	github.com/stretchr/testify v1.7.1
 	github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.2457
 	github.com/utahta/go-linenotify v0.5.0
-	golang.org/x/sync v0.0.0-20220513210516-0976fa681c29
+	golang.org/x/sync v0.0.0-20220601150217-0de741cfad7f
 )
 
 require (
