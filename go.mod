@@ -27,7 +27,7 @@ require (
 	github.com/sendgrid/sendgrid-go v3.10.5+incompatible
 	github.com/silenceper/wechat/v2 v2.1.3
 	github.com/slack-go/slack v0.10.3
-	github.com/stretchr/testify v1.7.1
+	github.com/stretchr/testify v1.7.2
 	github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.3361
 	github.com/utahta/go-linenotify v0.5.0
 	golang.org/x/sync v0.0.0-20220601150217-0de741cfad7f
@@ -84,5 +84,5 @@ require (
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
-	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
