@@ -8,8 +8,8 @@ import (
 )
 
 const (
-	ModeMarkdown = "Markdown"
-	ModeHTML     = "HTML"
+	ModeMarkdown = tgbotapi.ModeMarkdown
+	ModeHTML     = tgbotapi.ModeHTML
 )
 
 var parseMode = ModeHTML // HTML is the default mode.
