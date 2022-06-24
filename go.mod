@@ -27,7 +27,7 @@ require (
 	github.com/sendgrid/sendgrid-go v3.10.5+incompatible
 	github.com/silenceper/wechat/v2 v2.1.3
 	github.com/slack-go/slack v0.11.0
-	github.com/stretchr/testify v1.7.2
+	github.com/stretchr/testify v1.7.5
 	github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.3361
 	github.com/utahta/go-linenotify v0.5.0
 	golang.org/x/sync v0.0.0-20220601150217-0de741cfad7f
@@ -72,7 +72,7 @@ require (
 	github.com/sirupsen/logrus v1.8.1 // indirect
 	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e // indirect
 	github.com/spf13/cast v1.4.1 // indirect
-	github.com/stretchr/objx v0.3.0 // indirect
+	github.com/stretchr/objx v0.4.0 // indirect
 	github.com/technoweenie/multipartstreamer v1.0.1 // indirect
 	github.com/tidwall/gjson v1.14.1 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
