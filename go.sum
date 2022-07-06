@@ -236,6 +236,8 @@ github.com/dghubble/go-twitter v0.0.0-20220626024101-68c0170dc641 h1:rPOAd+sNoax
 github.com/dghubble/go-twitter v0.0.0-20220626024101-68c0170dc641/go.mod h1:W7cClyd2pauUMiUPU0D054DWpD5Qove2BoNdecqJGIg=
 github.com/dghubble/go-twitter v0.0.0-20220702170435-7faa89b027c5 h1:tbavH/kY2tP10GzCQimYpZjPTTNFBvkCIx1p1QAD6xQ=
 github.com/dghubble/go-twitter v0.0.0-20220702170435-7faa89b027c5/go.mod h1:q7VYuSasPO79IE/QBNAMYVNlzZNy4Zr7vay6is50u5I=
+github.com/dghubble/go-twitter v0.0.0-20220706021256-cdf1c5ea4e19 h1:yBc09o4K0aqh4BPkL092XBGU3jfTDD3dEvrt2quP0hk=
+github.com/dghubble/go-twitter v0.0.0-20220706021256-cdf1c5ea4e19/go.mod h1:q7VYuSasPO79IE/QBNAMYVNlzZNy4Zr7vay6is50u5I=
 github.com/dghubble/oauth1 v0.7.1 h1:JjbOVSVVkms9A4h/sTQy5Jb2nFuAAVb2qVYgenJPyrE=
 github.com/dghubble/oauth1 v0.7.1/go.mod h1:0eEzON0UY/OLACQrmnjgJjmvCGXzjBCsZqL1kWDXtF0=
 github.com/dghubble/sling v1.4.0 h1:/n8MRosVTthvMbwlNZgLx579OGVjUOy3GNEv5BIqAWY=
