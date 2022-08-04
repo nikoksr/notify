@@ -8,6 +8,9 @@ export GOPROXY = https://proxy.golang.org,direct
 # Install all the build and lint dependencies
 setup:
 	go mod tidy
+	@go install mvdan.cc/gofumpt@latest
+	@go install github.com/daixiang0/gci@latest
+	@go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 .PHONY: setup
 
 ###############################################################################
@@ -26,12 +29,6 @@ cover:
 ###############################################################################
 # CODE HEALTH
 ###############################################################################
-
-setup:
-	@go install mvdan.cc/gofumpt@latest
-	@go install github.com/daixiang0/gci@latest
-	@go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
-.PHONY: setup
 
 fmt:
 	@gofumpt -w -l .
