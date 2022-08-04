@@ -5,7 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strings"
 	"time"
@@ -131,7 +131,7 @@ func (s *Service) send(ctx context.Context, serverURL, subject, content string) 
 	defer func() { _ = resp.Body.Close() }()
 
 	// Read response and verify success
-	result, err := ioutil.ReadAll(resp.Body)
+	result, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return errors.Wrap(err, "read response")
 	}
