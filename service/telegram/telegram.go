@@ -17,7 +17,8 @@ type Telegram struct {
 
 // New returns a new instance of a Telegram notification service.
 // For more information about telegram api token:
-//    -> https://pkg.go.dev/github.com/go-telegram-bot-api/telegram-bot-api#NewBotAPI
+//
+//	-> https://pkg.go.dev/github.com/go-telegram-bot-api/telegram-bot-api#NewBotAPI
 func New(apiToken string) (*Telegram, error) {
 	client, err := tgbotapi.NewBotAPI(apiToken)
 	if err != nil {

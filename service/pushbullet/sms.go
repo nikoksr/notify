@@ -19,7 +19,8 @@ type SMS struct {
 // Pushbullet nickname of the sms capable device from which messages are sent.
 // (https://help.pushbullet.com/articles/how-do-i-send-text-messages-from-my-computer/).
 // For more information about Pushbullet api token:
-//    -> https://docs.pushbullet.com/#api-overview
+//
+//	-> https://docs.pushbullet.com/#api-overview
 func NewSMS(apiToken, deviceNickname string) (*SMS, error) {
 	client := pushbullet.New(apiToken)
 
