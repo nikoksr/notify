@@ -35,7 +35,7 @@ require (
 
 require (
 	github.com/appleboy/go-fcm v0.1.5
-	github.com/go-lark/lark v1.7.1
+	github.com/go-lark/lark v1.7.2
 	github.com/google/go-cmp v0.5.8
 )
 
