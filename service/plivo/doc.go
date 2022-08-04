@@ -36,6 +36,5 @@ Usage:
 
 		log.Printf("notification sent")
 	}
-
 */
 package plivo

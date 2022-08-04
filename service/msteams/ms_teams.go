@@ -15,7 +15,8 @@ type MSTeams struct {
 
 // New returns a new instance of a MSTeams notification service.
 // For more information about telegram api token:
-//    -> https://github.com/atc0005/go-teams-notify#example-basic
+//
+//	-> https://github.com/atc0005/go-teams-notify#example-basic
 func New() *MSTeams {
 	client := goteamsnotify.NewClient()
 
@@ -30,7 +31,8 @@ func New() *MSTeams {
 // DisableWebhookValidation disables the validation of webhook URLs, including the validation of known prefixes so that
 // custom/private webhook URL endpoints can be used (e.g., testing purposes).
 // For more information about telegram api token:
-//    -> https://github.com/atc0005/go-teams-notify#example-disable-webhook-url-prefix-validation
+//
+//	-> https://github.com/atc0005/go-teams-notify#example-disable-webhook-url-prefix-validation
 func (m *MSTeams) DisableWebhookValidation() {
 	m.client.SkipWebhookURLValidationOnSend(true)
 }
@@ -44,7 +46,8 @@ func (m *MSTeams) AddReceivers(webHooks ...string) {
 // Send accepts a subject and a message body and sends them to all previously specified channels. Message body supports
 // html as markup language.
 // For more information about telegram api token:
-//    -> https://github.com/atc0005/go-teams-notify#example-basic
+//
+//	-> https://github.com/atc0005/go-teams-notify#example-basic
 func (m MSTeams) Send(ctx context.Context, subject, message string) error {
 	msgCard := goteamsnotify.NewMessageCard()
 	msgCard.Title = subject

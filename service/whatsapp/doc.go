@@ -35,6 +35,5 @@ Usage:
 
 		log.Println("notification sent")
 	}
-
 */
 package whatsapp
