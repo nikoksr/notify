@@ -8,6 +8,9 @@ export GOPROXY = https://proxy.golang.org,direct
 # Install all the build and lint dependencies
 setup:
 	go mod tidy
+	@go install mvdan.cc/gofumpt@latest
+	@go install github.com/daixiang0/gci@latest
+	@go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 .PHONY: setup
 
 ###############################################################################
@@ -28,16 +31,13 @@ cover:
 ###############################################################################
 
 fmt:
-	@go install mvdan.cc/gofumpt@latest
 	@gofumpt -w -l .
 
-	@go install github.com/daixiang0/gci@latest
-	@gci write --Section Standard --Section Default --Section "Prefix(github.com/nikoksr/notify)" .
+	@gci write --section Standard --section Default --section "Prefix(github.com/nikoksr/notify)" .
 .PHONY: fmt
 
 
 lint:
-	@go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 	@golangci-lint run --config .golangci.yml
 .PHONY: lint
 

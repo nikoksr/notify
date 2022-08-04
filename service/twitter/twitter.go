@@ -35,7 +35,8 @@ type Credentials struct {
 
 // New returns a new instance of a Slack notification service.
 // For more information about slack api token:
-//    -> https://pkg.go.dev/github.com/slack-go/slack#New
+//
+//	-> https://pkg.go.dev/github.com/slack-go/slack#New
 func New(credentials Credentials) (*Twitter, error) {
 	config := oauth1.NewConfig(credentials.ConsumerKey, credentials.ConsumerSecret)
 	token := oauth1.NewToken(credentials.AccessToken, credentials.AccessTokenSecret)

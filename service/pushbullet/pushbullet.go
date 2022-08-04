@@ -15,7 +15,8 @@ type Pushbullet struct {
 
 // New returns a new instance of a Pushbullet notification service.
 // For more information about Pushbullet api token:
-//    -> https://docs.pushbullet.com/#api-overview
+//
+//	-> https://docs.pushbullet.com/#api-overview
 func New(apiToken string) *Pushbullet {
 	client := pushbullet.New(apiToken)
 

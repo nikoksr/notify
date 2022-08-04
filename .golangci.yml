@@ -15,7 +15,6 @@ linters:
     - 'errcheck'
     - 'errorlint'
     - 'exportloopref'
-    - 'gofmt'
     - 'gofumpt'
     - 'goheader'
     - 'goimports'
