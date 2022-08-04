@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"sync"
+	"time"
 
 	"github.com/pkg/errors"
 	"github.com/silenceper/wechat/v2"
@@ -56,15 +57,14 @@ func New(cfg *Config) *Service {
 	}
 }
 
-// WaitForOneOffVerification waits for the verification call from the WeChat backend.
+// waitForOneOffVerification waits for the verification call from the WeChat backend.
 //
 // Should be running when (re-)applying settings in wechat configuration.
 //
 // Set devMode to true when using the sandbox.
 //
 // See https://developers.weixin.qq.com/doc/offiaccount/en/Basic_Information/Access_Overview.html
-func (s *Service) WaitForOneOffVerification(serverURL string, devMode bool, callback verificationCallbackFunc) error {
-	srv := &http.Server{Addr: serverURL}
+func (s *Service) waitForOneOffVerification(server *http.Server, devMode bool, callback verificationCallbackFunc) error {
 	verificationDone := &sync.WaitGroup{}
 	verificationDone.Add(1)
 
@@ -105,19 +105,49 @@ func (s *Service) WaitForOneOffVerification(serverURL string, devMode bool, call
 
 	var err error
 	go func() {
-		if innerErr := srv.ListenAndServe(); innerErr != http.ErrServerClosed {
-			err = errors.Wrapf(innerErr, "failed to start verification listener '%s'", serverURL)
+		if innerErr := server.ListenAndServe(); innerErr != http.ErrServerClosed {
+			err = errors.Wrapf(innerErr, "failed to start verification listener '%s'", server.Addr)
 		}
 	}()
 
 	// wait until verification is done and shutdown the server
 	verificationDone.Wait()
 
-	if innerErr := srv.Shutdown(context.TODO()); innerErr != nil {
-		err = errors.Wrap(innerErr, "failed to shutdown verification listerer")
+	if innerErr := server.Shutdown(context.TODO()); innerErr != nil {
+		err = errors.Wrap(innerErr, "failed to shutdown verification listener")
 	}
 
 	return err
+}
+
+// WaitForOneOffVerificationWithServer allows you to use WaitForOneOffVerification with a fully custom HTTP server.
+//
+// Should be running when (re-)applying settings in wechat configuration.
+//
+// Set devMode to true when using the sandbox.
+//
+// See https://developers.weixin.qq.com/doc/offiaccount/en/Basic_Information/Access_Overview.html
+func (s *Service) WaitForOneOffVerificationWithServer(server *http.Server, devMode bool, callback verificationCallbackFunc) error {
+	return s.waitForOneOffVerification(server, devMode, callback)
+}
+
+// WaitForOneOffVerification waits for the verification call from the WeChat backend. It uses an internal
+// ReadHeaderTimeout of 20 seconds to avoid blocking the caller for too long (potential slow loris attack). In case
+// that you want to use a different timeout, you can use the WaitForOneOffVerificationWithServer method instead. It
+// allows you to specify a custom server.
+//
+// Should be running when (re-)applying settings in wechat configuration.
+//
+// Set devMode to true when using the sandbox.
+//
+// See https://developers.weixin.qq.com/doc/offiaccount/en/Basic_Information/Access_Overview.html
+func (s *Service) WaitForOneOffVerification(serverURL string, devMode bool, callback verificationCallbackFunc) error {
+	server := &http.Server{
+		Addr:              serverURL,
+		ReadHeaderTimeout: 20 * time.Second,
+	}
+
+	return s.WaitForOneOffVerificationWithServer(server, devMode, callback)
 }
 
 // AddReceivers takes user ids and adds them to the internal users list. The Send method will send
