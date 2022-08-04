@@ -31,6 +31,5 @@ Usage:
 
 		log.Println("notification sent")
 	}
-
 */
 package twilio
