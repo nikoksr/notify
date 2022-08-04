@@ -27,17 +27,20 @@ cover:
 # CODE HEALTH
 ###############################################################################
 
-fmt:
+setup:
 	@go install mvdan.cc/gofumpt@latest
+	@go install github.com/daixiang0/gci@latest
+	@go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+.PHONY: setup
+
+fmt:
 	@gofumpt -w -l .
 
-	@go install github.com/daixiang0/gci@latest
 	@gci write --section Standard --section Default --section "Prefix(github.com/nikoksr/notify)" .
 .PHONY: fmt
 
 
 lint:
-	@go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 	@golangci-lint run --config .golangci.yml
 .PHONY: lint
 
