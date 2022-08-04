@@ -5,7 +5,6 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/nikoksr/notify/service/lark/mocks"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -47,7 +46,7 @@ func TestSendCustomApp(t *testing.T) {
 
 	// First, test for when the sender returns an error.
 	for _, tt := range tests {
-		mockSendToer := mocks.NewSendToer(t)
+		mockSendToer := NewSendToer(t)
 		mockSendToer.
 			On("SendTo", "subject", "message", tt.id, string(tt.typ)).
 			Return(errors.New(""))
@@ -64,7 +63,7 @@ func TestSendCustomApp(t *testing.T) {
 
 	// Then test for when the sender does not return an error.
 	for _, tt := range tests {
-		mockSendToer := mocks.NewSendToer(t)
+		mockSendToer := NewSendToer(t)
 		mockSendToer.
 			On("SendTo", "subject", "message", tt.id, string(tt.typ)).
 			Return(nil)
@@ -77,6 +76,5 @@ func TestSendCustomApp(t *testing.T) {
 		assert.Nil(err)
 
 		mockSendToer.AssertExpectations(t)
-
 	}
 }

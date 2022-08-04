@@ -51,8 +51,8 @@ type receiverIDType string
 
 const (
 	openID  receiverIDType = "open_id"
-	userID                 = "user_id"
-	unionID                = "union_id"
-	email                  = "email"
-	chatID                 = "chat_id"
+	userID  receiverIDType = "user_id"
+	unionID receiverIDType = "union_id"
+	email   receiverIDType = "email"
+	chatID  receiverIDType = "chat_id"
 )

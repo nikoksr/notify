@@ -8,47 +8,46 @@ https://open.larksuite.com/document/home/develop-a-bot-in-5-minutes/create-an-ap
 
 Usage:
 
-  package main
+	package main
 
-  import (
-    "context"
-    "log"
+	import (
+	  "context"
+	  "log"
 
-    "github.com/nikoksr/notify"
-    "github.com/nikoksr/notify/service/lark"
-  )
+	  "github.com/nikoksr/notify"
+	  "github.com/nikoksr/notify/service/lark"
+	)
 
-  const (
-    webhookURL = "https://open.feishu.cn/open-apis/bot/v2/hook/xxx"
-    appId      = "xxx"
-    appSecret  = "xxx"
-  )
+	const (
+	  webhookURL = "https://open.feishu.cn/open-apis/bot/v2/hook/xxx"
+	  appId      = "xxx"
+	  appSecret  = "xxx"
+	)
 
-  func main() {
-    // Two types of services are available depending on your requirements.
-    larkWebhookService := lark.NewWebhookService(webhookURL)
-    larkCustomAppService := lark.NewCustomAppService(appId, appSecret)
+	func main() {
+	  // Two types of services are available depending on your requirements.
+	  larkWebhookService := lark.NewWebhookService(webhookURL)
+	  larkCustomAppService := lark.NewCustomAppService(appId, appSecret)
 
-    // Lark implements five types of receiver IDs. You'll need to specify the
-    // type using the respective helper functions when adding them as receivers
-    // for the custom app service.
-    larkCustomAppService.AddReceivers(
-      lark.OpenID("xxx"),
-      lark.UserID("xxx"),
-      lark.UnionID("xxx"),
-      lark.Email("xyz@example.com"),
-      lark.ChatID("xxx"),
-    )
+	  // Lark implements five types of receiver IDs. You'll need to specify the
+	  // type using the respective helper functions when adding them as receivers
+	  // for the custom app service.
+	  larkCustomAppService.AddReceivers(
+	    lark.OpenID("xxx"),
+	    lark.UserID("xxx"),
+	    lark.UnionID("xxx"),
+	    lark.Email("xyz@example.com"),
+	    lark.ChatID("xxx"),
+	  )
 
-    notifier := notify.New()
-    notifier.UseServices(larkWebhookService, larkCustomAppService)
+	  notifier := notify.New()
+	  notifier.UseServices(larkWebhookService, larkCustomAppService)
 
-    if err := notifier.Send(context.Background(), "subject", "message"); err != nil {
-      log.Fatalf("notifier.Send() failed: %s", err.Error())
-    }
+	  if err := notifier.Send(context.Background(), "subject", "message"); err != nil {
+	    log.Fatalf("notifier.Send() failed: %s", err.Error())
+	  }
 
-    log.Println("notification sent")
-  }
+	  log.Println("notification sent")
+	}
 */
-
 package lark

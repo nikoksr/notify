@@ -5,17 +5,18 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/nikoksr/notify/service/lark/mocks"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestSendWebhook(t *testing.T) {
+	t.Parallel()
+
 	assert := assert.New(t)
 	ctx := context.Background()
 
 	// First, test for when the sender returns an error.
 	{
-		mockSender := mocks.NewSender(t)
+		mockSender := NewSender(t)
 		mockSender.
 			On("Send", "subject", "message").
 			Return(errors.New(""))
@@ -29,7 +30,7 @@ func TestSendWebhook(t *testing.T) {
 
 	// Then test for when the sender does not return an error.
 	{
-		mockSender := mocks.NewSender(t)
+		mockSender := NewSender(t)
 		mockSender.
 			On("Send", "subject", "message").
 			Return(nil)

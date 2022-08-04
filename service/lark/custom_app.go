@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/go-lark/lark"
+
 	"github.com/nikoksr/notify"
 )
 
@@ -32,7 +33,8 @@ func NewCustomAppService(appID, appSecret string) *customAppService {
 	bot.SetClient(&http.Client{
 		Timeout: 8 * time.Second,
 	})
-	bot.StartHeartbeat()
+
+	_ = bot.StartHeartbeat()
 
 	return &customAppService{
 		receiveIDs: make([]*receiverID, 0),
@@ -43,16 +45,16 @@ func NewCustomAppService(appID, appSecret string) *customAppService {
 }
 
 // AddReceivers adds recipients to future notifications. There are five different
-// types of receiver IDs availabe in Lark and they must be specified here. For
+// types of receiver IDs available in Lark and they must be specified here. For
 // example:
 //
-//  larkService.AddReceivers(
-//    lark.OpenID("ou_c99c5f35d542efc7ee492afe11af19ef"),
-//    lark.UserID("8335aga2"),
-//    lark.UnionID("on_cad4860e7af114fb4ff6c5d496d1dd76"),
-//    lark.Email("xyz@example.com"),
-//    lark.ChatID("oc_a0553eda9014c201e6969b478895c230"),
-//  )
+//	larkService.AddReceivers(
+//	  lark.OpenID("ou_c99c5f35d542efc7ee492afe11af19ef"),
+//	  lark.UserID("8335aga2"),
+//	  lark.UnionID("on_cad4860e7af114fb4ff6c5d496d1dd76"),
+//	  lark.Email("xyz@example.com"),
+//	  lark.ChatID("oc_a0553eda9014c201e6969b478895c230"),
+//	)
 func (c *customAppService) AddReceivers(ids ...*receiverID) {
 	c.receiveIDs = append(c.receiveIDs, ids...)
 }
