@@ -43,6 +43,5 @@ Usage:
 
 		log.Println("notification sent")
 	}
-
 */
 package fcm

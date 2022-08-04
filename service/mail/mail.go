@@ -29,7 +29,8 @@ func New(senderAddress, smtpHostAddress string) *Mail {
 // AuthenticateSMTP authenticates you to send emails via smtp.
 // Example values: "", "test@gmail.com", "password123", "smtp.gmail.com"
 // For more information about smtp authentication, see here:
-//    -> https://pkg.go.dev/net/smtp#PlainAuth
+//
+//	-> https://pkg.go.dev/net/smtp#PlainAuth
 func (m *Mail) AuthenticateSMTP(identity, userName, password, host string) {
 	m.smtpAuth = smtp.PlainAuth(identity, userName, password, host)
 }
