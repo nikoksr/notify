@@ -32,7 +32,7 @@ fmt:
 	@gofumpt -w -l .
 
 	@go install github.com/daixiang0/gci@latest
-	@gci write --Section Standard --Section Default --Section "Prefix(github.com/nikoksr/notify)" .
+	@gci write --section Standard --section Default --section "Prefix(github.com/nikoksr/notify)" .
 .PHONY: fmt
 
 
