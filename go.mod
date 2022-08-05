@@ -35,6 +35,7 @@ require (
 
 require (
 	github.com/appleboy/go-fcm v0.1.5
+	github.com/go-lark/lark v1.7.2
 	github.com/google/go-cmp v0.5.8
 	github.com/kevinburke/twilio-go v0.0.0-20220615032439-b0fe9b151b0e
 )
