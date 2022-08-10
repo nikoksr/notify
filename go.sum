@@ -11,6 +11,8 @@ github.com/Rhymen/go-whatsapp/examples/sendImage v0.0.0-20190325075644-cc2581bbf
 github.com/Rhymen/go-whatsapp/examples/sendTextMessages v0.0.0-20190325075644-cc2581bbf24d/go.mod h1:suwzklatySS3Q0+NCxCDh5hYfgXdQUWU1DNcxwAxStM=
 github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20220708192748-b73dcb041214 h1:MdZskg1II+YVe+9ss935i8+paqqf4KEuYcTYUWSwABI=
 github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20220708192748-b73dcb041214/go.mod h1:rjP7sIipbZcagro/6TCk6X0ZeFT2eyudH5+fve/cbBA=
+github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20220809225255-0c827b6166bc h1:eaUW8YG7pbVoHiGzvl7KfLyr0rBYuxYYT21YKsIhe2I=
+github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20220809225255-0c827b6166bc/go.mod h1:rjP7sIipbZcagro/6TCk6X0ZeFT2eyudH5+fve/cbBA=
 github.com/antihax/optional v1.0.0 h1:xK2lYat7ZLaVVcIuj82J8kIro4V6kDe0AUDFboUCwcg=
 github.com/antihax/optional v1.0.0/go.mod h1:uupD/76wgC+ih3iEmQUL+0Ugr19nfwCT1kdvxnR2qWY=
 github.com/appleboy/go-fcm v0.1.5 h1:fKbcZf/7vwGsvDkcop8a+kCHnK+tt4wXX0X7uEzwI6E=
