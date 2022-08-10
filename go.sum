@@ -13,6 +13,8 @@ github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20220708192748-b73dcb041214 h1:M
 github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20220708192748-b73dcb041214/go.mod h1:rjP7sIipbZcagro/6TCk6X0ZeFT2eyudH5+fve/cbBA=
 github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20220809225255-0c827b6166bc h1:eaUW8YG7pbVoHiGzvl7KfLyr0rBYuxYYT21YKsIhe2I=
 github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20220809225255-0c827b6166bc/go.mod h1:rjP7sIipbZcagro/6TCk6X0ZeFT2eyudH5+fve/cbBA=
+github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20220810144218-381e7373453c h1:ktWwgxiW/DKN9PsFBbPdlcYPzIJUN86ZDp+5T4jUSAg=
+github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20220810144218-381e7373453c/go.mod h1:rjP7sIipbZcagro/6TCk6X0ZeFT2eyudH5+fve/cbBA=
 github.com/antihax/optional v1.0.0 h1:xK2lYat7ZLaVVcIuj82J8kIro4V6kDe0AUDFboUCwcg=
 github.com/antihax/optional v1.0.0/go.mod h1:uupD/76wgC+ih3iEmQUL+0Ugr19nfwCT1kdvxnR2qWY=
 github.com/appleboy/go-fcm v0.1.5 h1:fKbcZf/7vwGsvDkcop8a+kCHnK+tt4wXX0X7uEzwI6E=
