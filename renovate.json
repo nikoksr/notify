@@ -1,13 +1,14 @@
 {
-  "assignees": ["nikoksr"],
-  "labels": ["type/deps"],
-  "extends": [
-    "config:base"
-  ],
-  "packageRules": [
-    {
-      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
-      "automerge": true
-    }
-  ]
+    "assignees": ["nikoksr"],
+    "labels": ["type/deps"],
+    "extends": [
+        "config:base"
+    ],
+    "packageRules": [
+        {
+            "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+            "automerge": true
+        }
+    ],
+    "dependencyDashboard": false
 }
