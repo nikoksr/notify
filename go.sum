@@ -148,6 +148,8 @@ github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSs
 github.com/deckarep/golang-set v1.7.1/go.mod h1:93vsz/8Wt4joVM7c2AVqh+YRMiUSc14yDtF28KmMOgQ=
 github.com/dghubble/go-twitter v0.0.0-20220716041154-837915ec2f79 h1:Z9wtGrNgCDhG7u+hVTlcBl9jeNdSfqzvg3piJNR4VX0=
 github.com/dghubble/go-twitter v0.0.0-20220716041154-837915ec2f79/go.mod h1:q7VYuSasPO79IE/QBNAMYVNlzZNy4Zr7vay6is50u5I=
+github.com/dghubble/go-twitter v0.0.0-20220815161542-b9435e8fec44 h1:t9+Zl0UrwhRnlFHjr6gtvKH36FxQ3VQ+aKeXG8yOQE8=
+github.com/dghubble/go-twitter v0.0.0-20220815161542-b9435e8fec44/go.mod h1:q7VYuSasPO79IE/QBNAMYVNlzZNy4Zr7vay6is50u5I=
 github.com/dghubble/oauth1 v0.7.1 h1:JjbOVSVVkms9A4h/sTQy5Jb2nFuAAVb2qVYgenJPyrE=
 github.com/dghubble/oauth1 v0.7.1/go.mod h1:0eEzON0UY/OLACQrmnjgJjmvCGXzjBCsZqL1kWDXtF0=
 github.com/dghubble/sling v1.4.0 h1:/n8MRosVTthvMbwlNZgLx579OGVjUOy3GNEv5BIqAWY=
