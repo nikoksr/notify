@@ -10,35 +10,35 @@ type sendToer interface {
 	SendTo(subject, message, id, idType string) error
 }
 
-// receiverID encapsulates a receiver ID and its type in Lark.
-type receiverID struct {
+// ReceiverID encapsulates a receiver ID and its type in Lark.
+type ReceiverID struct {
 	id  string
 	typ receiverIDType
 }
 
 // OpenID specifies an ID as a Lark Open ID.
-func OpenID(s string) *receiverID {
-	return &receiverID{s, openID}
+func OpenID(s string) *ReceiverID {
+	return &ReceiverID{s, openID}
 }
 
 // UserID specifies an ID as a Lark User ID.
-func UserID(s string) *receiverID {
-	return &receiverID{s, userID}
+func UserID(s string) *ReceiverID {
+	return &ReceiverID{s, userID}
 }
 
 // UnionID specifies an ID as a Lark Union ID.
-func UnionID(s string) *receiverID {
-	return &receiverID{s, unionID}
+func UnionID(s string) *ReceiverID {
+	return &ReceiverID{s, unionID}
 }
 
 // Email specifies a receiver ID as an email.
-func Email(s string) *receiverID {
-	return &receiverID{s, email}
+func Email(s string) *ReceiverID {
+	return &ReceiverID{s, email}
 }
 
 // ChatID specifies an ID as a Lark Chat ID.
-func ChatID(s string) *receiverID {
-	return &receiverID{s, chatID}
+func ChatID(s string) *ReceiverID {
+	return &ReceiverID{s, chatID}
 }
 
 // receiverIDType represents the different ID types implemented by Lark. This

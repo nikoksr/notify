@@ -11,17 +11,18 @@ import (
 	"github.com/nikoksr/notify"
 )
 
-type customAppService struct {
-	receiveIDs []*receiverID
+// CustomAppService is a Lark notify service using a Lark custom app.
+type CustomAppService struct {
+	receiveIDs []*ReceiverID
 	cli        sendToer
 }
 
 // Compile time check that larkCustomAppService implements notify.Notifer.
-var _ notify.Notifier = &customAppService{}
+var _ notify.Notifier = &CustomAppService{}
 
 // NewCustomAppService returns a new instance of a Lark notify service using a
 // Lark custom app.
-func NewCustomAppService(appID, appSecret string) *customAppService {
+func NewCustomAppService(appID, appSecret string) *CustomAppService {
 	bot := lark.NewChatBot(appID, appSecret)
 
 	// We need to set the bot to use Lark's open.larksuite.com domain instead of
@@ -36,8 +37,8 @@ func NewCustomAppService(appID, appSecret string) *customAppService {
 
 	_ = bot.StartHeartbeat()
 
-	return &customAppService{
-		receiveIDs: make([]*receiverID, 0),
+	return &CustomAppService{
+		receiveIDs: make([]*ReceiverID, 0),
 		cli: &larkClientGoLarkChatBot{
 			bot: bot,
 		},
@@ -55,13 +56,13 @@ func NewCustomAppService(appID, appSecret string) *customAppService {
 //	  lark.Email("xyz@example.com"),
 //	  lark.ChatID("oc_a0553eda9014c201e6969b478895c230"),
 //	)
-func (c *customAppService) AddReceivers(ids ...*receiverID) {
+func (c *CustomAppService) AddReceivers(ids ...*ReceiverID) {
 	c.receiveIDs = append(c.receiveIDs, ids...)
 }
 
 // Send takes a message subject and a message body and sends them to all
 // previously registered recipient IDs.
-func (c *customAppService) Send(ctx context.Context, subject, message string) error {
+func (c *CustomAppService) Send(ctx context.Context, subject, message string) error {
 	for _, id := range c.receiveIDs {
 		select {
 		case <-ctx.Done():

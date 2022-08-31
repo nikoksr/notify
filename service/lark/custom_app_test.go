@@ -11,7 +11,7 @@ import (
 func TestAddReceivers(t *testing.T) {
 	t.Parallel()
 
-	xs := []*receiverID{
+	xs := []*ReceiverID{
 		OpenID("ou_c99c5f35d542efc7ee492afe11af19ef"),
 		UserID("8335aga2"),
 	}
@@ -21,7 +21,7 @@ func TestAddReceivers(t *testing.T) {
 	assert.ElementsMatch(t, svc.receiveIDs, xs)
 
 	// Test if adding more receivers afterwards works.
-	ys := []*receiverID{
+	ys := []*ReceiverID{
 		UnionID("on_cad4860e7af114fb4ff6c5d496d1dd76"),
 		Email("xyz@example.com"),
 		ChatID("oc_a0553eda9014c201e6969b478895c230"),
@@ -36,7 +36,7 @@ func TestSendCustomApp(t *testing.T) {
 	ctx := context.Background()
 	assert := assert.New(t)
 
-	tests := []*receiverID{
+	tests := []*ReceiverID{
 		OpenID("ou_c99c5f35d542efc7ee492afe11af19ef"),
 		UserID("8335aga2"),
 		UnionID("on_cad4860e7af114fb4ff6c5d496d1dd76"),
