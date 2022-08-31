@@ -11,7 +11,7 @@ require (
 	github.com/aws/aws-sdk-go-v2 v1.16.12
 	github.com/aws/aws-sdk-go-v2/config v1.17.1
 	github.com/aws/aws-sdk-go-v2/credentials v1.12.14
-	github.com/aws/aws-sdk-go-v2/service/ses v1.14.13
+	github.com/aws/aws-sdk-go-v2/service/ses v1.14.14
 	github.com/aws/aws-sdk-go-v2/service/sns v1.17.13
 	github.com/blinkbean/dingtalk v0.0.0-20210905093040-7d935c0f7e19
 	github.com/bwmarrin/discordgo v0.26.0
@@ -42,8 +42,8 @@ require (
 
 require (
 	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.12.12 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/configsources v1.1.18 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.4.12 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/configsources v1.1.19 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.4.13 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/ini v1.3.19 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.9.12 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sso v1.11.17 // indirect
