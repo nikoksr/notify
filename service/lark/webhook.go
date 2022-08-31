@@ -9,20 +9,21 @@ import (
 	"github.com/nikoksr/notify"
 )
 
-type webhookService struct {
+// WebhookService is a Notify service that uses a Lark webhook to send messages.
+type WebhookService struct {
 	cli sender
 }
 
 // Compile time check that larkCustomAppService implements notify.Notifer.
-var _ notify.Notifier = &webhookService{}
+var _ notify.Notifier = &WebhookService{}
 
 // NewWebhookService returns a new instance of a Lark notify service using a
 // Lark group chat webhook. Note that this service does not take any
 // notification receivers because it can only push messages to the group chat
 // it belongs to.
-func NewWebhookService(webhookURL string) *webhookService {
+func NewWebhookService(webhookURL string) *WebhookService {
 	bot := lark.NewNotificationBot(webhookURL)
-	return &webhookService{
+	return &WebhookService{
 		cli: &larkClientGoLarkNotificationBot{
 			bot: bot,
 		},
@@ -30,7 +31,7 @@ func NewWebhookService(webhookURL string) *webhookService {
 }
 
 // Send sends the message subject and body to the group chat.
-func (w *webhookService) Send(ctx context.Context, subject, message string) error {
+func (w *WebhookService) Send(ctx context.Context, subject, message string) error {
 	return w.cli.Send(subject, message)
 }
 
