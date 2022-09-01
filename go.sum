@@ -137,6 +137,8 @@ github.com/aws/aws-sdk-go-v2/service/ses v1.14.13 h1:nmgejCzBpJXmtA6IWFSWMLklKbq
 github.com/aws/aws-sdk-go-v2/service/ses v1.14.13/go.mod h1:MVF1NzKU5VhUIDJ7UDaCbdFCCUgrLts2j51IPJWYRWg=
 github.com/aws/aws-sdk-go-v2/service/ses v1.14.14 h1:Bx6jmWWKnHj1Riw/xCIme+O8RcEB3xRMud3JCqquc/I=
 github.com/aws/aws-sdk-go-v2/service/ses v1.14.14/go.mod h1:cXydipCqtHaUSAFNBNTEeWg3y1OeyuDGCow3d+08pew=
+github.com/aws/aws-sdk-go-v2/service/ses v1.14.15 h1:HZwcYDkznb12iD/WetBKJuKaU89HCVjikznYrsY8LFk=
+github.com/aws/aws-sdk-go-v2/service/ses v1.14.15/go.mod h1:jr9D5h8DHUpBwBoKVNhVJc/kOaaswB34KRo5OWvMWRY=
 github.com/aws/aws-sdk-go-v2/service/sns v1.17.10 h1:ZZuqucIwjbUEJqxxR++VDZX9BcMbX5ZcQaKoWul/ELk=
 github.com/aws/aws-sdk-go-v2/service/sns v1.17.10/go.mod h1:uITsRNVMeCB3MkWpXxXw0eDz8pW4TYLzj+eyQtbhSxM=
 github.com/aws/aws-sdk-go-v2/service/sns v1.17.11 h1:B3jCcpykJs4ndKC5BI+OtKSzSeY4e99LJrgwCGGCjOE=
