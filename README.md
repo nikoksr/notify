@@ -104,7 +104,14 @@ Yes, please! Contributions of all kinds are very welcome! Feel free to check our
 | [WeChat](https://www.wechat.com)                                               | [service/wechat](service/wechat)         | [silenceper/wechat](https://github.com/silenceper/wechat)                                       |
 | [WhatsApp](https://www.whatsapp.com)                                           | [service/whatsapp](service/whatsapp)     | [Rhymen/go-whatsapp](https://github.com/Rhymen/go-whatsapp)                                     |
 
-## Logo <a id="logo"></a>
+
+## Special Thanks <a id="special_thanks"></a>
+
+### Maintainers <a id="maintainers"></a>
+
+- [@svaloumas](https://github.com/svaloumas)
+
+### Logo <a id="logo"></a>
 
 The [logo](https://github.com/MariaLetta/free-gophers-pack) was made by the amazing [MariaLetta](https://github.com/MariaLetta).
 
