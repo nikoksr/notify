@@ -237,6 +237,8 @@ github.com/fsnotify/fsnotify v1.4.9 h1:hsms1Qyu0jgnwNXIxa+/V/PDsU6CfLf6CNO8H7IWo
 github.com/fsnotify/fsnotify v1.4.9/go.mod h1:znqG4EE+3YCdAaPaxE2ZRY/06pZUdp0tY4IgpuI1SZQ=
 github.com/go-lark/lark v1.7.2 h1:F2LlwbRrZVuHPs8lz1D7owDevUndPy88Hbw6ZXaho/A=
 github.com/go-lark/lark v1.7.2/go.mod h1:6ltbSztPZRT6IaO9ZIQyVaY5pVp/KeMizDYtfZkU+vM=
+github.com/go-lark/lark v1.7.3 h1:02PupA3383fc+Ym/nOhZC8g7OaYrDzXzl0zjDpgOR1k=
+github.com/go-lark/lark v1.7.3/go.mod h1:6ltbSztPZRT6IaO9ZIQyVaY5pVp/KeMizDYtfZkU+vM=
 github.com/go-redis/redis/v8 v8.11.6-0.20220405070650-99c79f7041fc h1:jZY+lpZB92nvBo2f31oPC/ivGll6NcsnEOORm8Fkr4M=
 github.com/go-redis/redis/v8 v8.11.6-0.20220405070650-99c79f7041fc/go.mod h1:25mL1NKxbJhB63ihiK8MnNeTRd+xAizd6bOdydrTLUQ=
 github.com/go-task/slim-sprig v0.0.0-20210107165309-348f09dbbbc0/go.mod h1:fyg7847qk6SyHyPtNmDHnmrv/HOrqktSC+C9fM+CJOE=
