@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/Baozisoftware/qrcode-terminal-go v0.0.0-20170407111555-c0650d8dff0f
 	github.com/Rhymen/go-whatsapp v0.1.1
-	github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20220811115547-6c7006b790b8
+	github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20220903135808-56c5346a1a28
 	github.com/antihax/optional v1.0.0 // indirect
 	github.com/atc0005/go-teams-notify/v2 v2.6.1
 	github.com/aws/aws-sdk-go-v2 v1.16.14
