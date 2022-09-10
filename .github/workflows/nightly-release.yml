@@ -1,0 +1,27 @@
+name: Deploy Nightly
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 0 * * *' # Run every day at 0 AM UTC
+
+jobs:
+  nightly:
+    name: Deploy Nightly
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Get current date
+        id: get_date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+      - name: Create nightly release
+        id: create_release
+        uses: viperproject/create-nightly-release@v1
+        with:
+          tag_name: nightly
+          release_name: Nightly - ${{ steps.get_date.outputs.date }}
+          keep_num: 0
+          keep_tags: false
