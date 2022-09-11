@@ -1,11 +1,11 @@
 name: Deploy Nightly
 
 on:
+  schedule:
+    - cron: "0 0 * * *" # Run at 00:00 UTC every day
   push:
     branches:
       - main
-  schedule:
-    - cron: '0 0 * * *' # Run every day at 0 AM UTC
 
 jobs:
   nightly:
@@ -13,15 +13,21 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      TAG_NAME: nightly
     steps:
       - name: Get current date
         id: get_date
         run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
-      - name: Create nightly release
+      - name: Remove old nightly release
+        uses: dev-drprasad/delete-tag-and-release@v0.2.0
+        with:
+          delete_release: true
+          tag_name: ${{ env.TAG_NAME }}
+      - name: Create new nightly release
         id: create_release
         uses: viperproject/create-nightly-release@v1
         with:
-          tag_name: nightly
+          tag_name: ${{ env.TAG_NAME }}
           release_name: Nightly - ${{ steps.get_date.outputs.date }}
           keep_num: 0
           keep_tags: false
