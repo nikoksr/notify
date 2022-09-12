@@ -10,6 +10,8 @@ import (
 )
 
 // mockSyslogWriter abstracts log/syslog for writing unit tests.
+//
+//go:generate mockery --name=syslogWriter --output=. --case=underscore --inpackage
 type syslogWriter interface {
 	io.WriteCloser
 }
