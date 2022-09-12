@@ -34,7 +34,7 @@ func TestAmazonSNS_AddReceivers(t *testing.T) {
 func TestAmazonSNS_SendMessageWithNoTopicsConfigured(t *testing.T) {
 	t.Parallel()
 
-	mockSns := new(MockSNSSendMessageAPI)
+	mockSns := new(mockSnsSendMessageAPI)
 	amazonSNS := AmazonSNS{
 		sendMessageClient: mockSns,
 	}
@@ -47,7 +47,7 @@ func TestAmazonSNS_SendMessageWithNoTopicsConfigured(t *testing.T) {
 func TestAmazonSNS_SendMessageWithSucessAndOneTopicConfigured(t *testing.T) {
 	t.Parallel()
 
-	mockSns := new(MockSNSSendMessageAPI)
+	mockSns := new(mockSnsSendMessageAPI)
 	output := sns.PublishOutput{}
 	mockSns.On("SendMessage", mock.Anything, mock.Anything, mock.Anything).
 		Return(&output, nil)
@@ -66,7 +66,7 @@ func TestAmazonSNS_SendMessageWithSucessAndOneTopicConfigured(t *testing.T) {
 func TestAmazonSNS_SendMessageWithSucessAndTwoTopicsConfigured(t *testing.T) {
 	t.Parallel()
 
-	mockSns := new(MockSNSSendMessageAPI)
+	mockSns := new(mockSnsSendMessageAPI)
 	output := sns.PublishOutput{}
 	mockSns.On("SendMessage", mock.Anything, mock.Anything, mock.Anything).
 		Return(&output, nil)
@@ -88,7 +88,7 @@ func TestAmazonSNS_SendMessageWithSucessAndTwoTopicsConfigured(t *testing.T) {
 func TestAmazonSNS_SendMessageWithErrorAndOneQueueConfiguredShouldReturnError(t *testing.T) {
 	t.Parallel()
 
-	mockSns := new(MockSNSSendMessageAPI)
+	mockSns := new(mockSnsSendMessageAPI)
 	output := sns.PublishOutput{}
 	mockSns.On("SendMessage", mock.Anything, mock.Anything, mock.Anything).
 		Return(&output, errors.New("Error on SNS"))
@@ -109,7 +109,7 @@ func TestAmazonSNS_SendMessageWithErrorAndOneQueueConfiguredShouldReturnError(t 
 func TestAmazonSNS_SendMessageWithErrorAndTwoQueueConfiguredShouldReturnErrorOnFirst(t *testing.T) {
 	t.Parallel()
 
-	mockSns := new(MockSNSSendMessageAPI)
+	mockSns := new(mockSnsSendMessageAPI)
 	output := sns.PublishOutput{}
 	mockSns.On("SendMessage", mock.Anything, mock.Anything, mock.Anything).
 		Return(&output, errors.New("Error on SNS"))
