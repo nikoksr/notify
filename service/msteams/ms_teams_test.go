@@ -5,7 +5,6 @@ import (
 	"testing"
 
 	teams "github.com/atc0005/go-teams-notify/v2"
-	"github.com/google/go-cmp/cmp"
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/require"
 )
@@ -37,7 +36,7 @@ func TestMSTeams_AddReceivers(t *testing.T) {
 	service.webHooks = []string{}
 	service.AddReceivers(hooks...)
 
-    assert.Equal(service.webHooks, hooks)
+	assert.Equal(service.webHooks, hooks)
 }
 
 func TestMSTeams_Send(t *testing.T) {
