@@ -11,9 +11,17 @@ import (
 	"github.com/pkg/errors"
 )
 
+//go:generate mockery --name=sesClient --output=. --case=underscore --inpackage
+type sesClient interface {
+	SendEmail(ctx context.Context, params *ses.SendEmailInput, optFns ...func(options *ses.Options)) (*ses.SendEmailOutput, error)
+}
+
+// Compile-time check to ensure that ses.Client implements the sesClient interface.
+var _ sesClient = new(ses.Client)
+
 // AmazonSES struct holds necessary data to communicate with the Amazon Simple Email Service API.
 type AmazonSES struct {
-	client            *ses.Client
+	client            sesClient
 	senderAddress     *string
 	receiverAddresses []string
 }
