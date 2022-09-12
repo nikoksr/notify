@@ -5,11 +5,25 @@ import (
 	"testing"
 
 	"github.com/pkg/errors"
+	"github.com/silenceper/wechat/v2/cache"
 	"github.com/silenceper/wechat/v2/officialaccount/message"
 	"github.com/stretchr/testify/require"
 )
 
-func TestAddReceivers(t *testing.T) {
+func TestWeChat_New(t *testing.T) {
+	t.Parallel()
+
+	assert := require.New(t)
+
+	cache := &cache.Memory{}
+	cfg := &Config{
+		Cache: cache,
+	}
+	service := New(cfg)
+	assert.NotNil(service)
+}
+
+func TestWeChat_AddReceivers(t *testing.T) {
 	t.Parallel()
 
 	assert := require.New(t)
@@ -23,7 +37,7 @@ func TestAddReceivers(t *testing.T) {
 	assert.Equal(svc.userIDs, userIDs)
 }
 
-func TestSend(t *testing.T) {
+func TestWeChat_Send(t *testing.T) {
 	t.Parallel()
 
 	assert := require.New(t)

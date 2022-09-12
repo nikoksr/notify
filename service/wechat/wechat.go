@@ -27,6 +27,8 @@ type Config struct {
 }
 
 // wechatMessageManager abstracts go-wechat's message.Manager for writing unit tests
+//
+//go:generate mockery --name=wechatMessageManager --output=. --case=underscore --inpackage
 type wechatMessageManager interface {
 	Send(msg *message.CustomerMessage) error
 }
