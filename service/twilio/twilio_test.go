@@ -20,6 +20,7 @@ func TestTwilio_New(t *testing.T) {
 	assert.NotNil(service)
 	assert.Nil(err)
 }
+
 func TestTwilio_AddReceivers(t *testing.T) {
 	t.Parallel()
 
