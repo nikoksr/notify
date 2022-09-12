@@ -8,21 +8,20 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/sns"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
+	"github.com/stretchr/testify/require"
 )
 
-type SNSSendMessageMock struct {
-	mock.Mock
+func TestAmazonSNS_New(t *testing.T) {
+	t.Parallel()
+
+	assert := require.New(t)
+
+	service, err := New("", "", "")
+	assert.NotNil(service)
+	assert.Nil(err)
 }
 
-func (m *SNSSendMessageMock) SendMessage(ctx context.Context,
-	params *sns.PublishInput,
-	optFns ...func(*sns.Options),
-) (*sns.PublishOutput, error) {
-	args := m.Called(ctx, params, optFns)
-	return args.Get(0).(*sns.PublishOutput), args.Error(1)
-}
-
-func TestAddReceivers(t *testing.T) {
+func TestAmazonSNS_AddReceivers(t *testing.T) {
 	t.Parallel()
 
 	amazonSNS, err := New("", "", "")
@@ -32,10 +31,10 @@ func TestAddReceivers(t *testing.T) {
 	amazonSNS.AddReceivers("One topic")
 }
 
-func TestSendMessageWithNoTopicsConfigured(t *testing.T) {
+func TestAmazonSNS_SendMessageWithNoTopicsConfigured(t *testing.T) {
 	t.Parallel()
 
-	mockSns := new(SNSSendMessageMock)
+	mockSns := new(MockSNSSendMessageAPI)
 	amazonSNS := AmazonSNS{
 		sendMessageClient: mockSns,
 	}
@@ -45,10 +44,10 @@ func TestSendMessageWithNoTopicsConfigured(t *testing.T) {
 	mockSns.AssertNotCalled(t, "SendMessage", mock.Anything, mock.Anything, mock.Anything)
 }
 
-func TestSendMessageWithSucessAndOneTopicCOnfigured(t *testing.T) {
+func TestAmazonSNS_SendMessageWithSucessAndOneTopicConfigured(t *testing.T) {
 	t.Parallel()
 
-	mockSns := new(SNSSendMessageMock)
+	mockSns := new(MockSNSSendMessageAPI)
 	output := sns.PublishOutput{}
 	mockSns.On("SendMessage", mock.Anything, mock.Anything, mock.Anything).
 		Return(&output, nil)
@@ -64,10 +63,10 @@ func TestSendMessageWithSucessAndOneTopicCOnfigured(t *testing.T) {
 	assert.Equal(t, 1, len(mockSns.Calls))
 }
 
-func TestSendMessageWithSucessAndTwoTopicCOnfigured(t *testing.T) {
+func TestAmazonSNS_SendMessageWithSucessAndTwoTopicsConfigured(t *testing.T) {
 	t.Parallel()
 
-	mockSns := new(SNSSendMessageMock)
+	mockSns := new(MockSNSSendMessageAPI)
 	output := sns.PublishOutput{}
 	mockSns.On("SendMessage", mock.Anything, mock.Anything, mock.Anything).
 		Return(&output, nil)
@@ -86,10 +85,10 @@ func TestSendMessageWithSucessAndTwoTopicCOnfigured(t *testing.T) {
 	assert.Equal(t, 2, len(mockSns.Calls))
 }
 
-func TestSendMessageWithErrorAndOneQueueConfiguredShouldReturnError(t *testing.T) {
+func TestAmazonSNS_SendMessageWithErrorAndOneQueueConfiguredShouldReturnError(t *testing.T) {
 	t.Parallel()
 
-	mockSns := new(SNSSendMessageMock)
+	mockSns := new(MockSNSSendMessageAPI)
 	output := sns.PublishOutput{}
 	mockSns.On("SendMessage", mock.Anything, mock.Anything, mock.Anything).
 		Return(&output, errors.New("Error on SNS"))
@@ -107,10 +106,10 @@ func TestSendMessageWithErrorAndOneQueueConfiguredShouldReturnError(t *testing.T
 	assert.Equal(t, 1, len(mockSns.Calls))
 }
 
-func TestSendMessageWithErrorAndTwoQueueConfiguredShouldReturnErrorOnFirst(t *testing.T) {
+func TestAmazonSNS_SendMessageWithErrorAndTwoQueueConfiguredShouldReturnErrorOnFirst(t *testing.T) {
 	t.Parallel()
 
-	mockSns := new(SNSSendMessageMock)
+	mockSns := new(MockSNSSendMessageAPI)
 	output := sns.PublishOutput{}
 	mockSns.On("SendMessage", mock.Anything, mock.Anything, mock.Anything).
 		Return(&output, errors.New("Error on SNS"))

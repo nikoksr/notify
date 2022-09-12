@@ -11,6 +11,8 @@ import (
 )
 
 // SNSSendMessageAPI Basic interface to send messages through SNS.
+//
+//go:generate mockery --name=SNSSendMessageAPI --output=. --case=underscore --inpackage
 type SNSSendMessageAPI interface {
 	SendMessage(ctx context.Context,
 		params *sns.PublishInput,
