@@ -37,8 +37,7 @@ func TestMSTeams_AddReceivers(t *testing.T) {
 	service.webHooks = []string{}
 	service.AddReceivers(hooks...)
 
-	diff := cmp.Diff(service.webHooks, hooks)
-	assert.Equal("", diff)
+    assert.Equal(service.webHooks, hooks)
 }
 
 func TestMSTeams_Send(t *testing.T) {
