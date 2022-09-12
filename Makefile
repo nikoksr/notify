@@ -26,6 +26,11 @@ cover:
 	go test -race -covermode=atomic -coverprofile=coverage.out ./...
 .PHONY: cover
 
+mock:
+	@go install github.com/vektra/mockery/v2@latest
+	go generate ./...
+.PHONY: mock
+
 ###############################################################################
 # CODE HEALTH
 ###############################################################################
