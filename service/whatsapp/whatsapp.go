@@ -40,11 +40,10 @@ func New() (*Service, error) {
 		return nil, err
 	}
 
-	s := &Service{
+	return &Service{
 		client:   client,
 		contacts: []string{},
-	}
-	return s, nil
+	}, nil
 }
 
 // LoginWithSessionCredentials provides helper for authentication using whatsapp.Session credentials.
