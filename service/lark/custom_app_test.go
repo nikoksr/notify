@@ -6,9 +6,19 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
-func TestAddReceivers(t *testing.T) {
+func TestLark_NewCustomAppService(t *testing.T) {
+	t.Parallel()
+
+	assert := require.New(t)
+
+	service := NewCustomAppService("", "")
+	assert.NotNil(service)
+}
+
+func TestLark_AddReceivers(t *testing.T) {
 	t.Parallel()
 
 	xs := []*ReceiverID{
@@ -31,7 +41,7 @@ func TestAddReceivers(t *testing.T) {
 	assert.ElementsMatch(t, svc.receiveIDs, append(xs, ys...))
 }
 
-func TestSendCustomApp(t *testing.T) {
+func TestLark_SendCustomApp(t *testing.T) {
 	t.Parallel()
 	ctx := context.Background()
 	assert := assert.New(t)
@@ -46,7 +56,7 @@ func TestSendCustomApp(t *testing.T) {
 
 	// First, test for when the sender returns an error.
 	for _, tt := range tests {
-		mockSendToer := NewSendToer(t)
+		mockSendToer := newMockSendToer(t)
 		mockSendToer.
 			On("SendTo", "subject", "message", tt.id, string(tt.typ)).
 			Return(errors.New(""))
@@ -63,7 +73,7 @@ func TestSendCustomApp(t *testing.T) {
 
 	// Then test for when the sender does not return an error.
 	for _, tt := range tests {
-		mockSendToer := NewSendToer(t)
+		mockSendToer := newMockSendToer(t)
 		mockSendToer.
 			On("SendTo", "subject", "message", tt.id, string(tt.typ)).
 			Return(nil)

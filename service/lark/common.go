@@ -1,11 +1,15 @@
 package lark
 
 // sender is an interface for sending a message to an already defined receiver.
+//
+//go:generate mockery --name=sender --output=. --case=underscore --inpackage
 type sender interface {
 	Send(subject, message string) error
 }
 
 // sender is an interface for sending a message to a specific receiver ID.
+//
+//go:generate mockery --name=sendToer --output=. --case=underscore --inpackage
 type sendToer interface {
 	SendTo(subject, message, id, idType string) error
 }

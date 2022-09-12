@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestNew(t *testing.T) {
+func TestMSTeams_New(t *testing.T) {
 	t.Parallel()
 
 	assert := require.New(t)

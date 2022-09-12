@@ -9,7 +9,17 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestAddReceivers(t *testing.T) {
+func TestFCM_New(t *testing.T) {
+	t.Parallel()
+
+	assert := require.New(t)
+
+	service, err := New("server-api-key")
+	assert.NotNil(service)
+	assert.Nil(err)
+}
+
+func TestFCM_AddReceivers(t *testing.T) {
 	t.Parallel()
 
 	assert := require.New(t)
@@ -23,7 +33,7 @@ func TestAddReceivers(t *testing.T) {
 	assert.Equal(svc.deviceTokens, deviceTokens)
 }
 
-func TestSend(t *testing.T) {
+func TestFCM_Send(t *testing.T) {
 	t.Parallel()
 
 	assert := require.New(t)
@@ -38,7 +48,7 @@ func TestSend(t *testing.T) {
 	}
 
 	// test fcm client send
-	mockClient := newMockFCMClient(t)
+	mockClient := newMockFcmClient(t)
 	mockClient.On("SendWithRetry", &fcm.Message{
 		To: mockToken,
 		Notification: &fcm.Notification{
@@ -54,7 +64,7 @@ func TestSend(t *testing.T) {
 	mockClient.AssertExpectations(t)
 
 	// test fcm client send with data
-	mockClient = newMockFCMClient(t)
+	mockClient = newMockFcmClient(t)
 	mockClient.On("SendWithRetry", &fcm.Message{
 		To:   mockToken,
 		Data: mockData,
@@ -72,7 +82,7 @@ func TestSend(t *testing.T) {
 	mockClient.AssertExpectations(t)
 
 	// test fcm client send with data and retries
-	mockClient = newMockFCMClient(t)
+	mockClient = newMockFcmClient(t)
 	mockClient.On("SendWithRetry", &fcm.Message{
 		To:   mockToken,
 		Data: mockData,
@@ -91,7 +101,7 @@ func TestSend(t *testing.T) {
 	mockClient.AssertExpectations(t)
 
 	// test fcm client returning error
-	mockClient = newMockFCMClient(t)
+	mockClient = newMockFcmClient(t)
 	mockClient.On("SendWithRetry", &fcm.Message{
 		To:   mockToken,
 		Data: mockData,
@@ -111,7 +121,7 @@ func TestSend(t *testing.T) {
 
 	// test fcm client multiple receivers
 	anotherMockToken := "another_device_token"
-	mockClient = newMockFCMClient(t)
+	mockClient = newMockFcmClient(t)
 	mockClient.On("SendWithRetry", &fcm.Message{
 		To:   mockToken,
 		Data: mockData,
@@ -138,7 +148,7 @@ func TestSend(t *testing.T) {
 	mockClient.AssertExpectations(t)
 }
 
-func TestGetMessageData(t *testing.T) {
+func TestFCM_GetMessageData(t *testing.T) {
 	t.Parallel()
 
 	assert := require.New(t)
@@ -179,7 +189,7 @@ func TestGetMessageData(t *testing.T) {
 	assert.True(ok)
 }
 
-func TestGetMessageRetryAttempts(t *testing.T) {
+func TestFCM_GetMessageRetryAttempts(t *testing.T) {
 	t.Parallel()
 
 	assert := require.New(t)

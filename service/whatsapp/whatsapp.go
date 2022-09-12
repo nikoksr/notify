@@ -21,6 +21,8 @@ const (
 var sessionFilePath = filepath.Join(os.TempDir(), "whatsappSession.gob")
 
 // whatsappClient abstracts go-whatsapp for writing unit tests
+//
+//go:generate mockery --name=whatsappClient --output=. --case=underscore --inpackage
 type whatsappClient interface {
 	Login(qrChan chan<- string) (whatsapp.Session, error)
 	RestoreWithSession(session whatsapp.Session) (whatsapp.Session, error)

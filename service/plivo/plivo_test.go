@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestNew(t *testing.T) {
+func TestPlivo_New(t *testing.T) {
 	t.Parallel()
 
 	assert := require.New(t)
@@ -35,7 +35,7 @@ func TestNew(t *testing.T) {
 	assert.NotNil(svc)
 }
 
-func TestAddReceivers(t *testing.T) {
+func TestPlivo_AddReceivers(t *testing.T) {
 	t.Parallel()
 
 	assert := require.New(t)
@@ -50,7 +50,7 @@ func TestAddReceivers(t *testing.T) {
 	assert.Equal(svc.destinations, nums)
 }
 
-func TestSend(t *testing.T) {
+func TestPlivo_Send(t *testing.T) {
 	t.Parallel()
 
 	assert := require.New(t)
