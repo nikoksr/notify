@@ -3,7 +3,7 @@ package msteams
 import (
 	"context"
 
-	goteamsnotify "github.com/atc0005/go-teams-notify/v2"
+	teams "github.com/atc0005/go-teams-notify/v2"
 	"github.com/pkg/errors"
 )
 
@@ -18,7 +18,7 @@ type MSTeams struct {
 //
 //	-> https://github.com/atc0005/go-teams-notify#example-basic
 func New() *MSTeams {
-	client := goteamsnotify.NewClient()
+	client := teams.NewClient()
 
 	m := &MSTeams{
 		client:   client,
@@ -49,7 +49,7 @@ func (m *MSTeams) AddReceivers(webHooks ...string) {
 //
 //	-> https://github.com/atc0005/go-teams-notify#example-basic
 func (m MSTeams) Send(ctx context.Context, subject, message string) error {
-	msgCard := goteamsnotify.NewMessageCard()
+	msgCard := teams.NewMessageCard()
 	msgCard.Title = subject
 	msgCard.Text = message
 
