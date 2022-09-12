@@ -23,6 +23,8 @@ type (
 )
 
 // fcmClient abstracts go-fcm for writing unit tests
+//
+//go:generate mockery --name=fcmClient --output=. --case=underscore --inpackage
 type fcmClient interface {
 	SendWithRetry(*fcm.Message, int) (*fcm.Response, error)
 }
