@@ -60,3 +60,24 @@ func TestNotifySend(t *testing.T) {
 		t.Errorf("Send() with nil service panicked: %v", r)
 	}
 }
+
+func TestSendMany(t *testing.T) {
+	t.Parallel()
+
+	n := New()
+	if n == nil {
+		t.Fatal("New() returned nil")
+	}
+
+	var services []Notifier
+
+	for i := 0; i < 10; i++ {
+		services = append(services, mail.New("", ""))
+	}
+
+	n.UseServices(services...)
+
+	if err := n.Send(context.Background(), "subject", "message"); err == nil {
+		t.Errorf("Send() invalid mail returned no error: %v", err)
+	}
+}
