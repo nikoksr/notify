@@ -7,9 +7,18 @@ import (
 	"github.com/pkg/errors"
 )
 
+//go:generate mockery --name=teamsClient --output=. --case=underscore --inpackage
+type teamsClient interface {
+	SendWithContext(ctx context.Context, webhookURL string, webhookMessage teams.MessageCard) error
+	SkipWebhookURLValidationOnSend(skip bool) teams.API
+}
+
+// Compile-time check to ensure that teams.Client implements the teamsClient interface.
+var _ teamsClient = teams.NewClient()
+
 // MSTeams struct holds necessary data to communicate with the MSTeams API.
 type MSTeams struct {
-	client   goteamsnotify.API
+	client   teamsClient
 	webHooks []string
 }
 
