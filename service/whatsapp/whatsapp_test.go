@@ -9,7 +9,17 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestAddReceivers(t *testing.T) {
+func TestWhatsApp_New(t *testing.T) {
+	t.Parallel()
+
+	assert := require.New(t)
+
+	service, err := New()
+	assert.NotNil(service)
+	assert.Nil(err)
+}
+
+func TestWhatsApp_AddReceivers(t *testing.T) {
 	t.Parallel()
 
 	assert := require.New(t)
@@ -23,7 +33,7 @@ func TestAddReceivers(t *testing.T) {
 	assert.Equal(svc.contacts, contacts)
 }
 
-func TestSend(t *testing.T) {
+func TestWhatsApp_Send(t *testing.T) {
 	t.Parallel()
 
 	assert := require.New(t)
