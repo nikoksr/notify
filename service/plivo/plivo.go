@@ -28,6 +28,8 @@ type MessageOptions struct {
 }
 
 // plivoMsgClient abstracts Plivo SDK for writing unit tests
+//
+//go:generate mockery --name=plivoMsgClient --output=. --case=underscore --inpackage
 type plivoMsgClient interface {
 	Create(plivo.MessageCreateParams) (*plivo.MessageCreateResponseBody, error)
 }
