@@ -11,13 +11,14 @@ If you need to mock an interface in your tests, follow the next steps:
 1. Comment the interface you'd like to mock following the example below
 
     ```go
-    //go:generate mockery --name=fcmClient --output=. --case=underscore --inpackage
-    type fcmClient interface {
-        SendWithRetry(*fcm.Message, int) (*fcm.Response, error)
+    //go:generate mockery --name=nameOfClient --output=. --case=underscore --inpackage
+    type nameOfClient interface {
+        ...
     }
     ```
 
-    > Remember to set the `--name` argument accordingly.
+    > Remember to set the `--name` argument accordingly. For real-life implementation examples, check out existing services, for example [fcm](https://github.com/nikoksr/notify/blob/bda5705e4ee1cbf6b02bbb12679ed597334dee51/service/fcm/fcm.go#L27).
+
 
 2. Run `make mock` 
 
@@ -26,7 +27,7 @@ If you need to mock an interface in your tests, follow the next steps:
 3. Use the mocked interface in your tests
 
     ```go
-	mockClient := newMockFcmClient(t)
+	mockClient := newMockNameOfClient(t)
     ```
 
 ## Commits
