@@ -260,6 +260,8 @@ github.com/technoweenie/multipartstreamer v1.0.1 h1:XRztA5MXiR1TIRHxH2uNxXxaIkKQ
 github.com/technoweenie/multipartstreamer v1.0.1/go.mod h1:jNVxdtShOxzAsukZwTSw6MDx5eUJoiEBsSvzDU9uzog=
 github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.3361 h1:D8+m/4Cp9XJijvP/fx4m82/McaCIKA5+ygHk7QUblsA=
 github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.3361/go.mod h1:PbP69y7uRiNdwtPE3/bVGDaPYA1sr4vuHaGLQAGzeW8=
+github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.4420 h1:X+WJ1bnpbuf7GLhFCpme/LuFRvLJMdnry5FEiR7SUJI=
+github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.4420/go.mod h1:PbP69y7uRiNdwtPE3/bVGDaPYA1sr4vuHaGLQAGzeW8=
 github.com/tidwall/gjson v1.14.1 h1:iymTbGkQBhveq21bEvAQ81I0LEBork8BFe1CUZXdyuo=
 github.com/tidwall/gjson v1.14.1/go.mod h1:/wbyibRr2FHMks5tjHJ5F8dMZh3AcwJEMf5vlfC0lxk=
 github.com/tidwall/match v1.1.1 h1:+Ho715JplO36QYgwN9PGYNhgZvoUSc9X2c80KVTi+GA=
