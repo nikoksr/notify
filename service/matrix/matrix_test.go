@@ -2,11 +2,12 @@ package matrix
 
 import (
 	"context"
+	"testing"
+
 	"github.com/stretchr/testify/require"
 	matrix "maunium.net/go/mautrix"
 	"maunium.net/go/mautrix/event"
 	"maunium.net/go/mautrix/id"
-	"testing"
 )
 
 func TestService_SetRoomID(t *testing.T) {
@@ -33,5 +34,4 @@ func TestService_Send(t *testing.T) {
 	assert.Nil(err)
 
 	mockClient.AssertExpectations(t)
-
 }
