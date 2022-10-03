@@ -1,0 +1,23 @@
+# Add affects/core label to all changes to the core package; exclude changes to test files
+affects/core:
+  - any: [ '/*.go', '!/*_test.go']
+
+# Add affects/services label to all changes to the services directory
+affects/services:
+  - 'services/*'
+
+# Add affects/tests label when any test file is changed
+affects/tests:
+  - '**/*_test.go'
+
+# Add affects/docs label when any markdown file or the docs directory is changed
+affects/docs:
+  - 'docs/**/*'
+  - '/*.md'
+
+# Add affects/ci label when any CI related file is changed
+affects/ci:
+  - '.github/**/*'
+  - '.golangci.yml'
+  - '.codacy.yml'
+  - 'renovate.json'
