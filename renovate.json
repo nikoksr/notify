@@ -3,7 +3,7 @@
         "config:base"
     ],
     "assignees": ["nikoksr", "svaloumas"],
-    "labels": ["type/deps"],
+    "labels": ["affects/deps"],
     "packageRules": [
         {
             "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
