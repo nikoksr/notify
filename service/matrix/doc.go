@@ -1,5 +1,5 @@
 /*
-Package matrix provides message notification integration for WhatsApp.
+Package matrix provides message notification integration for Matrix.
 
 Usage:
 
