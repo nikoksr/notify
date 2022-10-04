@@ -3,6 +3,7 @@ package matrix
 import (
 	"context"
 	"errors"
+
 	matrix "maunium.net/go/mautrix"
 	"maunium.net/go/mautrix/event"
 	"maunium.net/go/mautrix/id"
@@ -22,7 +23,6 @@ var _ matrixClient = new(matrix.Client)
 // -> https://spec.matrix.org/v1.2/client-server-api
 func New(userID id.UserID, roomID id.RoomID, homeServer, accessToken string) (*Matrix, error) {
 	client, err := matrix.NewClient(homeServer, userID, accessToken)
-
 	if err != nil {
 		return nil, err
 	}
@@ -50,7 +50,6 @@ func (s *Matrix) Send(ctx context.Context, _, message string) error {
 		return ctx.Err()
 	default:
 		_, err := s.client.SendMessageEvent(s.options.roomID, event.EventMessage, &messageBody)
-
 		if err != nil {
 			return errors.New("failed to send message to the room using Matrix")
 		}
