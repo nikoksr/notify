@@ -85,7 +85,7 @@ Yes, please! Contributions of all kinds are very welcome! Feel free to check our
 | [DingTalk](https://www.dingtalk.com)                                           | [service/dinding](service/dingding)      | [blinkbean/dingtalk](https://github.com/blinkbean/dingtalk)                                     |
 | [Discord](https://discord.com)                                                 | [service/discord](service/discord)       | [bwmarrin/discordgo](https://github.com/bwmarrin/discordgo)                                     |
 | [Email](https://wikipedia.org/wiki/Email)                                      | [service/mail](service/mail)             | [jordan-wright/email](https://github.com/jordan-wright/email)                                   |
-| [Firebase Cloud Messaging](https://firebase.google.com/docs/cloud-messaging)   | [service/fcm](service/fcm)               | [appleboy/go-fcm](https://github.com/appleboy/go-fcm)                                   |
+| [Firebase Cloud Messaging](https://firebase.google.com/docs/cloud-messaging)   | [service/fcm](service/fcm)               | [appleboy/go-fcm](https://github.com/appleboy/go-fcm)                                           |
 | [Lark](https://www.larksuite.com/)                                             | [service/lark](service/lark)             | [go-lark/lark](https://github.com/go-lark/lark)                                                 |
 | [Line](https://line.me)                                                        | [service/line](service/line)             | [line/line-bot-sdk-go](https://github.com/line/line-bot-sdk-go)                                 |
 | [Line Notify](https://notify-bot.line.me)                                      | [service/line](service/line)             | [utahta/go-linenotify](https://github.com/utahta/go-linenotify)                                 |
@@ -103,6 +103,7 @@ Yes, please! Contributions of all kinds are very welcome! Feel free to check our
 | [Twitter](https://twitter.com)                                                 | [service/twitter](service/twitter)       | [dghubble/go-twitter](https://github.com/dghubble/go-twitter)                                   |
 | [WeChat](https://www.wechat.com)                                               | [service/wechat](service/wechat)         | [silenceper/wechat](https://github.com/silenceper/wechat)                                       |
 | [WhatsApp](https://www.whatsapp.com)                                           | [service/whatsapp](service/whatsapp)     | [Rhymen/go-whatsapp](https://github.com/Rhymen/go-whatsapp)                                     |
+| [Matrix](https://www.matrix.org)                                               | [service/matrix](service/matrix)         | [mautrix/go](https://github.com/mautrix/go)                                                     |
 
 
 ## Special Thanks <a id="special_thanks"></a>
