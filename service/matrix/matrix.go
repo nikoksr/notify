@@ -39,7 +39,7 @@ func New(userID id.UserID, roomID id.RoomID, homeServer, accessToken string) (*M
 	return s, nil
 }
 
-// Send takesa message body and sends them to the previously set channel.
+// Send takes a message body and sends them to the previously set channel.
 // you will need an account, access token and roomID
 // see https://matrix.org
 func (s *Matrix) Send(ctx context.Context, _, message string) error {
@@ -58,7 +58,6 @@ func (s *Matrix) Send(ctx context.Context, _, message string) error {
 	return nil
 }
 
-// createMessage is a function for the developer to construct a messagebody.
 func createMessage(message string) Message {
 	return Message{
 		Body:    message,

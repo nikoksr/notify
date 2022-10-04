@@ -16,7 +16,7 @@ type mockMatrixClient struct {
 	mock.Mock
 }
 
-// SendMessageEvent provides a mock function with given fields: roomIDs, eventType, contentJSON, extra
+// SendMessageEvent provides a mock function with given fields: roomID, eventType, contentJSON, extra
 func (_m *mockMatrixClient) SendMessageEvent(roomID id.RoomID, eventType event.Type, contentJSON interface{}, extra ...mautrix.ReqSendEvent) (*mautrix.RespSendEvent, error) {
 	_va := make([]interface{}, len(extra))
 	for _i := range extra {
