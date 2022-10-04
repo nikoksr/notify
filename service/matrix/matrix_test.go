@@ -2,12 +2,13 @@ package matrix
 
 import (
 	"context"
+	"testing"
+
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/require"
 	matrix "maunium.net/go/mautrix"
 	"maunium.net/go/mautrix/event"
 	"maunium.net/go/mautrix/id"
-	"testing"
 )
 
 func TestMatrix_New(t *testing.T) {
