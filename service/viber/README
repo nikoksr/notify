@@ -36,10 +36,7 @@ You'll get a URL like https://script.google.com/macros/s/xxx/exec and this URL w
 Here is an example use case on how you can use Viber:
 
 ```go
-
 package main
-
-
 
 import (
   "context"
