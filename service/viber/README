@@ -20,9 +20,7 @@ If you need to set up webhook easily like for example only for local testing, yo
 function doPost(e) {
   const contents = JSON.parse(e.postData.contents)
   Logger.log(JSON.stringify(contents))
-
 }
-
 ```
 
 _In short, it will just receive the POST request, and log the content_.
@@ -68,7 +66,6 @@ func main() {
 
   log.Println("Notification sent")
 }
-
 ```
 
 > ❗️**Viber is only allowing the bot to send the message to their subscriber**. Therefore, in order to send the notification, we need to make sure that the receiver already subscribed to the bot. Read more details here: https://developers.viber.com/docs/api/rest-bot-api/#send-message
