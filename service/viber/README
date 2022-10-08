@@ -44,8 +44,8 @@ import (
 	"github.com/nikoksr/notify/service/viber"
 )
 
-const appKey = "4fedd3b160e7dc77-8378815e812898c4-f8bb7ce536c7b68f"
-const webhookURL = "https://script.google.com/macros/s/AKfycbzMMYywzyZ5eFDo6rNowWPAmo1BMTbQ3QgT8Mx-oVun0YhnE-L4AJ5TkgLZMbcZDIPa/exec"
+const appKey = "your-viber-token"
+const webhookURL = "https://webhook.com"
 const senderName = "vibersofyana"
 
 func main() {
@@ -56,11 +56,11 @@ func main() {
 		log.Fatalf("set webhook to viber server failed: %v", err)
 	}
 
-	viberSvc.AddReceivers("receiver1-viber-user-id", "receiver2-viber-user-id") // can add as many as required
+	viberSvc.AddReceivers("receiver-viber-user-id") // can add as many as required
 	notifier := notify.New()
 
 	notifier.UseServices(viberSvc)
-	if err := notifier.Send(context.Background(), "TEST", "Message using notifier"); err != nil {
+	if err := notifier.Send(context.Background(), "TEST", "Message using golang notifier library"); err != nil {
 		log.Fatalf("notifier.Send() failed: %s", err.Error())
 	}
 
