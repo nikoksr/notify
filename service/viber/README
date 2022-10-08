@@ -37,34 +37,34 @@ Here is an example use case on how you can use Viber:
 package main
 
 import (
-  "context"
-  "log"
-  "github.com/nikoksr/notify"
-  "github.com/nikoksr/notify/service/viber"
+	"context"
+	"log"
 
+	"github.com/nikoksr/notify"
+	"github.com/nikoksr/notify/service/viber"
 )
 
-const appKey = "xxx-your-bot-app-key"
-const webhookURL = "https://your-webhook-url-to-received-webhook-from-viber.com"
-const senderName = "the-sender-name"
+const appKey = "4fedd3b160e7dc77-8378815e812898c4-f8bb7ce536c7b68f"
+const webhookURL = "https://script.google.com/macros/s/AKfycbzMMYywzyZ5eFDo6rNowWPAmo1BMTbQ3QgT8Mx-oVun0YhnE-L4AJ5TkgLZMbcZDIPa/exec"
+const senderName = "vibersofyana"
 
 func main() {
-  viberSvc, err := viber.New(appKey, webhookURL, senderName)
-  if err != nil {
-    log.Fatal(err)
-  }
+	viberSvc := viber.New(appKey, senderName, "")
 
-  viberSvc.AddReceivers("receiver1-viber-user-id", "receiver2-viber-user-id") // can add as many as required
+	err := viberSvc.SetWebhook(webhookURL) // this only needs to be called once
+	if err != nil {
+		log.Fatalf("set webhook to viber server failed: %v", err)
+	}
 
-  notifier := notify.New()
+	viberSvc.AddReceivers("receiver1-viber-user-id", "receiver2-viber-user-id") // can add as many as required
+	notifier := notify.New()
 
-  notifier.UseServices(viberSvc)
+	notifier.UseServices(viberSvc)
+	if err := notifier.Send(context.Background(), "TEST", "Message using notifier"); err != nil {
+		log.Fatalf("notifier.Send() failed: %s", err.Error())
+	}
 
-  if err := notifier.Send(context.Background(), "TEST", "Message using notifier"); err != nil {
-    log.Fatalf("notifier.Send() failed: %s", err.Error())
-  }
-
-  log.Println("Notification sent")
+	log.Println("Notification sent")
 }
 ```
 

@@ -7,44 +7,37 @@ import (
 	"github.com/pkg/errors"
 )
 
+//go:generate mockery --name=viberClient --output=. --case=underscore --inpackage
+type viberClient interface {
+	SetWebhook(url string, eventTypes []string) (vb.WebhookResp, error)
+	SendTextMessage(receiver, msg string) (uint64, error)
+}
+
 // Viber struct holds necessary fields to communicate with Viber API
 type Viber struct {
-	Client            *vb.Viber
+	Client            viberClient
 	SubscribedUserIDs []string
 }
 
-// ViberOption struct holds an optional function to create Viber instance
-type ViberOption func(v *Viber)
+// Compile-time check to ensure that vb.Viber implements the viberClient interface.
+var _ viberClient = new(vb.Viber)
 
 // New returns a new instance of Viber notification service
-func New(appKey, webhookURL, senderName string, opts ...ViberOption) (*Viber, error) {
-	viber := &Viber{
-		Client:            vb.New(appKey, senderName, ""),
+func New(appKey, senderName, senderAvatar string) *Viber {
+	return &Viber{
+		Client:            vb.New(appKey, senderName, senderAvatar),
 		SubscribedUserIDs: []string{},
-	}
-
-	for _, opt := range opts {
-		opt(viber)
-	}
-
-	_, err := viber.Client.SetWebhook(webhookURL, []string{})
-	if err != nil {
-		return nil, err
-	}
-
-	return viber, nil
-}
-
-// WithSenderAvatar function to add senderAvatar to the Viber client
-func WithSenderAvatar(senderAvatar string) ViberOption {
-	return func(v *Viber) {
-		v.Client.Sender.Avatar = senderAvatar
 	}
 }
 
 // AddReceivers receives subscribed user IDs then add them to internal receivers list
 func (v *Viber) AddReceivers(subscribedUserIDs ...string) {
 	v.SubscribedUserIDs = append(v.SubscribedUserIDs, subscribedUserIDs...)
+}
+
+func (v *Viber) SetWebhook(webhookURL string) error {
+	_, err := v.Client.SetWebhook(webhookURL, []string{})
+	return err
 }
 
 // Send takes a message subject and a message body and sends them to all previously set userIds
