@@ -38,6 +38,7 @@ require (
 	github.com/go-lark/lark v1.7.3
 	github.com/google/go-cmp v0.5.9
 	github.com/kevinburke/twilio-go v0.0.0-20220922200631-8f3f155dfe1f
+	maunium.net/go/mautrix v0.12.1
 )
 
 require (
@@ -70,6 +71,7 @@ require (
 	github.com/kevinburke/rest v0.0.0-20210506044642-5611499aa33c // indirect
 	github.com/mattn/go-colorable v0.1.12 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
+	github.com/mileusna/viber v1.0.1
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
@@ -89,9 +91,8 @@ require (
 	golang.org/x/net v0.0.0-20220930213112-107f3e3c3b0b // indirect
 	golang.org/x/oauth2 v0.0.0-20220722155238-128564f6959c // indirect
 	golang.org/x/sys v0.0.0-20220803195053-6e608f9ce704 // indirect
-	golang.org/x/text v0.3.7 // indirect
+	golang.org/x/text v0.3.7
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	maunium.net/go/mautrix v0.12.1 // indirect
 )
