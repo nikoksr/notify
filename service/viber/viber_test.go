@@ -33,7 +33,7 @@ func TestViber_AddReceivers(t *testing.T) {
 	assert.Len(viber.SubscribedUserIDs, 3)
 }
 
-func TestSlack_SetWebhook(t *testing.T) {
+func TestViber_SetWebhook(t *testing.T) {
 	t.Parallel()
 	assert := require.New(t)
 	viber := New("appkey", "senderName", "senderAvatar")
