@@ -104,7 +104,7 @@ Yes, please! Contributions of all kinds are very welcome! Feel free to check our
 | [WeChat](https://www.wechat.com)                                               | [service/wechat](service/wechat)         | [silenceper/wechat](https://github.com/silenceper/wechat)                                       |
 | [WhatsApp](https://www.whatsapp.com)                                           | [service/whatsapp](service/whatsapp)     | [Rhymen/go-whatsapp](https://github.com/Rhymen/go-whatsapp)                                     |
 | [Matrix](https://www.matrix.org)                                               | [service/matrix](service/matrix)         | [mautrix/go](https://github.com/mautrix/go)                                                     |
-
+| [Viber](https://www.viber.com)                                               | [service/viber](service/viber)         | [mileusna/viber](https://github.com/mileusna/viber)                                                     |
 
 ## Special Thanks <a id="special_thanks"></a>
 
