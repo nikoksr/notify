@@ -3,6 +3,7 @@ package wechat
 import (
 	"context"
 	"fmt"
+	"html"
 	"net/http"
 	"sync"
 	"time"
@@ -73,7 +74,7 @@ func (s *Service) waitForOneOffVerification(server *http.Server, devMode bool, c
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		query := r.URL.Query()
 
-		echoStr := query.Get("echostr")
+		echoStr := html.EscapeString(query.Get("echostr"))
 		if devMode {
 			if callback != nil {
 				callback(r, true)
