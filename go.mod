@@ -23,14 +23,14 @@ require (
 	github.com/line/line-bot-sdk-go v7.8.0+incompatible
 	github.com/mailgun/mailgun-go/v4 v4.8.1
 	github.com/pkg/errors v0.9.1
-	github.com/plivo/plivo-go/v7 v7.12.1
+	github.com/plivo/plivo-go/v7 v7.14.0
 	github.com/sendgrid/sendgrid-go v3.12.0+incompatible
-	github.com/silenceper/wechat/v2 v2.1.3
+	github.com/silenceper/wechat/v2 v2.1.4
 	github.com/slack-go/slack v0.11.3
 	github.com/stretchr/testify v1.8.0
 	github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.4420
 	github.com/utahta/go-linenotify v0.5.0
-	golang.org/x/sync v0.0.0-20220929204114-8fcdb60fdcc0
+	golang.org/x/sync v0.1.0
 )
 
 require (
@@ -38,6 +38,7 @@ require (
 	github.com/go-lark/lark v1.7.3
 	github.com/google/go-cmp v0.5.9
 	github.com/kevinburke/twilio-go v0.0.0-20220922200631-8f3f155dfe1f
+	maunium.net/go/mautrix v0.12.1
 )
 
 require (
@@ -93,5 +94,4 @@ require (
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	maunium.net/go/mautrix v0.12.1 // indirect
 )
