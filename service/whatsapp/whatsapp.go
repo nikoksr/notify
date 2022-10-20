@@ -14,8 +14,8 @@ import (
 )
 
 const (
-	qrLoginWaitTime = 3 * time.Second
-	clientTimeout   = 5 * time.Second
+	qrLoginWaitTime = 10 * time.Second
+	clientTimeout   = 30 * time.Second
 )
 
 var sessionFilePath = filepath.Join(os.TempDir(), "whatsappSession.gob")
