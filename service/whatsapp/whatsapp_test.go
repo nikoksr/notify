@@ -15,8 +15,8 @@ func TestWhatsApp_New(t *testing.T) {
 	assert := require.New(t)
 
 	service, err := New()
-	assert.NotNil(service)
 	assert.Nil(err)
+	assert.NotNil(service)
 }
 
 func TestWhatsApp_AddReceivers(t *testing.T) {
