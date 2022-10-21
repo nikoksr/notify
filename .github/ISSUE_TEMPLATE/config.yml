@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Start a discussion (usage, doubts, docs, contributions, etc.)
+    url: https://github.com/nikoksr/notify/discussions/new
+    about: Please start a discussion if you have questions or want to discuss something with the community. If you have a bug report or feature request, please use the respective templates.

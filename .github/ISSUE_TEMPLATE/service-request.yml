@@ -1,0 +1,34 @@
+
+name: Feature request
+title: 'feat(service): Add [SERVICE NAME]'
+description: Suggest a new service for this project.
+labels: ['type/feature', 'affects/services', 'good first issue', 'help wanted', 'up for grabs']
+body:
+  - type: textarea
+    id: what-service-you-like-notify-to-support
+    attributes:
+      label: What service do you want to be supported?
+      description: Tell us about the service you want to be supported and why you want it to be supported. Please provide a link to the official website of the service.
+    validations:
+      required: true
+
+  - type: textarea
+    id: implementation-idea-textbox
+    attributes:
+      label: If you have any ideas on how this should be implemented, please tell us here.
+      description: |
+        In case you've already dug into existing options or source code and have ideas, mention them here. Please provide links to the relevant resources like documentation or client libraries.
+        Try to keep implementation ideas separate from requirements.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: interested-in-implementing-the-feature
+    attributes:
+      label: Is this a service you are interested in implementing yourself?
+      options:
+        - 'Yes'
+        - 'Maybe'
+        - 'No'
+    validations:
+      required: true

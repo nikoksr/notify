@@ -1,0 +1,41 @@
+name: Bug report
+title: "[BUG] "
+description: Confirmed bugs only. If in doubt, create a Discussion instead.
+labels: ['type/bug']
+body:
+- type: markdown
+  attributes:
+  value: |
+  Before you begin to fill out the form, make sure you have actually found a bug.
+  If you're not sure then please create a [discussion](https://github.com/nikoksr/notify/discussions) first.
+  If you have questions or want help with Notify, then also please create a [discussion](https://github.com/nikoksr/notify/discussions).
+
+- type: dropdown
+  id: regression-error
+  attributes:
+  label: Was this something which used to work for you, and then stopped?
+  options:
+  - 'It used to work, and then stopped'
+  - 'I never saw this working'
+  validations:
+  required: true
+
+- type: textarea
+  id: describe-bug
+  attributes:
+  label: Describe the bug
+  description: 'Please describe the bug in as much detail as possible.'
+  validations:
+  required: true
+
+- type: dropdown
+  id: minimal-reproduction-repository
+  attributes:
+  label: Have you created a minimal reproduction repository?
+  description: To help us debug your issue, please create a minimal reproduction repository.
+  options:
+  - 'I have linked to a minimal reproduction repository in the bug description'
+  - 'No reproduction, but I have linked to a public repo where it occurs'
+  - 'No reproduction repository'
+  validations:
+  required: true
