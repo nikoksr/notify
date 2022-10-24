@@ -35,6 +35,7 @@ func (v *Viber) AddReceivers(subscribedUserIDs ...string) {
 	v.SubscribedUserIDs = append(v.SubscribedUserIDs, subscribedUserIDs...)
 }
 
+// SetWebhook receives a URL that will we used as a webhook URL for Viber
 func (v *Viber) SetWebhook(webhookURL string) error {
 	_, err := v.Client.SetWebhook(webhookURL, []string{})
 	return err
