@@ -13,14 +13,14 @@ type viberClient interface {
 	SendTextMessage(receiver, msg string) (uint64, error)
 }
 
+// Compile-time check to ensure that vb.Viber implements the viberClient interface.
+var _ viberClient = new(vb.Viber)
+
 // Viber struct holds necessary fields to communicate with Viber API
 type Viber struct {
 	Client            viberClient
 	SubscribedUserIDs []string
 }
-
-// Compile-time check to ensure that vb.Viber implements the viberClient interface.
-var _ viberClient = new(vb.Viber)
 
 // New returns a new instance of Viber notification service
 func New(appKey, senderName, senderAvatar string) *Viber {
