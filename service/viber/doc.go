@@ -35,5 +35,4 @@ Usage:
         log.Println("Notification sent")
     }
 */
-
 package viber
