@@ -2,37 +2,38 @@
 Package viber provides a service for sending messages to viber.
 
 Usage:
-    package main
 
-    import (
-        "context"
-        "log"
+	package main
 
-        "github.com/nikoksr/notify"
-        "github.com/nikoksr/notify/service/viber"
-    )
+	import (
+	    "context"
+	    "log"
 
-    const appKey = "your-viber-token"
-    const webhookURL = "https://webhook.com"
-    const senderName = "vibersofyana"
+	    "github.com/nikoksr/notify"
+	    "github.com/nikoksr/notify/service/viber"
+	)
 
-    func main() {
-        viberSvc := viber.New(appKey, senderName, "")
+	const appKey = "your-viber-token"
+	const webhookURL = "https://webhook.com"
+	const senderName = "vibersofyana"
 
-        err := viberSvc.SetWebhook(webhookURL) // this only needs to be called once
-        if err != nil {
-            log.Fatalf("set webhook to viber server failed: %v", err)
-        }
+	func main() {
+	    viberSvc := viber.New(appKey, senderName, "")
 
-        viberSvc.AddReceivers("receiver-viber-user-id") // can add as many as required
-        notifier := notify.New()
+	    err := viberSvc.SetWebhook(webhookURL) // this only needs to be called once
+	    if err != nil {
+	        log.Fatalf("set webhook to viber server failed: %v", err)
+	    }
 
-        notifier.UseServices(viberSvc)
-        if err := notifier.Send(context.Background(), "TEST", "Message using golang notifier library"); err != nil {
-            log.Fatalf("notifier.Send() failed: %s", err.Error())
-        }
+	    viberSvc.AddReceivers("receiver-viber-user-id") // can add as many as required
+	    notifier := notify.New()
 
-        log.Println("Notification sent")
-    }
+	    notifier.UseServices(viberSvc)
+	    if err := notifier.Send(context.Background(), "TEST", "Message using golang notifier library"); err != nil {
+	        log.Fatalf("notifier.Send() failed: %s", err.Error())
+	    }
+
+	    log.Println("Notification sent")
+	}
 */
 package viber
