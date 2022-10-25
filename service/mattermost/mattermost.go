@@ -1,3 +1,4 @@
+// Package mattermost provides message notification integration for mattermost.com.
 package mattermost
 
 import (
