@@ -102,6 +102,7 @@ Yes, please! Contributions of all kinds are very welcome! Feel free to check our
 | [TextMagic](https://www.textmagic.com)                                         | [service/textmagic](service/textmagic)   | [textmagic/textmagic-rest-go-v2](https://github.com/textmagic/textmagic-rest-go-v2)             | :heavy_check_mark: |
 | [Twilio](https://www.twilio.com/)                                              | [service/twilio](service/twilio)         | [kevinburke/twilio-go](https://github.com/kevinburke/twilio-go)                                 | :heavy_check_mark: |
 | [Twitter](https://twitter.com)                                                 | [service/twitter](service/twitter)       | [dghubble/go-twitter](https://github.com/dghubble/go-twitter)                                   | :heavy_check_mark: |
+| [Viber](https://www.viber.com)                                                 | [service/viber](service/viber)           | [mileusna/viber](https://github.com/mileusna/viber)                                             | :heavy_check_mark: |
 | [WeChat](https://www.wechat.com)                                               | [service/wechat](service/wechat)         | [silenceper/wechat](https://github.com/silenceper/wechat)                                       | :heavy_check_mark: |
 | [WhatsApp](https://www.whatsapp.com)                                           | [service/whatsapp](service/whatsapp)     | [Rhymen/go-whatsapp](https://github.com/Rhymen/go-whatsapp)                                     |        :x:         |
 
