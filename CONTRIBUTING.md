@@ -43,8 +43,8 @@ We actively welcome your pull requests.
 1. Fork the repo and create your branch from `main`.
 2. If you've added code that should be tested, add tests.
 3. If you've changed or added exported functions or types, document them.
-4. Ensure the test suite passes and the linter doesn't complain (`make ci`).
-5. We use [gofumpt](https://github.com/mvdan/gofumpt) to format our code. Don't forget to always run `make fmt` before opening a new PR.
+4. We use [gofumpt](https://github.com/mvdan/gofumpt) to format our code. Don't forget to always run `make fmt` before opening a new PR.
+5. Ensure the test suite passes and the linter doesn't complain (`make ci`).
 
 
 ## Issues
