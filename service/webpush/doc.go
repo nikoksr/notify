@@ -1,5 +1,5 @@
 /*
-Package viber provides a service for sending messages to viber.
+Package webpush provides a service for sending messages to viber.
 
 Usage:
 
