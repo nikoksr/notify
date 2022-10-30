@@ -41,13 +41,13 @@ type Service struct {
 }
 
 // New returns a new instance of the Service
-func New(VAPIDPublicKey string, VAPIDPrivateKey string) *Service {
+func New(vapidPublicKey string, vapidPrivateKey string) *Service {
 	subscriptions := []webpush.Subscription{}
 
 	return &Service{
 		subscriptions,
-		VAPIDPublicKey,
-		VAPIDPrivateKey,
+		vapidPublicKey,
+		vapidPrivateKey,
 	}
 }
 
