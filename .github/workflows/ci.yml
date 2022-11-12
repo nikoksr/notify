@@ -10,8 +10,8 @@ jobs:
   test:
     strategy:
       matrix:
-        go-version: [1.19.x]
-        os: [ubuntu-latest]
+        go-version: [ 1.19.x ]
+        os: [ ubuntu-latest ]
     runs-on: ${{ matrix.os }}
     steps:
       - name: Install Go
@@ -26,13 +26,9 @@ jobs:
           # In order:
           # * Module download cache
           # * Build cache (Linux)
-          # * Build cache (Mac)
-          # * Build cache (Windows)
           path: |
             ~/go/pkg/mod
             ~/.cache/go-build
-            ~/Library/Caches/go-build
-            %LocalAppData%\go-build
           key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
           restore-keys: |
             ${{ runner.os }}-go-
@@ -40,9 +36,13 @@ jobs:
         run: go test -race -covermode=atomic -coverprofile=coverage.out ./...
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
+
   lint:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/setup-go@v3
+        with:
+          go-version: 1.19
       - uses: actions/checkout@v3
       - name: Lint
         uses: golangci/golangci-lint-action@v3
