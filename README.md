@@ -5,7 +5,7 @@
     alt="notify logo"
 />
 
-![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/nikoksr/notify?color=success&label=version&sort=semver)
+[![codecov](https://codecov.io/gh/nikoksr/notify/branch/main/graph/badge.svg?token=QDON0KO2WV)](https://codecov.io/gh/nikoksr/notify)
 [![Go Report Card](https://goreportcard.com/badge/github.com/nikoksr/notify)](https://goreportcard.com/report/github.com/nikoksr/notify)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/37fdff3c275c4a72a3a061f2d0ec5553)](https://www.codacy.com/gh/nikoksr/notify/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=nikoksr/notify&amp;utm_campaign=Badge_Grade)
 [![Maintainability](https://api.codeclimate.com/v1/badges/b3afd7bf115341995077/maintainability)](https://codeclimate.com/github/nikoksr/notify/maintainability)
@@ -101,7 +101,7 @@ Yes, please! Contributions of all kinds are very welcome! Feel free to check our
 | [Telegram](https://telegram.org)                                               | [service/telegram](service/telegram)     | [go-telegram-bot-api/telegram-bot-api](https://github.com/go-telegram-bot-api/telegram-bot-api) | :heavy_check_mark: |
 | [TextMagic](https://www.textmagic.com)                                         | [service/textmagic](service/textmagic)   | [textmagic/textmagic-rest-go-v2](https://github.com/textmagic/textmagic-rest-go-v2)             | :heavy_check_mark: |
 | [Twilio](https://www.twilio.com/)                                              | [service/twilio](service/twilio)         | [kevinburke/twilio-go](https://github.com/kevinburke/twilio-go)                                 | :heavy_check_mark: |
-| [Twitter](https://twitter.com)                                                 | [service/twitter](service/twitter)       | [dghubble/go-twitter](https://github.com/dghubble/go-twitter)                                   | :heavy_check_mark: |
+| [Twitter](https://twitter.com)                                                 | [service/twitter](service/twitter)       | [dghubble/go-twitter](https://github.com/dghubble/go-twitter)                                   |     :warning:      |
 | [Viber](https://www.viber.com)                                                 | [service/viber](service/viber)           | [mileusna/viber](https://github.com/mileusna/viber)                                             | :heavy_check_mark: |
 | [WeChat](https://www.wechat.com)                                               | [service/wechat](service/wechat)         | [silenceper/wechat](https://github.com/silenceper/wechat)                                       | :heavy_check_mark: |
 | [WhatsApp](https://www.whatsapp.com)                                           | [service/whatsapp](service/whatsapp)     | [Rhymen/go-whatsapp](https://github.com/Rhymen/go-whatsapp)                                     |        :x:         |
@@ -125,4 +125,5 @@ The [logo](https://github.com/MariaLetta/free-gophers-pack) was made by the amaz
 
 ## Show your support <a id="support"></a>
 
-Give a ⭐️ if you like this project!
+Please give a ⭐️ if you like the project! It draws more attention to the project, which helps us improve it even faster.
+
