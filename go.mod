@@ -14,7 +14,6 @@ require (
 	github.com/blinkbean/dingtalk v0.0.0-20210905093040-7d935c0f7e19
 	github.com/bwmarrin/discordgo v0.26.1
 	github.com/cschomburg/go-pushbullet v0.0.0-20171206132031-67759df45fbb
-	github.com/dghubble/go-twitter v0.0.0-20221024160433-0cc1e72ed6d8
 	github.com/dghubble/oauth1 v0.7.1
 	github.com/go-telegram-bot-api/telegram-bot-api v4.6.4+incompatible
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
@@ -33,6 +32,7 @@ require (
 
 require (
 	github.com/appleboy/go-fcm v0.1.5
+	github.com/drswork/go-twitter v0.0.0-20221107160839-dea1b6ed53d7
 	github.com/go-lark/lark v1.7.4
 	github.com/google/go-cmp v0.5.9
 	github.com/kevinburke/twilio-go v0.0.0-20220922200631-8f3f155dfe1f
