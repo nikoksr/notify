@@ -9,7 +9,7 @@ Ensure that you have already navigated to your GOPATH and installed the followin
 These are general and very high level instructions
 
 1. Log into Reddit create a new "script" type by visiting [here](https://www.reddit.com/prefs/apps/)
-2. The "rediret uri" parameter doesn't matter in this case and can just be set to `http://localhost:8080`
+2. The "redirect uri" parameter doesn't matter in this case and can just be set to `http://localhost:8080`
 2. Copy the *client id* and *client secret* for usage below
 4. Now you should be good to use the code detailed in [doc.go](doc.go)
 
