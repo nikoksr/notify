@@ -39,6 +39,8 @@ require (
 	maunium.net/go/mautrix v0.12.3
 )
 
+require github.com/vartanbeno/go-reddit/v2 v2.0.1
+
 require (
 	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.12.19 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/configsources v1.1.25 // indirect
