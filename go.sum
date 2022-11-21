@@ -1,8 +1,8 @@
 cloud.google.com/go v0.34.0/go.mod h1:aQUYkXzVsufM+DwF1aE+0xfcU+56JwCaLick0ClmMTw=
 github.com/Jeffail/gabs v1.4.0 h1://5fYRRTq1edjfIrQGvdkcd22pkYUrHZ5YC/H2GJVAo=
 github.com/Jeffail/gabs v1.4.0/go.mod h1:6xMvQMK4k33lb7GUUpaAPh6nKMmemQeg5d4gn7/bOXc=
-github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20220903135808-56c5346a1a28 h1:OJe0G++TYGhE525XnkrF9KF15D1WtQdyrk19SFwRrKk=
-github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20220903135808-56c5346a1a28/go.mod h1:rjP7sIipbZcagro/6TCk6X0ZeFT2eyudH5+fve/cbBA=
+github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20221121042443-a3fd332d56d9 h1:vuu1KBsr6l7XU3CHsWESP/4B1SNd+VZkrgeFZsUXrsY=
+github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20221121042443-a3fd332d56d9/go.mod h1:rjP7sIipbZcagro/6TCk6X0ZeFT2eyudH5+fve/cbBA=
 github.com/antihax/optional v1.0.0 h1:xK2lYat7ZLaVVcIuj82J8kIro4V6kDe0AUDFboUCwcg=
 github.com/antihax/optional v1.0.0/go.mod h1:uupD/76wgC+ih3iEmQUL+0Ugr19nfwCT1kdvxnR2qWY=
 github.com/appleboy/go-fcm v0.1.5 h1:fKbcZf/7vwGsvDkcop8a+kCHnK+tt4wXX0X7uEzwI6E=
