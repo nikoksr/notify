@@ -35,7 +35,7 @@ require (
 	github.com/drswork/go-twitter v0.0.0-20221107160839-dea1b6ed53d7
 	github.com/go-lark/lark v1.7.4
 	github.com/google/go-cmp v0.5.9
-	github.com/kevinburke/twilio-go v0.0.0-20220922200631-8f3f155dfe1f
+	github.com/kevinburke/twilio-go v0.0.0-20221122012537-65f3dd7539e2
 	maunium.net/go/mautrix v0.12.3
 )
 

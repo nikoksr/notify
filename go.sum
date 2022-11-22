@@ -145,8 +145,8 @@ github.com/kevinburke/go-types v0.0.0-20210723172823-2deba1f80ba7 h1:K8qael4Lems
 github.com/kevinburke/go-types v0.0.0-20210723172823-2deba1f80ba7/go.mod h1:/Pk5i/SqYdYv1cie5wGwoZ4P6TpgMi+Yf58mtJSHdOw=
 github.com/kevinburke/rest v0.0.0-20210506044642-5611499aa33c h1:hnbwWED5rIu+UaMkLR3JtnscMVGqp35lfzQwLuZAAUY=
 github.com/kevinburke/rest v0.0.0-20210506044642-5611499aa33c/go.mod h1:pD+iEcdAGVXld5foVN4e24zb/6fnb60tgZPZ3P/3T/I=
-github.com/kevinburke/twilio-go v0.0.0-20220922200631-8f3f155dfe1f h1:hfNgahMeAII8WXHg8COu6hX/TM/e5FBleh8jyiUMZNM=
-github.com/kevinburke/twilio-go v0.0.0-20220922200631-8f3f155dfe1f/go.mod h1:PDdDH7RSKjjy9iFyoMzfeChOSmXpXuMEUqmAJSihxx4=
+github.com/kevinburke/twilio-go v0.0.0-20221122012537-65f3dd7539e2 h1:k+lYMvS9cAl7e4Ea78qodfa6QZfXNa4QlFS/0GYpanI=
+github.com/kevinburke/twilio-go v0.0.0-20221122012537-65f3dd7539e2/go.mod h1:PDdDH7RSKjjy9iFyoMzfeChOSmXpXuMEUqmAJSihxx4=
 github.com/kr/pretty v0.3.0 h1:WgNl7dwNpEZ6jJ9k1snq4pZsg7DOEN8hP9Xw0Tsjwk0=
 github.com/kr/text v0.2.0 h1:5Nx0Ya0ZqY2ygV366QzturHI13Jq95ApcVaJBhpS+AY=
 github.com/line/line-bot-sdk-go v7.8.0+incompatible h1:Uf9/OxV0zCVfqyvwZPH8CrdiHXXmMRa/L91G3btQblQ=
