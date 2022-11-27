@@ -3,8 +3,8 @@ package twitter
 import (
 	"context"
 
-	"github.com/dghubble/go-twitter/twitter"
 	"github.com/dghubble/oauth1"
+	"github.com/drswork/go-twitter/twitter"
 	"github.com/pkg/errors"
 )
 
