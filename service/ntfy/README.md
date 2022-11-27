@@ -8,18 +8,24 @@
 package main
 
 import (
+	"context"
+
 	"github.com/nikoksr/notify"
 	"github.com/nikoksr/notify/service/ntfy"
-	"golang.org/x/net/context"
 )
 
 func main() {
+	// Create a ntfy service. You can use the
+	// `ntfy.NewWithServers` function to create a service with a custom server.
+	//ntfyService := ntfy.NewWithServers(ntfy.DefaultServerURL)
 
-	notifier := notify.New()
+	// Or use `ntfy.New` to create a service with the default server.
 	ntfyService := ntfy.New()
-	notifier.UseServices(ntfyService)
 
-	jsonBody := `{
+	// Tell our notifier to use the bark service.
+	notify.UseServices(ntfyService)
+
+	content := `{
 		"message": "Disk space is low at 5.1 GB",
 		"title": "Low disk space alert",
 		"tags": ["warning","cd"],
@@ -30,17 +36,15 @@ func main() {
 		"actions": [{ "action": "view", "label": "Admin panel", "url": "https://filesrv.lan/admin" }]
 	}`
 
-	// Send a message
-	err := notifier.Send(
+	// Send a test message.
+	err := notify.Send(
 		context.Background(),
-		"pushkar",                      // this is topic name
-		jsonBody,
+		"pushkar",
+		content,
 	)
 
 	if err != nil {
 		panic(err)
 	}
-
 }
-
 ```
