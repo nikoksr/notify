@@ -11,6 +11,7 @@ import (
 
 // Mail struct holds necessary data to send emails.
 type Mail struct {
+	usePlainText      bool
 	senderAddress     string
 	smtpHostAddr      string
 	smtpAuth          smtp.Auth
@@ -20,6 +21,7 @@ type Mail struct {
 // New returns a new instance of a Mail notification service.
 func New(senderAddress, smtpHostAddress string) *Mail {
 	return &Mail{
+		usePlainText:      false,
 		senderAddress:     senderAddress,
 		smtpHostAddr:      smtpHostAddress,
 		receiverAddresses: []string{},
@@ -41,6 +43,16 @@ func (m *Mail) AddReceivers(addresses ...string) {
 	m.receiverAddresses = append(m.receiverAddresses, addresses...)
 }
 
+// UsePlainTextBody toggles client to send E-Mails as unformatted Plain Text
+func (m *Mail) UsePlainTextBody() {
+	m.usePlainText = true
+}
+
+// UseHtmlBody will use
+func (m *Mail) UseHtmlBody() {
+	m.usePlainText = false
+}
+
 // Send takes a message subject and a message body and sends them to all previously set chats. Message body supports
 // html as markup language.
 func (m Mail) Send(ctx context.Context, subject, message string) error {
@@ -48,9 +60,13 @@ func (m Mail) Send(ctx context.Context, subject, message string) error {
 		To:      m.receiverAddresses,
 		From:    m.senderAddress,
 		Subject: subject,
-		// Text:    []byte("Text Body is, of course, supported!"),
-		HTML:    []byte(message),
 		Headers: textproto.MIMEHeader{},
+	}
+
+	if m.usePlainText {
+		msg.Text = []byte(message)
+	} else {
+		msg.HTML = []byte(message)
 	}
 
 	var err error
