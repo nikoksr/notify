@@ -48,8 +48,8 @@ func (m *Mail) UsePlainTextBody() {
 	m.usePlainText = true
 }
 
-// UseHtmlBody will use
-func (m *Mail) UseHtmlBody() {
+//  UseHTMLBody will toggle client to send E-Mails HTML formatted
+func (m *Mail) UseHTMLBody() {
 	m.usePlainText = false
 }
 
