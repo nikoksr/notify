@@ -53,9 +53,7 @@ func (m *Mail) UseHtmlBody() {
 	m.usePlainText = false
 }
 
-// Send takes a message subject and a message body and sends them to all previously set chats. Message body supports
-// html as markup language.
-func (m Mail) Send(ctx context.Context, subject, message string) error {
+func (m *Mail) newEmail(subject, message string) *email.Email {
 	msg := &email.Email{
 		To:      m.receiverAddresses,
 		From:    m.senderAddress,
@@ -68,6 +66,13 @@ func (m Mail) Send(ctx context.Context, subject, message string) error {
 	} else {
 		msg.HTML = []byte(message)
 	}
+	return msg
+}
+
+// Send takes a message subject and a message body and sends them to all previously set chats. Message body supports
+// html as markup language.
+func (m Mail) Send(ctx context.Context, subject, message string) error {
+	msg := m.newEmail(subject, message)
 
 	var err error
 	select {
