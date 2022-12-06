@@ -19,7 +19,7 @@ func TestMail_newEmailHtml(t *testing.T) {
 func TestMail_newEmailText(t *testing.T) {
 	text := "test"
 	m := New("foo", "server")
-	m.UsePlainTextBody()
+	m.BodyFormat(PlainText)
 	email := m.newEmail("test", text)
 
 	assert.True(t, m.usePlainText)

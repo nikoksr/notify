@@ -28,6 +28,13 @@ func New(senderAddress, smtpHostAddress string) *Mail {
 	}
 }
 
+type BodyType int
+
+const (
+	PlainText BodyType = iota
+	HTML
+)
+
 // AuthenticateSMTP authenticates you to send emails via smtp.
 // Example values: "", "test@gmail.com", "password123", "smtp.gmail.com"
 // For more information about smtp authentication, see here:
@@ -43,14 +50,15 @@ func (m *Mail) AddReceivers(addresses ...string) {
 	m.receiverAddresses = append(m.receiverAddresses, addresses...)
 }
 
-// UsePlainTextBody toggles client to send E-Mails as unformatted Plain Text
-func (m *Mail) UsePlainTextBody() {
-	m.usePlainText = true
-}
-
-//  UseHTMLBody will toggle client to send E-Mails HTML formatted
-func (m *Mail) UseHTMLBody() {
-	m.usePlainText = false
+// BodyFormat can be used to specify the format of the body.
+// Default BodyType is HTML.
+func (m *Mail) BodyFormat(format BodyType) {
+	switch format {
+	case PlainText:
+		m.usePlainText = true
+	default:
+		m.usePlainText = false
+	}
 }
 
 func (m *Mail) newEmail(subject, message string) *email.Email {
