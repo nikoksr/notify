@@ -28,10 +28,13 @@ func New(senderAddress, smtpHostAddress string) *Mail {
 	}
 }
 
+// BodyType is used to specify the format of the body.
 type BodyType int
 
 const (
+	// PlainText is used to specify that the body is plain text.
 	PlainText BodyType = iota
+	// HTML is used to specify that the body is HTML.
 	HTML
 )
 
