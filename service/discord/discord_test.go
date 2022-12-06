@@ -1,10 +1,8 @@
 package discord
 
 import (
-	"context"
 	"testing"
 
-	"github.com/pkg/errors"
 	"github.com/stretchr/testify/require"
 )
 
@@ -51,46 +49,4 @@ func TestDiscord_Authenticate(t *testing.T) {
 
 	err = service.AuthenticateWithBotToken("")
 	assert.Nil(err)
-}
-
-func TestDiscord_Send(t *testing.T) {
-	t.Parallel()
-
-	assert := require.New(t)
-
-	service := New()
-	assert.NotNil(service)
-
-	// No receivers added
-	ctx := context.Background()
-	err := service.Send(ctx, "subject", "message")
-	assert.Nil(err)
-
-	// Test error response
-	mockClient := newMockDiscordSession(t)
-	mockClient.
-		On("ChannelMessageSend", "1234", "subject\nmessage").
-		Return(nil, errors.New("some error"))
-
-	service.client = mockClient
-	service.AddReceivers("1234")
-	err = service.Send(ctx, "subject", "message")
-	assert.NotNil(err)
-	mockClient.AssertExpectations(t)
-
-	// Test success response
-	mockClient = newMockDiscordSession(t)
-	mockClient.
-		On("ChannelMessageSend", "1234", "subject\nmessage").
-		Return(nil, nil)
-
-	mockClient.
-		On("ChannelMessageSend", "5678", "subject\nmessage").
-		Return(nil, nil)
-
-	service.client = mockClient
-	service.AddReceivers("5678")
-	err = service.Send(ctx, "subject", "message")
-	assert.Nil(err)
-	mockClient.AssertExpectations(t)
 }

@@ -2,18 +2,17 @@ package discord
 
 import (
 	"context"
+	"fmt"
 
-	"github.com/bwmarrin/discordgo"
 	"github.com/pkg/errors"
+	"github.com/switchupcb/disgo"
 )
 
 //go:generate mockery --name=discordSession --output=. --case=underscore --inpackage
-type discordSession interface {
-	ChannelMessageSend(channelID string, content string) (*discordgo.Message, error)
-}
+type discordSession interface{}
 
-// Compile-time check to ensure that discordgo.Session implements the discordSession interface.
-var _ discordSession = new(discordgo.Session)
+// Compile-time check to ensure that disgo.Client implements the discordSession interface.
+var _ discordSession = new(disgo.Client)
 
 // Discord struct holds necessary data to communicate with the Discord API.
 type Discord struct {
@@ -24,51 +23,29 @@ type Discord struct {
 // New returns a new instance of a Discord notification service.
 func New() *Discord {
 	return &Discord{
-		client:     &discordgo.Session{},
+		client:     &disgo.Client{},
 		channelIDs: []string{},
 	}
 }
 
-// authenticate will try and authenticate to discord.
-func (d *Discord) authenticate(token string) error {
-	client, err := discordgo.New(token)
-	if err != nil {
-		return err
+// AuthenticateWithBotToken authenticates you as a bot to Discord via the given access token.
+func (d *Discord) AuthenticateWithBotToken(token string) error {
+	d.client = &disgo.Client{
+		Authentication: disgo.BotToken(token),
+		Config:         disgo.DefaultConfig(),
 	}
-
-	client.Identify.Intents = discordgo.IntentsGuildMessageTyping
-
-	d.client = client
 
 	return nil
 }
 
-// AuthenticateWithBotToken authenticates you as a bot to Discord via the given access token.
-// For more info, see here: https://pkg.go.dev/github.com/bwmarrin/discordgo@v0.22.1#New
-func (d *Discord) AuthenticateWithBotToken(token string) error {
-	token = parseBotToken(token)
-
-	return d.authenticate(token)
-}
-
 // AuthenticateWithOAuth2Token authenticates you to Discord via the given OAUTH2 token.
-// For more info, see here: https://pkg.go.dev/github.com/bwmarrin/discordgo@v0.22.1#New
 func (d *Discord) AuthenticateWithOAuth2Token(token string) error {
-	token = parseOAuthToken(token)
+	d.client = &disgo.Client{
+		Authentication: disgo.BearerToken(token),
+		Config:         disgo.DefaultConfig(),
+	}
 
-	return d.authenticate(token)
-}
-
-// parseBotToken parses a regular token to a bot token that is understandable for discord.
-// For more info, see here: https://pkg.go.dev/github.com/bwmarrin/discordgo@v0.22.1#New
-func parseBotToken(token string) string {
-	return "Bot " + token
-}
-
-// parseBotToken parses a regular token to a OAUTH2 token that is understandable for discord.
-// For more info, see here: https://pkg.go.dev/github.com/bwmarrin/discordgo@v0.22.1#New
-func parseOAuthToken(token string) string {
-	return "Bearer " + token
+	return nil
 }
 
 // AddReceivers takes Discord channel IDs and adds them to the internal channel ID list. The Send method will send
@@ -86,8 +63,28 @@ func (d Discord) Send(ctx context.Context, subject, message string) error {
 		case <-ctx.Done():
 			return ctx.Err()
 		default:
-			_, err := d.client.ChannelMessageSend(channelID, fullMessage)
-			if err != nil {
+			request := &disgo.CreateMessage{
+				MessageReference: nil,
+				Content:          disgo.Pointer(fullMessage),
+				Nonce:            nil,
+				TTS:              nil,
+				AllowedMentions:  nil,
+				Flags:            nil,
+				ChannelID:        channelID,
+				Embeds:           nil,
+				Components:       nil,
+				StickerIDS:       nil,
+				Files:            nil,
+				Attachments:      nil,
+			}
+
+			// assertion required due to Discord.client mock field.
+			bot, ok := d.client.(*disgo.Client)
+			if !ok {
+				return fmt.Errorf("mock client assertion failure: failed to send message to Discord channel '%s'", channelID)
+			}
+
+			if _, err := request.Send(bot); err != nil {
 				return errors.Wrapf(err, "failed to send message to Discord channel '%s'", channelID)
 			}
 		}

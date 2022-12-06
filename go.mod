@@ -12,7 +12,6 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/ses v1.14.22
 	github.com/aws/aws-sdk-go-v2/service/sns v1.18.7
 	github.com/blinkbean/dingtalk v0.0.0-20210905093040-7d935c0f7e19
-	github.com/bwmarrin/discordgo v0.26.1
 	github.com/cschomburg/go-pushbullet v0.0.0-20171206132031-67759df45fbb
 	github.com/dghubble/oauth1 v0.7.1
 	github.com/go-telegram-bot-api/telegram-bot-api v4.6.4+incompatible
@@ -39,7 +38,24 @@ require (
 	maunium.net/go/mautrix v0.12.3
 )
 
-require github.com/vartanbeno/go-reddit/v2 v2.0.1
+require (
+	github.com/switchupcb/disgo v1.10.0
+	github.com/vartanbeno/go-reddit/v2 v2.0.1
+)
+
+require (
+	github.com/andybalholm/brotli v1.0.4 // indirect
+	github.com/goccy/go-json v0.10.0 // indirect
+	github.com/gorilla/schema v1.2.0 // indirect
+	github.com/klauspost/compress v1.15.12 // indirect
+	github.com/mattn/go-colorable v0.1.13 // indirect
+	github.com/mattn/go-isatty v0.0.16 // indirect
+	github.com/rs/xid v1.4.0 // indirect
+	github.com/rs/zerolog v1.28.0 // indirect
+	github.com/switchupcb/websocket v1.8.8 // indirect
+	github.com/valyala/bytebufferpool v1.0.0 // indirect
+	github.com/valyala/fasthttp v1.43.0 // indirect
+)
 
 require (
 	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.12.20 // indirect
