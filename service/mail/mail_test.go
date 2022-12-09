@@ -7,6 +7,8 @@ import (
 )
 
 func TestMail_newEmailHtml(t *testing.T) {
+	t.Parallel()
+
 	text := "test"
 	m := New("foo", "server")
 	email := m.newEmail("test", text)
@@ -17,6 +19,8 @@ func TestMail_newEmailHtml(t *testing.T) {
 }
 
 func TestMail_newEmailText(t *testing.T) {
+	t.Parallel()
+
 	text := "test"
 	m := New("foo", "server")
 	m.BodyFormat(PlainText)
@@ -28,6 +32,8 @@ func TestMail_newEmailText(t *testing.T) {
 }
 
 func TestMail_AddReceivers(t *testing.T) {
+	t.Parallel()
+
 	m := New("foo", "server")
 	m.AddReceivers("test")
 
@@ -36,6 +42,8 @@ func TestMail_AddReceivers(t *testing.T) {
 }
 
 func TestMail_AuthenticateSMTP(t *testing.T) {
+	t.Parallel()
+
 	m := New("foo", "server")
 	assert.Nil(t, m.smtpAuth)
 
