@@ -20,14 +20,14 @@ var _ gotifyService = &Gotify{}
 // Gotify struct holds necessary data to communicate with Gotify API
 type Gotify struct {
 	httpClient *http.Client
-	baseUrl    string
+	baseURL    string
 	appToken   string
 }
 
-func New(appToken, baseUrl string) *Gotify {
+func New(appToken, baseURL string) *Gotify {
 	g := &Gotify{
 		httpClient: http.DefaultClient,
-		baseUrl:    baseUrl,
+		baseURL:    baseURL,
 		appToken:   appToken,
 	}
 
@@ -56,14 +56,15 @@ func (g *Gotify) Send(ctx context.Context, subject, message string) error {
 			return err
 		}
 
-		req, err := http.NewRequest("POST", fmt.Sprintf("%s/message", g.baseUrl), bytes.NewReader(body))
+		req, err := http.NewRequestWithContext(context.Background(), "POST", fmt.Sprintf("%s/message", g.baseURL), bytes.NewReader(body))
 		if err != nil {
 			return err
 		}
 
 		req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", g.appToken))
 
-		_, err = g.httpClient.Do(req)
+		b, err := g.httpClient.Do(req)
+		b.Body.Close()
 		if err != nil {
 			return errors.Wrapf(err, "failed to send message to gotify server")
 		}
