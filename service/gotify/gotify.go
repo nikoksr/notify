@@ -15,6 +15,8 @@ type gotifyService interface {
 	Send(ctx context.Context, subject, message string) error
 }
 
+var _ gotifyService = &Gotify{}
+
 // Gotify struct holds necessary data to communicate with Gotify API
 type Gotify struct {
 	httpClient *http.Client
