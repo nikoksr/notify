@@ -16,7 +16,6 @@ require (
 	github.com/cschomburg/go-pushbullet v0.0.0-20171206132031-67759df45fbb
 	github.com/dghubble/oauth1 v0.7.2
 	github.com/go-telegram-bot-api/telegram-bot-api v4.6.4+incompatible
-	github.com/jordan-wright/email/v4 v4.0.0
 	github.com/line/line-bot-sdk-go v7.8.0+incompatible
 	github.com/mailgun/mailgun-go/v4 v4.8.1
 	github.com/pkg/errors v0.9.1
@@ -39,7 +38,10 @@ require (
 	maunium.net/go/mautrix v0.12.4
 )
 
-require github.com/vartanbeno/go-reddit/v2 v2.0.1
+require (
+	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
+	github.com/vartanbeno/go-reddit/v2 v2.0.1
+)
 
 require (
 	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.12.21 // indirect
