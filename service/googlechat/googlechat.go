@@ -1,3 +1,5 @@
+// Package googlechat provides message notification integration sent to multiple
+// spaces within a Google Chat Application.
 package googlechat
 
 import (
@@ -55,7 +57,7 @@ type Service struct {
 	spaces         []string
 }
 
-// Returns a new instance of the google chat notification service
+// New returns an instance of the google chat notification service
 func New(credentialsFilepath string) (*Service, error) {
 	svc, err := newMessageCreator(credentialsFilepath)
 	if err != nil {
