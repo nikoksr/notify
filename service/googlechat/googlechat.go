@@ -37,9 +37,9 @@ type messageCreator struct {
 	*chat.SpacesMessagesService
 }
 
-func newMessageCreator(credentialsFilepath string) (spacesMessageCreator, error) {
+func newMessageCreator(options ...option.ClientOption) (spacesMessageCreator, error) {
 	ctx := context.Background()
-	svc, err := chat.NewService(ctx, option.WithCredentialsFile(credentialsFilepath))
+	svc, err := chat.NewService(ctx, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -58,8 +58,8 @@ type Service struct {
 }
 
 // New returns an instance of the google chat notification service
-func New(credentialsFilepath string) (*Service, error) {
-	svc, err := newMessageCreator(credentialsFilepath)
+func New(options ...option.ClientOption) (*Service, error) {
+	svc, err := newMessageCreator(options...)
 	if err != nil {
 		return nil, err
 	}

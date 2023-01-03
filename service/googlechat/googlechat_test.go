@@ -8,12 +8,14 @@ import (
 	"github.com/pkg/errors"
 	"github.com/stretchr/testify/require"
 	"google.golang.org/api/chat/v1"
+	"google.golang.org/api/option"
 )
 
 func TestGoogleChat_New(t *testing.T) {
 	t.Parallel()
+    withCred := option.WithCredentialsFile("example_credentials.json")
 	assert := require.New(t)
-	service, err := New("example_credentials.json")
+	service, err := New(withCred)
 	assert.Nil(err)
 	assert.NotNil(service)
 }

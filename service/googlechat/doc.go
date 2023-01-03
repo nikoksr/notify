@@ -9,43 +9,59 @@ Credentials" file must be supplied.
 For more information on Google Application credential JSON files see:
 https://cloud.google.com/docs/authentication/application-default-credentials
 
-Normally Application Default Credentials as an environment variable would be
-supported. However, to remain consistent with other `notify` services, the path to
-a valid credential configuration JSON file or service account key JSON file must be
-passed in as a parameter of `New()`.
-
 Usage:
-	package main
+    package main
 
-	import (
-		"context"
-		"log"
+    import (
+        "context"
+        "fmt"
+        "log"
+        "strings"
 
-		"github.com/nikoksr/notify"
-		"github.com/nikoksr/notify/service/googlechat"
-	)
+        "github.com/nikoksr/notify"
+        "github.com/nikoksr/notify/service/googlechat"
+        "google.golang.org/api/chat/v1"
+        "google.golang.org/api/option"
+    )
 
-	func main() {
-		gChatSvc, err := googlechat.New("path/to/config_file.json")
-		if err != nil {
-			log.Fatalf("googlechat.New() failed: %s", err.Error())
-		}
+    func main() {
+        // only basic text messages with subject and message is supported at this time.
+        ctx := context.Background()
 
-		gChatSvc.AddReceivers("office_space")
+        withCred := option.WithCredentialsFile("credentials.json")
+        withSpacesScope := option.WithScopes("https://www.googleapis.com/auth/chat.spaces") 
+        
+        listSvc, err := chat.NewService(ctx, withCred, withSpacesScope)
+        spaces, err := listSvc.Spaces.List().Do()
 
-		notifier := notify.New()
-		notifier.UseServices(gChatSvc)
+        if err != nil {
+            log.Fatalf("svc.Spaces.List().Do() failed: %s", err.Error())
+        }
+        sps := make([]string, 0)
+        for _, space := range spaces.Spaces {
+        fmt.Printf("space %s\n", space.DisplayName)
+            name := strings.Replace(space.Name, "spaces/", "", 1)
+            sps = append(sps, name)
+        }
+        
+        msgSvc, err := googlechat.New(withCred)
+        if err != nil {
+            log.Fatalf("googlechat.New() failed: %s", err.Error())
+        }
 
-		// only basic text messages with subject and message is supported at
-        // this time.
-		ctx := context.Background()
+        msgSvc.AddReceivers(sps...)
 
-		err = notifier.Send(ctx, "subject", "message")
-		if err != nil {
-			log.Fatalf("notifier.Send() failed: %s", err.Error())
-		}
+        notifier := notify.New()
 
-		log.Println("notification sent")
-	}
+        notifier.UseServices(msgSvc)
+
+        fmt.Printf("sending message to %d spaces\n", len(sps))
+        err = notifier.Send(ctx, "subject", "message")
+        if err != nil {
+            log.Fatalf("notifier.Send() failed: %s", err.Error())
+        }
+
+        log.Println("notification sent")
+    }
 */
 package googlechat
