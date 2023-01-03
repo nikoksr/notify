@@ -13,7 +13,7 @@ import (
 
 func TestGoogleChat_New(t *testing.T) {
 	t.Parallel()
-    withCred := option.WithCredentialsFile("example_credentials.json")
+	withCred := option.WithCredentialsFile("example_credentials.json")
 	assert := require.New(t)
 	service, err := New(withCred)
 	assert.Nil(err)
