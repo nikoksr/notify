@@ -182,8 +182,8 @@ github.com/pkg/errors v0.8.1-0.20161029093637-248dadf4e906/go.mod h1:bwawxfHBFNV
 github.com/pkg/errors v0.8.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
 github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
-github.com/plivo/plivo-go/v7 v7.15.0 h1:wSfvgkaLTFQj9rpTWzIbnOhy8MrCTDAOgYCQqohPJdU=
-github.com/plivo/plivo-go/v7 v7.15.0/go.mod h1:Jw1e16x0WjW334botVeKQT4hcMXMN55r4HH0XoGsR6Q=
+github.com/plivo/plivo-go/v7 v7.16.0 h1:xxVv4cSCaHapwd0UmFXE3q9M1fOGpeRzEa+0hj3M6h4=
+github.com/plivo/plivo-go/v7 v7.16.0/go.mod h1:Jw1e16x0WjW334botVeKQT4hcMXMN55r4HH0XoGsR6Q=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/rogpeppe/go-internal v1.6.1 h1:/FiVV8dS/e+YqF2JvO3yXRFbBLTIuSDkuC7aBOAvL+k=
