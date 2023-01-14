@@ -10,14 +10,16 @@ import (
 	"strings"
 
 	"github.com/pkg/errors"
+
+	"github.com/nikoksr/notify"
 )
 
 type (
 	// PreSendHookFn defines a function signature for a pre-send hook.
-	PreSendHookFn func(ctx context.Context, req *http.Request) error
+	PreSendHookFn func(req *http.Request) error
 
 	// PostSendHookFn defines a function signature for a post-send hook.
-	PostSendHookFn func(ctx context.Context, req *http.Request, resp *http.Response) error
+	PostSendHookFn func(req *http.Request, resp *http.Response) error
 
 	// BuildPayloadFn defines a function signature for a function that builds a payload.
 	BuildPayloadFn func(subject, message string) (payload any)
@@ -31,9 +33,10 @@ type (
 	// the receiver. The BuildPayload function is used to build the payload that will be sent to the receiver from the
 	// given subject and message.
 	Webhook struct {
-		URL          string
 		ContentType  string
+		Header       http.Header
 		Method       string
+		URL          string
 		BuildPayload BuildPayloadFn
 	}
 
@@ -50,8 +53,13 @@ type (
 )
 
 const (
-	defaultContentType   = "application/json"
-	defaultRequestMethod = "POST"
+	defaultUserAgent     = "notify/" + notify.Version
+	defaultContentType   = "application/json; charset=utf-8"
+	defaultRequestMethod = http.MethodPost
+
+	// Defining these as constants for testing purposes.
+	defaultSubjectKey = "subject"
+	defaultMessageKey = "message"
 )
 
 type defaultMarshaller struct{}
@@ -59,15 +67,15 @@ type defaultMarshaller struct{}
 // Marshal takes a payload and serializes it to a byte slice. The content type is used to determine the serialization
 // format. If the content type is not supported, an error is returned. The default marshaller supports the following
 // content types: application/json, text/plain.
-// TODO: expand the default marshaller to support more content types?
+// NOTE: should we expand the default marshaller to support more content types?
 func (defaultMarshaller) Marshal(contentType string, payload any) (out []byte, err error) {
-	switch contentType {
-	case "application/json":
+	switch {
+	case strings.HasPrefix(contentType, "application/json"):
 		out, err = json.Marshal(payload)
 		if err != nil {
 			return nil, errors.Wrap(err, "marshal json")
 		}
-	case "text/plain":
+	case strings.HasPrefix(contentType, "text/plain"):
 		str, ok := payload.(string)
 		if !ok {
 			return nil, errors.Errorf("payload was expected to be string, but was %T", payload)
@@ -84,8 +92,8 @@ func (defaultMarshaller) Marshal(contentType string, payload any) (out []byte, e
 // "message".
 func buildDefaultPayload(subject, message string) any {
 	return map[string]string{
-		"Subject": subject,
-		"Message": message,
+		defaultSubjectKey: subject,
+		defaultMessageKey: message,
 	}
 }
 
@@ -103,16 +111,27 @@ func New() *Service {
 
 func newWebhook(url string) *Webhook {
 	return &Webhook{
-		URL:          url,
 		ContentType:  defaultContentType,
+		Header:       http.Header{},
 		Method:       defaultRequestMethod,
+		URL:          url,
 		BuildPayload: buildDefaultPayload,
 	}
 }
 
-// AddReceivers accepts a list of Webhooks and adds them as receivers.
-func (s *Service) AddReceivers(webhook ...*Webhook) {
-	s.webhooks = append(s.webhooks, webhook...)
+// String returns a string representation of the webhook. It implements the fmt.Stringer interface.
+func (w *Webhook) String() string {
+	if w == nil {
+		return ""
+	}
+
+	return strings.TrimSpace(fmt.Sprintf("%s %s %s", strings.ToUpper(w.Method), w.URL, w.ContentType))
+}
+
+// AddReceivers accepts a list of Webhooks and adds them as receivers. The Webhooks are expected to be valid HTTP
+// endpoints.
+func (s *Service) AddReceivers(webhooks ...*Webhook) {
+	s.webhooks = append(s.webhooks, webhooks...)
 }
 
 // AddReceiversURLs accepts a list of URLs and adds them as receivers. Internally it converts the URLs to Webhooks by
@@ -133,9 +152,9 @@ func (s *Service) WithClient(client *http.Client) {
 
 // doPreSendHooks executes all the pre-send hooks. If any of the hooks returns an error, the execution is stopped and
 // the error is returned.
-func (s *Service) doPreSendHooks(ctx context.Context, req *http.Request) error {
+func (s *Service) doPreSendHooks(req *http.Request) error {
 	for _, hook := range s.preSendHooks {
-		if err := hook(ctx, req); err != nil {
+		if err := hook(req); err != nil {
 			return err
 		}
 	}
@@ -145,9 +164,9 @@ func (s *Service) doPreSendHooks(ctx context.Context, req *http.Request) error {
 
 // doPostSendHooks executes all the post-send hooks. If any of the hooks returns an error, the execution is stopped and
 // the error is returned.
-func (s *Service) doPostSendHooks(ctx context.Context, req *http.Request, resp *http.Response) error {
+func (s *Service) doPostSendHooks(req *http.Request, resp *http.Response) error {
 	for _, hook := range s.postSendHooks {
-		if err := hook(ctx, req, resp); err != nil {
+		if err := hook(req, resp); err != nil {
 			return err
 		}
 	}
@@ -167,13 +186,20 @@ func (s *Service) PostSend(hook PostSendHookFn) {
 
 // newRequest creates a new http request with the given method, content-type, url and payload. Request created by this
 // function will usually be passed to the Service.do method.
-func newRequest(ctx context.Context, method, contentType, url string, payload io.Reader) (*http.Request, error) {
-	req, err := http.NewRequestWithContext(ctx, method, url, payload)
+func newRequest(ctx context.Context, hook *Webhook, payload io.Reader) (*http.Request, error) {
+	req, err := http.NewRequestWithContext(ctx, hook.Method, hook.URL, payload)
 	if err != nil {
 		return nil, err
 	}
 
-	req.Header.Set("Content-Type", contentType)
+	req.Header = hook.Header
+
+	if req.Header.Get("User-Agent") == "" {
+		req.Header.Set("User-Agent", defaultUserAgent)
+	}
+	if req.Header.Get("Content-Type") == "" {
+		req.Header.Set("Content-Type", hook.ContentType)
+	}
 
 	return req, nil
 }
@@ -183,8 +209,7 @@ func newRequest(ctx context.Context, method, contentType, url string, payload io
 // by the newRequest function.
 func (s *Service) do(req *http.Request) error {
 	// Execute all pre-send hooks in order.
-	err := s.doPreSendHooks(req.Context(), req)
-	if err != nil {
+	if err := s.doPreSendHooks(req); err != nil {
 		return errors.Wrap(err, "pre-send hooks")
 	}
 
@@ -196,8 +221,7 @@ func (s *Service) do(req *http.Request) error {
 	defer func() { _ = resp.Body.Close() }()
 
 	// Execute all post-send hooks in order.
-	err = s.doPostSendHooks(req.Context(), req, resp)
-	if err != nil {
+	if err = s.doPostSendHooks(req, resp); err != nil {
 		return errors.Wrap(err, "post-send hooks")
 	}
 
@@ -213,19 +237,13 @@ func (s *Service) do(req *http.Request) error {
 // is creating a new request for the given webhook and sending it.
 func (s *Service) send(ctx context.Context, webhook *Webhook, payload []byte) error {
 	// Create a new HTTP request for the given webhook.
-	req, err := newRequest(ctx, webhook.Method, webhook.ContentType, webhook.URL, bytes.NewReader(payload))
+	req, err := newRequest(ctx, webhook, bytes.NewReader(payload))
 	if err != nil {
-		return errors.Wrapf(err, "create request for %q", webhook)
+		return errors.Wrapf(err, "create request %q", webhook)
 	}
 	defer func() { _ = req.Body.Close() }()
 
-	// Send the request
-	err = s.do(req)
-	if err != nil {
-		return errors.Wrapf(err, "send request to %q", webhook)
-	}
-
-	return nil
+	return s.do(req)
 }
 
 // Send takes a message and sends it to all webhooks.
@@ -236,6 +254,11 @@ func (s *Service) Send(ctx context.Context, subject, message string) error {
 		case <-ctx.Done():
 			return ctx.Err()
 		default:
+			// Skip webhook if it is nil.
+			if webhook == nil {
+				continue
+			}
+
 			// Build the payload for the current webhook.
 			payload := webhook.BuildPayload(subject, message)
 
@@ -246,9 +269,8 @@ func (s *Service) Send(ctx context.Context, subject, message string) error {
 			}
 
 			// Send the payload to the webhook.
-			err = s.send(ctx, webhook, payloadRaw)
-			if err != nil {
-				return errors.Wrapf(err, "send %s request to %q", strings.ToUpper(webhook.Method), webhook.URL)
+			if err = s.send(ctx, webhook, payloadRaw); err != nil {
+				return errors.Wrapf(err, "send request %q", webhook)
 			}
 		}
 	}
