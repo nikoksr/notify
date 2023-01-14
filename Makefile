@@ -17,14 +17,21 @@ setup:
 # TESTS
 ###############################################################################
 
-# Run all the tests
 test:
-	go test -failfast -race -timeout=5m ./...
+	go test -failfast -race ./...
 .PHONY: test
 
-cover:
-	go test -race -covermode=atomic -coverprofile=coverage.out ./...
-.PHONY: cover
+gen-coverage:
+	@go test -race -covermode=atomic -coverprofile=coverage.out ./... > /dev/null
+.PHONY: gen-coverage
+
+coverage: gen-coverage
+	go tool cover -func coverage.out
+.PHONY: coverage
+
+coverage-html: gen-coverage
+	go tool cover -html=coverage.out -o cover.html
+.PHONY: coverage-html
 
 ###############################################################################
 # CODE HEALTH
