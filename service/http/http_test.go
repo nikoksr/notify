@@ -372,6 +372,8 @@ func TestWebhook_String(t *testing.T) {
 }
 
 func Test_defaultMarshaller_Marshal(t *testing.T) {
+	t.Parallel()
+
 	type args struct {
 		contentType string
 		payload     any
