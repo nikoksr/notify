@@ -3,6 +3,7 @@ package wechat
 import (
 	"context"
 	"fmt"
+	"html"
 	"net/http"
 	"sync"
 	"time"
@@ -27,6 +28,8 @@ type Config struct {
 }
 
 // wechatMessageManager abstracts go-wechat's message.Manager for writing unit tests
+//
+//go:generate mockery --name=wechatMessageManager --output=. --case=underscore --inpackage
 type wechatMessageManager interface {
 	Send(msg *message.CustomerMessage) error
 }
@@ -71,7 +74,7 @@ func (s *Service) waitForOneOffVerification(server *http.Server, devMode bool, c
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		query := r.URL.Query()
 
-		echoStr := query.Get("echostr")
+		echoStr := html.EscapeString(query.Get("echostr"))
 		if devMode {
 			if callback != nil {
 				callback(r, true)

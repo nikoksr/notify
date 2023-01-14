@@ -7,9 +7,17 @@ import (
 	"github.com/pkg/errors"
 )
 
+//go:generate mockery --name=discordSession --output=. --case=underscore --inpackage
+type discordSession interface {
+	ChannelMessageSend(channelID string, content string) (*discordgo.Message, error)
+}
+
+// Compile-time check to ensure that discordgo.Session implements the discordSession interface.
+var _ discordSession = new(discordgo.Session)
+
 // Discord struct holds necessary data to communicate with the Discord API.
 type Discord struct {
-	client     *discordgo.Session
+	client     discordSession
 	channelIDs []string
 }
 

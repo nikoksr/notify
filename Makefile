@@ -11,6 +11,7 @@ setup:
 	@go install mvdan.cc/gofumpt@latest
 	@go install github.com/daixiang0/gci@latest
 	@go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
+	@go install github.com/vektra/mockery/v2@latest
 .PHONY: setup
 
 ###############################################################################
@@ -32,6 +33,10 @@ coverage: gen-coverage
 coverage-html: gen-coverage
 	go tool cover -html=coverage.out -o cover.html
 .PHONY: coverage-html
+
+mock:
+	go generate ./...
+.PHONY: mock
 
 ###############################################################################
 # CODE HEALTH

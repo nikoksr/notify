@@ -6,9 +6,19 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
-func TestSendWebhook(t *testing.T) {
+func TestLark_NewWebhookService(t *testing.T) {
+	t.Parallel()
+
+	assert := require.New(t)
+
+	service := NewWebhookService("")
+	assert.NotNil(service)
+}
+
+func TestLark_SendWebhook(t *testing.T) {
 	t.Parallel()
 
 	assert := assert.New(t)
@@ -16,7 +26,7 @@ func TestSendWebhook(t *testing.T) {
 
 	// First, test for when the sender returns an error.
 	{
-		mockSender := NewSender(t)
+		mockSender := newMockSender(t)
 		mockSender.
 			On("Send", "subject", "message").
 			Return(errors.New(""))
@@ -30,7 +40,7 @@ func TestSendWebhook(t *testing.T) {
 
 	// Then test for when the sender does not return an error.
 	{
-		mockSender := NewSender(t)
+		mockSender := newMockSender(t)
 		mockSender.
 			On("Send", "subject", "message").
 			Return(nil)

@@ -10,20 +10,22 @@ import (
 	"github.com/pkg/errors"
 )
 
-// SNSSendMessageAPI Basic interface to send messages through SNS.
-type SNSSendMessageAPI interface {
+// snsSendMessageAPI Basic interface to send messages through SNS.
+//
+//go:generate mockery --name=snsSendMessageAPI --output=. --case=underscore --inpackage
+type snsSendMessageAPI interface {
 	SendMessage(ctx context.Context,
 		params *sns.PublishInput,
 		optFns ...func(*sns.Options)) (*sns.PublishOutput, error)
 }
 
-// SNSSendMessageClient Client specific for SNS using aws sdk v2.
-type SNSSendMessageClient struct {
+// snsSendMessageClient Client specific for SNS using aws sdk v2.
+type snsSendMessageClient struct {
 	client *sns.Client
 }
 
 // SendMessage Client specific for SNS using aws sdk v2.
-func (s SNSSendMessageClient) SendMessage(ctx context.Context,
+func (s snsSendMessageClient) SendMessage(ctx context.Context,
 	params *sns.PublishInput,
 	optFns ...func(*sns.Options),
 ) (*sns.PublishOutput, error) {
@@ -32,7 +34,7 @@ func (s SNSSendMessageClient) SendMessage(ctx context.Context,
 
 // AmazonSNS Basic structure with SNS information
 type AmazonSNS struct {
-	sendMessageClient SNSSendMessageAPI
+	sendMessageClient snsSendMessageAPI
 	queueTopics       []string
 }
 
@@ -49,7 +51,7 @@ func New(accessKeyID, secretKey, region string) (*AmazonSNS, error) {
 	}
 	client := sns.NewFromConfig(cfg)
 	return &AmazonSNS{
-		sendMessageClient: SNSSendMessageClient{client: client},
+		sendMessageClient: snsSendMessageClient{client: client},
 	}, nil
 }
 

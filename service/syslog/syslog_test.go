@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestNew(t *testing.T) {
+func TestSyslog_New(t *testing.T) {
 	t.Parallel()
 
 	assert := require.New(t)
@@ -39,7 +39,7 @@ func TestNew(t *testing.T) {
 	assert.NoError(err)
 }
 
-func TestSend(t *testing.T) {
+func TestSyslog_Send(t *testing.T) {
 	t.Parallel()
 
 	assert := require.New(t)

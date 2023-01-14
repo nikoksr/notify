@@ -11,7 +11,17 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestAddReceivers(t *testing.T) {
+func TestTwilio_New(t *testing.T) {
+	t.Parallel()
+
+	assert := require.New(t)
+
+	service, err := New("", "", "")
+	assert.NotNil(service)
+	assert.Nil(err)
+}
+
+func TestTwilio_AddReceivers(t *testing.T) {
 	t.Parallel()
 
 	assert := require.New(t)
@@ -25,7 +35,7 @@ func TestAddReceivers(t *testing.T) {
 	assert.Equal(svc.toPhoneNumbers, toPhoneNumbers)
 }
 
-func TestSend(t *testing.T) {
+func TestTwilio_Send(t *testing.T) {
 	t.Parallel()
 
 	assert := require.New(t)

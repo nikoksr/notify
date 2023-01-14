@@ -1,14 +1,17 @@
 {
-    "assignees": ["nikoksr"],
-    "labels": ["type/deps"],
     "extends": [
         "config:base"
     ],
+    "assignees": ["nikoksr", "svaloumas"],
+    "labels": ["type/deps"],
     "packageRules": [
         {
             "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
             "automerge": true
         }
+    ],
+    "postUpdateOptions": [
+        "gomodTidy"
     ],
     "dependencyDashboard": false
 }
