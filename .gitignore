@@ -10,3 +10,4 @@ tmp/
 .gh-docker-token
 .env
 coverage.out
+cover.html
