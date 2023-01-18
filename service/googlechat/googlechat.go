@@ -22,9 +22,9 @@ type createCall interface {
 	Do(...googleapi.CallOption) (*chat.Message, error)
 }
 
-// Compile-time check to ensure that client implements the spaces message service
-// interface.
 var (
+	// Compile-time check to ensure that client implements the spaces message service
+	// interface.
 	_ spacesMessageCreator = new(messageCreator)
 	// Compile-time check to ensure that client implements the create call interface.
 	_ createCall = new(chat.SpacesMessagesCreateCall)
@@ -37,8 +37,7 @@ type messageCreator struct {
 	*chat.SpacesMessagesService
 }
 
-func newMessageCreator(options ...option.ClientOption) (spacesMessageCreator, error) {
-	ctx := context.Background()
+func newMessageCreator(ctx context.Context, options ...option.ClientOption) (spacesMessageCreator, error) {
 	svc, err := chat.NewService(ctx, options...)
 	if err != nil {
 		return nil, err
@@ -46,6 +45,8 @@ func newMessageCreator(options ...option.ClientOption) (spacesMessageCreator, er
 	return &messageCreator{svc.Spaces.Messages}, nil
 }
 
+// Create creates a createCall struct for google chat. In order to execute sending
+// the message utilize the `.Do` method found on the createCall.
 func (m *messageCreator) Create(parent string, message *chat.Message) createCall {
 	return m.SpacesMessagesService.Create(parent, message)
 }
@@ -59,7 +60,23 @@ type Service struct {
 
 // New returns an instance of the google chat notification service
 func New(options ...option.ClientOption) (*Service, error) {
-	svc, err := newMessageCreator(options...)
+	ctx := context.Background()
+	svc, err := newMessageCreator(ctx, options...)
+	if err != nil {
+		return nil, err
+	}
+	s := &Service{
+		messageCreator: svc,
+		spaces:         []string{},
+	}
+	return s, nil
+}
+
+// NewWithContext returns an instance of the google chat notification service with the
+// specified context. Utilize this constructor if the message requires the context to
+// be set.
+func NewWithContext(ctx context.Context, options ...option.ClientOption) (*Service, error) {
+	svc, err := newMessageCreator(ctx, options...)
 	if err != nil {
 		return nil, err
 	}
@@ -87,8 +104,7 @@ func (s *Service) Send(ctx context.Context, subject, message string) error {
 		case <-ctx.Done():
 			return ctx.Err()
 		default:
-			_, err := s.messageCreator.Create(parent, msg).Do()
-			if err != nil {
+			if _, err := s.messageCreator.Create(parent, msg).Do(); err != nil {
 				return errors.Wrapf(err, "failed to send message to the google chat space: %s", space)
 			}
 		}

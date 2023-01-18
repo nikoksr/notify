@@ -20,6 +20,16 @@ func TestGoogleChat_New(t *testing.T) {
 	assert.NotNil(service)
 }
 
+func TestGoogleChat_NewWithContext(t *testing.T) {
+	t.Parallel()
+	withCred := option.WithCredentialsFile("example_credentials.json")
+	assert := require.New(t)
+	ctx := context.Background()
+	service, err := NewWithContext(ctx, withCred)
+	assert.Nil(err)
+	assert.NotNil(service)
+}
+
 func TestGoogleChat_AddReceivers(t *testing.T) {
 	t.Parallel()
 
