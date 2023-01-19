@@ -90,4 +90,11 @@ func TestGoogleChat_Send(t *testing.T) {
 	err = service.Send(ctx, "subject", "success")
 	assert.Nil(err)
 	mockMsgCreator.AssertExpectations(t)
+
+	// Test context cancellation
+	ctx, cancel := context.WithCancel(ctx)
+	cancel()
+	err = service.Send(ctx, "subject", "success")
+	assert.NotNil(err)
+	mockMsgCreator.AssertExpectations(t)
 }
