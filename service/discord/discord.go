@@ -9,7 +9,7 @@ import (
 
 //go:generate mockery --name=discordSession --output=. --case=underscore --inpackage
 type discordSession interface {
-	ChannelMessageSend(channelID string, content string) (*discordgo.Message, error)
+	ChannelMessageSend(channelID string, content string, options ...discordgo.RequestOption) (*discordgo.Message, error)
 }
 
 // Compile-time check to ensure that discordgo.Session implements the discordSession interface.
