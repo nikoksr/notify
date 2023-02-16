@@ -3,8 +3,8 @@ package twitter
 import (
 	"context"
 
-	"github.com/dghubble/go-twitter/twitter"
 	"github.com/dghubble/oauth1"
+	"github.com/drswork/go-twitter/twitter"
 	"github.com/pkg/errors"
 )
 
@@ -33,10 +33,10 @@ type Credentials struct {
 	AccessTokenSecret string
 }
 
-// New returns a new instance of a Slack notification service.
-// For more information about slack api token:
+// New returns a new instance of a Twitter service.
+// For more information about Twitter access token:
 //
-//	-> https://pkg.go.dev/github.com/slack-go/slack#New
+//	-> https://developer.twitter.com/en/docs/authentication/oauth-1-0a/obtaining-user-access-tokens
 func New(credentials Credentials) (*Twitter, error) {
 	config := oauth1.NewConfig(credentials.ConsumerKey, credentials.ConsumerSecret)
 	token := oauth1.NewToken(credentials.AccessToken, credentials.AccessTokenSecret)

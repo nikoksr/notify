@@ -5,7 +5,7 @@
     alt="notify logo"
 />
 
-![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/nikoksr/notify?color=success&label=version&sort=semver)
+[![codecov](https://codecov.io/gh/nikoksr/notify/branch/main/graph/badge.svg?token=QDON0KO2WV)](https://codecov.io/gh/nikoksr/notify)
 [![Go Report Card](https://goreportcard.com/badge/github.com/nikoksr/notify)](https://goreportcard.com/report/github.com/nikoksr/notify)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/37fdff3c275c4a72a3a061f2d0ec5553)](https://www.codacy.com/gh/nikoksr/notify/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=nikoksr/notify&amp;utm_campaign=Badge_Grade)
 [![Maintainability](https://api.codeclimate.com/v1/badges/b3afd7bf115341995077/maintainability)](https://codeclimate.com/github/nikoksr/notify/maintainability)
@@ -86,6 +86,8 @@ Yes, please! Contributions of all kinds are very welcome! Feel free to check our
 | [Discord](https://discord.com)                                                 | [service/discord](service/discord)       | [bwmarrin/discordgo](https://github.com/bwmarrin/discordgo)                                     | :heavy_check_mark: |
 | [Email](https://wikipedia.org/wiki/Email)                                      | [service/mail](service/mail)             | [jordan-wright/email](https://github.com/jordan-wright/email)                                   | :heavy_check_mark: |
 | [Firebase Cloud Messaging](https://firebase.google.com/docs/cloud-messaging)   | [service/fcm](service/fcm)               | [appleboy/go-fcm](https://github.com/appleboy/go-fcm)                                           | :heavy_check_mark: |
+ | [Google Chat](https://workspace.google.com/intl/en/products/chat/)             | [service/googlechat](service/googlechat) | [googleapis/google-api-go-client](https://google.golang.org/api/chat/v1)                        | :heavy_check_mark: |
+| [HTTP](https://wikipedia.org/wiki/Hypertext_Transfer_Protocol)                 | [service/http](service/http)             | -                                                                                               | :heavy_check_mark: |
 | [Lark](https://www.larksuite.com/)                                             | [service/lark](service/lark)             | [go-lark/lark](https://github.com/go-lark/lark)                                                 | :heavy_check_mark: |
 | [Line](https://line.me)                                                        | [service/line](service/line)             | [line/line-bot-sdk-go](https://github.com/line/line-bot-sdk-go)                                 | :heavy_check_mark: |
 | [Line Notify](https://notify-bot.line.me)                                      | [service/line](service/line)             | [utahta/go-linenotify](https://github.com/utahta/go-linenotify)                                 | :heavy_check_mark: |
@@ -93,7 +95,9 @@ Yes, please! Contributions of all kinds are very welcome! Feel free to check our
 | [Matrix](https://www.matrix.org)                                               | [service/matrix](service/matrix)         | [mautrix/go](https://github.com/mautrix/go)                                                     | :heavy_check_mark: |
 | [Microsoft Teams](https://www.microsoft.com/microsoft-teams)                   | [service/msteams](service/msteams)       | [atc0005/go-teams-notify](https://github.com/atc0005/go-teams-notify)                           | :heavy_check_mark: |
 | [Plivo](https://www.plivo.com)                                                 | [service/plivo](service/plivo)           | [plivo/plivo-go](https://github.com/plivo/plivo-go)                                             | :heavy_check_mark: |
+| [Pushover](https://pushover.net/)                                              | [service/pushover](service/pushover)     | [gregdel/pushover](https://github.com/gregdel/pushover)                                         | :heavy_check_mark: |
 | [Pushbullet](https://www.pushbullet.com)                                       | [service/pushbullet](service/pushbullet) | [cschomburg/go-pushbullet](https://github.com/cschomburg/go-pushbullet)                         | :heavy_check_mark: |
+| [Reddit](https://www.reddit.com)                                               | [service/reddit](service/reddit)         | [vartanbeno/go-reddit](https://github.com/vartanbeno/go-reddit)                                 | :heavy_check_mark: |
 | [RocketChat](https://rocket.chat)                                              | [service/rocketchat](service/rocketchat) | [RocketChat/Rocket.Chat.Go.SDK](https://github.com/RocketChat/Rocket.Chat.Go.SDK)               | :heavy_check_mark: |
 | [SendGrid](https://sendgrid.com)                                               | [service/sendgrid](service/sendgrid)     | [sendgrid/sendgrid-go](https://github.com/sendgrid/sendgrid-go)                                 | :heavy_check_mark: |
 | [Slack](https://slack.com)                                                     | [service/slack](service/slack)           | [slack-go/slack](https://github.com/slack-go/slack)                                             | :heavy_check_mark: |
@@ -101,7 +105,7 @@ Yes, please! Contributions of all kinds are very welcome! Feel free to check our
 | [Telegram](https://telegram.org)                                               | [service/telegram](service/telegram)     | [go-telegram-bot-api/telegram-bot-api](https://github.com/go-telegram-bot-api/telegram-bot-api) | :heavy_check_mark: |
 | [TextMagic](https://www.textmagic.com)                                         | [service/textmagic](service/textmagic)   | [textmagic/textmagic-rest-go-v2](https://github.com/textmagic/textmagic-rest-go-v2)             | :heavy_check_mark: |
 | [Twilio](https://www.twilio.com/)                                              | [service/twilio](service/twilio)         | [kevinburke/twilio-go](https://github.com/kevinburke/twilio-go)                                 | :heavy_check_mark: |
-| [Twitter](https://twitter.com)                                                 | [service/twitter](service/twitter)       | [dghubble/go-twitter](https://github.com/dghubble/go-twitter)                                   | :heavy_check_mark: |
+| [Twitter](https://twitter.com)                                                 | [service/twitter](service/twitter)       | [drswork/go-twitter](https://github.com/drswork/go-twitter)                                     | :heavy_check_mark: |
 | [Viber](https://www.viber.com)                                                 | [service/viber](service/viber)           | [mileusna/viber](https://github.com/mileusna/viber)                                             | :heavy_check_mark: |
 | [WeChat](https://www.wechat.com)                                               | [service/wechat](service/wechat)         | [silenceper/wechat](https://github.com/silenceper/wechat)                                       | :heavy_check_mark: |
 | [WhatsApp](https://www.whatsapp.com)                                           | [service/whatsapp](service/whatsapp)     | [Rhymen/go-whatsapp](https://github.com/Rhymen/go-whatsapp)                                     |        :x:         |
@@ -126,4 +130,5 @@ The [logo](https://github.com/MariaLetta/free-gophers-pack) was made by the amaz
 
 ## Show your support <a id="support"></a>
 
-Give a ⭐️ if you like this project!
+Please give a ⭐️ if you like the project! It draws more attention to the project, which helps us improve it even faster.
+
