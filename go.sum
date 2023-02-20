@@ -217,8 +217,8 @@ github.com/pkg/errors v0.8.1-0.20161029093637-248dadf4e906/go.mod h1:bwawxfHBFNV
 github.com/pkg/errors v0.8.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
 github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
-github.com/plivo/plivo-go/v7 v7.19.0 h1:5uV+Ux2ypceI9qr5ZGsh0udiHF5zRmB1qtkIcUQeDzc=
-github.com/plivo/plivo-go/v7 v7.19.0/go.mod h1:Jw1e16x0WjW334botVeKQT4hcMXMN55r4HH0XoGsR6Q=
+github.com/plivo/plivo-go/v7 v7.20.0 h1:Sx/LTPSkYGsDxKXbijynHgqI3epPhEeNv3pQXEhf7Uo=
+github.com/plivo/plivo-go/v7 v7.20.0/go.mod h1:Jw1e16x0WjW334botVeKQT4hcMXMN55r4HH0XoGsR6Q=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/prometheus/client_model v0.0.0-20190812154241-14fe0d1b01d4/go.mod h1:xMI15A0UPsDsEKsMN9yxemIoYk6Tm2C1GtYGdfGttqA=
