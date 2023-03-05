@@ -4,7 +4,6 @@ package mattermost
 import (
 	"context"
 	"io"
-	"log"
 	stdhttp "net/http"
 
 	"github.com/pkg/errors"
@@ -24,7 +23,7 @@ type httpClient interface {
 type Service struct {
 	loginClient   httpClient
 	messageClient httpClient
-	channelIDs    []string
+	channelIDs    map[string]bool
 }
 
 // New returns a new instance of a Mattermost notification service.
@@ -33,7 +32,7 @@ func New(url string) *Service {
 	return &Service{
 		setupLoginService(url, httpService),
 		httpService,
-		[]string{},
+		make(map[string]bool),
 	}
 }
 
@@ -49,14 +48,16 @@ func (s *Service) LoginWithCredentials(ctx context.Context, loginID, password st
 // AddReceivers takes Mattermost channel IDs or Chat IDs and adds them to the internal channel ID list.
 // The Send method will send a given message to all these channels.
 func (s *Service) AddReceivers(channelIDs ...string) {
-	s.channelIDs = append(s.channelIDs, channelIDs...)
+	for i := range channelIDs {
+		s.channelIDs[channelIDs[i]] = true
+	}
 }
 
 // Send takes a message subject and a message body and send them to added channel ids.
 // you will need a 'create_post' permission for your username.
 // refer https://api.mattermost.com/ for more info
 func (s *Service) Send(ctx context.Context, subject, message string) error {
-	for _, id := range s.channelIDs {
+	for id := range s.channelIDs {
 		select {
 		case <-ctx.Done():
 			return ctx.Err()
@@ -68,6 +69,16 @@ func (s *Service) Send(ctx context.Context, subject, message string) error {
 		}
 	}
 	return nil
+}
+
+// PreSend adds a pre-send hook to the service. The hook will be executed before sending a request to a receiver.
+func (s *Service) PreSend(hook http.PreSendHookFn) {
+	s.messageClient.PreSend(hook)
+}
+
+// PostSend adds a post-send hook to the service. The hook will be executed after sending a request to a receiver.
+func (s *Service) PostSend(hook http.PostSendHookFn) {
+	s.messageClient.PostSend(hook)
 }
 
 // setups main message service for creating posts
@@ -119,12 +130,6 @@ func setupLoginService(url string, msgService *http.Service) *http.Service {
 		},
 	})
 
-	// Add pre-send hook to log the request before it is sent.
-	httpService.PreSend(func(req *stdhttp.Request) error {
-		log.Printf("Sending login request to %s", req.URL)
-		return nil
-	})
-
 	// Add post-send hook to do error checks and log the response after it is received.
 	// Also extract token from response header and set it as part of pre-send hook of main http client for further requests.
 	httpService.PostSend(func(req *stdhttp.Request, resp *stdhttp.Response) error {
@@ -132,7 +137,6 @@ func setupLoginService(url string, msgService *http.Service) *http.Service {
 			b, _ := io.ReadAll(resp.Body)
 			return errors.New("login failed with status: " + resp.Status + " body: " + string(b))
 		}
-		log.Printf("Login successful for %s", resp.Request.URL)
 
 		// get token from header
 		token := resp.Header.Get("Token")

@@ -55,12 +55,17 @@ func TestService_AddReceivers(t *testing.T) {
 	assert.Equal(1, len(service.channelIDs))
 
 	service.AddReceivers("yfgstwuisnshydhd", "nwudneyfrwqjs")
-	assert.Equal(3, len(service.channelIDs))
+	assert.Equal(2, len(service.channelIDs))
 
-	hooks := []string{"yfgstwuisnshydhd", "nwudneyfrwqjs"}
-	service.channelIDs = []string{}
+	hooks := []string{"yfgstwuisnshydhd", "nwudneyfrwqjs", "abcjudiekslkj"}
+	// prepare expected map
+	hooksMap := make(map[string]bool)
+	for i := range hooks {
+		hooksMap[hooks[i]] = true
+	}
 	service.AddReceivers(hooks...)
-	assert.Equal(service.channelIDs, hooks)
+	assert.Equal(3, len(service.channelIDs))
+	assert.Equal(service.channelIDs, hooksMap)
 }
 
 func TestService_Send(t *testing.T) {
@@ -69,7 +74,7 @@ func TestService_Send(t *testing.T) {
 
 	service := New(url)
 	channelID := "yfgstwuisnshydhd"
-	service.channelIDs = append(service.channelIDs, channelID)
+	service.channelIDs[channelID] = true
 
 	// Test responses
 	mockClient := newMockHttpClient(t)
