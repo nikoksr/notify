@@ -4,162 +4,187 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io"
+	"net/http"
 
-	webpush "github.com/SherClockHolmes/webpush-go"
+	"github.com/SherClockHolmes/webpush-go"
 	"github.com/pkg/errors"
 )
 
-var (
-	// DataKey is used as a context.Context key to optionally add data to the message payload.
-	DataKey = msgDataKey{}
-	// UrgencyKey is used as context.Context key to optionally add urgency to the message.
-	UrgencyKey = msgUrgencyKey{}
+type (
+	// Urgency indicates the importance of the message. It's a type alias for webpush.Urgency.
+	Urgency = webpush.Urgency
+
+	// Options are optional settings for the sending of a message. It's a type alias for webpush.Options.
+	Options = webpush.Options
+
+	// Subscription is a JSON representation of a webpush subscription. It's a type alias for webpush.Subscription.
+	Subscription = webpush.Subscription
+
+	// messagePayload is the JSON payload that is sent to the webpush endpoint.
+	messagePayload struct {
+		Subject string                 `json:"subject"`
+		Message string                 `json:"message"`
+		Data    map[string]interface{} `json:"data,omitempty"`
+	}
+
+	msgDataKey    struct{}
+	msgOptionsKey struct{}
 )
+
+// optionsKey is used as a context.Context key to optionally add options to the messagePayload payload.
+var optionsKey = msgOptionsKey{}
+
+// dataKey is used as a context.Context key to optionally add data to the messagePayload payload.
+var dataKey = msgDataKey{}
 
 // These are exposed Urgency constants from the webpush package.
 var (
 	// UrgencyVeryLow requires device state: on power and Wi-Fi
-  UrgencyVeryLow = webpush.UrgencyVeryLow
-	// UrgencyLow requires device state: on either power or Wi-Fi
-  UrgencyLow = webpush.UrgencyLow
-	// UrgencyNormal excludes device state: low battery
-  UrgencyNormal = webpush.UrgencyNormal
-	// UrgencyHigh admits device state: low battery
-  UrgencyHigh = webpush.UrgencyHigh
-)
+	UrgencyVeryLow Urgency = webpush.UrgencyVeryLow
 
-type (
-	msgDataKey    struct{}
-	msgUrgencyKey struct{}
+	// UrgencyLow requires device state: on either power or Wi-Fi
+	UrgencyLow Urgency = webpush.UrgencyLow
+
+	// UrgencyNormal excludes device state: low battery
+	UrgencyNormal Urgency = webpush.UrgencyNormal
+
+	// UrgencyHigh admits device state: low battery
+	UrgencyHigh Urgency = webpush.UrgencyHigh
 )
 
 // Service encapsulates the webpush notification system along with the internal state
 type Service struct {
-	subscriptions   []webpush.Subscription
-	vapidPublicKey  string
-	vapidPrivateKey string
+	subscriptions []webpush.Subscription
+	options       webpush.Options
 }
 
 // New returns a new instance of the Service
 func New(vapidPublicKey string, vapidPrivateKey string) *Service {
-	subscriptions := []webpush.Subscription{}
-
 	return &Service{
-		subscriptions,
-		vapidPublicKey,
-		vapidPrivateKey,
+		subscriptions: []webpush.Subscription{},
+		options: webpush.Options{
+			VAPIDPublicKey:  vapidPublicKey,
+			VAPIDPrivateKey: vapidPrivateKey,
+		},
 	}
 }
 
-// AddReceivers accepts multiple JSON strings as []byte, each representing a subscription (refer to: https://developer.mozilla.org/en-US/docs/Web/API/PushSubscription)
-// Send method will send the notification to all these subscriptions
-func (s *Service) AddReceivers(subscriptions ...[]byte) error {
-	// Parses subscription objects and saves them into the service
-	for _, subJSON := range subscriptions {
-		subscription := webpush.Subscription{}
-		err := json.Unmarshal(subJSON, &subscription)
-		if err != nil {
-			return err
-		}
+// AddReceivers adds one or more subscriptions to the Service.
+func (s *Service) AddReceivers(subscriptions ...Subscription) {
+	for _, subscription := range subscriptions {
 		s.subscriptions = append(s.subscriptions, subscription)
 	}
-
-	return nil
 }
 
-// Send sends the message to all the subscriptions that were previously added
-// It accepts the following options from the ctx 
-//  * DataKey - This is a map[string]interface{} which sent as extra payload (default: empty)
-//  * Urgency - This is a webpush.Urgency or string (default: UrgencyNormal)
-// All these are optinal and are have sensible defaults in place
-func (s *Service) Send(ctx context.Context, subject, message string) error {
-	options := getOptionsFromCtx(ctx)
-	options.VAPIDPrivateKey = s.vapidPrivateKey
-	options.VAPIDPublicKey = s.vapidPublicKey
+// withOptions returns a new Options struct with the incoming options merged with the Service's options. The incoming
+// options take precedence, except for the VAPID keys. Existing VAPID keys are only replaced if the incoming VAPID keys
+// are not empty.
+func (s *Service) withOptions(options Options) Options {
+	if options.VAPIDPublicKey == "" {
+		options.VAPIDPublicKey = s.options.VAPIDPublicKey
+	}
+	if options.VAPIDPrivateKey == "" {
+		options.VAPIDPrivateKey = s.options.VAPIDPrivateKey
+	}
 
-	payload, err := getMessageFromCtx(ctx, subject, message)
+	return options
+}
+
+// WithOptions binds the options to the context so that they will be used by the Service.Send method automatically. Options
+// are settings that allow you to customize the sending behavior of a message.
+func WithOptions(ctx context.Context, options Options) context.Context {
+	return context.WithValue(ctx, optionsKey, options)
+}
+
+func optionsFromContext(ctx context.Context) Options {
+	if options, ok := ctx.Value(optionsKey).(Options); ok {
+		return options
+	}
+
+	return Options{}
+}
+
+// WithData binds the data to the context so that it will be used by the Service.Send method automatically. Data is a
+// map[string]interface{} and acts as a metadata field that is sent along with the message payload.
+func WithData(ctx context.Context, data map[string]interface{}) context.Context {
+	return context.WithValue(ctx, dataKey, data)
+}
+
+func dataFromContext(ctx context.Context) map[string]interface{} {
+	if data, ok := ctx.Value(dataKey).(map[string]interface{}); ok {
+		return data
+	}
+
+	return map[string]interface{}{}
+}
+
+// payloadFromContext returns a json encoded byte array of the messagePayload payload that is ready to be sent to the
+// webpush endpoint. Internally, it uses the messagePayload and data from the context, and it combines it with the
+// subject and message arguments into a single messagePayload.
+func payloadFromContext(ctx context.Context, subject, message string) ([]byte, error) {
+	payload := messagePayload{
+		Subject: subject,
+		Message: message,
+	}
+
+	payload.Data = dataFromContext(ctx) // Load optional data
+
+	payloadBytes, err := json.Marshal(payload)
+	if err != nil {
+		return nil, errors.Wrap(err, "failed to serialize messagePayload")
+	}
+
+	return payloadBytes, nil
+}
+
+// send is a wrapper that makes it primarily easier to defer the closing of the response body.
+func (s *Service) send(ctx context.Context, message []byte, subscription *Subscription, options *Options) error {
+	res, err := webpush.SendNotificationWithContext(ctx, message, subscription, options)
+	if err != nil {
+		return errors.Wrapf(err, "failed to send messagePayload to webpush subscription %s", subscription.Endpoint)
+	}
+	defer res.Body.Close()
+
+	if res.StatusCode == http.StatusOK || res.StatusCode == http.StatusCreated {
+		return nil // Everything is fine
+	}
+
+	// Make sure to produce a helpful error message
+
+	baseErr := errors.Errorf(
+		"failed to send message to webpush subscription %s: unexpected status code %d",
+		subscription.Endpoint, res.StatusCode,
+	)
+
+	body, err := io.ReadAll(res.Body)
+	if err != nil {
+		baseErr = fmt.Errorf("%s: failed to read response body: %w", baseErr, err)
+	} else {
+		baseErr = fmt.Errorf("%s: %s", baseErr, body)
+	}
+
+	return baseErr
+}
+
+// Send sends a message to all the webpush subscriptions that have been added to the Service. The subject and message
+// arguments are the subject and message of the messagePayload payload. The context can be used to optionally add
+// options and data to the messagePayload payload. See the WithOptions and WithData functions.
+func (s *Service) Send(ctx context.Context, subject, message string) error {
+	// Get the options from the context and merge them with the service's initial options
+	options := optionsFromContext(ctx)
+	options = s.withOptions(options)
+
+	payload, err := payloadFromContext(ctx, subject, message)
 	if err != nil {
 		return err
 	}
 
-	for i := range s.subscriptions {
-		sub := s.subscriptions[i]
-		res, err := webpush.SendNotificationWithContext(ctx, payload, &sub, &options)
-		if err != nil {
-			return errors.Wrapf(err, "failed to send message to webpush subscription %+v", sub)
-		}
-		if res.StatusCode != 201 {
-			return errors.Wrapf(
-				fmt.Errorf("expected StatusCode 201, got %v", res.StatusCode),
-				"failed to send message to webpush subscription %+v", sub,
-			)
+	for _, subscription := range s.subscriptions {
+		if err := s.send(ctx, payload, &subscription, &options); err != nil {
+			return err
 		}
 	}
 
 	return nil
-}
-
-// getOptionsFromCtx extracts webpush.Options from the given ctx
-func getOptionsFromCtx(ctx context.Context) webpush.Options {
-	return webpush.Options{
-		Urgency: getUrgencyFromCtx(ctx),
-	}
-}
-
-// Gets Urgency From Ctx, returns webpush.UrgencyNormal as a default
-func getUrgencyFromCtx(ctx context.Context) webpush.Urgency {
-	value := ctx.Value(UrgencyKey)
-	if value == nil {
-		return webpush.UrgencyNormal
-	}
-	data, ok := value.(webpush.Urgency)
-
-	if !ok {
-		return webpush.UrgencyNormal
-	}
-
-	// validate urgency
-	switch data {
-	case webpush.UrgencyVeryLow, webpush.UrgencyLow, webpush.UrgencyNormal, webpush.UrgencyHigh:
-		return data
-	}
-
-	return webpush.UrgencyNormal
-}
-
-
-// webpushMessage  a webpush message that is serialized into JSON
-type webpushMessage struct {
-	Subject string                 `json:"subject"`
-	Message string                 `json:"message"`
-	Data    map[string]interface{} `json:"data"`
-}
-
-// getMessageFromCtx constructs a webpushMessage from the ctx, subject and message.
-// It returns the webpushMessage converted to JSON []byte 
-func getMessageFromCtx(ctx context.Context, subject, message string) ([]byte, error) {
-	webpushMsg := webpushMessage{
-		Subject: subject,
-		Message: message,
-		Data:    map[string]interface{}{},
-	}
-	data, ok := getMessageData(ctx)
-	if ok {
-		webpushMsg.Data = data
-	}
-	payload, err := json.Marshal(webpushMsg)
-	if err != nil {
-		return nil, errors.Wrap(err, "failed to serialize message")
-	}
-
-	return payload, nil
-}
-
-// getMessageData extracts message data out of the context
-func getMessageData(ctx context.Context) (data map[string]interface{}, ok bool) {
-	value := ctx.Value(DataKey)
-	if value != nil {
-		data, ok = value.(map[string]interface{})
-	}
-	return
 }

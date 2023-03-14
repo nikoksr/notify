@@ -12,32 +12,34 @@ Generate VAPID Public and Private Keys for the notification service. This can be
 package main
 
 import (
-    "context"
-    "log"
+	"context"
+	"log"
 
-    "github.com/nikoksr/notify"
-    "github.com/nikoksr/notify/service/webpush"
+	"github.com/nikoksr/notify"
+	"github.com/nikoksr/notify/service/webpush"
 )
 
-const vapidPublicKey = "" // Add a vapidPublicKey
-const vapidPrivateKey = "" // Add a vapidPrivateKey
-const subscription = `` // JSON string of the subscription object
+const vapidPublicKey = "..."  // Add a vapidPublicKey
+const vapidPrivateKey = "..." // Add a vapidPrivateKey
 
 func main() {
-    webpushSvc = webpush.New(vapidPublicKey, vapidPrivateKey)
+	subscription := webpush.Subscription{
+		Endpoint: "https://your-endpoint",
+		Keys: {
+			Auth:   "...",
+			P256dh: "...",
+		},
+	}
 
-    err := webpushSvc.AddReceivers([]byte(subscription))
-    if err != nil {
-      log.Fatalf("could not add recivier: %v", err)
-    }
+	webpushSvc := webpush.New(vapidPublicKey, vapidPrivateKey)
+	webpushSvc.AddReceivers(subscription)
 
-    notifier := notify.New()
+	notifier := notify.NewWithServices(webpushSvc)
 
-    notifier.UseServices(webpushSvc)
-    if err := notifier.Send(context.Background(), "TEST", "Message using golang notifier library"); err != nil {
-        log.Fatalf("notifier.Send() failed: %s", err.Error())
-    }
+	if err := notifier.Send(context.Background(), "TEST", "Message using golang notifier library"); err != nil {
+		log.Fatalf("notifier.Send() failed: %s", err.Error())
+	}
 
-    log.Println("Notification sent")
+	log.Println("Notification sent successfully")
 }
 ```

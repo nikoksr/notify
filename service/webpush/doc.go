@@ -11,28 +11,31 @@ Usage:
 
 	    "github.com/nikoksr/notify"
 	    "github.com/nikoksr/notify/service/webpush"
+
 	)
 
-	const vapidPublicKey = "" // Add a vapidPublicKey
-	const vapidPrivateKey = "" // Add a vapidPrivateKey
-  const subscription = `` // JSON string of the subscription object
+	const vapidPublicKey = "..."  // Add a vapidPublicKey
+	const vapidPrivateKey = "..." // Add a vapidPrivateKey
 
 	func main() {
-      webpushSvg = webpush.New(vapidPublicKey, vapidPrivateKey)
+	        subscription := webpush.Subscription{
+	            Endpoint: "https://your-endpoint",
+	            Keys: {
+	                Auth:   "...",
+	                P256dh: "...",
+	            },
+	        }
 
-      err := webpushSvc.AddReceivers([]byte(subscription))
-	    if err != nil {
-        log.Fatalf("could not add recivier: %v", err)
+	        webpushSvc := webpush.New(vapidPublicKey, vapidPrivateKey)
+	        webpushSvc.AddReceivers(subscription)
+
+	        notifier := notify.NewWithServices(webpushSvc)
+
+	        if err := notifier.Send(context.Background(), "TEST", "Message using golang notifier library"); err != nil {
+	            log.Fatalf("notifier.Send() failed: %s", err.Error())
+	        }
+
+	        log.Println("Notification sent successfully")
 	    }
-
-	    notifier := notify.New()
-
-	    notifier.UseServices(webpushSvc)
-	    if err := notifier.Send(context.Background(), "TEST", "Message using golang notifier library"); err != nil {
-	        log.Fatalf("notifier.Send() failed: %s", err.Error())
-	    }
-
-	    log.Println("Notification sent")
-	}
 */
 package webpush
