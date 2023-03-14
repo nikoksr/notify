@@ -10,9 +10,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/google/go-cmp/cmp"
-
 	"github.com/SherClockHolmes/webpush-go"
+	"github.com/google/go-cmp/cmp"
 )
 
 // Allows us to simulate an error returned from the server on a per-request basis
