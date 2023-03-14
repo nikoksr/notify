@@ -72,9 +72,7 @@ func New(vapidPublicKey string, vapidPrivateKey string) *Service {
 
 // AddReceivers adds one or more subscriptions to the Service.
 func (s *Service) AddReceivers(subscriptions ...Subscription) {
-	for _, subscription := range subscriptions {
-		s.subscriptions = append(s.subscriptions, subscription)
-	}
+	s.subscriptions = append(s.subscriptions, subscriptions...)
 }
 
 // withOptions returns a new Options struct with the incoming options merged with the Service's options. The incoming
@@ -159,9 +157,9 @@ func (s *Service) send(ctx context.Context, message []byte, subscription *Subscr
 
 	body, err := io.ReadAll(res.Body)
 	if err != nil {
-		baseErr = fmt.Errorf("%s: failed to read response body: %w", baseErr, err)
+		baseErr = errors.Wrap(errors.Wrap(err, "failed to read response body"), baseErr.Error())
 	} else {
-		baseErr = fmt.Errorf("%s: %s", baseErr, body)
+		baseErr = fmt.Errorf("%w: %s", baseErr, body)
 	}
 
 	return baseErr
@@ -181,6 +179,7 @@ func (s *Service) Send(ctx context.Context, subject, message string) error {
 	}
 
 	for _, subscription := range s.subscriptions {
+		subscription := subscription // Capture the subscription in the closure
 		if err := s.send(ctx, payload, &subscription, &options); err != nil {
 			return err
 		}

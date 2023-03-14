@@ -54,7 +54,7 @@ func newWebpushHandlerWithChecks(checks ...checkFunc) http.Handler {
 		for _, check := range checks {
 			if err := check(r); err != nil {
 				w.WriteHeader(http.StatusBadRequest)
-				w.Write([]byte(err.Error()))
+				_, _ = w.Write([]byte(err.Error()))
 				return
 			}
 		}
@@ -62,7 +62,7 @@ func newWebpushHandlerWithChecks(checks ...checkFunc) http.Handler {
 		// This allows us to simulate an error returned from the server on a per-request basis
 		if r.Header.Get(headerTestError) != "" {
 			w.WriteHeader(http.StatusBadRequest)
-			w.Write([]byte(r.Header.Get(headerTestError)))
+			_, _ = w.Write([]byte(r.Header.Get(headerTestError)))
 			return
 		}
 
@@ -269,6 +269,7 @@ func TestService_Send(t *testing.T) {
 		},
 	}
 
+	//nolint:paralleltest
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			fakeWebpushServer := httptest.NewServer(tt.handler)
@@ -362,7 +363,10 @@ func TestService_withOptions(t *testing.T) {
 		},
 	}
 	for _, tt := range tests {
+		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
 			s := New(tt.fields.vapidPublicKey, tt.fields.vapidPrivateKey)
 
 			if got := s.withOptions(tt.args.options); !reflect.DeepEqual(got, tt.want) {
@@ -609,6 +613,8 @@ func Test_ContextBinding(t *testing.T) {
 }
 
 func Test_payloadFromContext(t *testing.T) {
+	t.Parallel()
+
 	type args struct {
 		ctx     context.Context
 		subject string
