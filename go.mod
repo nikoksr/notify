@@ -35,7 +35,7 @@ require (
 	github.com/go-lark/lark v1.7.4
 	github.com/google/go-cmp v0.5.9
 	github.com/kevinburke/twilio-go v0.0.0-20221122012537-65f3dd7539e2
-	maunium.net/go/mautrix v0.14.0
+	maunium.net/go/mautrix v0.15.0
 )
 
 require (
@@ -50,9 +50,13 @@ require (
 	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.2.3 // indirect
 	github.com/googleapis/gax-go/v2 v2.7.1 // indirect
+	github.com/mattn/go-colorable v0.1.12 // indirect
+	github.com/mattn/go-isatty v0.0.14 // indirect
+	github.com/rs/zerolog v1.29.0 // indirect
 	go.opencensus.io v0.24.0 // indirect
 	google.golang.org/genproto v0.0.0-20230306155012-7f2fa6fef1f4 // indirect
 	google.golang.org/grpc v1.53.0 // indirect
+	maunium.net/go/maulogger/v2 v2.4.1 // indirect
 )
 
 require (
