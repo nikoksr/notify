@@ -7,6 +7,12 @@
 
 Generate VAPID Public and Private Keys for the notification service. This can be done using many tools, one of which is [`GenerateVAPIDKeys`](https://pkg.go.dev/github.com/SherClockHolmes/webpush-go#GenerateVAPIDKeys) from [webpush-go](https://github.com/SherClockHolmes/webpush-go/).
 
+### Compatibility
+
+This service is compatible with the [Web Push Protocol](https://tools.ietf.org/html/rfc8030) and [VAPID](https://tools.ietf.org/html/rfc8292).
+
+For a list of compatible browsers, see [this](https://caniuse.com/push-api) for the Push API and [this](https://caniuse.com/notifications) for the Web Notifications.
+
 ## Usage
 ```go
 package main
