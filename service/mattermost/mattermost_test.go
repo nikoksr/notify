@@ -3,6 +3,8 @@ package mattermost
 import (
 	"context"
 	"errors"
+	"log"
+	"net/http"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -96,4 +98,28 @@ func TestService_Send(t *testing.T) {
 	err = service.Send(context.TODO(), "fake-sub", "fake-msg")
 	assert.NotNil(err)
 	mockClient.AssertExpectations(t)
+}
+
+func TestService_PreSend(t *testing.T) {
+	t.Parallel()
+	service := New(url)
+	service.PreSend(func(req *http.Request) error {
+		log.Println("sending notification")
+		return nil
+	})
+	service.PreSend(func(req *http.Request) error {
+		return errors.New("internal_error")
+	})
+}
+
+func TestService_PostSend(t *testing.T) {
+	t.Parallel()
+	service := New(url)
+	service.PostSend(func(req *http.Request, resp *http.Response) error {
+		log.Println("sent notification")
+		return nil
+	})
+	service.PostSend(func(req *http.Request, resp *http.Response) error {
+		return errors.New("internal_error")
+	})
 }
