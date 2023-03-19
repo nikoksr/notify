@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"testing"
 
+	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 )
 
@@ -102,24 +103,36 @@ func TestService_Send(t *testing.T) {
 
 func TestService_PreSend(t *testing.T) {
 	t.Parallel()
+	assert := require.New(t)
+
 	service := New(url)
+	assert.NotNil(service)
+
+	// Test responses
+	mockClient := newMockHttpClient(t)
+	mockClient.On("PreSend", mock.AnythingOfType("http.PreSendHookFn"))
+	service.messageClient = mockClient
+	// test call
 	service.PreSend(func(req *http.Request) error {
 		log.Println("sending notification")
 		return nil
-	})
-	service.PreSend(func(req *http.Request) error {
-		return errors.New("internal_error")
 	})
 }
 
 func TestService_PostSend(t *testing.T) {
 	t.Parallel()
+	assert := require.New(t)
+
 	service := New(url)
+	assert.NotNil(service)
+
+	// Test responses
+	mockClient := newMockHttpClient(t)
+	mockClient.On("PostSend", mock.AnythingOfType("http.PostSendHookFn"))
+	service.messageClient = mockClient
+	// test call
 	service.PostSend(func(req *http.Request, resp *http.Response) error {
 		log.Println("sent notification")
 		return nil
-	})
-	service.PostSend(func(req *http.Request, resp *http.Response) error {
-		return errors.New("internal_error")
 	})
 }
