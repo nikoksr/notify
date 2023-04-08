@@ -106,17 +106,24 @@ func TestService_PreSend(t *testing.T) {
 	assert := require.New(t)
 
 	service := New(url)
+	channelID := "yfgstwuisnshydhd"
+	service.channelIDs[channelID] = true
 	assert.NotNil(service)
 
 	// Test responses
 	mockClient := newMockHttpClient(t)
 	mockClient.On("PreSend", mock.AnythingOfType("http.PreSendHookFn"))
+	mockClient.
+		On("Send", context.TODO(), channelID, "fake-sub\nfake-msg").Return(nil)
 	service.messageClient = mockClient
 	// test call
 	service.PreSend(func(req *http.Request) error {
 		log.Println("sending notification")
 		return nil
 	})
+	err := service.Send(context.TODO(), "fake-sub", "fake-msg")
+	assert.Nil(err)
+	mockClient.AssertExpectations(t)
 }
 
 func TestService_PostSend(t *testing.T) {
@@ -124,15 +131,22 @@ func TestService_PostSend(t *testing.T) {
 	assert := require.New(t)
 
 	service := New(url)
+	channelID := "yfgstwuisnshydhd"
+	service.channelIDs[channelID] = true
 	assert.NotNil(service)
 
 	// Test responses
 	mockClient := newMockHttpClient(t)
 	mockClient.On("PostSend", mock.AnythingOfType("http.PostSendHookFn"))
+	mockClient.
+		On("Send", context.TODO(), channelID, "fake-sub\nfake-msg").Return(nil)
 	service.messageClient = mockClient
 	// test call
 	service.PostSend(func(req *http.Request, resp *http.Response) error {
 		log.Println("sent notification")
 		return nil
 	})
+	err := service.Send(context.TODO(), "fake-sub", "fake-msg")
+	assert.Nil(err)
+	mockClient.AssertExpectations(t)
 }
