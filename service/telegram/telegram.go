@@ -38,6 +38,14 @@ func New(apiToken string) (*Telegram, error) {
 	return t, nil
 }
 
+// SetClient set a new custom BotAPI instance.
+// For example allowing you to use NewBotAPIWithClient:
+//
+//	-> https://pkg.go.dev/github.com/go-telegram-bot-api/telegram-bot-api#NewBotAPIWithClient
+func (t *Telegram) SetClient(client *tgbotapi.BotAPI) {
+	t.client = client
+}
+
 // SetParseMode sets the parse mode for the message body.
 // For more information about telegram constants:
 //
