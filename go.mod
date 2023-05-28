@@ -21,7 +21,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/plivo/plivo-go/v7 v7.28.0
 	github.com/sendgrid/sendgrid-go v3.12.0+incompatible
-	github.com/silenceper/wechat/v2 v2.1.4
+	github.com/silenceper/wechat/v2 v2.1.5
 	github.com/slack-go/slack v0.12.2
 	github.com/stretchr/testify v1.8.2
 	github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.4420
