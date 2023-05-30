@@ -23,7 +23,7 @@ require (
 	github.com/sendgrid/sendgrid-go v3.12.0+incompatible
 	github.com/silenceper/wechat/v2 v2.1.5
 	github.com/slack-go/slack v0.12.2
-	github.com/stretchr/testify v1.8.3
+	github.com/stretchr/testify v1.8.4
 	github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.4420
 	github.com/utahta/go-linenotify v0.5.0
 	golang.org/x/sync v0.2.0
