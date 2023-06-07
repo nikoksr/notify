@@ -6,11 +6,11 @@ require (
 	github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20221121042443-a3fd332d56d9
 	github.com/antihax/optional v1.0.0 // indirect
 	github.com/atc0005/go-teams-notify/v2 v2.6.1
-	github.com/aws/aws-sdk-go-v2 v1.17.8
-	github.com/aws/aws-sdk-go-v2/config v1.18.21
-	github.com/aws/aws-sdk-go-v2/credentials v1.13.20
-	github.com/aws/aws-sdk-go-v2/service/ses v1.15.7
-	github.com/aws/aws-sdk-go-v2/service/sns v1.20.8
+	github.com/aws/aws-sdk-go-v2 v1.18.0
+	github.com/aws/aws-sdk-go-v2/config v1.18.25
+	github.com/aws/aws-sdk-go-v2/credentials v1.13.24
+	github.com/aws/aws-sdk-go-v2/service/ses v1.15.9
+	github.com/aws/aws-sdk-go-v2/service/sns v1.20.11
 	github.com/blinkbean/dingtalk v0.0.0-20210905093040-7d935c0f7e19
 	github.com/bwmarrin/discordgo v0.27.1
 	github.com/cschomburg/go-pushbullet v0.0.0-20171206132031-67759df45fbb
@@ -19,56 +19,60 @@ require (
 	github.com/line/line-bot-sdk-go v7.8.0+incompatible
 	github.com/mailgun/mailgun-go/v4 v4.8.2
 	github.com/pkg/errors v0.9.1
-	github.com/plivo/plivo-go/v7 v7.25.0
+	github.com/plivo/plivo-go/v7 v7.29.0
 	github.com/sendgrid/sendgrid-go v3.12.0+incompatible
-	github.com/silenceper/wechat/v2 v2.1.4
-	github.com/slack-go/slack v0.12.1
-	github.com/stretchr/testify v1.8.2
+	github.com/silenceper/wechat/v2 v2.1.5
+	github.com/slack-go/slack v0.12.2
+	github.com/stretchr/testify v1.8.4
 	github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.4420
 	github.com/utahta/go-linenotify v0.5.0
-	golang.org/x/sync v0.1.0
+	golang.org/x/sync v0.2.0
 )
 
 require (
+	github.com/SherClockHolmes/webpush-go v1.2.0
 	github.com/appleboy/go-fcm v0.1.5
 	github.com/drswork/go-twitter v0.0.0-20221107160839-dea1b6ed53d7
 	github.com/go-lark/lark v1.7.4
 	github.com/google/go-cmp v0.5.9
 	github.com/kevinburke/twilio-go v0.0.0-20221122012537-65f3dd7539e2
-	maunium.net/go/mautrix v0.15.0
+	maunium.net/go/mautrix v0.15.2
 )
+
+require github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 
 require (
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	github.com/vartanbeno/go-reddit/v2 v2.0.1
-	google.golang.org/api v0.118.0
+	google.golang.org/api v0.125.0
 )
 
 require (
-	cloud.google.com/go/compute v1.19.0 // indirect
+	cloud.google.com/go/compute v1.19.3 // indirect
 	cloud.google.com/go/compute/metadata v0.2.3 // indirect
-	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e // indirect
-	github.com/google/s2a-go v0.1.0 // indirect
+	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
+	github.com/google/s2a-go v0.1.4 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.2.3 // indirect
-	github.com/googleapis/gax-go/v2 v2.8.0 // indirect
+	github.com/googleapis/gax-go/v2 v2.10.0 // indirect
 	github.com/mattn/go-colorable v0.1.12 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
-	github.com/rs/zerolog v1.29.0 // indirect
+	github.com/rs/zerolog v1.29.1 // indirect
 	go.opencensus.io v0.24.0 // indirect
-	google.golang.org/genproto v0.0.0-20230403163135-c38d8f061ccd // indirect
-	google.golang.org/grpc v1.54.0 // indirect
+	golang.org/x/exp v0.0.0-20230510235704-dd950f8aeaea // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20230530153820-e85fd2cbaebc // indirect
+	google.golang.org/grpc v1.55.0 // indirect
 	maunium.net/go/maulogger/v2 v2.4.1 // indirect
 )
 
 require (
-	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.13.2 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/configsources v1.1.32 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.4.26 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/ini v1.3.33 // indirect
-	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.9.26 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sso v1.12.8 // indirect
-	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.14.8 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sts v1.18.9 // indirect
+	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.13.3 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/configsources v1.1.33 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.4.27 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/ini v1.3.34 // indirect
+	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.9.27 // indirect
+	github.com/aws/aws-sdk-go-v2/service/sso v1.12.10 // indirect
+	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.14.10 // indirect
+	github.com/aws/aws-sdk-go-v2/service/sts v1.19.0 // indirect
 	github.com/aws/smithy-go v1.13.5 // indirect
 	github.com/bradfitz/gomemcache v0.0.0-20220106215444-fb4bf637b56d // indirect
 	github.com/cenkalti/backoff/v4 v4.1.3 // indirect
@@ -84,7 +88,7 @@ require (
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/gorilla/websocket v1.5.0 // indirect
-	github.com/gregdel/pushover v1.1.0
+	github.com/gregdel/pushover v1.2.0
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/kevinburke/go-types v0.0.0-20210723172823-2deba1f80ba7 // indirect
@@ -105,10 +109,10 @@ require (
 	github.com/tidwall/sjson v1.2.5 // indirect
 	github.com/ttacon/builder v0.0.0-20170518171403-c099f663e1c2 // indirect
 	github.com/ttacon/libphonenumber v1.2.1 // indirect
-	golang.org/x/crypto v0.6.0 // indirect
-	golang.org/x/net v0.9.0 // indirect
-	golang.org/x/oauth2 v0.7.0 // indirect
-	golang.org/x/sys v0.7.0 // indirect
+	golang.org/x/crypto v0.9.0 // indirect
+	golang.org/x/net v0.10.0 // indirect
+	golang.org/x/oauth2 v0.8.0 // indirect
+	golang.org/x/sys v0.8.0 // indirect
 	golang.org/x/text v0.9.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/protobuf v1.30.0 // indirect

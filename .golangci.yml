@@ -9,7 +9,6 @@ linters:
   enable:
     - 'asciicheck'
     - 'bodyclose'
-    - 'depguard'
     - 'dogsled'
     - 'errcheck'
     - 'errorlint'
