@@ -31,7 +31,7 @@ func NewWebhookService(webhookURL string) *WebhookService {
 }
 
 // Send sends the message subject and body to the group chat.
-func (w *WebhookService) Send(ctx context.Context, subject, message string) error {
+func (w *WebhookService) Send(_ context.Context, subject, message string) error {
 	return w.cli.Send(subject, message)
 }
 
