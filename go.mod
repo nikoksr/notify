@@ -19,44 +19,48 @@ require (
 	github.com/line/line-bot-sdk-go v7.8.0+incompatible
 	github.com/mailgun/mailgun-go/v4 v4.8.2
 	github.com/pkg/errors v0.9.1
-	github.com/plivo/plivo-go/v7 v7.28.0
+	github.com/plivo/plivo-go/v7 v7.29.0
 	github.com/sendgrid/sendgrid-go v3.12.0+incompatible
-	github.com/silenceper/wechat/v2 v2.1.4
+	github.com/silenceper/wechat/v2 v2.1.5
 	github.com/slack-go/slack v0.12.2
-	github.com/stretchr/testify v1.8.2
+	github.com/stretchr/testify v1.8.4
 	github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.4420
 	github.com/utahta/go-linenotify v0.5.0
 	golang.org/x/sync v0.2.0
 )
 
 require (
+	github.com/SherClockHolmes/webpush-go v1.2.0
 	github.com/appleboy/go-fcm v0.1.5
 	github.com/drswork/go-twitter v0.0.0-20221107160839-dea1b6ed53d7
 	github.com/go-lark/lark v1.7.4
 	github.com/google/go-cmp v0.5.9
 	github.com/kevinburke/twilio-go v0.0.0-20221122012537-65f3dd7539e2
-	maunium.net/go/mautrix v0.15.1
+	maunium.net/go/mautrix v0.15.2
 )
+
+require github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 
 require (
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	github.com/vartanbeno/go-reddit/v2 v2.0.1
-	google.golang.org/api v0.122.0
+	google.golang.org/api v0.125.0
 )
 
 require (
-	cloud.google.com/go/compute v1.19.0 // indirect
+	cloud.google.com/go/compute v1.19.3 // indirect
 	cloud.google.com/go/compute/metadata v0.2.3 // indirect
-	github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e // indirect
-	github.com/google/s2a-go v0.1.3 // indirect
+	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
+	github.com/google/s2a-go v0.1.4 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.2.3 // indirect
-	github.com/googleapis/gax-go/v2 v2.8.0 // indirect
+	github.com/googleapis/gax-go/v2 v2.10.0 // indirect
 	github.com/mattn/go-colorable v0.1.12 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/rs/zerolog v1.29.1 // indirect
 	go.opencensus.io v0.24.0 // indirect
-	google.golang.org/genproto v0.0.0-20230410155749-daa745c078e1 // indirect
-	google.golang.org/grpc v1.54.0 // indirect
+	golang.org/x/exp v0.0.0-20230510235704-dd950f8aeaea // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20230530153820-e85fd2cbaebc // indirect
+	google.golang.org/grpc v1.55.0 // indirect
 	maunium.net/go/maulogger/v2 v2.4.1 // indirect
 )
 
@@ -105,10 +109,10 @@ require (
 	github.com/tidwall/sjson v1.2.5 // indirect
 	github.com/ttacon/builder v0.0.0-20170518171403-c099f663e1c2 // indirect
 	github.com/ttacon/libphonenumber v1.2.1 // indirect
-	golang.org/x/crypto v0.8.0 // indirect
-	golang.org/x/net v0.9.0 // indirect
-	golang.org/x/oauth2 v0.7.0 // indirect
-	golang.org/x/sys v0.7.0 // indirect
+	golang.org/x/crypto v0.9.0 // indirect
+	golang.org/x/net v0.10.0 // indirect
+	golang.org/x/oauth2 v0.8.0 // indirect
+	golang.org/x/sys v0.8.0 // indirect
 	golang.org/x/text v0.9.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/protobuf v1.30.0 // indirect
