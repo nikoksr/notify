@@ -30,6 +30,7 @@ require (
 )
 
 require (
+	github.com/SherClockHolmes/webpush-go v1.2.0
 	github.com/appleboy/go-fcm v0.1.5
 	github.com/drswork/go-twitter v0.0.0-20221107160839-dea1b6ed53d7
 	github.com/go-lark/lark v1.7.4
@@ -37,6 +38,8 @@ require (
 	github.com/kevinburke/twilio-go v0.0.0-20221122012537-65f3dd7539e2
 	maunium.net/go/mautrix v0.15.2
 )
+
+require github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 
 require (
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
