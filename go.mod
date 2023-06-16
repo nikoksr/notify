@@ -36,7 +36,7 @@ require (
 	github.com/go-lark/lark v1.7.4
 	github.com/google/go-cmp v0.5.9
 	github.com/kevinburke/twilio-go v0.0.0-20221122012537-65f3dd7539e2
-	maunium.net/go/mautrix v0.15.2
+	maunium.net/go/mautrix v0.15.3
 )
 
 require github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
@@ -58,7 +58,7 @@ require (
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/rs/zerolog v1.29.1 // indirect
 	go.opencensus.io v0.24.0 // indirect
-	golang.org/x/exp v0.0.0-20230510235704-dd950f8aeaea // indirect
+	golang.org/x/exp v0.0.0-20230522175609-2e198f4a06a1 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20230530153820-e85fd2cbaebc // indirect
 	google.golang.org/grpc v1.55.0 // indirect
 	maunium.net/go/maulogger/v2 v2.4.1 // indirect
@@ -109,11 +109,11 @@ require (
 	github.com/tidwall/sjson v1.2.5 // indirect
 	github.com/ttacon/builder v0.0.0-20170518171403-c099f663e1c2 // indirect
 	github.com/ttacon/libphonenumber v1.2.1 // indirect
-	golang.org/x/crypto v0.9.0 // indirect
-	golang.org/x/net v0.10.0 // indirect
+	golang.org/x/crypto v0.10.0 // indirect
+	golang.org/x/net v0.11.0 // indirect
 	golang.org/x/oauth2 v0.8.0 // indirect
-	golang.org/x/sys v0.8.0 // indirect
-	golang.org/x/text v0.9.0 // indirect
+	golang.org/x/sys v0.9.0 // indirect
+	golang.org/x/text v0.10.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/protobuf v1.30.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20190902080502-41f04d3bba15 // indirect
