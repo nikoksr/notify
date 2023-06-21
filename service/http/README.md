@@ -42,6 +42,7 @@ func main() {
 	// from the given subject and message.
 	httpService.AddReceivers(&http.Webhook{
 		URL:         "http://localhost:8080",
+		Header:      stdhttp.Header{},
 		ContentType: "text/plain",
 		Method:      stdhttp.MethodPost,
 		BuildPayload: func(subject, message string) (payload any) {
