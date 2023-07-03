@@ -17,7 +17,7 @@ require (
 	github.com/dghubble/oauth1 v0.7.2
 	github.com/go-telegram-bot-api/telegram-bot-api v4.6.4+incompatible
 	github.com/line/line-bot-sdk-go v7.8.0+incompatible
-	github.com/mailgun/mailgun-go/v4 v4.9.1
+	github.com/mailgun/mailgun-go/v4 v4.9.2
 	github.com/pkg/errors v0.9.1
 	github.com/plivo/plivo-go/v7 v7.32.0
 	github.com/sendgrid/sendgrid-go v3.12.0+incompatible
@@ -50,6 +50,7 @@ require (
 require (
 	cloud.google.com/go/compute v1.19.3 // indirect
 	cloud.google.com/go/compute/metadata v0.2.3 // indirect
+	github.com/go-chi/chi/v5 v5.0.8 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/google/s2a-go v0.1.4 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.2.5 // indirect
@@ -86,7 +87,6 @@ require (
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/google/uuid v1.3.0 // indirect
-	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/gregdel/pushover v1.2.0
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
