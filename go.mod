@@ -19,7 +19,7 @@ require (
 	github.com/line/line-bot-sdk-go v7.8.0+incompatible
 	github.com/mailgun/mailgun-go/v4 v4.10.0
 	github.com/pkg/errors v0.9.1
-	github.com/plivo/plivo-go/v7 v7.34.0
+	github.com/plivo/plivo-go/v7 v7.35.0
 	github.com/sendgrid/sendgrid-go v3.12.0+incompatible
 	github.com/silenceper/wechat/v2 v2.1.5
 	github.com/slack-go/slack v0.12.2
@@ -51,10 +51,13 @@ require (
 	cloud.google.com/go/compute v1.20.1 // indirect
 	cloud.google.com/go/compute/metadata v0.2.3 // indirect
 	github.com/go-chi/chi/v5 v5.0.8 // indirect
+	github.com/go-playground/locales v0.14.1 // indirect
+	github.com/go-playground/universal-translator v0.16.0 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/google/s2a-go v0.1.4 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.2.5 // indirect
 	github.com/googleapis/gax-go/v2 v2.12.0 // indirect
+	github.com/leodido/go-urn v1.2.4 // indirect
 	github.com/mattn/go-colorable v0.1.12 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/rs/zerolog v1.29.1 // indirect
@@ -62,6 +65,7 @@ require (
 	golang.org/x/exp v0.0.0-20230713183714-613f0c0eb8a1 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20230720185612-659f7aaaa771 // indirect
 	google.golang.org/grpc v1.56.2 // indirect
+	gopkg.in/go-playground/validator.v9 v9.31.0 // indirect
 	maunium.net/go/maulogger/v2 v2.4.1 // indirect
 )
 
