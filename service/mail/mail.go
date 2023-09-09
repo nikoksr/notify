@@ -2,6 +2,7 @@ package mail
 
 import (
 	"context"
+	"crypto/tls"
 	"net/smtp"
 	"net/textproto"
 
@@ -16,6 +17,8 @@ type Mail struct {
 	smtpHostAddr      string
 	smtpAuth          smtp.Auth
 	receiverAddresses []string
+	useTLS            bool
+	tlsConfig         *tls.Config
 }
 
 // New returns a new instance of a Mail notification service.
@@ -25,6 +28,7 @@ func New(senderAddress, smtpHostAddress string) *Mail {
 		senderAddress:     senderAddress,
 		smtpHostAddr:      smtpHostAddress,
 		receiverAddresses: []string{},
+		useTLS:            false,
 	}
 }
 
@@ -64,6 +68,17 @@ func (m *Mail) BodyFormat(format BodyType) {
 	}
 }
 
+// SetTLS can be used to send email over tls with an optional TLS config.
+func (m *Mail) SetTLS(tlsConfig *tls.Config) {
+	m.useTLS = true
+	m.tlsConfig = tlsConfig
+}
+
+// UnSetTLS can be used to send email without tls.
+func (m *Mail) UnSetTLS() {
+	m.useTLS = false
+}
+
 func (m *Mail) newEmail(subject, message string) *email.Email {
 	msg := &email.Email{
 		To:      m.receiverAddresses,
@@ -90,7 +105,11 @@ func (m Mail) Send(ctx context.Context, subject, message string) error {
 	case <-ctx.Done():
 		err = ctx.Err()
 	default:
-		err = msg.Send(m.smtpHostAddr, m.smtpAuth)
+		if m.useTLS {
+			err = msg.SendWithTLS(m.smtpHostAddr, m.smtpAuth, m.tlsConfig)
+		} else {
+			err = msg.Send(m.smtpHostAddr, m.smtpAuth)
+		}
 		if err != nil {
 			err = errors.Wrap(err, "failed to send mail")
 		}

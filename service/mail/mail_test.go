@@ -1,6 +1,7 @@
 package mail
 
 import (
+	"crypto/tls"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -49,4 +50,31 @@ func TestMail_AuthenticateSMTP(t *testing.T) {
 
 	m.AuthenticateSMTP("test", "test", "test", "test")
 	assert.NotNil(t, m.smtpAuth)
+}
+
+func TestMail_SetTLS(t *testing.T) {
+	t.Parallel()
+
+	m := New("foo", "server")
+	assert.False(t, m.useTLS)
+	assert.Nil(t, m.tlsConfig)
+
+	m.SetTLS(&tls.Config{ServerName: "server"})
+	assert.True(t, m.useTLS)
+	assert.NotNil(t, m.tlsConfig)
+}
+
+func TestMail_UnSetTLS(t *testing.T) {
+	t.Parallel()
+
+	m := New("foo", "server")
+	assert.False(t, m.useTLS)
+	assert.Nil(t, m.tlsConfig)
+
+	m.SetTLS(&tls.Config{ServerName: "server"})
+	assert.True(t, m.useTLS)
+	assert.NotNil(t, m.tlsConfig)
+
+	m.UnSetTLS()
+	assert.False(t, m.useTLS)
 }
