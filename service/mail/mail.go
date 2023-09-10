@@ -77,6 +77,7 @@ func (m *Mail) SetTLS(tlsConfig *tls.Config) {
 // UnSetTLS can be used to send email without tls.
 func (m *Mail) UnSetTLS() {
 	m.useTLS = false
+	m.tlsConfig = nil
 }
 
 func (m *Mail) newEmail(subject, message string) *email.Email {
