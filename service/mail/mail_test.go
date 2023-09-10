@@ -77,4 +77,5 @@ func TestMail_UnSetTLS(t *testing.T) {
 
 	m.UnSetTLS()
 	assert.False(t, m.useTLS)
+	assert.Nil(t, m.tlsConfig)
 }
