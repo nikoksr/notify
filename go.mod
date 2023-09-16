@@ -36,7 +36,7 @@ require (
 	github.com/go-lark/lark v1.9.0
 	github.com/google/go-cmp v0.5.9
 	github.com/kevinburke/twilio-go v0.0.0-20221122012537-65f3dd7539e2
-	maunium.net/go/mautrix v0.16.0
+	maunium.net/go/mautrix v0.16.1
 )
 
 require github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
@@ -61,9 +61,9 @@ require (
 	github.com/mattn/go-colorable v0.1.12 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/rs/zerolog v1.30.0 // indirect
-	go.mau.fi/util v0.0.0-20230805171708-199bf3eec776 // indirect
+	go.mau.fi/util v0.1.0 // indirect
 	go.opencensus.io v0.24.0 // indirect
-	golang.org/x/exp v0.0.0-20230810033253-352e893a4cad // indirect
+	golang.org/x/exp v0.0.0-20230905200255-921286631fa9 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20230911183012-2d3300fd4832 // indirect
 	google.golang.org/grpc v1.57.0 // indirect
 	gopkg.in/go-playground/validator.v9 v9.31.0 // indirect
