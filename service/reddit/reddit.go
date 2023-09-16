@@ -44,7 +44,7 @@ func New(clientID, clientSecret, username, password string) (*Reddit, error) {
 			Password: password,
 		},
 		reddit.WithHTTPClient(&h),
-		reddit.WithUserAgent("github.com/nikoksr/notify"),
+		reddit.WithUserAgent("github.com/heilmela/notify"),
 	)
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to instantiate base Reddit client")

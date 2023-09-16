@@ -3,6 +3,6 @@ Package whatsapp is currently a [ NO-OP ] service! We're sorry for the inconveni
 
 Please read this [1] for more. Thanks!
 
-[1]:https://github.com/nikoksr/notify/issues/274
+[1]:https://github.com/heilmela/notify/issues/274
 */
 package whatsapp

@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/nikoksr/notify/service/mail"
+	"github.com/heilmela/notify/service/mail"
 )
 
 func TestNotifySend(t *testing.T) {

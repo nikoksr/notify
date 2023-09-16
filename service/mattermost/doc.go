@@ -8,8 +8,8 @@ Usage:
 	import (
 		"os"
 
-		"github.com/nikoksr/notify"
-		"github.com/nikoksr/notify/service/mattermost"
+		"github.com/heilmela/notify"
+		"github.com/heilmela/notify/service/mattermost"
 	)
 
 	func main() {

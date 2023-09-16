@@ -11,8 +11,8 @@ Usage:
 
 	    sl "log/syslog"
 
-	    "github.com/nikoksr/notify"
-	    "github.com/nikoksr/notify/service/syslog"
+	    "github.com/heilmela/notify"
+	    "github.com/heilmela/notify/service/syslog"
 	)
 
 	func main() {
