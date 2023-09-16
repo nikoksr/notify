@@ -50,3 +50,14 @@ func TestMail_AuthenticateSMTP(t *testing.T) {
 	m.AuthenticateSMTP("test", "test", "test", "test")
 	assert.NotNil(t, m.smtpAuth)
 }
+
+func TestMail_AddHeaders(t *testing.T) {
+	t.Parallel()
+
+	m := New("foo", "server")
+	assert.Nil(t, m.smtpAuth)
+
+	m.AddHeader("test", "test")
+	assert.Len(t, m.headers, 1)
+	assert.Equal(t, "test", m.headers.Get("test"))
+}
