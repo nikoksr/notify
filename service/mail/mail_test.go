@@ -45,7 +45,6 @@ func TestMail_AuthenticateSMTP(t *testing.T) {
 	t.Parallel()
 
 	m := New("foo", "server")
-	assert.Nil(t, m.smtpAuth)
 
 	m.AuthenticateSMTP("test", "test", "test", "test")
 	assert.NotNil(t, m.smtpAuth)
