@@ -16,6 +16,7 @@ type Mail struct {
 	smtpHostAddr      string
 	smtpAuth          smtp.Auth
 	receiverAddresses []string
+	Headers           textproto.MIMEHeader
 }
 
 // New returns a new instance of a Mail notification service.
@@ -25,6 +26,7 @@ func New(senderAddress, smtpHostAddress string) *Mail {
 		senderAddress:     senderAddress,
 		smtpHostAddr:      smtpHostAddress,
 		receiverAddresses: []string{},
+		Headers:           textproto.MIMEHeader{},
 	}
 }
 
@@ -64,12 +66,25 @@ func (m *Mail) BodyFormat(format BodyType) {
 	}
 }
 
+func (m *Mail) AddHeader(name, value string) {
+	if m.Headers == nil {
+		m.Headers = textproto.MIMEHeader{}
+	}
+	m.Headers.Add(name, value)
+}
+
 func (m *Mail) newEmail(subject, message string) *email.Email {
 	msg := &email.Email{
 		To:      m.receiverAddresses,
 		From:    m.senderAddress,
 		Subject: subject,
 		Headers: textproto.MIMEHeader{},
+	}
+
+	for name, values := range m.Headers {
+		for _, value := range values {
+			msg.Headers.Add(name, value)
+		}
 	}
 
 	if m.usePlainText {
