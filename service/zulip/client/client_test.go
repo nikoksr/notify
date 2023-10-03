@@ -8,19 +8,21 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestSend(t *testing.T) {
 	t.Parallel()
+
+	assert := require.New(t)
 
 	t.Run("send=success", func(t *testing.T) {
 		t.Parallel()
 
 		server := httptest.NewServer(http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {
 			email, apiKey, _ := req.BasicAuth()
-			assert.Equal(t, email, "email", "invalid email provided")
-			assert.Equal(t, apiKey, "apiKey", "invalid apiKey provided")
+			assert.Equal(email, "email", "invalid email provided")
+			assert.Equal(apiKey, "apiKey", "invalid apiKey provided")
 
 			rw.WriteHeader(http.StatusOK)
 			rw.Header().Set("Content-Type", "application/json")
@@ -60,8 +62,8 @@ func TestSend(t *testing.T) {
 
 		server := httptest.NewServer(http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {
 			email, apiKey, _ := req.BasicAuth()
-			assert.Equal(t, email, "email", "invalid email provided")
-			assert.Equal(t, apiKey, "apiKey", "invalid apiKey provided")
+			assert.Equal(email, "email", "invalid email provided")
+			assert.Equal(apiKey, "apiKey", "invalid apiKey provided")
 
 			rw.WriteHeader(http.StatusBadRequest)
 		}))
@@ -124,10 +126,12 @@ func TestSendWithContext(t *testing.T) {
 	t.Run("send_context=success", func(t *testing.T) {
 		t.Parallel()
 
+		assert := require.New(t)
+
 		server := httptest.NewServer(http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {
 			email, apiKey, _ := req.BasicAuth()
-			assert.Equal(t, email, "email", "invalid email provided")
-			assert.Equal(t, apiKey, "apiKey", "invalid apiKey provided")
+			assert.Equal(email, "email", "invalid email provided")
+			assert.Equal(apiKey, "apiKey", "invalid apiKey provided")
 
 			rw.WriteHeader(http.StatusOK)
 			rw.Header().Set("Content-Type", "application/json")
@@ -166,10 +170,12 @@ func TestSendWithContext(t *testing.T) {
 	t.Run("send_context=timeout", func(t *testing.T) {
 		t.Parallel()
 
+		assert := require.New(t)
+
 		server := httptest.NewServer(http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {
 			email, apiKey, _ := req.BasicAuth()
-			assert.Equal(t, email, "email", "invalid email provided")
-			assert.Equal(t, apiKey, "apiKey", "invalid apiKey provided")
+			assert.Equal(email, "email", "invalid email provided")
+			assert.Equal(apiKey, "apiKey", "invalid apiKey provided")
 
 			time.Sleep(time.Millisecond * 100)
 

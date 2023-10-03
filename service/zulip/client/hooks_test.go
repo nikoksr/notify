@@ -5,11 +5,13 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestWithBaseURL(t *testing.T) {
 	t.Parallel()
+
+	assert := require.New(t)
 
 	urls := []string{
 		"https://localhost:5000",
@@ -20,7 +22,6 @@ func TestWithBaseURL(t *testing.T) {
 	for i, url := range urls {
 		client, _ := NewClient(WithBaseURL(url), WithCreds("<email>", "<apiKey>"))
 		assert.Equal(
-			t,
 			client.baseURL,
 			url,
 			fmt.Sprintf("TEST %d: WithBaseURL hook failed", i),
@@ -30,6 +31,8 @@ func TestWithBaseURL(t *testing.T) {
 
 func TestWithCreds(t *testing.T) {
 	t.Parallel()
+
+	assert := require.New(t)
 
 	creds := []struct {
 		email  string
@@ -46,13 +49,11 @@ func TestWithCreds(t *testing.T) {
 			t.Errorf("TEST %d: WithCreds hook errored", i)
 		} else {
 			assert.Equal(
-				t,
 				client.email,
 				cred.email,
 				fmt.Sprintf("TEST %d: WithCreds hook failed for email", i),
 			)
 			assert.Equal(
-				t,
 				client.apiKey,
 				cred.apiKey,
 				fmt.Sprintf("TEST %d: WithCreds hook failed for apiKey", i),
@@ -64,6 +65,8 @@ func TestWithCreds(t *testing.T) {
 func TestWithTimeout(t *testing.T) {
 	t.Parallel()
 
+	assert := require.New(t)
+
 	timeouts := []time.Duration{
 		1 * time.Minute,
 		50 * time.Second,
@@ -74,7 +77,6 @@ func TestWithTimeout(t *testing.T) {
 		client, _ := NewClient(WithTimeout(timeout), WithCreds("<email>", "<apiKey>"))
 
 		assert.Equal(
-			t,
 			client.timeout,
 			timeout,
 			fmt.Sprintf("TEST %d: WithTimeout hook failed", i),

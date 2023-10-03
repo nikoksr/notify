@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 type MessageValidationTest struct {
@@ -14,6 +14,8 @@ type MessageValidationTest struct {
 
 func TestMessageValidation(t *testing.T) {
 	t.Parallel()
+
+	assert := require.New(t)
 
 	msgs := []MessageValidationTest{
 		{
@@ -60,7 +62,6 @@ func TestMessageValidation(t *testing.T) {
 
 	for i, v := range msgs {
 		assert.Equal(
-			t,
 			v.msg.Validate(),
 			v.err,
 			fmt.Sprintf("TEST %d: validation failed", i),
