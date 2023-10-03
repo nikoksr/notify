@@ -13,7 +13,7 @@ type Message struct {
 
 // Validate returns an error if the message is not well-formed.
 func (m *Message) Validate() error {
-	//Type must be "direct", "stream" or "private"
+	// Type must be "direct", "stream" or "private"
 	switch m.Type {
 	case "direct":
 	case "stream":
@@ -23,7 +23,7 @@ func (m *Message) Validate() error {
 		return ErrInvalidMessageType
 	}
 
-	//To must be int,string, []int, []string
+	// To must be int,string, []int, []string
 	switch reflect.TypeOf(m.To) {
 	case reflect.TypeOf(""):
 	case reflect.TypeOf(1):
