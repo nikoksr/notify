@@ -1,6 +1,7 @@
 package client
 
 import (
+	"fmt"
 	"testing"
 	"time"
 
@@ -18,11 +19,12 @@ func TestWithBaseURL(t *testing.T) {
 
 	for i, url := range urls {
 		client, _ := NewClient(WithBaseURL(url), WithCreds("<email>", "<apiKey>"))
-		if assert.Equal(t, client.baseURL, url) {
-			t.Logf("TEST %d: WithBaseURL hook passed", i)
-		} else {
-			t.Errorf("TEST %d: WithBaseURL hook failed", i)
-		}
+		assert.Equal(
+			t,
+			client.baseURL,
+			url,
+			fmt.Sprintf("TEST %d: WithBaseURL hook failed", i),
+		)
 	}
 }
 
@@ -43,11 +45,18 @@ func TestWithCreds(t *testing.T) {
 		if err != nil {
 			t.Errorf("TEST %d: WithCreds hook errored", i)
 		} else {
-			if assert.Equal(t, client.email, cred.email) && assert.Equal(t, client.apiKey, cred.apiKey) {
-				t.Logf("TEST %d: WithCreds hook passed", i)
-			} else {
-				t.Errorf("TEST %d: WithCreds hook failed", i)
-			}
+			assert.Equal(
+				t,
+				client.email,
+				cred.email,
+				fmt.Sprintf("TEST %d: WithCreds hook failed for email", i),
+			)
+			assert.Equal(
+				t,
+				client.apiKey,
+				cred.apiKey,
+				fmt.Sprintf("TEST %d: WithCreds hook failed for apiKey", i),
+			)
 		}
 	}
 }
@@ -64,10 +73,11 @@ func TestWithTimeout(t *testing.T) {
 	for i, timeout := range timeouts {
 		client, _ := NewClient(WithTimeout(timeout), WithCreds("<email>", "<apiKey>"))
 
-		if assert.Equal(t, client.timeout, timeout) {
-			t.Logf("TEST %d: WithTimeout hook passed", i)
-		} else {
-			t.Errorf("TEST %d: WithTimeout hook failed", i)
-		}
+		assert.Equal(
+			t,
+			client.timeout,
+			timeout,
+			fmt.Sprintf("TEST %d: WithTimeout hook failed", i),
+		)
 	}
 }

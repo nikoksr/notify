@@ -1,6 +1,7 @@
 package client
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -58,10 +59,11 @@ func TestMessageValidation(t *testing.T) {
 	}
 
 	for i, v := range msgs {
-		if assert.Equal(t, v.msg.Validate(), v.err) {
-			t.Logf("TEST %d: validation passed", i)
-		} else {
-			t.Errorf("TEST %d: validation failed", i)
-		}
+		assert.Equal(
+			t,
+			v.msg.Validate(),
+			v.err,
+			fmt.Sprintf("TEST %d: validation failed", i),
+		)
 	}
 }
