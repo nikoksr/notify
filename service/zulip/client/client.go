@@ -38,14 +38,17 @@ type Option func(*Client) error
 
 // NewClient creates new Zulip Client based on opts passed and
 // with default endpoint and http client.
-func NewClient(opt Option) (*Client, error) {
+func NewClient(opts ...Option) (*Client, error) {
 	c := &Client{
 		baseURL: DefaultBaseURL,
 		client:  &http.Client{},
 		timeout: DefaultTimeout,
 	}
-	if err := opt(c); err != nil {
-		return nil, err
+
+	for _, opt := range opts {
+		if err := opt(c); err != nil {
+			return nil, err
+		}
 	}
 
 	if c.apiKey == "" || c.email == "" {
