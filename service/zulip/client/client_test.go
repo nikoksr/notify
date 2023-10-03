@@ -12,7 +12,11 @@ import (
 )
 
 func TestSend(t *testing.T) {
+	t.Parallel()
+
 	t.Run("send=success", func(t *testing.T) {
+		t.Parallel()
+
 		server := httptest.NewServer(http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {
 			email, apiKey, _ := req.BasicAuth()
 			assert.Equal(t, email, "email", "invalid email provided")
@@ -52,6 +56,8 @@ func TestSend(t *testing.T) {
 	})
 
 	t.Run("send=failure", func(t *testing.T) {
+		t.Parallel()
+
 		server := httptest.NewServer(http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {
 			email, apiKey, _ := req.BasicAuth()
 			assert.Equal(t, email, "email", "invalid email provided")
@@ -84,6 +90,8 @@ func TestSend(t *testing.T) {
 	})
 
 	t.Run("send=invalid_token", func(t *testing.T) {
+		t.Parallel()
+
 		_, err := NewClient(
 			WithCreds("", ""),
 			WithTimeout(10*time.Second),
@@ -94,6 +102,8 @@ func TestSend(t *testing.T) {
 	})
 
 	t.Run("send=invalid_message", func(t *testing.T) {
+		t.Parallel()
+
 		client, err := NewClient(
 			WithBaseURL(""),
 			WithCreds("email", "apiKey"),
@@ -112,6 +122,8 @@ func TestSend(t *testing.T) {
 
 func TestSendWithContext(t *testing.T) {
 	t.Run("send_context=success", func(t *testing.T) {
+		t.Parallel()
+
 		server := httptest.NewServer(http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {
 			email, apiKey, _ := req.BasicAuth()
 			assert.Equal(t, email, "email", "invalid email provided")
@@ -152,6 +164,8 @@ func TestSendWithContext(t *testing.T) {
 	})
 
 	t.Run("send_context=timeout", func(t *testing.T) {
+		t.Parallel()
+
 		server := httptest.NewServer(http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {
 			email, apiKey, _ := req.BasicAuth()
 			assert.Equal(t, email, "email", "invalid email provided")
