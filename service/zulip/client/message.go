@@ -33,5 +33,13 @@ func (m *Message) Validate() error {
 		return errors.New("invalid message to. To should be string, int, []string or []int")
 	}
 
+	if m.Topic == "" {
+		return errors.New("invalid message topic. Topic should be a non-empty string")
+	}
+
+	if m.Content == "" {
+		return errors.New("invalid message content. Content should be a non-empty string")
+	}
+
 	return nil
 }
