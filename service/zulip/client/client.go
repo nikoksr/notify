@@ -3,7 +3,6 @@ package client
 import (
 	"context"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -18,9 +17,6 @@ const (
 	// DefaultTimeout duration in second
 	DefaultTimeout time.Duration = 30 * time.Second
 )
-
-// ErrInvalidCreds occurs if API key or Email is not set.
-var ErrInvalidCreds = errors.New("client credentials are invalid")
 
 // Client abstracts the interaction between the application server and the
 // Zulip server via HTTP protocol. The developer must obtain an API key from the

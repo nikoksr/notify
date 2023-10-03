@@ -1,7 +1,6 @@
 package client
 
 import (
-	"errors"
 	"reflect"
 )
 
@@ -20,7 +19,7 @@ func (m *Message) Validate() error {
 	case "private":
 		break
 	default:
-		return errors.New("invalid message type. Type should be 'direct','stream' or 'private'")
+		return ErrInvalidMessageType
 	}
 
 	switch reflect.TypeOf(m.To) {
@@ -30,15 +29,15 @@ func (m *Message) Validate() error {
 	case reflect.SliceOf(reflect.TypeOf(1)):
 		break
 	default:
-		return errors.New("invalid message to. To should be string, int, []string or []int")
+		return ErrInvalidMessageTo
 	}
 
 	if m.Topic == "" {
-		return errors.New("invalid message topic. Topic should be a non-empty string")
+		return ErrInvalidMessageTopic
 	}
 
 	if m.Content == "" {
-		return errors.New("invalid message content. Content should be a non-empty string")
+		return ErrInvalidMessageContent
 	}
 
 	return nil
