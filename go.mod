@@ -44,7 +44,7 @@ require github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 require (
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	github.com/vartanbeno/go-reddit/v2 v2.0.1
-	google.golang.org/api v0.143.0
+	google.golang.org/api v0.144.0
 )
 
 require (
@@ -65,7 +65,7 @@ require (
 	go.opencensus.io v0.24.0 // indirect
 	golang.org/x/exp v0.0.0-20230905200255-921286631fa9 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20230920204549-e6e6cdab5c13 // indirect
-	google.golang.org/grpc v1.57.0 // indirect
+	google.golang.org/grpc v1.58.2 // indirect
 	gopkg.in/go-playground/validator.v9 v9.31.0 // indirect
 	maunium.net/go/maulogger/v2 v2.4.1 // indirect
 )
