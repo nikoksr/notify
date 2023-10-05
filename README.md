@@ -110,6 +110,7 @@ Yes, please! Contributions of all kinds are very welcome! Feel free to check our
 | [WeChat](https://www.wechat.com)                                                  | [service/wechat](service/wechat)         | [silenceper/wechat](https://github.com/silenceper/wechat)                                       | :heavy_check_mark: |
 | [Webpush Notification](https://developer.mozilla.org/en-US/docs/Web/API/Push_API) | [service/webpush](service/webpush)       | [SherClockHolmes/webpush-go](https://github.com/SherClockHolmes/webpush-go/)                    | :heavy_check_mark: |
 | [WhatsApp](https://www.whatsapp.com)                                              | [service/whatsapp](service/whatsapp)     | [Rhymen/go-whatsapp](https://github.com/Rhymen/go-whatsapp)                                     |        :x:         |
+| [Zulip](https://zulip.com/)                                             | [service/zulip](service/zulip)                     | -                                                                                               | :heavy_check_mark: |
 
 ## Special Thanks <a id="special_thanks"></a>
 
