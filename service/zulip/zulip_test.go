@@ -4,8 +4,9 @@ import (
 	"context"
 	"testing"
 
-	z "github.com/nikoksr/notify/service/zulip/client"
 	"github.com/stretchr/testify/require"
+
+	z "github.com/nikoksr/notify/service/zulip/client"
 )
 
 func TestZulip_New(t *testing.T) {
