@@ -26,11 +26,11 @@ require (
 	github.com/stretchr/testify v1.8.4
 	github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.4420
 	github.com/utahta/go-linenotify v0.5.0
-	golang.org/x/sync v0.3.0
+	golang.org/x/sync v0.4.0
 )
 
 require (
-	github.com/SherClockHolmes/webpush-go v1.2.0
+	github.com/SherClockHolmes/webpush-go v1.3.0
 	github.com/appleboy/go-fcm v0.1.5
 	github.com/drswork/go-twitter v0.0.0-20221107160839-dea1b6ed53d7
 	github.com/go-lark/lark v1.9.0
@@ -44,7 +44,7 @@ require github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 require (
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	github.com/vartanbeno/go-reddit/v2 v2.0.1
-	google.golang.org/api v0.143.0
+	google.golang.org/api v0.145.0
 )
 
 require (
@@ -65,7 +65,7 @@ require (
 	go.opencensus.io v0.24.0 // indirect
 	golang.org/x/exp v0.0.0-20230905200255-921286631fa9 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20230920204549-e6e6cdab5c13 // indirect
-	google.golang.org/grpc v1.57.0 // indirect
+	google.golang.org/grpc v1.58.2 // indirect
 	gopkg.in/go-playground/validator.v9 v9.31.0 // indirect
 	maunium.net/go/maulogger/v2 v2.4.1 // indirect
 )
