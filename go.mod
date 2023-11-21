@@ -7,8 +7,8 @@ require (
 	github.com/antihax/optional v1.0.0 // indirect
 	github.com/atc0005/go-teams-notify/v2 v2.6.1
 	github.com/aws/aws-sdk-go-v2 v1.23.1
-	github.com/aws/aws-sdk-go-v2/config v1.25.4
-	github.com/aws/aws-sdk-go-v2/credentials v1.16.3
+	github.com/aws/aws-sdk-go-v2/config v1.25.5
+	github.com/aws/aws-sdk-go-v2/credentials v1.16.4
 	github.com/aws/aws-sdk-go-v2/service/ses v1.18.3
 	github.com/aws/aws-sdk-go-v2/service/sns v1.25.3
 	github.com/blinkbean/dingtalk v0.0.0-20230927120905-796332ac4ba1
