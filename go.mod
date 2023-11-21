@@ -10,7 +10,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/config v1.25.4
 	github.com/aws/aws-sdk-go-v2/credentials v1.16.3
 	github.com/aws/aws-sdk-go-v2/service/ses v1.18.3
-	github.com/aws/aws-sdk-go-v2/service/sns v1.25.2
+	github.com/aws/aws-sdk-go-v2/service/sns v1.25.3
 	github.com/blinkbean/dingtalk v0.0.0-20230927120905-796332ac4ba1
 	github.com/bwmarrin/discordgo v0.27.1
 	github.com/cschomburg/go-pushbullet v0.0.0-20171206132031-67759df45fbb
