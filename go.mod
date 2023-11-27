@@ -44,11 +44,11 @@ require github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 require (
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	github.com/vartanbeno/go-reddit/v2 v2.0.1
-	google.golang.org/api v0.151.0
+	google.golang.org/api v0.152.0
 )
 
 require (
-	cloud.google.com/go/compute v1.23.1 // indirect
+	cloud.google.com/go/compute v1.23.3 // indirect
 	cloud.google.com/go/compute/metadata v0.2.3 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.10.1 // indirect
 	github.com/go-chi/chi/v5 v5.0.8 // indirect
@@ -65,7 +65,7 @@ require (
 	go.mau.fi/util v0.2.1 // indirect
 	go.opencensus.io v0.24.0 // indirect
 	golang.org/x/exp v0.0.0-20231110203233-9a3e6036ecaa // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20231030173426-d783a09b4405 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20231120223509-83a465c0220f // indirect
 	google.golang.org/grpc v1.59.0 // indirect
 	gopkg.in/go-playground/validator.v9 v9.31.0 // indirect
 	maunium.net/go/maulogger/v2 v2.4.1 // indirect
@@ -117,7 +117,7 @@ require (
 	github.com/ttacon/libphonenumber v1.2.1 // indirect
 	golang.org/x/crypto v0.15.0 // indirect
 	golang.org/x/net v0.18.0 // indirect
-	golang.org/x/oauth2 v0.13.0 // indirect
+	golang.org/x/oauth2 v0.14.0 // indirect
 	golang.org/x/sys v0.14.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
