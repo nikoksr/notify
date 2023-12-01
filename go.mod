@@ -20,7 +20,7 @@ require (
 	github.com/mailgun/mailgun-go/v4 v4.12.0
 	github.com/pkg/errors v0.9.1
 	github.com/plivo/plivo-go/v7 v7.43.0
-	github.com/sendgrid/sendgrid-go v3.13.0+incompatible
+	github.com/sendgrid/sendgrid-go v3.14.0+incompatible
 	github.com/silenceper/wechat/v2 v2.1.6
 	github.com/slack-go/slack v0.12.3
 	github.com/stretchr/testify v1.8.4
