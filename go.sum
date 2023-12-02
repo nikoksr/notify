@@ -21,8 +21,8 @@ github.com/appleboy/go-fcm v0.1.5 h1:fKbcZf/7vwGsvDkcop8a+kCHnK+tt4wXX0X7uEzwI6E
 github.com/appleboy/go-fcm v0.1.5/go.mod h1:MSxZ4LqGRsnywOjnlXJXMqbjZrG4vf+0oHitfC9HRH0=
 github.com/atc0005/go-teams-notify/v2 v2.6.1 h1:t22ybzQuaQs4UJe4ceF5VYGsPhs6ir3nZOId/FBy6Go=
 github.com/atc0005/go-teams-notify/v2 v2.6.1/go.mod h1:xo6GejLDHn3tWBA181F8LrllIL0xC1uRsRxq7YNXaaY=
-github.com/aws/aws-sdk-go-v2 v1.23.4 h1:2P20ZjH0ouSAu/6yZep8oCmTReathLuEu6dwoqEgjts=
-github.com/aws/aws-sdk-go-v2 v1.23.4/go.mod h1:t3szzKfP0NeRU27uBFczDivYJjsmSnqI8kIvKyWb9ds=
+github.com/aws/aws-sdk-go-v2 v1.23.5 h1:xK6C4udTyDMd82RFvNkDQxtAd00xlzFUtX4fF2nMZyg=
+github.com/aws/aws-sdk-go-v2 v1.23.5/go.mod h1:t3szzKfP0NeRU27uBFczDivYJjsmSnqI8kIvKyWb9ds=
 github.com/aws/aws-sdk-go-v2/config v1.25.10 h1:qw/e8emDtNufTkrAU86DlQ18DruMyyM7ttW6Lgwp4v0=
 github.com/aws/aws-sdk-go-v2/config v1.25.10/go.mod h1:203YiAtb6XyoGxXMPsUVwEcuxCiTQY/r8P27IDjfvMc=
 github.com/aws/aws-sdk-go-v2/credentials v1.16.8 h1:phw9nRLy/77bPk6Mfu2SHCOnHwfVB7WWrOa5rZIY2Fc=
