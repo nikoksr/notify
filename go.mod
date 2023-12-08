@@ -6,11 +6,11 @@ require (
 	github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20221121042443-a3fd332d56d9
 	github.com/antihax/optional v1.0.0 // indirect
 	github.com/atc0005/go-teams-notify/v2 v2.6.1
-	github.com/aws/aws-sdk-go-v2 v1.23.5
-	github.com/aws/aws-sdk-go-v2/config v1.25.12
-	github.com/aws/aws-sdk-go-v2/credentials v1.16.10
-	github.com/aws/aws-sdk-go-v2/service/ses v1.19.3
-	github.com/aws/aws-sdk-go-v2/service/sns v1.26.3
+	github.com/aws/aws-sdk-go-v2 v1.24.0
+	github.com/aws/aws-sdk-go-v2/config v1.26.0
+	github.com/aws/aws-sdk-go-v2/credentials v1.16.11
+	github.com/aws/aws-sdk-go-v2/service/ses v1.19.4
+	github.com/aws/aws-sdk-go-v2/service/sns v1.26.4
 	github.com/blinkbean/dingtalk v0.0.0-20230927120905-796332ac4ba1
 	github.com/bwmarrin/discordgo v0.27.1
 	github.com/cschomburg/go-pushbullet v0.0.0-20171206132031-67759df45fbb
@@ -50,7 +50,7 @@ require (
 require (
 	cloud.google.com/go/compute v1.23.3 // indirect
 	cloud.google.com/go/compute/metadata v0.2.3 // indirect
-	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.10.3 // indirect
+	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.10.4 // indirect
 	github.com/go-chi/chi/v5 v5.0.8 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.16.0 // indirect
@@ -72,15 +72,15 @@ require (
 )
 
 require (
-	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.14.9 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/configsources v1.2.8 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.5.8 // indirect
+	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.14.10 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/configsources v1.2.9 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.5.9 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/ini v1.7.1 // indirect
-	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.10.8 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sso v1.18.3 // indirect
-	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.21.3 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sts v1.26.3 // indirect
-	github.com/aws/smithy-go v1.18.1 // indirect
+	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.10.9 // indirect
+	github.com/aws/aws-sdk-go-v2/service/sso v1.18.4 // indirect
+	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.21.4 // indirect
+	github.com/aws/aws-sdk-go-v2/service/sts v1.26.4 // indirect
+	github.com/aws/smithy-go v1.19.0 // indirect
 	github.com/bradfitz/gomemcache v0.0.0-20220106215444-fb4bf637b56d // indirect
 	github.com/cenkalti/backoff/v4 v4.1.3 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
