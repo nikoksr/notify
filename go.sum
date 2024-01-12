@@ -289,8 +289,8 @@ github.com/stretchr/testify v1.8.4 h1:CcVxjf3Q8PM0mHUKJCdn+eZZtm5yQwehR5yeSVQQcU
 github.com/stretchr/testify v1.8.4/go.mod h1:sz/lmYIOXD/1dqDmKjjqLyZ2RngseejIcXlSw2iwfAo=
 github.com/technoweenie/multipartstreamer v1.0.1 h1:XRztA5MXiR1TIRHxH2uNxXxaIkKQDeX7m2XsSOlQEnM=
 github.com/technoweenie/multipartstreamer v1.0.1/go.mod h1:jNVxdtShOxzAsukZwTSw6MDx5eUJoiEBsSvzDU9uzog=
-github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.4420 h1:X+WJ1bnpbuf7GLhFCpme/LuFRvLJMdnry5FEiR7SUJI=
-github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.4420/go.mod h1:PbP69y7uRiNdwtPE3/bVGDaPYA1sr4vuHaGLQAGzeW8=
+github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.17428 h1:1SjUKaFDM3AadKqhtu1qSouzpsKMOr7PF/SCmu37QH0=
+github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.17428/go.mod h1:PbP69y7uRiNdwtPE3/bVGDaPYA1sr4vuHaGLQAGzeW8=
 github.com/tidwall/gjson v1.14.1/go.mod h1:/wbyibRr2FHMks5tjHJ5F8dMZh3AcwJEMf5vlfC0lxk=
 github.com/tidwall/gjson v1.14.2/go.mod h1:/wbyibRr2FHMks5tjHJ5F8dMZh3AcwJEMf5vlfC0lxk=
 github.com/tidwall/gjson v1.17.0 h1:/Jocvlh98kcTfpN2+JzGQWQcqrPQwDrVEMApx/M5ZwM=
