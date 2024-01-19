@@ -44,7 +44,7 @@ require github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 require (
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	github.com/vartanbeno/go-reddit/v2 v2.0.1
-	google.golang.org/api v0.156.0
+	google.golang.org/api v0.157.0
 )
 
 require (
@@ -72,7 +72,7 @@ require (
 	go.opentelemetry.io/otel/metric v1.21.0 // indirect
 	go.opentelemetry.io/otel/trace v1.21.0 // indirect
 	golang.org/x/exp v0.0.0-20231110203233-9a3e6036ecaa // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20240102182953-50ed04b92917 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20240116215550-a9fa1716bcac // indirect
 	google.golang.org/grpc v1.60.1 // indirect
 	gopkg.in/go-playground/validator.v9 v9.31.0 // indirect
 	maunium.net/go/maulogger/v2 v2.4.1 // indirect
