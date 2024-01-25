@@ -11,7 +11,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/credentials v1.16.16
 	github.com/aws/aws-sdk-go-v2/service/ses v1.19.6
 	github.com/aws/aws-sdk-go-v2/service/sns v1.26.7
-	github.com/blinkbean/dingtalk v0.0.0-20230927120905-796332ac4ba1
+	github.com/blinkbean/dingtalk v0.0.0-20240125124841-eed4f3220a50
 	github.com/bwmarrin/discordgo v0.27.1
 	github.com/cschomburg/go-pushbullet v0.0.0-20171206132031-67759df45fbb
 	github.com/dghubble/oauth1 v0.7.2
