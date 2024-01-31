@@ -31,7 +31,7 @@ require (
 
 require (
 	github.com/SherClockHolmes/webpush-go v1.3.0
-	github.com/appleboy/go-fcm v0.1.5
+	github.com/appleboy/go-fcm v0.1.6
 	github.com/drswork/go-twitter v0.0.0-20221107160839-dea1b6ed53d7
 	github.com/go-lark/lark v1.14.0
 	github.com/google/go-cmp v0.6.0
