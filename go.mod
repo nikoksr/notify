@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20240116134246-a8cbe886bab0
 	github.com/antihax/optional v1.0.0 // indirect
-	github.com/atc0005/go-teams-notify/v2 v2.6.1
+	github.com/atc0005/go-teams-notify/v2 v2.10.0
 	github.com/aws/aws-sdk-go-v2 v1.24.1
 	github.com/aws/aws-sdk-go-v2/config v1.26.6
 	github.com/aws/aws-sdk-go-v2/credentials v1.16.16
