@@ -1,6 +1,8 @@
 module github.com/nikoksr/notify
 
-go 1.19
+go 1.21
+
+toolchain go1.22.1
 
 require (
 	github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20240116134246-a8cbe886bab0
@@ -23,7 +25,7 @@ require (
 	github.com/sendgrid/sendgrid-go v3.14.0+incompatible
 	github.com/silenceper/wechat/v2 v2.1.6
 	github.com/slack-go/slack v0.12.3
-	github.com/stretchr/testify v1.8.4
+	github.com/stretchr/testify v1.9.0
 	github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.18991
 	github.com/utahta/go-linenotify v0.5.0
 	golang.org/x/sync v0.6.0
@@ -36,7 +38,7 @@ require (
 	github.com/go-lark/lark v1.14.0
 	github.com/google/go-cmp v0.6.0
 	github.com/kevinburke/twilio-go v0.0.0-20221122012537-65f3dd7539e2
-	maunium.net/go/mautrix v0.16.2
+	maunium.net/go/mautrix v0.18.0
 )
 
 require github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
@@ -64,18 +66,17 @@ require (
 	github.com/leodido/go-urn v1.2.4 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.19 // indirect
-	github.com/rs/zerolog v1.31.0 // indirect
-	go.mau.fi/util v0.2.1 // indirect
+	github.com/rs/zerolog v1.32.0 // indirect
+	go.mau.fi/util v0.4.1 // indirect
 	go.opencensus.io v0.24.0 // indirect
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.47.0 // indirect
 	go.opentelemetry.io/otel v1.22.0 // indirect
 	go.opentelemetry.io/otel/metric v1.22.0 // indirect
 	go.opentelemetry.io/otel/trace v1.22.0 // indirect
-	golang.org/x/exp v0.0.0-20231110203233-9a3e6036ecaa // indirect
+	golang.org/x/exp v0.0.0-20240314144324-c7f7c6466f7f // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240125205218-1f4bbc51befe // indirect
 	google.golang.org/grpc v1.61.0 // indirect
 	gopkg.in/go-playground/validator.v9 v9.31.0 // indirect
-	maunium.net/go/maulogger/v2 v2.4.1 // indirect
 )
 
 require (
@@ -114,18 +115,18 @@ require (
 	github.com/sendgrid/rest v2.6.9+incompatible // indirect
 	github.com/sirupsen/logrus v1.9.0 // indirect
 	github.com/spf13/cast v1.5.0 // indirect
-	github.com/stretchr/objx v0.5.0 // indirect
+	github.com/stretchr/objx v0.5.2 // indirect
 	github.com/technoweenie/multipartstreamer v1.0.1 // indirect
-	github.com/tidwall/gjson v1.17.0 // indirect
+	github.com/tidwall/gjson v1.17.1 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
 	github.com/tidwall/pretty v1.2.0 // indirect
 	github.com/tidwall/sjson v1.2.5 // indirect
 	github.com/ttacon/builder v0.0.0-20170518171403-c099f663e1c2 // indirect
 	github.com/ttacon/libphonenumber v1.2.1 // indirect
-	golang.org/x/crypto v0.18.0 // indirect
-	golang.org/x/net v0.20.0 // indirect
+	golang.org/x/crypto v0.21.0 // indirect
+	golang.org/x/net v0.22.0 // indirect
 	golang.org/x/oauth2 v0.16.0 // indirect
-	golang.org/x/sys v0.16.0 // indirect
+	golang.org/x/sys v0.18.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
 	google.golang.org/protobuf v1.32.0 // indirect
