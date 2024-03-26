@@ -2,6 +2,7 @@ package notify
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/pkg/errors"
 	"golang.org/x/sync/errgroup"
@@ -24,7 +25,18 @@ func (n *Notify) send(ctx context.Context, subject, message string) error {
 
 		service := service
 		eg.Go(func() error {
-			return service.Send(ctx, subject, message)
+			var err error
+			defer func() {
+				if r := recover(); r != nil {
+					if recErr, ok := r.(error); ok {
+						err = recErr
+					} else {
+						err = fmt.Errorf("service panic: %v", r)
+					}
+				}
+			}()
+			err = service.Send(ctx, subject, message)
+			return err
 		})
 	}
 
