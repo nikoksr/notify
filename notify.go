@@ -6,7 +6,7 @@ import "github.com/pkg/errors"
 var _ Notifier = (*Notify)(nil)
 
 // ErrSendNotification signals that the notifier failed to send a notification.
-var ErrSendNotification = errors.New("send notification")
+var ErrSendNotification = errors.New("while sending notification")
 
 // Notify is the central struct for managing notification services and sending messages to them.
 type Notify struct {
