@@ -2,11 +2,12 @@ package mail
 
 import (
 	"context"
+	"crypto/tls"
+	"net"
 	"net/smtp"
 	"net/textproto"
 
 	"github.com/jordan-wright/email"
-	"github.com/pkg/errors"
 )
 
 // Mail struct holds necessary data to send emails.
@@ -100,16 +101,21 @@ func (m *Mail) newEmail(subject, message string) *email.Email {
 func (m Mail) Send(ctx context.Context, subject, message string) error {
 	msg := m.newEmail(subject, message)
 
-	var err error
+	var sendError error
+
 	select {
 	case <-ctx.Done():
-		err = ctx.Err()
+		sendError = ctx.Err()
 	default:
-		err = msg.Send(m.smtpHostAddr, m.smtpAuth)
+		err := msg.Send(m.smtpHostAddr, m.smtpAuth)
+		if err.Error() == "EOF" {
+			host, _, _ := net.SplitHostPort(m.smtpHostAddr)
+			err = msg.SendWithTLS(m.smtpHostAddr, m.smtpAuth, &tls.Config{ServerName: host})
+		}
 		if err != nil {
-			err = errors.Wrap(err, "failed to send mail")
+			sendError = err
 		}
 	}
 
-	return err
+	return sendError
 }

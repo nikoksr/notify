@@ -11,7 +11,7 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/nikoksr/notify"
+	"github.com/heilmela/notify"
 )
 
 type (
