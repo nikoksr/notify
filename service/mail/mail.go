@@ -2,12 +2,12 @@ package mail
 
 import (
 	"context"
-	"crypto/tls"
 	"net"
-	"net/smtp"
 	"net/textproto"
+	"strconv"
+	"time"
 
-	"github.com/jordan-wright/email"
+	"gopkg.in/mail.v2"
 )
 
 // Mail struct holds necessary data to send emails.
@@ -15,7 +15,8 @@ type Mail struct {
 	usePlainText      bool
 	senderAddress     string
 	smtpHostAddr      string
-	smtpAuth          smtp.Auth
+	user              string
+	pass              string
 	receiverAddresses []string
 	headers           textproto.MIMEHeader
 }
@@ -41,19 +42,15 @@ const (
 	HTML
 )
 
-// AuthenticateSMTP authenticates you to send emails via smtp.
-// Example values: "", "test@gmail.com", "password123", "smtp.gmail.com"
-// For more information about smtp authentication, see here:
-//
-//	-> https://pkg.go.dev/net/smtp#PlainAuth
-func (m *Mail) AuthenticateSMTP(identity, userName, password, host string) {
-	m.smtpAuth = smtp.PlainAuth(identity, userName, password, host)
-}
-
 // AddReceivers takes email addresses and adds them to the internal address list. The Send method will send
 // a given message to all those addresses.
 func (m *Mail) AddReceivers(addresses ...string) {
 	m.receiverAddresses = append(m.receiverAddresses, addresses...)
+}
+
+func (m *Mail) AddAuthentication(user string, pass string) {
+	m.user = user
+	m.pass = pass
 }
 
 // BodyFormat can be used to specify the format of the body.
@@ -74,48 +71,59 @@ func (m *Mail) AddHeader(name, value string) {
 	m.headers.Add(name, value)
 }
 
-func (m *Mail) newEmail(subject, message string) *email.Email {
-	msg := &email.Email{
-		To:      m.receiverAddresses,
-		From:    m.senderAddress,
-		Subject: subject,
-		Headers: textproto.MIMEHeader{},
+func (m *Mail) newEmail(subject, message string) *mail.Message {
+	msg := mail.NewMessage()
+	msg.SetHeader("From", m.senderAddress)
+	msg.SetHeader("To", m.receiverAddresses...)
+	msg.SetHeader("Subject", subject)
+	if m.usePlainText {
+		msg.SetBody("text/plain", message)
+	} else {
+		msg.SetBody("text/html", message)
+
 	}
 
 	for name, values := range m.headers {
 		for _, value := range values {
-			msg.Headers.Add(name, value)
+			msg.SetHeader(name, value)
 		}
 	}
 
-	if m.usePlainText {
-		msg.Text = []byte(message)
-	} else {
-		msg.HTML = []byte(message)
-	}
 	return msg
 }
 
 // Send takes a message subject and a message body and sends them to all previously set chats. Message body supports
 // html as markup language.
 func (m Mail) Send(ctx context.Context, subject, message string) error {
-	msg := m.newEmail(subject, message)
-
-	var sendError error
-
 	select {
 	case <-ctx.Done():
-		sendError = ctx.Err()
+		return ctx.Err()
 	default:
-		err := msg.Send(m.smtpHostAddr, m.smtpAuth)
-		if err.Error() == "EOF" {
-			host, _, _ := net.SplitHostPort(m.smtpHostAddr)
-			err = msg.SendWithTLS(m.smtpHostAddr, m.smtpAuth, &tls.Config{ServerName: host})
-		}
-		if err != nil {
-			sendError = err
+	}
+
+	msg := m.newEmail(subject, message)
+
+	host, portStr, err := net.SplitHostPort(m.smtpHostAddr)
+	if err != nil {
+		return err
+	}
+
+	port, err := strconv.Atoi(portStr)
+	if err != nil {
+		return err
+	}
+
+	d := mail.NewDialer(host, port, m.user, m.pass)
+
+	if deadline, ok := ctx.Deadline(); ok {
+		timeout := time.Until(deadline)
+		if timeout > 0 {
+			d.Timeout = timeout
+		} else {
+			return context.DeadlineExceeded
 		}
 	}
 
-	return sendError
+	err = d.DialAndSend(msg)
+	return err
 }
