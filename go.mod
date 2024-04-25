@@ -14,7 +14,7 @@ require (
 	github.com/blinkbean/dingtalk v0.0.0-20240125124841-eed4f3220a50
 	github.com/bwmarrin/discordgo v0.27.1
 	github.com/cschomburg/go-pushbullet v0.0.0-20171206132031-67759df45fbb
-	github.com/dghubble/oauth1 v0.7.2
+	github.com/dghubble/oauth1 v0.7.3
 	github.com/go-telegram-bot-api/telegram-bot-api v4.6.4+incompatible
 	github.com/line/line-bot-sdk-go v7.8.0+incompatible
 	github.com/mailgun/mailgun-go/v4 v4.12.0
