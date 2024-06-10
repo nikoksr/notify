@@ -2,6 +2,7 @@ package mail
 
 import (
 	"context"
+	"crypto/tls"
 	"net"
 	"net/textproto"
 	"strconv"
@@ -19,6 +20,7 @@ type Mail struct {
 	pass              string
 	receiverAddresses []string
 	headers           textproto.MIMEHeader
+	tls               *tls.Config
 }
 
 // New returns a new instance of a Mail notification service.
@@ -71,6 +73,14 @@ func (m *Mail) AddHeader(name, value string) {
 	m.headers.Add(name, value)
 }
 
+func (m *Mail) InsecureSkipVerify(enable bool) {
+	if m.tls == nil {
+		host, _, _ := net.SplitHostPort(m.smtpHostAddr)
+		m.tls = &tls.Config{ServerName: host}
+	}
+	m.tls.InsecureSkipVerify = enable
+}
+
 func (m *Mail) newEmail(subject, message string) *mail.Message {
 	msg := mail.NewMessage()
 	msg.SetHeader("From", m.senderAddress)
@@ -114,7 +124,9 @@ func (m Mail) Send(ctx context.Context, subject, message string) error {
 	}
 
 	d := mail.NewDialer(host, port, m.user, m.pass)
-
+	if m.tls != nil {
+		d.TLSConfig = m.tls
+	}
 	if deadline, ok := ctx.Deadline(); ok {
 		timeout := time.Until(deadline)
 		if timeout > 0 {
