@@ -15,6 +15,8 @@
 
 > <p align="center">A dead simple Go library for sending notifications to various messaging services.</p>
 
+> **[July 2024 Update]**: Notify is back under active maintenance! [Read the full announcement here](https://github.com/nikoksr/notify/discussions/840).
+
 <h1></h1>
 
 ## About <a id="about"></a>
@@ -131,4 +133,3 @@ The [logo](https://github.com/MariaLetta/free-gophers-pack) was made by the amaz
 ## Show your support <a id="support"></a>
 
 Please give a ⭐️ if you like the project! It draws more attention to the project, which helps us improve it even faster.
-
