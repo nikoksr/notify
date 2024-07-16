@@ -226,8 +226,8 @@ github.com/kevinburke/go-types v0.0.0-20210723172823-2deba1f80ba7 h1:K8qael4Lems
 github.com/kevinburke/go-types v0.0.0-20210723172823-2deba1f80ba7/go.mod h1:/Pk5i/SqYdYv1cie5wGwoZ4P6TpgMi+Yf58mtJSHdOw=
 github.com/kevinburke/rest v0.0.0-20240617045629-3ed0ad3487f0 h1:qksAIHu0d4vkA0rIePBn+K9eO33RxkUMiceFn3T7lO4=
 github.com/kevinburke/rest v0.0.0-20240617045629-3ed0ad3487f0/go.mod h1:dcLMT8KO9krIMJQ4578Lex1Su6ewuJUqEDeQ1nTORug=
-github.com/kevinburke/twilio-go v0.0.0-20240623211326-c7334b537077 h1:IBBYDggH8Ra+xBzJ/7e+X9MG5TUNQ6kjyU2qf08m8c8=
-github.com/kevinburke/twilio-go v0.0.0-20240623211326-c7334b537077/go.mod h1:ywO98mC3XU46KlDLgCDChBOpf5CihdaETKriwam/8eE=
+github.com/kevinburke/twilio-go v0.0.0-20240716172313-813590983ccc h1:cDRzcR6IuXvxkrXA1GY1RGR7bfUzDjvI9DC1xs+V1eI=
+github.com/kevinburke/twilio-go v0.0.0-20240716172313-813590983ccc/go.mod h1:G52lJ9gSqbkLzwqB9e3sBJ/nhvYswVIqwZcTw4NiXdY=
 github.com/kr/pretty v0.3.1 h1:flRD4NNwYAUpkphVc1HcthR4KEIFJ65n8Mw5qdRn3LE=
 github.com/kr/pretty v0.3.1/go.mod h1:hoEshYVHaxMs3cyo3Yncou5ZscifuDolrwPKZanG3xk=
 github.com/kr/text v0.2.0 h1:5Nx0Ya0ZqY2ygV366QzturHI13Jq95ApcVaJBhpS+AY=
