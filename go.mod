@@ -38,7 +38,7 @@ require (
 	github.com/go-lark/lark v1.14.1
 	github.com/google/go-cmp v0.6.0
 	github.com/kevinburke/twilio-go v0.0.0-20240623211326-c7334b537077
-	maunium.net/go/mautrix v0.18.1
+	maunium.net/go/mautrix v0.19.0
 )
 
 require github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
@@ -76,7 +76,7 @@ require (
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/rs/zerolog v1.33.0 // indirect
-	go.mau.fi/util v0.5.0 // indirect
+	go.mau.fi/util v0.6.0 // indirect
 	go.opencensus.io v0.24.0 // indirect
 	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.53.0 // indirect
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.53.0 // indirect
