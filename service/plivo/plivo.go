@@ -2,6 +2,7 @@ package plivo
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"strings"
@@ -27,14 +28,12 @@ type MessageOptions struct {
 	CallbackMethod string // The HTTP method to be used when calling CallbackURL - GET or POST(default)
 }
 
-// plivoMsgClient abstracts Plivo SDK for writing unit tests
-//
-//go:generate mockery --name=plivoMsgClient --output=. --case=underscore --inpackage
+// plivoMsgClient abstracts Plivo SDK for writing unit tests.
 type plivoMsgClient interface {
 	Create(plivo.MessageCreateParams) (*plivo.MessageCreateResponseBody, error)
 }
 
-// Service is a Plivo client
+// Service is a Plivo client.
 type Service struct {
 	client       plivoMsgClient
 	mopts        MessageOptions
@@ -44,15 +43,15 @@ type Service struct {
 // New creates a new instance of plivo service.
 func New(cOpts *ClientOptions, mOpts *MessageOptions) (*Service, error) {
 	if cOpts == nil {
-		return nil, fmt.Errorf("client-options cannot be nil")
+		return nil, errors.New("client-options cannot be nil")
 	}
 
 	if mOpts == nil {
-		return nil, fmt.Errorf("message-options cannot be nil")
+		return nil, errors.New("message-options cannot be nil")
 	}
 
 	if mOpts.Source == "" {
-		return nil, fmt.Errorf("source cannot be empty")
+		return nil, errors.New("source cannot be empty")
 	}
 
 	client, err := plivo.NewClient(
@@ -63,7 +62,7 @@ func New(cOpts *ClientOptions, mOpts *MessageOptions) (*Service, error) {
 		},
 	)
 	if err != nil {
-		return nil, fmt.Errorf("plivo.NewClient() failed: %w", err)
+		return nil, err
 	}
 
 	return &Service{
@@ -84,7 +83,7 @@ func (s *Service) Send(ctx context.Context, subject, message string) error {
 	var dst string
 	switch len(s.destinations) {
 	case 0:
-		return fmt.Errorf("no receivers added")
+		return errors.New("no receivers added")
 	case 1:
 		dst = s.destinations[0]
 	default:
@@ -93,19 +92,21 @@ func (s *Service) Send(ctx context.Context, subject, message string) error {
 		dst = strings.Join(s.destinations, "<")
 	}
 
-	var err error
 	select {
 	case <-ctx.Done():
 		return ctx.Err()
 	default:
-		_, err = s.client.Create(plivo.MessageCreateParams{
+		_, err := s.client.Create(plivo.MessageCreateParams{
 			Dst:    dst,
 			Text:   text,
 			Src:    s.mopts.Source,
 			URL:    s.mopts.CallbackURL,
 			Method: s.mopts.CallbackMethod,
 		})
+		if err != nil {
+			return fmt.Errorf("send SMS to %q: %w", dst, err)
+		}
 	}
 
-	return err
+	return nil
 }

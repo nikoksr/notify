@@ -4,44 +4,59 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
 	"net/http/httptest"
-	"os"
 	"testing"
 
-	"github.com/pkg/errors"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
-// Set up a test server to handle the requests
-var notifyServer *httptest.Server
-
-// Allows us to simulate an error returned from the server on a per-request basis
+// Allows us to simulate an error returned from the server on a per-request basis.
 const headerTestError = "X-Test-Error"
 
-func TestMain(m *testing.M) {
-	var notifyHandler http.Handler = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+// testServer encapsulates the httptest.Server and provides methods for testing.
+type testServer struct {
+	server *httptest.Server
+}
+
+// newTestServer creates and returns a new testServer.
+func newTestServer() *testServer {
+	ts := &testServer{}
+	ts.server = httptest.NewServer(ts.handler())
+	return ts
+}
+
+// handler returns the http.HandlerFunc for the test server.
+func (ts *testServer) handler() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
 		switch {
 		case r.Header.Get(headerTestError) == "true":
 			w.WriteHeader(http.StatusInternalServerError)
 		default:
 			w.WriteHeader(http.StatusOK)
 		}
-	})
-
-	notifyServer = httptest.NewServer(notifyHandler)
-	defer notifyServer.Close()
-
-	os.Exit(m.Run())
+	}
 }
 
-// Create a custom serializer that will return an error
+// Close shuts down the test server.
+func (ts *testServer) Close() {
+	ts.server.Close()
+}
+
+// URL returns the URL of the test server.
+func (ts *testServer) URL() string {
+	return ts.server.URL
+}
+
+// Create a custom serializer that will return an error.
 type errorSerializer struct{}
 
 // Marshal is a no-op and always returns an error.
-func (errorSerializer) Marshal(_ string, _ any) (payloadRaw []byte, err error) {
+func (errorSerializer) Marshal(_ string, _ any) ([]byte, error) {
 	return nil, errors.New("error")
 }
 
@@ -97,7 +112,6 @@ func TestService_AddReceivers(t *testing.T) {
 		},
 	}
 	for _, tt := range tests {
-		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 
@@ -114,9 +128,13 @@ func TestService_AddReceivers(t *testing.T) {
 func TestService_Hooks(t *testing.T) {
 	t.Parallel()
 
+	// Create a test server for this specific test
+	ts := newTestServer()
+	defer ts.Close()
+
 	// Set the local server as the receiver
 	service := New()
-	service.AddReceiversURLs(notifyServer.URL)
+	service.AddReceiversURLs(ts.URL())
 
 	// Constants for the test
 	const (
@@ -126,16 +144,17 @@ func TestService_Hooks(t *testing.T) {
 
 	// Add a very simple pre-send hook. We'll check if the header and body are set correctly.
 	service.PreSend(func(req *http.Request) error {
-		// At this point, the request should be unmodified as this is the first hook. Unmarshal the bodyRaw and check the
+		// At this point, the request should be unmodified as this is the first hook. Unmarshal the bodyRaw and check
+		// the
 		// subject and message.
 		bodyRaw, err := io.ReadAll(req.Body)
 		if err != nil {
-			return errors.Wrap(err, "failed to read request body")
+			return fmt.Errorf("read request bodyRaw: %w", err)
 		}
 
 		var body map[string]string
-		if err := json.Unmarshal(bodyRaw, &body); err != nil {
-			return errors.Wrap(err, "failed to unmarshal request body")
+		if err = json.Unmarshal(bodyRaw, &body); err != nil {
+			return fmt.Errorf("unmarshal request bodyRaw: %w", err)
 		}
 
 		// This implicitly checks the correctness of buildDefaultPayload.
@@ -145,7 +164,7 @@ func TestService_Hooks(t *testing.T) {
 		// Injecting new headers and bodyRaw
 		req.Header.Set("X-Test-1", "test-header")
 		req.Header.Set("Content-Type", "text/plain")
-		req.Body = io.NopCloser(bytes.NewBuffer([]byte("test-body")))
+		req.Body = io.NopCloser(bytes.NewBufferString("test-body"))
 
 		return nil
 	})
@@ -159,7 +178,7 @@ func TestService_Hooks(t *testing.T) {
 		// Check the bodyRaw
 		bodyRaw, err := io.ReadAll(req.Body)
 		if err != nil {
-			return errors.Wrap(err, "failed to read request bodyRaw")
+			return fmt.Errorf("read request bodyRaw: %w", err)
 		}
 		assert.Equal(t, "test-body", string(bodyRaw), "body should be equal")
 
@@ -177,7 +196,8 @@ func TestService_Hooks(t *testing.T) {
 		return nil
 	})
 
-	// Adding a third pre-send hook. We'll check if the header and body have been correctly modified by the first two hooks.
+	// Adding a third pre-send hook. We'll check if the header and body have been correctly modified by the first two
+	// hooks.
 	service.PreSend(func(req *http.Request) error {
 		assert.Equal(t, "test-header-2", req.Header.Get("X-Test-2"), "header should be equal")
 		assert.Equal(t, "", req.Header.Get("X-Test-1"), "header should be equal")
@@ -191,14 +211,14 @@ func TestService_Hooks(t *testing.T) {
 
 	// Add a very simple post-send hook. We'll inject a custom header and return an error, in case the according http
 	// header has been set.
-	service.PostSend(func(req *http.Request, res *http.Response) error {
+	service.PostSend(func(_ *http.Request, res *http.Response) error {
 		res.Header.Set("X-Test-1", "test-header")
 
 		return nil
 	})
 
 	// Add a second post-send hook. We'll check if the header has been correctly modified by the first hook.
-	service.PostSend(func(req *http.Request, res *http.Response) error {
+	service.PostSend(func(_ *http.Request, res *http.Response) error {
 		assert.Equal(t, "test-header", res.Header.Get("X-Test-1"), "header should be equal")
 
 		// Injecting a new header to confirm that consecutive hooks work as expected
@@ -209,7 +229,7 @@ func TestService_Hooks(t *testing.T) {
 	})
 
 	// Add a third post-send hook. We'll check if the header has been correctly modified by the first two hooks.
-	service.PostSend(func(req *http.Request, res *http.Response) error {
+	service.PostSend(func(_ *http.Request, res *http.Response) error {
 		assert.Equal(t, "test-header-2", res.Header.Get("X-Test-2"), "header should be equal")
 		assert.Equal(t, "", res.Header.Get("X-Test-1"), "header should be equal")
 
@@ -217,12 +237,12 @@ func TestService_Hooks(t *testing.T) {
 	})
 
 	// Sanity check
-	assert.Equal(t, 3, len(service.preSendHooks), "preSendHooks should be equal")
-	assert.Equal(t, 3, len(service.postSendHooks), "postSendHooks should be equal")
+	assert.Len(t, service.preSendHooks, 3, "preSendHooks should be equal")
+	assert.Len(t, service.postSendHooks, 3, "postSendHooks should be equal")
 
 	// Send a notification
 	err := service.Send(context.Background(), testSubject, testMessage)
-	assert.NoError(t, err, "error should be nil")
+	require.NoError(t, err, "error should be nil")
 
 	// Now, add a new pre-send hook that sets special header that requests the server to return an error. We'll check if
 	// the error is correctly returned.
@@ -234,31 +254,31 @@ func TestService_Hooks(t *testing.T) {
 
 	// Send a notification
 	err = service.Send(context.Background(), testSubject, testMessage)
-	assert.Error(t, err, "error should not be nil")
+	require.Error(t, err, "error should not be nil")
 
 	// Reset the hooks
 	service.preSendHooks = make([]PreSendHookFn, 0)
 	service.postSendHooks = make([]PostSendHookFn, 0)
 
 	// Add a pre-send hook that returns an error
-	service.PreSend(func(req *http.Request) error {
+	service.PreSend(func(_ *http.Request) error {
 		return errors.New("test error")
 	})
 
 	// Send a notification
 	err = service.Send(context.Background(), testSubject, testMessage)
-	assert.Error(t, err, "error should not be nil")
+	require.Error(t, err, "error should not be nil")
 
 	// Reset the hooks again and add a post-send hook that returns an error
 	service.preSendHooks = make([]PreSendHookFn, 0)
 
-	service.PostSend(func(req *http.Request, res *http.Response) error {
+	service.PostSend(func(_ *http.Request, _ *http.Response) error {
 		return errors.New("test error")
 	})
 
 	// Send a notification
 	err = service.Send(context.Background(), testSubject, testMessage)
-	assert.Error(t, err, "error should not be nil")
+	require.Error(t, err, "error should not be nil")
 }
 
 func TestService_Send(t *testing.T) {
@@ -267,13 +287,17 @@ func TestService_Send(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
+	// Create a test server for this specific test
+	ts := newTestServer()
+	defer ts.Close()
+
 	// Create service with local server as receiver
 	service := New()
-	service.AddReceiversURLs(notifyServer.URL)
+	service.AddReceiversURLs(ts.URL())
 
 	// Sending this notification should work without any issues
 	err := service.Send(ctx, "test subject", "test message")
-	assert.NoError(t, err, "error should be nil")
+	require.NoError(t, err, "error should be nil")
 
 	// Now, let's reset the receivers and set a custom one, specifically requesting for our test server to return an
 	// error. This should result in an error.
@@ -286,34 +310,34 @@ func TestService_Send(t *testing.T) {
 		ContentType:  defaultContentType,
 		Header:       header,
 		Method:       http.MethodPost,
-		URL:          notifyServer.URL,
+		URL:          ts.URL(),
 		BuildPayload: buildDefaultPayload,
 	})
 
 	err = service.Send(ctx, "test subject", "test message")
-	assert.Error(t, err, "error should not be nil")
+	require.Error(t, err, "error should not be nil")
 
 	// Reset again, add a functioning receiver again for further tests
 	service.webhooks = make([]*Webhook, 0)
-	service.AddReceiversURLs(notifyServer.URL)
+	service.AddReceiversURLs(ts.URL())
 
 	// Since we won't reset the receivers list again, add a nil receiver to make sure that the service doesn't crash.
 	service.AddReceivers(nil)
 
 	err = service.Send(ctx, "test subject", "test message")
-	assert.NoError(t, err, "error should be nil")
+	require.NoError(t, err, "error should be nil")
 
 	// Test setting a custom marshaller that always returns an error
 	service.Serializer = errorSerializer{}
 
 	err = service.Send(ctx, "test subject", "test message")
-	assert.Error(t, err, "error should not be nil")
+	require.Error(t, err, "error should not be nil")
 
 	// Test context cancellation.
 	cancel() // Cancel the context
 
 	err = service.Send(ctx, "test subject", "test message")
-	assert.Error(t, err, "error should not be nil")
+	require.Error(t, err, "error should not be nil")
 }
 
 func Test_newWebhook(t *testing.T) {
@@ -362,7 +386,6 @@ func TestWebhook_String(t *testing.T) {
 		},
 	}
 	for _, tt := range tests {
-		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 			assert.Equalf(t, tt.want, tt.hook.String(), "String() = %v, want %v", tt.hook.String(), tt.want)
@@ -381,7 +404,7 @@ func Test_defaultMarshaller_Marshal(t *testing.T) {
 		name    string
 		args    args
 		wantOut []byte
-		wantErr assert.ErrorAssertionFunc
+		wantErr require.ErrorAssertionFunc
 	}{
 		{
 			name: "test marshal valid json",
@@ -390,7 +413,7 @@ func Test_defaultMarshaller_Marshal(t *testing.T) {
 				payload:     map[string]interface{}{"test": "test"},
 			},
 			wantOut: []byte(`{"test":"test"}`),
-			wantErr: assert.NoError,
+			wantErr: require.NoError,
 		},
 		{
 			name: "test marshal invalid json",
@@ -399,7 +422,7 @@ func Test_defaultMarshaller_Marshal(t *testing.T) {
 				payload:     map[string]interface{}{"test": make(chan int)},
 			},
 			wantOut: nil,
-			wantErr: assert.Error,
+			wantErr: require.Error,
 		},
 		{
 			name: "test marshal valid text",
@@ -408,7 +431,7 @@ func Test_defaultMarshaller_Marshal(t *testing.T) {
 				payload:     "test",
 			},
 			wantOut: []byte("test"),
-			wantErr: assert.NoError,
+			wantErr: require.NoError,
 		},
 		{
 			name: "test marshal invalid text",
@@ -417,7 +440,7 @@ func Test_defaultMarshaller_Marshal(t *testing.T) {
 				payload:     map[string]interface{}{"test": "test"},
 			},
 			wantOut: nil,
-			wantErr: assert.Error,
+			wantErr: require.Error,
 		},
 		{
 			name: "test marshal invalid content type",
@@ -426,19 +449,20 @@ func Test_defaultMarshaller_Marshal(t *testing.T) {
 				payload:     map[string]interface{}{"test": "test"},
 			},
 			wantOut: nil,
-			wantErr: assert.Error,
+			wantErr: require.Error,
 		},
 	}
 	for _, tt := range tests {
-		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 
 			serializer := defaultMarshaller{}
 			gotOut, err := serializer.Marshal(tt.args.contentType, tt.args.payload)
-			if !tt.wantErr(t, err, fmt.Sprintf("Marshal(%v, %v)", tt.args.contentType, tt.args.payload)) {
-				return
+
+			if tt.wantErr != nil {
+				tt.wantErr(t, err)
 			}
+
 			assert.Equalf(t, tt.wantOut, gotOut, "Marshal(%v, %v)", tt.args.contentType, tt.args.payload)
 		})
 	}

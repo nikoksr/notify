@@ -4,9 +4,9 @@ package pushover
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/gregdel/pushover"
-	"github.com/pkg/errors"
 )
 
 //go:generate mockery --name=pushoverClient --output=. --case=underscore --inpackage
@@ -58,7 +58,7 @@ func (p Pushover) Send(ctx context.Context, subject, message string) error {
 				&p.recipients[i],
 			)
 			if err != nil {
-				return errors.Wrapf(err, "failed to send message to Pushover recipient '%s'", p.recipients[i])
+				return fmt.Errorf("send message to recipient %d: %w", i+1, err)
 			}
 		}
 	}

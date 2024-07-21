@@ -1,10 +1,11 @@
+//nolint:staticcheck // Will fix deprecated dependencies soon.
 package msteams
 
 import (
 	"context"
+	"fmt"
 
 	teams "github.com/atc0005/go-teams-notify/v2"
-	"github.com/pkg/errors"
 )
 
 //go:generate mockery --name=teamsClient --output=. --case=underscore --inpackage
@@ -69,7 +70,7 @@ func (m MSTeams) Send(ctx context.Context, subject, message string) error {
 		default:
 			err := m.client.SendWithContext(ctx, webHook, msgCard)
 			if err != nil {
-				return errors.Wrapf(err, "failed to send message to Microsoft Teams via webhook '%s'", webHook)
+				return fmt.Errorf("send messag to channel %q: %w", webHook, err)
 			}
 		}
 	}

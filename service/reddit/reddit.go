@@ -4,10 +4,10 @@ package reddit
 import (
 	"context"
 	"crypto/tls"
+	"fmt"
 	"net/http"
 
-	"github.com/pkg/errors"
-	"github.com/vartanbeno/go-reddit/v2/reddit"
+	"github.com/caarlos0/go-reddit/v3/reddit"
 )
 
 //go:generate mockery --name=redditMessageClient --output=. --case=underscore --inpackage
@@ -30,7 +30,8 @@ type Reddit struct {
 //	-> https://github.com/reddit-archive/reddit/wiki/OAuth2
 func New(clientID, clientSecret, username, password string) (*Reddit, error) {
 	// Disable HTTP2 in http client
-	// Details: https://www.reddit.com/r/redditdev/comments/t8e8hc/getting_nothing_but_429_responses_when_using_go/i18yga2/
+	// Details:
+	// https://www.reddit.com/r/redditdev/comments/t8e8hc/getting_nothing_but_429_responses_when_using_go/i18yga2/
 	h := http.Client{
 		Transport: &http.Transport{
 			TLSNextProto: map[string]func(authority string, c *tls.Conn) http.RoundTripper{},
@@ -47,7 +48,7 @@ func New(clientID, clientSecret, username, password string) (*Reddit, error) {
 		reddit.WithUserAgent("github.com/nikoksr/notify"),
 	)
 	if err != nil {
-		return nil, errors.Wrap(err, "failed to instantiate base Reddit client")
+		return nil, fmt.Errorf("create Reddit client: %w", err)
 	}
 
 	r := &Reddit{
@@ -77,11 +78,11 @@ func (r *Reddit) Send(ctx context.Context, subject, message string) error {
 				Text:    message,
 			}
 
-			_, err := r.client.Send(ctx, &m)
-			if err != nil {
-				return errors.Wrapf(err, "failed to send message to Reddit recipient '%s'", r.recipients[i])
+			if _, err := r.client.Send(ctx, &m); err != nil {
+				return fmt.Errorf("send message to user %q: %w", r.recipients[i], err)
 			}
 		}
 	}
+
 	return nil
 }

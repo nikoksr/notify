@@ -13,7 +13,7 @@ type ServiceOptions struct {
 	roomID      id.RoomID
 }
 
-// Message structure that reassembles the SendMessageEvent
+// Message structure that reassembles the SendMessageEvent.
 type Message struct {
 	Body          string            `json:"body"`
 	Format        string            `json:"format,omitempty"`
@@ -21,7 +21,7 @@ type Message struct {
 	Msgtype       event.MessageType `json:"msgtype"`
 }
 
-// Matrix struct that holds necessary data to communicate with the Matrix API
+// Matrix struct that holds necessary data to communicate with the Matrix API.
 type Matrix struct {
 	client  matrixClient
 	options ServiceOptions

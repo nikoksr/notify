@@ -2,12 +2,12 @@ package line
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/line/line-bot-sdk-go/linebot"
-	"github.com/pkg/errors"
 )
 
-// Line struct holds info about client and destination ID for communicating with line API
+// Line struct holds info about client and destination ID for communicating with line API.
 type Line struct {
 	client      *linebot.Client
 	receiverIDs []string
@@ -29,13 +29,13 @@ func New(channelSecret, channelAccessToken string) (*Line, error) {
 	return l, nil
 }
 
-// AddReceivers receives user, group or room IDs then add them to internal receivers list
+// AddReceivers receives user, group or room IDs then add them to internal receivers list.
 func (l *Line) AddReceivers(receiverIDs ...string) {
 	l.receiverIDs = append(l.receiverIDs, receiverIDs...)
 }
 
 // Send receives message subject and body then sends it to all receivers set previously
-// Subject will be on the first line followed by message on the next line
+// Subject will be on the first line followed by message on the next line.
 func (l *Line) Send(ctx context.Context, subject, message string) error {
 	lineMessage := &linebot.TextMessage{
 		Text: subject + "\n" + message,
@@ -48,7 +48,7 @@ func (l *Line) Send(ctx context.Context, subject, message string) error {
 		default:
 			_, err := l.client.PushMessage(receiverID, lineMessage).WithContext(ctx).Do()
 			if err != nil {
-				return errors.Wrapf(err, "failed to send message to LINE contact '%s'", receiverID)
+				return fmt.Errorf("push message to %q: %w", receiverID, err)
 			}
 		}
 	}

@@ -2,8 +2,8 @@ package notify
 
 import (
 	"context"
+	"errors"
 
-	"github.com/pkg/errors"
 	"golang.org/x/sync/errgroup"
 )
 
@@ -22,7 +22,6 @@ func (n *Notify) send(ctx context.Context, subject, message string) error {
 			continue
 		}
 
-		service := service
 		eg.Go(func() error {
 			return service.Send(ctx, subject, message)
 		})
@@ -30,7 +29,7 @@ func (n *Notify) send(ctx context.Context, subject, message string) error {
 
 	err := eg.Wait()
 	if err != nil {
-		err = errors.Wrap(ErrSendNotification, err.Error())
+		err = errors.Join(ErrSendNotification, err)
 	}
 
 	return err

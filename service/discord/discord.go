@@ -2,9 +2,9 @@ package discord
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/bwmarrin/discordgo"
-	"github.com/pkg/errors"
 )
 
 //go:generate mockery --name=discordSession --output=. --case=underscore --inpackage
@@ -88,7 +88,7 @@ func (d Discord) Send(ctx context.Context, subject, message string) error {
 		default:
 			_, err := d.client.ChannelMessageSend(channelID, fullMessage)
 			if err != nil {
-				return errors.Wrapf(err, "failed to send message to Discord channel '%s'", channelID)
+				return fmt.Errorf("send message to Discord channel %q: %w", channelID, err)
 			}
 		}
 	}

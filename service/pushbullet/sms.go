@@ -2,9 +2,9 @@ package pushbullet
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/cschomburg/go-pushbullet"
-	"github.com/pkg/errors"
 )
 
 // SMS struct holds necessary data to communicate with the Pushbullet SMS API.
@@ -26,7 +26,7 @@ func NewSMS(apiToken, deviceNickname string) (*SMS, error) {
 
 	dev, err := client.Device(deviceNickname)
 	if err != nil {
-		return nil, errors.Wrapf(err, "failed to locate Pushbullet device with nickname '%s'", deviceNickname)
+		return nil, fmt.Errorf("find device with nickname %q: %w", deviceNickname, err)
 	}
 
 	sms := &SMS{
@@ -50,7 +50,7 @@ func (sms SMS) Send(ctx context.Context, subject, message string) error {
 	fullMessage := subject + "\n" + message // Treating subject as message title
 	user, err := sms.client.Me()
 	if err != nil {
-		return errors.Wrapf(err, "failed to find valid pushbullet user")
+		return fmt.Errorf("get user information: %w", err)
 	}
 
 	for _, phoneNumber := range sms.phoneNumbers {
@@ -58,9 +58,8 @@ func (sms SMS) Send(ctx context.Context, subject, message string) error {
 		case <-ctx.Done():
 			return ctx.Err()
 		default:
-			err = sms.client.PushSMS(user.Iden, sms.deviceIdentifier, phoneNumber, fullMessage)
-			if err != nil {
-				return errors.Wrapf(err, "failed to send SMS message to %s via Pushbullet", phoneNumber)
+			if err = sms.client.PushSMS(user.Iden, sms.deviceIdentifier, phoneNumber, fullMessage); err != nil {
+				return fmt.Errorf("send SMS to %q: %w", phoneNumber, err)
 			}
 		}
 	}

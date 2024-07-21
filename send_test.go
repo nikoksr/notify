@@ -19,7 +19,7 @@ func TestNotifySend(t *testing.T) {
 	}
 
 	// Nil context
-	//nolint:staticcheck
+	//nolint:staticcheck // Purposefully testing with nil context.
 	if err := n.Send(nil, "subject", "message"); err != nil {
 		t.Errorf("Send() returned error: %v", err)
 	}
@@ -71,7 +71,7 @@ func TestSendMany(t *testing.T) {
 
 	var services []Notifier
 
-	for i := 0; i < 10; i++ {
+	for range 10 {
 		services = append(services, mail.New("", ""))
 	}
 

@@ -2,6 +2,7 @@ package textmagic
 
 import (
 	"context"
+	"fmt"
 	"strings"
 
 	textMagic "github.com/textmagic/textmagic-rest-go-v2/v2"
@@ -45,6 +46,9 @@ func (s *Service) Send(ctx context.Context, subject, message string) error {
 		Text:   text,
 		Phones: strings.Join(s.phoneNumbers, ","),
 	})
+	if err != nil {
+		return fmt.Errorf("send message: %w", err)
+	}
 
-	return err
+	return nil
 }

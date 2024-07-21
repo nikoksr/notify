@@ -3,10 +3,10 @@ package mattermost
 
 import (
 	"context"
+	"errors"
+	"fmt"
 	"io"
 	stdhttp "net/http"
-
-	"github.com/pkg/errors"
 
 	"github.com/nikoksr/notify/service/http"
 )
@@ -38,11 +38,7 @@ func New(url string) *Service {
 
 // LoginWithCredentials provides helper for authentication using Mattermost user/admin credentials.
 func (s *Service) LoginWithCredentials(ctx context.Context, loginID, password string) error {
-	// request login
-	if err := s.loginClient.Send(ctx, loginID, password); err != nil {
-		return errors.Wrapf(err, "failed login to Mattermost server")
-	}
-	return nil
+	return s.loginClient.Send(ctx, loginID, password)
 }
 
 // AddReceivers takes Mattermost channel IDs or Chat IDs and adds them to the internal channel ID list.
@@ -55,7 +51,7 @@ func (s *Service) AddReceivers(channelIDs ...string) {
 
 // Send takes a message subject and a message body and send them to added channel ids.
 // you will need a 'create_post' permission for your username.
-// refer https://api.mattermost.com/ for more info
+// refer https://api.mattermost.com/ for more info.
 func (s *Service) Send(ctx context.Context, subject, message string) error {
 	for id := range s.channelIDs {
 		select {
@@ -64,10 +60,11 @@ func (s *Service) Send(ctx context.Context, subject, message string) error {
 		default:
 			// create post
 			if err := s.messageClient.Send(ctx, id, subject+"\n"+message); err != nil {
-				return errors.Wrapf(err, "failed to send message")
+				return fmt.Errorf("send message to channel %q: %w", id, err)
 			}
 		}
 	}
+
 	return nil
 }
 
@@ -81,7 +78,7 @@ func (s *Service) PostSend(hook http.PostSendHookFn) {
 	s.messageClient.PostSend(hook)
 }
 
-// setups main message service for creating posts
+// setups main message service for creating posts.
 func setupMsgService(url string) *http.Service {
 	// create new http client for sending messages/notifications
 	httpService := http.New()
@@ -92,7 +89,7 @@ func setupMsgService(url string) *http.Service {
 		Header:      stdhttp.Header{},
 		ContentType: "application/json",
 		Method:      stdhttp.MethodPost,
-		BuildPayload: func(channelID, subjectAndMessage string) (payload any) {
+		BuildPayload: func(channelID, subjectAndMessage string) any {
 			return map[string]string{
 				"channel_id": channelID,
 				"message":    subjectAndMessage,
@@ -101,17 +98,18 @@ func setupMsgService(url string) *http.Service {
 	})
 
 	// add post-send hook for error checks
-	httpService.PostSend(func(req *stdhttp.Request, resp *stdhttp.Response) error {
+	httpService.PostSend(func(_ *stdhttp.Request, resp *stdhttp.Response) error {
 		if resp.StatusCode != stdhttp.StatusCreated {
 			b, _ := io.ReadAll(resp.Body)
-			return errors.New("failed to create post with status: " + resp.Status + " body: " + string(b))
+			return fmt.Errorf("create post failed with status: %s body: %s", resp.Status, string(b))
 		}
 		return nil
 	})
+
 	return httpService
 }
 
-// setups login service to get token
+// setups login service to get token.
 func setupLoginService(url string, msgService *http.Service) *http.Service {
 	// create another new http client for login request call.
 	httpService := http.New()
@@ -122,7 +120,7 @@ func setupLoginService(url string, msgService *http.Service) *http.Service {
 		Header:      stdhttp.Header{},
 		ContentType: "application/json",
 		Method:      stdhttp.MethodPost,
-		BuildPayload: func(loginID, password string) (payload any) {
+		BuildPayload: func(loginID, password string) any {
 			return map[string]string{
 				"login_id": loginID,
 				"password": password,
@@ -131,11 +129,12 @@ func setupLoginService(url string, msgService *http.Service) *http.Service {
 	})
 
 	// Add post-send hook to do error checks and log the response after it is received.
-	// Also extract token from response header and set it as part of pre-send hook of main http client for further requests.
-	httpService.PostSend(func(req *stdhttp.Request, resp *stdhttp.Response) error {
+	// Also extract token from response header and set it as part of pre-send hook of main http client for further
+	// requests.
+	httpService.PostSend(func(_ *stdhttp.Request, resp *stdhttp.Response) error {
 		if resp.StatusCode != stdhttp.StatusOK {
 			b, _ := io.ReadAll(resp.Body)
-			return errors.New("login failed with status: " + resp.Status + " body: " + string(b))
+			return fmt.Errorf("login failed with status: %s body: %s", resp.Status, string(b))
 		}
 
 		// get token from header

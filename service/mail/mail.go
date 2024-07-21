@@ -2,11 +2,11 @@ package mail
 
 import (
 	"context"
+	"fmt"
 	"net/smtp"
 	"net/textproto"
 
 	"github.com/jordan-wright/email"
-	"github.com/pkg/errors"
 )
 
 // Mail struct holds necessary data to send emails.
@@ -59,6 +59,8 @@ func (m *Mail) BodyFormat(format BodyType) {
 	switch format {
 	case PlainText:
 		m.usePlainText = true
+	case HTML:
+		m.usePlainText = false
 	default:
 		m.usePlainText = false
 	}
@@ -90,9 +92,8 @@ func (m Mail) Send(ctx context.Context, subject, message string) error {
 	case <-ctx.Done():
 		err = ctx.Err()
 	default:
-		err = msg.Send(m.smtpHostAddr, m.smtpAuth)
-		if err != nil {
-			err = errors.Wrap(err, "failed to send mail")
+		if err = msg.Send(m.smtpHostAddr, m.smtpAuth); err != nil {
+			err = fmt.Errorf("send email: %w", err)
 		}
 	}
 

@@ -2,9 +2,9 @@ package telegram
 
 import (
 	"context"
+	"fmt"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
-	"github.com/pkg/errors"
 )
 
 const (
@@ -12,7 +12,10 @@ const (
 	ModeHTML     = tgbotapi.ModeHTML
 )
 
-var parseMode = ModeHTML // HTML is the default mode.
+// HTML is the default mode.
+//
+//nolint:gochecknoglobals // I agree with the linter, won't bother fixing this now, will be fixed in v2.
+var parseMode = ModeHTML
 
 // Telegram struct holds necessary data to communicate with the Telegram API.
 type Telegram struct {
@@ -74,9 +77,8 @@ func (t Telegram) Send(ctx context.Context, subject, message string) error {
 			return ctx.Err()
 		default:
 			msg.ChatID = chatID
-			_, err := t.client.Send(msg)
-			if err != nil {
-				return errors.Wrapf(err, "failed to send message to Telegram chat '%d'", chatID)
+			if _, err := t.client.Send(msg); err != nil {
+				return fmt.Errorf("send message to chat %d: %w", chatID, err)
 			}
 		}
 	}

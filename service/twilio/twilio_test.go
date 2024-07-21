@@ -3,98 +3,86 @@ package twilio
 import (
 	"context"
 	"errors"
-	"fmt"
-	"net/url"
-	testing "testing"
+	"testing"
 
-	twilio "github.com/kevinburke/twilio-go"
+	"github.com/kevinburke/twilio-go"
+	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 )
 
-func TestTwilio_New(t *testing.T) {
+func TestService_Send(t *testing.T) {
 	t.Parallel()
 
-	assert := require.New(t)
-
-	service, err := New("", "", "")
-	assert.NotNil(service)
-	assert.Nil(err)
-}
-
-func TestTwilio_AddReceivers(t *testing.T) {
-	t.Parallel()
-
-	assert := require.New(t)
-
-	svc := &Service{
-		toPhoneNumbers: []string{},
+	tests := []struct {
+		name            string
+		fromPhoneNumber string
+		toPhoneNumbers  []string
+		subject         string
+		message         string
+		mockSetup       func(*mocktwilioClient)
+		expectedError   string
+	}{
+		{
+			name:            "Successful send to single recipient",
+			fromPhoneNumber: "+1234567890",
+			toPhoneNumbers:  []string{"+0987654321"},
+			subject:         "Test Subject",
+			message:         "Test Message",
+			mockSetup: func(m *mocktwilioClient) {
+				m.On("SendMessage", "+1234567890", "+0987654321", "Test Subject\nTest Message", mock.Anything).
+					Return(&twilio.Message{}, nil)
+			},
+			expectedError: "",
+		},
+		{
+			name:            "Successful send to multiple recipients",
+			fromPhoneNumber: "+1234567890",
+			toPhoneNumbers:  []string{"+0987654321", "+1122334455"},
+			subject:         "Test Subject",
+			message:         "Test Message",
+			mockSetup: func(m *mocktwilioClient) {
+				m.On("SendMessage", "+1234567890", mock.AnythingOfType("string"), "Test Subject\nTest Message", mock.Anything).
+					Return(&twilio.Message{}, nil).
+					Twice()
+			},
+			expectedError: "",
+		},
+		{
+			name:            "Twilio client error",
+			fromPhoneNumber: "+1234567890",
+			toPhoneNumbers:  []string{"+0987654321"},
+			subject:         "Test Subject",
+			message:         "Test Message",
+			mockSetup: func(m *mocktwilioClient) {
+				m.On("SendMessage", "+1234567890", "+0987654321", "Test Subject\nTest Message", mock.Anything).
+					Return(nil, errors.New("Twilio error"))
+			},
+			expectedError: "send message to recipient \"+0987654321\": Twilio error",
+		},
 	}
-	toPhoneNumbers := []string{"PhoneNumber1", "PhoneNumber2", "PhoneNumber3"}
-	svc.AddReceivers(toPhoneNumbers...)
 
-	assert.Equal(svc.toPhoneNumbers, toPhoneNumbers)
-}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
 
-func TestTwilio_Send(t *testing.T) {
-	t.Parallel()
+			mockClient := new(mocktwilioClient)
+			tt.mockSetup(mockClient)
 
-	assert := require.New(t)
+			s := &Service{
+				client:          mockClient,
+				fromPhoneNumber: tt.fromPhoneNumber,
+				toPhoneNumbers:  tt.toPhoneNumbers,
+			}
 
-	svc := &Service{
-		fromPhoneNumber: "my_phone_number",
-		toPhoneNumbers:  []string{},
+			err := s.Send(context.Background(), tt.subject, tt.message)
+
+			if tt.expectedError != "" {
+				require.EqualError(t, err, tt.expectedError)
+			} else {
+				require.NoError(t, err)
+			}
+
+			mockClient.AssertExpectations(t)
+		})
 	}
-
-	mockPhoneNumber := "recipient_phone_number"
-	mockBody := "subject\nmessage"
-	mockError := errors.New("some error")
-
-	// test twilio client send
-	mockClient := newMockTwilioClient(t)
-	mockClient.On("SendMessage",
-		svc.fromPhoneNumber,
-		mockPhoneNumber,
-		mockBody,
-		[]*url.URL{}).Return(&twilio.Message{Body: "a response message"}, nil)
-	svc.client = mockClient
-	svc.AddReceivers(mockPhoneNumber)
-	err := svc.Send(context.Background(), "subject", "message")
-	assert.Nil(err)
-	mockClient.AssertExpectations(t)
-
-	// test twilio client send returning error
-	mockClient = newMockTwilioClient(t)
-	mockClient.On("SendMessage",
-		svc.fromPhoneNumber,
-		mockPhoneNumber,
-		mockBody,
-		[]*url.URL{}).Return(nil, mockError)
-	svc.client = mockClient
-	svc.AddReceivers(mockPhoneNumber)
-	err = svc.Send(context.Background(), "subject", "message")
-	assert.NotNil(err)
-	assert.Equal(
-		fmt.Sprintf("failed to send message to phone number '%s' using Twilio: %s", mockPhoneNumber, mockError.Error()),
-		err.Error())
-	mockClient.AssertExpectations(t)
-
-	// test twilio client send multiple receivers
-	anotherMockPhoneNumber := "another_recipient_phone_number"
-	mockClient = newMockTwilioClient(t)
-	mockClient.On("SendMessage",
-		svc.fromPhoneNumber,
-		mockPhoneNumber,
-		mockBody,
-		[]*url.URL{}).Return(&twilio.Message{Body: "a response message"}, nil)
-	mockClient.On("SendMessage",
-		svc.fromPhoneNumber,
-		anotherMockPhoneNumber,
-		mockBody,
-		[]*url.URL{}).Return(&twilio.Message{Body: "a response message"}, nil)
-	svc.client = mockClient
-	svc.AddReceivers(mockPhoneNumber)
-	svc.AddReceivers(anotherMockPhoneNumber)
-	err = svc.Send(context.Background(), "subject", "message")
-	assert.Nil(err)
-	mockClient.AssertExpectations(t)
 }

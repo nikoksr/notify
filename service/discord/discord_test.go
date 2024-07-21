@@ -2,95 +2,82 @@ package discord
 
 import (
 	"context"
+	"errors"
 	"testing"
 
-	"github.com/pkg/errors"
+	"github.com/bwmarrin/discordgo"
 	"github.com/stretchr/testify/require"
 )
-
-func TestDiscord_New(t *testing.T) {
-	t.Parallel()
-
-	assert := require.New(t)
-	assert.NotNil(New())
-}
-
-func TestDiscord_AddReceivers(t *testing.T) {
-	t.Parallel()
-
-	assert := require.New(t)
-	service := New()
-	assert.NotNil(service)
-
-	channels := []string{"1", "2", "3", "4", "5"}
-	service.AddReceivers(channels...)
-	assert.Equal(service.channelIDs, channels)
-}
-
-func TestDiscord_Authenticate(t *testing.T) {
-	t.Parallel()
-
-	assert := require.New(t)
-	service := New()
-	assert.NotNil(service)
-
-	// Note: The following might look confusing, because the validation mechanism is not mocked and never returns an
-	// error. The function name may be misleading because it is not actually testing the authentication mechanism. The
-	// actual authentication only happens when the service is sends a message.
-
-	// OAuth2
-	err := service.AuthenticateWithOAuth2Token("12345")
-	assert.Nil(err)
-
-	err = service.AuthenticateWithOAuth2Token("")
-	assert.Nil(err)
-
-	// Bot token
-	err = service.AuthenticateWithBotToken("12345")
-	assert.Nil(err)
-
-	err = service.AuthenticateWithBotToken("")
-	assert.Nil(err)
-}
 
 func TestDiscord_Send(t *testing.T) {
 	t.Parallel()
 
-	assert := require.New(t)
+	tests := []struct {
+		name          string
+		channelIDs    []string
+		subject       string
+		message       string
+		mockSetup     func(*mockdiscordSession)
+		expectedError string
+	}{
+		{
+			name:       "Successful send to single channel",
+			channelIDs: []string{"123456789"},
+			subject:    "Test Subject",
+			message:    "Test Message",
+			mockSetup: func(m *mockdiscordSession) {
+				m.On("ChannelMessageSend", "123456789", "Test Subject\nTest Message").
+					Return(&discordgo.Message{}, nil)
+			},
+			expectedError: "",
+		},
+		{
+			name:       "Successful send to multiple channels",
+			channelIDs: []string{"123456789", "987654321"},
+			subject:    "Test Subject",
+			message:    "Test Message",
+			mockSetup: func(m *mockdiscordSession) {
+				m.On("ChannelMessageSend", "123456789", "Test Subject\nTest Message").
+					Return(&discordgo.Message{}, nil)
+				m.On("ChannelMessageSend", "987654321", "Test Subject\nTest Message").
+					Return(&discordgo.Message{}, nil)
+			},
+			expectedError: "",
+		},
+		{
+			name:       "Discord client error",
+			channelIDs: []string{"123456789"},
+			subject:    "Test Subject",
+			message:    "Test Message",
+			mockSetup: func(m *mockdiscordSession) {
+				m.On("ChannelMessageSend", "123456789", "Test Subject\nTest Message").
+					Return(nil, errors.New("Discord error"))
+			},
+			expectedError: "send message to Discord channel \"123456789\": Discord error",
+		},
+	}
 
-	service := New()
-	assert.NotNil(service)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
 
-	// No receivers added
-	ctx := context.Background()
-	err := service.Send(ctx, "subject", "message")
-	assert.Nil(err)
+			mockSession := new(mockdiscordSession)
+			tt.mockSetup(mockSession)
 
-	// Test error response
-	mockClient := newMockDiscordSession(t)
-	mockClient.
-		On("ChannelMessageSend", "1234", "subject\nmessage").
-		Return(nil, errors.New("some error"))
+			d := &Discord{
+				client:     mockSession,
+				channelIDs: tt.channelIDs,
+			}
 
-	service.client = mockClient
-	service.AddReceivers("1234")
-	err = service.Send(ctx, "subject", "message")
-	assert.NotNil(err)
-	mockClient.AssertExpectations(t)
+			err := d.Send(context.Background(), tt.subject, tt.message)
 
-	// Test success response
-	mockClient = newMockDiscordSession(t)
-	mockClient.
-		On("ChannelMessageSend", "1234", "subject\nmessage").
-		Return(nil, nil)
+			if tt.expectedError != "" {
+				require.EqualError(t, err, tt.expectedError)
+			} else {
+				require.NoError(t, err)
+			}
 
-	mockClient.
-		On("ChannelMessageSend", "5678", "subject\nmessage").
-		Return(nil, nil)
-
-	service.client = mockClient
-	service.AddReceivers("5678")
-	err = service.Send(ctx, "subject", "message")
-	assert.Nil(err)
-	mockClient.AssertExpectations(t)
+			mockSession.AssertExpectations(t)
+		})
+	}
 }

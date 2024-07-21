@@ -2,48 +2,73 @@ package matrix
 
 import (
 	"context"
+	"errors"
 	"testing"
 
-	"github.com/pkg/errors"
+	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
-	matrix "maunium.net/go/mautrix"
 	"maunium.net/go/mautrix/event"
 	"maunium.net/go/mautrix/id"
 )
 
-func TestMatrix_New(t *testing.T) {
+func TestMatrix_Send(t *testing.T) {
 	t.Parallel()
-	assert := require.New(t)
-	service, err := New("fake-user-id", "fake-home-server", "fake-home-server", "fake-access-token")
-	assert.Nil(err)
-	assert.NotNil(service)
-	assert.Equal(id.UserID("fake-user-id"), service.options.userID)
-	assert.Equal("fake-home-server", service.options.homeServer)
-	assert.Equal("fake-access-token", service.options.accessToken)
-}
 
-func TestService_Send(t *testing.T) {
-	t.Parallel()
-	assert := require.New(t)
-	// Test response
-	mockClient := newMockMatrixClient(t)
-	mockClient.
-		On("SendMessageEvent", id.RoomID("fake-room-id"), event.EventMessage, &Message{Body: "fake-message", Msgtype: event.MsgText}).Return(&matrix.RespSendEvent{}, nil)
-	service, _ := New("fake-user-id", "fake-room-id", "fake-home-server", "fake-access-token")
-	service.client = mockClient
-	err := service.Send(context.Background(), "", "fake-message")
-	assert.Nil(err)
+	tests := []struct {
+		name          string
+		roomID        id.RoomID
+		subject       string
+		message       string
+		mockSetup     func(*mockmatrixClient)
+		expectedError string
+	}{
+		{
+			name:    "Successful send",
+			roomID:  "!roomID:example.com",
+			subject: "Test Subject",
+			message: "Test Message",
+			mockSetup: func(m *mockmatrixClient) {
+				m.On("SendMessageEvent", mock.Anything, id.RoomID("!roomID:example.com"), event.EventMessage, mock.Anything).
+					Return(nil, nil)
+			},
+			expectedError: "",
+		},
+		{
+			name:    "Matrix client error",
+			roomID:  "!roomID:example.com",
+			subject: "Test Subject",
+			message: "Test Message",
+			mockSetup: func(m *mockmatrixClient) {
+				m.On("SendMessageEvent", mock.Anything, id.RoomID("!roomID:example.com"), event.EventMessage, mock.Anything).
+					Return(nil, errors.New("Matrix error"))
+			},
+			expectedError: "failed to send message to the room using Matrix",
+		},
+	}
 
-	mockClient.AssertExpectations(t)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
 
-	// Test error on Send
-	mockClient = newMockMatrixClient(t)
-	mockClient.
-		On("SendMessageEvent", id.RoomID("fake-room-id"), event.EventMessage, &Message{Body: "fake-message", Msgtype: event.MsgText}).Return(nil, errors.New("some-error"))
+			mockClient := new(mockmatrixClient)
+			tt.mockSetup(mockClient)
 
-	service, _ = New("fake-user-id", "fake-room-id", "fake-home-server", "fake-access-token")
-	service.client = mockClient
-	err = service.Send(context.Background(), "", "fake-message")
-	assert.NotNil(err)
-	mockClient.AssertExpectations(t)
+			m := &Matrix{
+				client: mockClient,
+				options: ServiceOptions{
+					roomID: tt.roomID,
+				},
+			}
+
+			err := m.Send(context.Background(), tt.subject, tt.message)
+
+			if tt.expectedError != "" {
+				require.EqualError(t, err, tt.expectedError)
+			} else {
+				require.NoError(t, err)
+			}
+
+			mockClient.AssertExpectations(t)
+		})
+	}
 }

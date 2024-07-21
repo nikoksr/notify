@@ -2,70 +2,84 @@ package wechat
 
 import (
 	"context"
+	"errors"
 	"testing"
 
-	"github.com/pkg/errors"
-	"github.com/silenceper/wechat/v2/cache"
 	"github.com/silenceper/wechat/v2/officialaccount/message"
+	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 )
 
-func TestWeChat_New(t *testing.T) {
+func TestService_Send(t *testing.T) {
 	t.Parallel()
 
-	assert := require.New(t)
-
-	cache := &cache.Memory{}
-	cfg := &Config{
-		Cache: cache,
+	tests := []struct {
+		name          string
+		userIDs       []string
+		subject       string
+		content       string
+		mockSetup     func(*mockwechatMessageManager)
+		expectedError string
+	}{
+		{
+			name:    "Successful send to single user",
+			userIDs: []string{"user1"},
+			subject: "Test Subject",
+			content: "Test Content",
+			mockSetup: func(m *mockwechatMessageManager) {
+				m.On("Send", mock.MatchedBy(func(msg *message.CustomerMessage) bool {
+					return msg.ToUser == "user1" && msg.Msgtype == "text" &&
+						msg.Text.Content == "Test Subject\nTest Content"
+				})).Return(nil)
+			},
+			expectedError: "",
+		},
+		{
+			name:    "Successful send to multiple users",
+			userIDs: []string{"user1", "user2"},
+			subject: "Test Subject",
+			content: "Test Content",
+			mockSetup: func(m *mockwechatMessageManager) {
+				m.On("Send", mock.MatchedBy(func(msg *message.CustomerMessage) bool {
+					return (msg.ToUser == "user1" || msg.ToUser == "user2") && msg.Msgtype == "text" &&
+						msg.Text.Content == "Test Subject\nTest Content"
+				})).Return(nil).Twice()
+			},
+			expectedError: "",
+		},
+		{
+			name:    "WeChat client error",
+			userIDs: []string{"user1"},
+			subject: "Test Subject",
+			content: "Test Content",
+			mockSetup: func(m *mockwechatMessageManager) {
+				m.On("Send", mock.Anything).Return(errors.New("WeChat error"))
+			},
+			expectedError: "send message to user \"user1\": WeChat error",
+		},
 	}
-	service := New(cfg)
-	assert.NotNil(service)
-}
 
-func TestWeChat_AddReceivers(t *testing.T) {
-	t.Parallel()
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
 
-	assert := require.New(t)
+			mockMessageManager := new(mockwechatMessageManager)
+			tt.mockSetup(mockMessageManager)
 
-	svc := &Service{
-		userIDs: []string{},
+			s := &Service{
+				messageManager: mockMessageManager,
+				userIDs:        tt.userIDs,
+			}
+
+			err := s.Send(context.Background(), tt.subject, tt.content)
+
+			if tt.expectedError != "" {
+				require.EqualError(t, err, tt.expectedError)
+			} else {
+				require.NoError(t, err)
+			}
+
+			mockMessageManager.AssertExpectations(t)
+		})
 	}
-	userIDs := []string{"User1ID", "User2ID", "User3ID"}
-	svc.AddReceivers(userIDs...)
-
-	assert.Equal(svc.userIDs, userIDs)
-}
-
-func TestWeChat_Send(t *testing.T) {
-	t.Parallel()
-
-	assert := require.New(t)
-
-	svc := &Service{
-		userIDs: []string{},
-	}
-
-	// test wechat message manager returning error
-	mockMsgManager := new(mockWechatMessageManager)
-	mockMsgManager.On("Send", message.NewCustomerTextMessage("UserID1", "subject\nmessage")).
-		Return(errors.New("some error"))
-	svc.messageManager = mockMsgManager
-	svc.AddReceivers("UserID1")
-	ctx := context.Background()
-	err := svc.Send(ctx, "subject", "message")
-	assert.NotNil(err)
-	mockMsgManager.AssertExpectations(t)
-
-	// test success and multiple receivers
-	mockMsgManager = new(mockWechatMessageManager)
-	mockMsgManager.On("Send", message.NewCustomerTextMessage("UserID1", "subject\nmessage")).
-		Return(nil)
-	mockMsgManager.On("Send", message.NewCustomerTextMessage("UserID2", "subject\nmessage")).
-		Return(nil)
-	svc.messageManager = mockMsgManager
-	svc.AddReceivers("UserID1", "UserID2")
-	err = svc.Send(ctx, "subject", "message")
-	assert.Nil(err)
-	mockMsgManager.AssertExpectations(t)
 }

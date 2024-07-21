@@ -1,14 +1,15 @@
+//nolint:gochecknoglobals // I agree with the linter, won't bother fixing this now, will be fixed in v2.
 package webpush
 
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
 
 	"github.com/SherClockHolmes/webpush-go"
-	"github.com/pkg/errors"
 )
 
 type (
@@ -40,26 +41,26 @@ var dataKey = msgDataKey{}
 
 // These are exposed Urgency constants from the webpush package.
 var (
-	// UrgencyVeryLow requires device state: on power and Wi-Fi
+	// UrgencyVeryLow requires device state: on power and Wi-Fi.
 	UrgencyVeryLow Urgency = webpush.UrgencyVeryLow
 
-	// UrgencyLow requires device state: on either power or Wi-Fi
+	// UrgencyLow requires device state: on either power or Wi-Fi.
 	UrgencyLow Urgency = webpush.UrgencyLow
 
-	// UrgencyNormal excludes device state: low battery
+	// UrgencyNormal excludes device state: low battery.
 	UrgencyNormal Urgency = webpush.UrgencyNormal
 
-	// UrgencyHigh admits device state: low battery
+	// UrgencyHigh admits device state: low battery.
 	UrgencyHigh Urgency = webpush.UrgencyHigh
 )
 
-// Service encapsulates the webpush notification system along with the internal state
+// Service encapsulates the webpush notification system along with the internal state.
 type Service struct {
 	subscriptions []webpush.Subscription
 	options       webpush.Options
 }
 
-// New returns a new instance of the Service
+// New returns a new instance of the Service.
 func New(vapidPublicKey string, vapidPrivateKey string) *Service {
 	return &Service{
 		subscriptions: []webpush.Subscription{},
@@ -89,7 +90,8 @@ func (s *Service) withOptions(options Options) Options {
 	return options
 }
 
-// WithOptions binds the options to the context so that they will be used by the Service.Send method automatically. Options
+// WithOptions binds the options to the context so that they will be used by the Service.Send method automatically.
+// Options
 // are settings that allow you to customize the sending behavior of a message.
 func WithOptions(ctx context.Context, options Options) context.Context {
 	return context.WithValue(ctx, optionsKey, options)
@@ -130,7 +132,7 @@ func payloadFromContext(ctx context.Context, subject, message string) ([]byte, e
 
 	payloadBytes, err := json.Marshal(payload)
 	if err != nil {
-		return nil, errors.Wrap(err, "failed to serialize messagePayload")
+		return nil, fmt.Errorf("marshal messagePayload: %w", err)
 	}
 
 	return payloadBytes, nil
@@ -140,7 +142,7 @@ func payloadFromContext(ctx context.Context, subject, message string) ([]byte, e
 func (s *Service) send(ctx context.Context, message []byte, subscription *Subscription, options *Options) error {
 	res, err := webpush.SendNotificationWithContext(ctx, message, subscription, options)
 	if err != nil {
-		return errors.Wrapf(err, "failed to send messagePayload to webpush subscription %s", subscription.Endpoint)
+		return fmt.Errorf("send notification: %w", err)
 	}
 	defer res.Body.Close()
 
@@ -150,19 +152,18 @@ func (s *Service) send(ctx context.Context, message []byte, subscription *Subscr
 
 	// Make sure to produce a helpful error message
 
-	baseErr := errors.Errorf(
-		"failed to send message to webpush subscription %s: unexpected status code %d",
+	baseErr := fmt.Errorf(
+		"send message to webpush subscription %s: unexpected status code %d",
 		subscription.Endpoint, res.StatusCode,
 	)
 
-	body, err := io.ReadAll(res.Body)
-	if err != nil {
-		baseErr = errors.Wrap(errors.Wrap(err, "failed to read response body"), baseErr.Error())
-	} else {
-		baseErr = fmt.Errorf("%w: %s", baseErr, body)
+	if _, err = io.ReadAll(res.Body); err != nil {
+		err = fmt.Errorf("read response body: %w", err)
 	}
 
-	return baseErr
+	err = errors.Join(baseErr, err)
+
+	return err
 }
 
 // Send sends a message to all the webpush subscriptions that have been added to the Service. The subject and message
@@ -179,8 +180,7 @@ func (s *Service) Send(ctx context.Context, subject, message string) error {
 	}
 
 	for _, subscription := range s.subscriptions {
-		subscription := subscription // Capture the subscription in the closure
-		if err := s.send(ctx, payload, &subscription, &options); err != nil {
+		if err = s.send(ctx, payload, &subscription, &options); err != nil {
 			return err
 		}
 	}

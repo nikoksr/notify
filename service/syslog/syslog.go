@@ -2,11 +2,10 @@ package syslog
 
 import (
 	"context"
+	"fmt"
 	"io"
 	"log/syslog"
 	"strings"
-
-	"github.com/pkg/errors"
 )
 
 // mockSyslogWriter abstracts log/syslog for writing unit tests.
@@ -67,7 +66,7 @@ func (s *Service) Send(ctx context.Context, subject, message string) error {
 	default:
 		_, err := s.writer.Write([]byte(subject + ": " + message))
 		if err != nil {
-			return errors.Wrap(err, "failed to write message to syslog")
+			return fmt.Errorf("write to syslog: %w", err)
 		}
 	}
 

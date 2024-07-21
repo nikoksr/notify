@@ -20,7 +20,6 @@ require (
 	github.com/go-telegram-bot-api/telegram-bot-api v4.6.4+incompatible
 	github.com/line/line-bot-sdk-go v7.8.0+incompatible
 	github.com/mailgun/mailgun-go/v4 v4.12.0
-	github.com/pkg/errors v0.9.1
 	github.com/plivo/plivo-go/v7 v7.51.0
 	github.com/sendgrid/sendgrid-go v3.14.0+incompatible
 	github.com/silenceper/wechat/v2 v2.1.6
@@ -44,8 +43,9 @@ require (
 require github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 
 require (
+	firebase.google.com/go/v4 v4.14.1
+	github.com/caarlos0/go-reddit/v3 v3.0.1
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
-	github.com/vartanbeno/go-reddit/v2 v2.0.1
 	google.golang.org/api v0.188.0
 )
 
@@ -58,7 +58,6 @@ require (
 	cloud.google.com/go/iam v1.1.11 // indirect
 	cloud.google.com/go/longrunning v0.5.10 // indirect
 	cloud.google.com/go/storage v1.43.0 // indirect
-	firebase.google.com/go/v4 v4.14.1 // indirect
 	github.com/MicahParks/keyfunc v1.9.0 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.11.3 // indirect
 	github.com/felixge/httpsnoop v1.0.4 // indirect
@@ -75,6 +74,7 @@ require (
 	github.com/leodido/go-urn v1.4.0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
+	github.com/pkg/errors v0.9.1 // indirect
 	github.com/rs/zerolog v1.33.0 // indirect
 	go.mau.fi/util v0.5.0 // indirect
 	go.opencensus.io v0.24.0 // indirect

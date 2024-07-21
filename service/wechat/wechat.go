@@ -8,13 +8,14 @@ import (
 	"sync"
 	"time"
 
-	"github.com/pkg/errors"
 	"github.com/silenceper/wechat/v2"
 	"github.com/silenceper/wechat/v2/cache"
 	"github.com/silenceper/wechat/v2/officialaccount/config"
 	"github.com/silenceper/wechat/v2/officialaccount/message"
 	"github.com/silenceper/wechat/v2/util"
 )
+
+const defaultTimeout = 20 * time.Second
 
 type verificationCallbackFunc func(r *http.Request, verified bool)
 
@@ -67,7 +68,11 @@ func New(cfg *Config) *Service {
 // Set devMode to true when using the sandbox.
 //
 // See https://developers.weixin.qq.com/doc/offiaccount/en/Basic_Information/Access_Overview.html
-func (s *Service) waitForOneOffVerification(server *http.Server, devMode bool, callback verificationCallbackFunc) error {
+func (s *Service) waitForOneOffVerification(
+	server *http.Server,
+	devMode bool,
+	callback verificationCallbackFunc,
+) error {
 	verificationDone := &sync.WaitGroup{}
 	verificationDone.Add(1)
 
@@ -109,15 +114,15 @@ func (s *Service) waitForOneOffVerification(server *http.Server, devMode bool, c
 	var err error
 	go func() {
 		if innerErr := server.ListenAndServe(); innerErr != http.ErrServerClosed {
-			err = errors.Wrapf(innerErr, "failed to start verification listener '%s'", server.Addr)
+			err = fmt.Errorf("start verification listener: %w", innerErr)
 		}
 	}()
 
 	// wait until verification is done and shutdown the server
 	verificationDone.Wait()
 
-	if innerErr := server.Shutdown(context.TODO()); innerErr != nil {
-		err = errors.Wrap(innerErr, "failed to shutdown verification listener")
+	if serr := server.Shutdown(context.TODO()); serr != nil {
+		err = fmt.Errorf("shutdown verification listener: %w", serr)
 	}
 
 	return err
@@ -130,7 +135,11 @@ func (s *Service) waitForOneOffVerification(server *http.Server, devMode bool, c
 // Set devMode to true when using the sandbox.
 //
 // See https://developers.weixin.qq.com/doc/offiaccount/en/Basic_Information/Access_Overview.html
-func (s *Service) WaitForOneOffVerificationWithServer(server *http.Server, devMode bool, callback verificationCallbackFunc) error {
+func (s *Service) WaitForOneOffVerificationWithServer(
+	server *http.Server,
+	devMode bool,
+	callback verificationCallbackFunc,
+) error {
 	return s.waitForOneOffVerification(server, devMode, callback)
 }
 
@@ -147,7 +156,7 @@ func (s *Service) WaitForOneOffVerificationWithServer(server *http.Server, devMo
 func (s *Service) WaitForOneOffVerification(serverURL string, devMode bool, callback verificationCallbackFunc) error {
 	server := &http.Server{
 		Addr:              serverURL,
-		ReadHeaderTimeout: 20 * time.Second,
+		ReadHeaderTimeout: defaultTimeout,
 	}
 
 	return s.WaitForOneOffVerificationWithServer(server, devMode, callback)
@@ -169,7 +178,7 @@ func (s *Service) Send(ctx context.Context, subject, content string) error {
 			text := fmt.Sprintf("%s\n%s", subject, content)
 			err := s.messageManager.Send(message.NewCustomerTextMessage(userID, text))
 			if err != nil {
-				return errors.Wrapf(err, "failed to send message to WeChat user '%s'", userID)
+				return fmt.Errorf("send message to user %q: %w", userID, err)
 			}
 		}
 	}

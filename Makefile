@@ -6,20 +6,22 @@ export GOPROXY = https://proxy.golang.org,direct
 ###############################################################################
 
 # Install all the build and lint dependencies
-setup:
+tools:
 	go mod tidy
 	@go install mvdan.cc/gofumpt@latest
 	@go install github.com/daixiang0/gci@latest
 	@go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
 	@go install github.com/vektra/mockery/v2@latest
-.PHONY: setup
+	go install github.com/segmentio/golines@latest
+.PHONY: tools
 
 ###############################################################################
 # TESTS
 ###############################################################################
 
 test:
-	go test -failfast -race ./...
+	@go build ./...
+	@go test -failfast -race ./...
 .PHONY: test
 
 gen-coverage:
@@ -27,15 +29,16 @@ gen-coverage:
 .PHONY: gen-coverage
 
 coverage: gen-coverage
-	go tool cover -func coverage.out
+	@go tool cover -func coverage.out
 .PHONY: coverage
 
 coverage-html: gen-coverage
-	go tool cover -html=coverage.out -o cover.html
+	@go tool cover -html=coverage.out -o cover.html
 .PHONY: coverage-html
 
 mock:
-	go generate ./...
+	@mockery
+	@rm mock_notifier.go mock_option.go
 .PHONY: mock
 
 ###############################################################################
@@ -43,15 +46,18 @@ mock:
 ###############################################################################
 
 fmt:
+	@golines --shorten-comments -m 120 -w .
 	@gofumpt -w -l .
-
-	@gci write --section Standard --section Default --section "Prefix(github.com/nikoksr/notify)" .
+	@gci write -s standard -s default -s "prefix(github.com/nikoksr/notify)" .
 .PHONY: fmt
 
-
 lint:
-	@golangci-lint run --config .golangci.yml
+	@golangci-lint run ./...
 .PHONY: lint
+
+clean:
+	@find . -name "mock_*" -type f -delete
+.PHONY: clean
 
 ci: lint test
 .PHONY: ci

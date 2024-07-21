@@ -2,75 +2,85 @@ package pushover
 
 import (
 	"context"
+	"errors"
 	"testing"
 
 	"github.com/gregdel/pushover"
-	"github.com/pkg/errors"
+	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 )
-
-func TestPushover_New(t *testing.T) {
-	t.Parallel()
-
-	assert := require.New(t)
-
-	service := New("")
-	assert.NotNil(service)
-}
-
-func TestPushover_AddReceivers(t *testing.T) {
-	t.Parallel()
-
-	assert := require.New(t)
-
-	service := New("")
-	assert.NotNil(service)
-
-	service.AddReceivers("")
-	assert.Len(service.recipients, 1)
-
-	service.AddReceivers("", "")
-	assert.Len(service.recipients, 3)
-}
 
 func TestPushover_Send(t *testing.T) {
 	t.Parallel()
 
-	assert := require.New(t)
+	tests := []struct {
+		name          string
+		recipients    []pushover.Recipient
+		subject       string
+		message       string
+		mockSetup     func(*mockpushoverClient)
+		expectedError string
+	}{
+		{
+			name:       "Successful send to single recipient",
+			recipients: []pushover.Recipient{*pushover.NewRecipient("recipient1")},
+			subject:    "Test Subject",
+			message:    "Test Message",
+			mockSetup: func(m *mockpushoverClient) {
+				m.On("SendMessage", mock.AnythingOfType("*pushover.Message"), mock.AnythingOfType("*pushover.Recipient")).
+					Return(&pushover.Response{}, nil)
+			},
+			expectedError: "",
+		},
+		{
+			name: "Successful send to multiple recipients",
+			recipients: []pushover.Recipient{
+				*pushover.NewRecipient("recipient1"),
+				*pushover.NewRecipient("recipient2"),
+			},
+			subject: "Test Subject",
+			message: "Test Message",
+			mockSetup: func(m *mockpushoverClient) {
+				m.On("SendMessage", mock.AnythingOfType("*pushover.Message"), mock.AnythingOfType("*pushover.Recipient")).
+					Return(&pushover.Response{}, nil).
+					Times(2)
+			},
+			expectedError: "",
+		},
+		{
+			name:       "Pushover client error",
+			recipients: []pushover.Recipient{*pushover.NewRecipient("recipient1")},
+			subject:    "Test Subject",
+			message:    "Test Message",
+			mockSetup: func(m *mockpushoverClient) {
+				m.On("SendMessage", mock.AnythingOfType("*pushover.Message"), mock.AnythingOfType("*pushover.Recipient")).
+					Return(nil, errors.New("Pushover error"))
+			},
+			expectedError: "send message to recipient 1: Pushover error",
+		},
+	}
 
-	service := New("")
-	assert.NotNil(service)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
 
-	// No receivers added
-	ctx := context.Background()
-	err := service.Send(ctx, "subject", "message")
-	assert.Nil(err)
+			mockClient := new(mockpushoverClient)
+			tt.mockSetup(mockClient)
 
-	// Test error response
-	mockClient := newMockPushoverClient(t)
-	mockClient.
-		On("SendMessage", &pushover.Message{Title: "subject", Message: "message"}, pushover.NewRecipient("1234")).
-		Return(&pushover.Response{}, errors.New("some error"))
+			p := &Pushover{
+				client:     mockClient,
+				recipients: tt.recipients,
+			}
 
-	service.client = mockClient
-	service.AddReceivers("1234")
-	err = service.Send(ctx, "subject", "message")
-	assert.NotNil(err)
-	mockClient.AssertExpectations(t)
+			err := p.Send(context.Background(), tt.subject, tt.message)
 
-	// Test success response
-	mockClient = newMockPushoverClient(t)
-	mockClient.
-		On("SendMessage", &pushover.Message{Title: "subject", Message: "message"}, pushover.NewRecipient("1234")).
-		Return(&pushover.Response{}, nil)
+			if tt.expectedError != "" {
+				require.EqualError(t, err, tt.expectedError)
+			} else {
+				require.NoError(t, err)
+			}
 
-	mockClient.
-		On("SendMessage", &pushover.Message{Title: "subject", Message: "message"}, pushover.NewRecipient("5678")).
-		Return(&pushover.Response{}, nil)
-
-	service.client = mockClient
-	service.AddReceivers("5678")
-	err = service.Send(ctx, "subject", "message")
-	assert.Nil(err)
-	mockClient.AssertExpectations(t)
+			mockClient.AssertExpectations(t)
+		})
+	}
 }

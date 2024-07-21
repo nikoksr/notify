@@ -11,6 +11,8 @@ import (
 	"github.com/nikoksr/notify"
 )
 
+const defaultTimeout = 10 * time.Second
+
 // CustomAppService is a Lark notify service using a Lark custom app.
 type CustomAppService struct {
 	receiveIDs []*ReceiverID
@@ -32,7 +34,7 @@ func NewCustomAppService(appID, appSecret string) *CustomAppService {
 	// Let the bot use a HTTP client with a longer timeout than the default 5
 	// seconds.
 	bot.SetClient(&http.Client{
-		Timeout: 8 * time.Second,
+		Timeout: defaultTimeout,
 	})
 
 	_ = bot.StartHeartbeat()
@@ -103,10 +105,15 @@ func (l *larkClientGoLarkChatBot) SendTo(subject, message, receiverID, idType st
 	}
 	res, err := l.bot.PostMessage(msg.Build())
 	if err != nil {
-		return fmt.Errorf("failed to send message: %w", err)
+		return fmt.Errorf("send message: %w", err)
 	}
 	if res.Code != 0 {
-		return fmt.Errorf("send failed with error code %d, please see https://open.larksuite.com/document/ukTMukTMukTM/ugjM14COyUjL4ITN for details", res.Code)
+		return fmt.Errorf(
+			"send failed with error code %d, please see "+
+				"https://open.larksuite.com/document/ukTMukTMukTM/ugjM14COyUjL4ITN for details",
+			res.Code,
+		)
 	}
+
 	return nil
 }

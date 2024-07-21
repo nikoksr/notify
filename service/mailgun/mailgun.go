@@ -2,9 +2,9 @@ package mailgun
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/mailgun/mailgun-go/v4"
-	"github.com/pkg/errors"
 )
 
 // Mailgun struct holds necessary data to communicate with the Mailgun API.
@@ -44,7 +44,7 @@ func (m Mailgun) Send(ctx context.Context, subject, message string) error {
 
 	_, _, err := m.client.Send(ctx, mailMessage)
 	if err != nil {
-		return errors.Wrap(err, "failed to send mail using Mailgun service")
+		return fmt.Errorf("send message: %w", err)
 	}
 
 	return nil

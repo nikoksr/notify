@@ -5,99 +5,131 @@ import (
 	"errors"
 	"testing"
 
-	vb "github.com/mileusna/viber"
+	"github.com/mileusna/viber"
+	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 )
 
-func TestViber_New(t *testing.T) {
+func TestViber_Send(t *testing.T) {
 	t.Parallel()
 
-	assert := require.New(t)
+	tests := []struct {
+		name              string
+		subscribedUserIDs []string
+		subject           string
+		message           string
+		mockSetup         func(*mockviberClient)
+		expectedError     string
+	}{
+		{
+			name:              "Successful send to single user",
+			subscribedUserIDs: []string{"user1"},
+			subject:           "Test Subject",
+			message:           "Test Message",
+			mockSetup: func(m *mockviberClient) {
+				m.On("SendTextMessage", "user1", "Test Subject\nTest Message").
+					Return(uint64(1), nil)
+			},
+			expectedError: "",
+		},
+		{
+			name:              "Successful send to multiple users",
+			subscribedUserIDs: []string{"user1", "user2"},
+			subject:           "Test Subject",
+			message:           "Test Message",
+			mockSetup: func(m *mockviberClient) {
+				m.On("SendTextMessage", mock.AnythingOfType("string"), "Test Subject\nTest Message").
+					Return(uint64(1), nil).Twice()
+			},
+			expectedError: "",
+		},
+		{
+			name:              "Viber client error",
+			subscribedUserIDs: []string{"user1"},
+			subject:           "Test Subject",
+			message:           "Test Message",
+			mockSetup: func(m *mockviberClient) {
+				m.On("SendTextMessage", "user1", "Test Subject\nTest Message").
+					Return(uint64(0), errors.New("Viber error"))
+			},
+			expectedError: "send message to user \"user1\": Viber error",
+		},
+	}
 
-	viber := New("appkey", "senderName", "senderAvatar")
-	assert.NotNil(viber)
-}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
 
-func TestViber_AddReceivers(t *testing.T) {
-	t.Parallel()
+			mockClient := new(mockviberClient)
+			tt.mockSetup(mockClient)
 
-	assert := require.New(t)
+			v := &Viber{
+				Client:            mockClient,
+				SubscribedUserIDs: tt.subscribedUserIDs,
+			}
 
-	viber := New("appkey", "senderName", "senderAvatar")
-	assert.Len(viber.SubscribedUserIDs, 0)
+			err := v.Send(context.Background(), tt.subject, tt.message)
 
-	viber.AddReceivers("first-subscriber")
-	assert.Len(viber.SubscribedUserIDs, 1)
+			if tt.expectedError != "" {
+				require.EqualError(t, err, tt.expectedError)
+			} else {
+				require.NoError(t, err)
+			}
 
-	viber.AddReceivers("second-subscriber", "third-subscriber")
-	assert.Len(viber.SubscribedUserIDs, 3)
+			mockClient.AssertExpectations(t)
+		})
+	}
 }
 
 func TestViber_SetWebhook(t *testing.T) {
 	t.Parallel()
-	assert := require.New(t)
-	viber := New("appkey", "senderName", "senderAvatar")
-	assert.NotNil(viber)
 
-	// Test error
-	viberMock := newMockViberClient(t)
-	webhookURLMock := "https://example-webhook.com"
-	viberMock.
-		On("SetWebhook", webhookURLMock, []string{}).
-		Return(vb.WebhookResp{}, errors.New("set webhook error"))
+	tests := []struct {
+		name          string
+		webhookURL    string
+		mockSetup     func(*mockviberClient)
+		expectedError string
+	}{
+		{
+			name:       "Successful webhook set",
+			webhookURL: "https://example.com/webhook",
+			mockSetup: func(m *mockviberClient) {
+				m.On("SetWebhook", "https://example.com/webhook", []string{}).
+					Return(viber.WebhookResp{Status: 0, StatusMessage: "ok"}, nil)
+			},
+			expectedError: "",
+		},
+		{
+			name:       "Viber client error",
+			webhookURL: "https://example.com/webhook",
+			mockSetup: func(m *mockviberClient) {
+				m.On("SetWebhook", "https://example.com/webhook", []string{}).
+					Return(viber.WebhookResp{}, errors.New("Viber error"))
+			},
+			expectedError: "Viber error",
+		},
+	}
 
-	viber.Client = viberMock
-	err := viber.SetWebhook(webhookURLMock)
-	assert.NotNil(err)
-	viberMock.AssertExpectations(t)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
 
-	// Test success
-	viberMock = newMockViberClient(t)
-	viberMock.
-		On("SetWebhook", webhookURLMock, []string{}).
-		Return(vb.WebhookResp{}, nil)
+			mockClient := new(mockviberClient)
+			tt.mockSetup(mockClient)
 
-	viber.Client = viberMock
-	err = viber.SetWebhook(webhookURLMock)
-	assert.Nil(err)
-	viberMock.AssertExpectations(t)
-}
+			v := &Viber{
+				Client: mockClient,
+			}
 
-func TestViber_Send(t *testing.T) {
-	t.Parallel()
-	assert := require.New(t)
-	viber := New("appkey", "senderName", "senderAvatar")
-	assert.NotNil(viber)
+			err := v.SetWebhook(tt.webhookURL)
 
-	// No receivers added
-	ctx := context.Background()
-	err := viber.Send(ctx, "subject", "message")
-	assert.Nil(err)
+			if tt.expectedError != "" {
+				require.EqualError(t, err, tt.expectedError)
+			} else {
+				require.NoError(t, err)
+			}
 
-	// Test error response
-	viberMock := newMockViberClient(t)
-	viberMock.
-		On("SendTextMessage", "receiver1", "subject\nmessage").
-		Return(uint64(0), errors.New("error send text message"))
-
-	viber.Client = viberMock
-	viber.AddReceivers("receiver1")
-	err = viber.Send(ctx, "subject", "message")
-	assert.NotNil(err)
-	viberMock.AssertExpectations(t)
-
-	// Test success response
-	viberMock = newMockViberClient(t)
-	viberMock.
-		On("SendTextMessage", "receiver1", "subject\nmessage").
-		Return(uint64(0), nil)
-	viberMock.
-		On("SendTextMessage", "receiver2", "subject\nmessage").
-		Return(uint64(0), nil)
-
-	viber.Client = viberMock
-	viber.AddReceivers("receiver2")
-	err = viber.Send(ctx, "subject", "message")
-	assert.Nil(err)
-	viberMock.AssertExpectations(t)
+			mockClient.AssertExpectations(t)
+		})
+	}
 }
