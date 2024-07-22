@@ -10,7 +10,6 @@ import (
 	"github.com/caarlos0/go-reddit/v3/reddit"
 )
 
-//go:generate mockery --name=redditMessageClient --output=. --case=underscore --inpackage
 type redditMessageClient interface {
 	Send(context.Context, *reddit.SendMessageRequest) (*reddit.Response, error)
 }

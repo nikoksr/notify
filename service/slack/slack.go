@@ -7,7 +7,6 @@ import (
 	"github.com/slack-go/slack"
 )
 
-//go:generate mockery --name=slackClient --output=. --case=underscore --inpackage
 type slackClient interface {
 	PostMessageContext(ctx context.Context, channelID string, options ...slack.MsgOption) (string, string, error)
 }

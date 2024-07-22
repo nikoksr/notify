@@ -7,7 +7,6 @@ import (
 	vb "github.com/mileusna/viber"
 )
 
-//go:generate mockery --name=viberClient --output=. --case=underscore --inpackage
 type viberClient interface {
 	SetWebhook(url string, eventTypes []string) (vb.WebhookResp, error)
 	SendTextMessage(receiver, msg string) (uint64, error)

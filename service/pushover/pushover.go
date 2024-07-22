@@ -9,7 +9,6 @@ import (
 	"github.com/gregdel/pushover"
 )
 
-//go:generate mockery --name=pushoverClient --output=. --case=underscore --inpackage
 type pushoverClient interface {
 	SendMessage(*pushover.Message, *pushover.Recipient) (*pushover.Response, error)
 }

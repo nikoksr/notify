@@ -11,7 +11,6 @@ import (
 	"github.com/nikoksr/notify/service/http"
 )
 
-//go:generate mockery --name=httpClient --output=. --case=underscore --inpackage
 type httpClient interface {
 	AddReceivers(wh ...*http.Webhook)
 	PreSend(prefn http.PreSendHookFn)

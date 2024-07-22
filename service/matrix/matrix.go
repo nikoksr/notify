@@ -9,7 +9,6 @@ import (
 	"maunium.net/go/mautrix/id"
 )
 
-//go:generate mockery --name=matrixClient --output=. --case=underscore --inpackage
 type matrixClient interface {
 	SendMessageEvent(
 		ctx context.Context,

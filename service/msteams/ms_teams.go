@@ -8,7 +8,6 @@ import (
 	teams "github.com/atc0005/go-teams-notify/v2"
 )
 
-//go:generate mockery --name=teamsClient --output=. --case=underscore --inpackage
 type teamsClient interface {
 	SendWithContext(ctx context.Context, webhookURL string, webhookMessage teams.MessageCard) error
 	SkipWebhookURLValidationOnSend(skip bool) teams.API

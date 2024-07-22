@@ -12,8 +12,6 @@ import (
 var _ twilioClient = &twilio.MessageService{}
 
 // twilioClient abstracts twilio-go MessageService for writing unit tests
-//
-//go:generate mockery --name=twilioClient --output=. --case=underscore --inpackage
 type twilioClient interface {
 	SendMessage(from, to, body string, mediaURLs []*url.URL) (*twilio.Message, error)
 }
