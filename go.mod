@@ -9,8 +9,8 @@ require (
 	github.com/antihax/optional v1.0.0 // indirect
 	github.com/atc0005/go-teams-notify/v2 v2.10.0
 	github.com/aws/aws-sdk-go-v2 v1.30.3
-	github.com/aws/aws-sdk-go-v2/config v1.27.26
-	github.com/aws/aws-sdk-go-v2/credentials v1.17.26
+	github.com/aws/aws-sdk-go-v2/config v1.27.27
+	github.com/aws/aws-sdk-go-v2/credentials v1.17.27
 	github.com/aws/aws-sdk-go-v2/service/ses v1.25.2
 	github.com/aws/aws-sdk-go-v2/service/sns v1.31.3
 	github.com/blinkbean/dingtalk v1.1.3
@@ -23,7 +23,7 @@ require (
 	github.com/plivo/plivo-go/v7 v7.51.0
 	github.com/sendgrid/sendgrid-go v3.14.0+incompatible
 	github.com/silenceper/wechat/v2 v2.1.6
-	github.com/slack-go/slack v0.13.0
+	github.com/slack-go/slack v0.13.1
 	github.com/stretchr/testify v1.9.0
 	github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.23575
 	github.com/utahta/go-linenotify v0.5.0
@@ -36,8 +36,8 @@ require (
 	github.com/drswork/go-twitter v0.0.0-20221107160839-dea1b6ed53d7
 	github.com/go-lark/lark v1.14.1
 	github.com/google/go-cmp v0.6.0
-	github.com/kevinburke/twilio-go v0.0.0-20240623211326-c7334b537077
-	maunium.net/go/mautrix v0.18.1
+	github.com/kevinburke/twilio-go v0.0.0-20240716172313-813590983ccc
+	maunium.net/go/mautrix v0.19.0
 )
 
 require github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
@@ -76,14 +76,14 @@ require (
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/rs/zerolog v1.33.0 // indirect
-	go.mau.fi/util v0.5.0 // indirect
+	go.mau.fi/util v0.6.0 // indirect
 	go.opencensus.io v0.24.0 // indirect
 	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.53.0 // indirect
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.53.0 // indirect
 	go.opentelemetry.io/otel v1.28.0 // indirect
 	go.opentelemetry.io/otel/metric v1.28.0 // indirect
 	go.opentelemetry.io/otel/trace v1.28.0 // indirect
-	golang.org/x/exp v0.0.0-20240707233637-46b078467d37 // indirect
+	golang.org/x/exp v0.0.0-20240719175910-8a7402abbf56 // indirect
 	golang.org/x/time v0.5.0 // indirect
 	google.golang.org/appengine/v2 v2.0.6 // indirect
 	google.golang.org/genproto v0.0.0-20240711142825-46eb208f015d // indirect
@@ -99,7 +99,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.6.15 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/ini v1.8.0 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.11.17 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sso v1.22.3 // indirect
+	github.com/aws/aws-sdk-go-v2/service/sso v1.22.4 // indirect
 	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.26.4 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sts v1.30.3 // indirect
 	github.com/aws/smithy-go v1.20.3 // indirect
@@ -119,7 +119,7 @@ require (
 	github.com/gregdel/pushover v1.3.1
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
-	github.com/kevinburke/go-types v0.0.0-20210723172823-2deba1f80ba7 // indirect
+	github.com/kevinburke/go-types v0.0.0-20240719050749-165e75e768f7 // indirect
 	github.com/kevinburke/rest v0.0.0-20240617045629-3ed0ad3487f0 // indirect
 	github.com/mileusna/viber v1.0.1
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
