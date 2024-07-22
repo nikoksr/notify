@@ -11,7 +11,7 @@ import (
 // Compile-time check that twilio.MessageService satisfies twilioClient interface.
 var _ twilioClient = &twilio.MessageService{}
 
-// twilioClient abstracts twilio-go MessageService for writing unit tests
+// twilioClient abstracts twilio-go MessageService for writing unit tests.
 type twilioClient interface {
 	SendMessage(from, to, body string, mediaURLs []*url.URL) (*twilio.Message, error)
 }

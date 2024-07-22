@@ -28,7 +28,7 @@ type Config struct {
 	Cache          cache.Cache
 }
 
-// wechatMessageManager abstracts go-wechat's message.Manager for writing unit tests
+// wechatMessageManager abstracts go-wechat's message.Manager for writing unit tests.
 type wechatMessageManager interface {
 	Send(msg *message.CustomerMessage) error
 }
