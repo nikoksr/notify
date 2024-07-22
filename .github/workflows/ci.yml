@@ -18,7 +18,7 @@ jobs:
       - name: Test coverage
         run: go test -race -covermode=atomic -coverprofile=coverage.out ./...
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
 
   golangci:
     name: lint
