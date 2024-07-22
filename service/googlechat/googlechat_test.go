@@ -18,7 +18,7 @@ func TestService_Send(t *testing.T) {
 		spaces        []string
 		subject       string
 		message       string
-		mockSetup     func(*mockSpacesMessageCreator, *mockCallCreator)
+		mockSetup     func(*mockspacesMessageCreator, *mockcallCreator)
 		expectedError string
 	}{
 		{
@@ -26,7 +26,7 @@ func TestService_Send(t *testing.T) {
 			spaces:  []string{"space1"},
 			subject: "Test Subject",
 			message: "Test Message",
-			mockSetup: func(m *mockSpacesMessageCreator, c *mockCallCreator) {
+			mockSetup: func(m *mockspacesMessageCreator, c *mockcallCreator) {
 				m.On("Create", "spaces/space1", mock.AnythingOfType("*chat.Message")).
 					Return(c)
 				c.On("Do").Return(&chat.Message{}, nil)
@@ -38,7 +38,7 @@ func TestService_Send(t *testing.T) {
 			spaces:  []string{"space1", "space2"},
 			subject: "Test Subject",
 			message: "Test Message",
-			mockSetup: func(m *mockSpacesMessageCreator, c *mockCallCreator) {
+			mockSetup: func(m *mockspacesMessageCreator, c *mockcallCreator) {
 				m.On("Create", "spaces/space1", mock.AnythingOfType("*chat.Message")).
 					Return(c)
 				m.On("Create", "spaces/space2", mock.AnythingOfType("*chat.Message")).
@@ -52,7 +52,7 @@ func TestService_Send(t *testing.T) {
 			spaces:  []string{"space1"},
 			subject: "Test Subject",
 			message: "Test Message",
-			mockSetup: func(m *mockSpacesMessageCreator, c *mockCallCreator) {
+			mockSetup: func(m *mockspacesMessageCreator, c *mockcallCreator) {
 				m.On("Create", "spaces/space1", mock.AnythingOfType("*chat.Message")).
 					Return(c)
 				c.On("Do").Return(nil, errors.New("Google Chat error"))
@@ -65,8 +65,8 @@ func TestService_Send(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 
-			mockSpacesMessageCreator := new(mockSpacesMessageCreator)
-			mockCallCreator := new(mockCallCreator)
+			mockSpacesMessageCreator := new(mockspacesMessageCreator)
+			mockCallCreator := new(mockcallCreator)
 			tt.mockSetup(mockSpacesMessageCreator, mockCallCreator)
 
 			s := &Service{

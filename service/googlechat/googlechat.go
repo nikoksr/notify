@@ -11,20 +11,20 @@ import (
 	"google.golang.org/api/option"
 )
 
-type SpacesMessageCreator interface {
-	Create(string, *chat.Message) CallCreator
+type spacesMessageCreator interface {
+	Create(string, *chat.Message) callCreator
 }
 
-type CallCreator interface {
+type callCreator interface {
 	Do(...googleapi.CallOption) (*chat.Message, error)
 }
 
 var (
 	// Compile-time check to ensure that client implements the spaces message service
 	// interface.
-	_ SpacesMessageCreator = new(messageCreator)
+	_ spacesMessageCreator = new(messageCreator)
 	// Compile-time check to ensure that client implements the create call interface.
-	_ CallCreator = new(chat.SpacesMessagesCreateCall)
+	_ callCreator = new(chat.SpacesMessagesCreateCall)
 )
 
 // messageCreator is wrapper struct for the native chat.SpacesMessagesService struct.
@@ -34,7 +34,7 @@ type messageCreator struct {
 	*chat.SpacesMessagesService
 }
 
-func newMessageCreator(ctx context.Context, options ...option.ClientOption) (SpacesMessageCreator, error) {
+func newMessageCreator(ctx context.Context, options ...option.ClientOption) (spacesMessageCreator, error) {
 	svc, err := chat.NewService(ctx, options...)
 	if err != nil {
 		return nil, err
@@ -44,14 +44,14 @@ func newMessageCreator(ctx context.Context, options ...option.ClientOption) (Spa
 
 // Create creates a createCall struct for google chat. In order to execute sending
 // the message utilize the `.Do` method found on the createCall.
-func (m *messageCreator) Create(parent string, message *chat.Message) CallCreator {
+func (m *messageCreator) Create(parent string, message *chat.Message) callCreator {
 	return m.SpacesMessagesService.Create(parent, message)
 }
 
 // Service encapsulates the google chat client along with internal state for storing
 // chat spaces.
 type Service struct {
-	messageCreator SpacesMessageCreator
+	messageCreator spacesMessageCreator
 	spaces         []string
 }
 
