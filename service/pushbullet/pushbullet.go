@@ -2,9 +2,9 @@ package pushbullet
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/cschomburg/go-pushbullet"
-	"github.com/pkg/errors"
 )
 
 // Pushbullet struct holds necessary data to communicate with the Pushbullet API.
@@ -46,12 +46,11 @@ func (pb Pushbullet) Send(ctx context.Context, subject, message string) error {
 		default:
 			dev, err := pb.client.Device(deviceNickname)
 			if err != nil {
-				return errors.Wrapf(err, "failed to find Pushbullet device with nickname '%s'", deviceNickname)
+				return fmt.Errorf("get device with nickname %q: %w", deviceNickname, err)
 			}
 
-			err = dev.PushNote(subject, message)
-			if err != nil {
-				return errors.Wrapf(err, "failed to send message to Pushbullet device with nickname '%s'", deviceNickname)
+			if err = dev.PushNote(subject, message); err != nil {
+				return fmt.Errorf("send push to %q: %w", deviceNickname, err)
 			}
 		}
 	}

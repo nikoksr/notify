@@ -1,76 +1,82 @@
 package reddit
 
 import (
-	context "context"
+	"context"
+	"errors"
 	"testing"
 
-	"github.com/pkg/errors"
+	"github.com/caarlos0/go-reddit/v3/reddit"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
-	"github.com/vartanbeno/go-reddit/v2/reddit"
 )
-
-func TestReddit_New(t *testing.T) {
-	t.Parallel()
-
-	assert := require.New(t)
-
-	service, err := New("id", "secret", "user", "password")
-	assert.NotNil(service)
-	assert.NoError(err)
-}
-
-func TestReddit_AddReceivers(t *testing.T) {
-	t.Parallel()
-
-	assert := require.New(t)
-
-	service, err := New("id", "secret", "user", "password")
-	assert.NotNil(service)
-	assert.NoError(err)
-
-	service.AddReceivers("")
-	assert.Len(service.recipients, 1)
-
-	service.AddReceivers("", "")
-	assert.Len(service.recipients, 3)
-}
 
 func TestReddit_Send(t *testing.T) {
 	t.Parallel()
 
-	assert := require.New(t)
+	tests := []struct {
+		name          string
+		recipients    []string
+		subject       string
+		message       string
+		mockSetup     func(*mockredditMessageClient)
+		expectedError string
+	}{
+		{
+			name:       "Successful send to single recipient",
+			recipients: []string{"user1"},
+			subject:    "Test Subject",
+			message:    "Test Message",
+			mockSetup: func(m *mockredditMessageClient) {
+				m.On("Send", mock.Anything, mock.AnythingOfType("*reddit.SendMessageRequest")).
+					Return(&reddit.Response{}, nil)
+			},
+			expectedError: "",
+		},
+		{
+			name:       "Successful send to multiple recipients",
+			recipients: []string{"user1", "user2"},
+			subject:    "Test Subject",
+			message:    "Test Message",
+			mockSetup: func(m *mockredditMessageClient) {
+				m.On("Send", mock.Anything, mock.AnythingOfType("*reddit.SendMessageRequest")).
+					Return(&reddit.Response{}, nil).Times(2)
+			},
+			expectedError: "",
+		},
+		{
+			name:       "Reddit client error",
+			recipients: []string{"user1"},
+			subject:    "Test Subject",
+			message:    "Test Message",
+			mockSetup: func(m *mockredditMessageClient) {
+				m.On("Send", mock.Anything, mock.AnythingOfType("*reddit.SendMessageRequest")).
+					Return(nil, errors.New("Reddit error"))
+			},
+			expectedError: "send message to user \"user1\": Reddit error",
+		},
+	}
 
-	service, err := New("id", "secret", "user", "password")
-	assert.NotNil(service)
-	assert.NoError(err)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
 
-	// No receivers added
-	ctx := context.Background()
-	err = service.Send(ctx, "subject", "message")
-	assert.Nil(err)
+			mockClient := new(mockredditMessageClient)
+			tt.mockSetup(mockClient)
 
-	// Test error response
-	mockClient := newMockRedditMessageClient(t)
-	mockClient.
-		On("Send", ctx, mock.AnythingOfType("*reddit.SendMessageRequest")).
-		Return(&reddit.Response{}, errors.New("some error"))
+			r := &Reddit{
+				client:     mockClient,
+				recipients: tt.recipients,
+			}
 
-	service.client = mockClient
-	service.AddReceivers("1234")
-	err = service.Send(ctx, "subject", "message")
-	assert.NotNil(err)
-	mockClient.AssertExpectations(t)
+			err := r.Send(context.Background(), tt.subject, tt.message)
 
-	// Test success response
-	mockClient = newMockRedditMessageClient(t)
-	mockClient.
-		On("Send", ctx, mock.AnythingOfType("*reddit.SendMessageRequest")).
-		Return(&reddit.Response{}, nil)
+			if tt.expectedError != "" {
+				require.EqualError(t, err, tt.expectedError)
+			} else {
+				require.NoError(t, err)
+			}
 
-	service.client = mockClient
-	service.AddReceivers("5678")
-	err = service.Send(ctx, "subject", "message")
-	assert.Nil(err)
-	mockClient.AssertExpectations(t)
+			mockClient.AssertExpectations(t)
+		})
+	}
 }

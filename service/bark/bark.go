@@ -4,13 +4,12 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
 	"strings"
 	"time"
-
-	"github.com/pkg/errors"
 )
 
 // Service allow you to configure Bark service.
@@ -22,7 +21,7 @@ type Service struct {
 
 func defaultHTTPClient() *http.Client {
 	return &http.Client{
-		Timeout: 5 * time.Second,
+		Timeout: 5 * time.Second, //nolint: mnd // 5 seconds is a reasonable timeout for a push notification
 	}
 }
 
@@ -42,7 +41,7 @@ func normalizeServerURL(serverURL string) string {
 		serverURL = "https://" + serverURL
 	}
 	if !strings.HasSuffix(serverURL, "/") {
-		serverURL = serverURL + "/"
+		serverURL += "/"
 	}
 
 	return serverURL
@@ -63,8 +62,9 @@ func (s *Service) AddReceivers(serverURLs ...string) {
 // (https://api.day.app/) if you don't specify any servers.
 func NewWithServers(deviceKey string, serverURLs ...string) *Service {
 	s := &Service{
-		deviceKey: deviceKey,
-		client:    defaultHTTPClient(),
+		deviceKey:  deviceKey,
+		client:     defaultHTTPClient(),
+		serverURLs: make([]string, 0),
 	}
 
 	if len(serverURLs) == 0 {
@@ -95,7 +95,7 @@ type postData struct {
 	URL       string `json:"pushURL,omitempty"`
 }
 
-func (s *Service) send(ctx context.Context, serverURL, subject, content string) (err error) {
+func (s *Service) send(ctx context.Context, serverURL, subject, content string) error {
 	if serverURL == "" {
 		return errors.New("server url is empty")
 	}
@@ -110,7 +110,7 @@ func (s *Service) send(ctx context.Context, serverURL, subject, content string) 
 
 	messageJSON, err := json.Marshal(message)
 	if err != nil {
-		return errors.Wrap(err, "marshal message")
+		return fmt.Errorf("marshal message: %w", err)
 	}
 
 	pushURL := serverURL + "push"
@@ -118,7 +118,7 @@ func (s *Service) send(ctx context.Context, serverURL, subject, content string) 
 	// Create new request
 	req, err := http.NewRequestWithContext(ctx, http.MethodPost, pushURL, bytes.NewBuffer(messageJSON))
 	if err != nil {
-		return errors.Wrap(err, "create request")
+		return fmt.Errorf("create request: %w", err)
 	}
 
 	req.Header.Set("Content-Type", "application/json; charset=utf-8")
@@ -126,14 +126,14 @@ func (s *Service) send(ctx context.Context, serverURL, subject, content string) 
 	// Send request
 	resp, err := s.client.Do(req)
 	if err != nil {
-		return errors.Wrap(err, "send request")
+		return fmt.Errorf("send request: %w", err)
 	}
 	defer func() { _ = resp.Body.Close() }()
 
 	// Read response and verify success
 	result, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return errors.Wrap(err, "read response")
+		return fmt.Errorf("read response: %w", err)
 	}
 
 	if resp.StatusCode != http.StatusOK {
@@ -156,7 +156,7 @@ func (s *Service) Send(ctx context.Context, subject, content string) error {
 		default:
 			err := s.send(ctx, serverURL, subject, content)
 			if err != nil {
-				return errors.Wrapf(err, "failed to send message to bark server %q", serverURL)
+				return fmt.Errorf("send message to bark server %q: %w", serverURL, err)
 			}
 		}
 	}

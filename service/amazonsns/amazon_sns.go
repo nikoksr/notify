@@ -2,12 +2,12 @@ package amazonsns
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/credentials"
 	"github.com/aws/aws-sdk-go-v2/service/sns"
-	"github.com/pkg/errors"
 )
 
 // snsSendMessageAPI Basic interface to send messages through SNS.
@@ -32,13 +32,13 @@ func (s snsSendMessageClient) SendMessage(ctx context.Context,
 	return s.client.Publish(ctx, params, optFns...)
 }
 
-// AmazonSNS Basic structure with SNS information
+// AmazonSNS Basic structure with SNS information.
 type AmazonSNS struct {
 	sendMessageClient snsSendMessageAPI
 	queueTopics       []string
 }
 
-// New creates a new AmazonSNS
+// New creates a new AmazonSNS.
 func New(accessKeyID, secretKey, region string) (*AmazonSNS, error) {
 	credProvider := credentials.NewStaticCredentialsProvider(accessKeyID, secretKey, "")
 	cfg, err := config.LoadDefaultConfig(
@@ -62,7 +62,7 @@ func (s *AmazonSNS) AddReceivers(queues ...string) {
 	s.queueTopics = append(s.queueTopics, queues...)
 }
 
-// Send message to everyone on all topics
+// Send message to everyone on all topics.
 func (s AmazonSNS) Send(ctx context.Context, subject, message string) error {
 	// For each topic
 	for _, topic := range s.queueTopics {
@@ -75,7 +75,7 @@ func (s AmazonSNS) Send(ctx context.Context, subject, message string) error {
 		// Send the message
 		_, err := s.sendMessageClient.SendMessage(ctx, input)
 		if err != nil {
-			return errors.Wrapf(err, "failed to send message using Amazon SNS to ARN TOPIC '%s'", topic)
+			return fmt.Errorf("send message using Amazon SNS to ARN TOPIC %q: %w", topic, err)
 		}
 	}
 	return nil

@@ -6,19 +6,16 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/pkg/errors"
 	"google.golang.org/api/chat/v1"
 	"google.golang.org/api/googleapi"
 	"google.golang.org/api/option"
 )
 
-//go:generate mockery --name=spacesMessageCreator --output=. --case=underscore --inpackage
 type spacesMessageCreator interface {
-	Create(string, *chat.Message) createCall
+	Create(string, *chat.Message) callCreator
 }
 
-//go:generate mockery --name=createCall --output=. --case=underscore --inpackage
-type createCall interface {
+type callCreator interface {
 	Do(...googleapi.CallOption) (*chat.Message, error)
 }
 
@@ -27,7 +24,7 @@ var (
 	// interface.
 	_ spacesMessageCreator = new(messageCreator)
 	// Compile-time check to ensure that client implements the create call interface.
-	_ createCall = new(chat.SpacesMessagesCreateCall)
+	_ callCreator = new(chat.SpacesMessagesCreateCall)
 )
 
 // messageCreator is wrapper struct for the native chat.SpacesMessagesService struct.
@@ -47,7 +44,7 @@ func newMessageCreator(ctx context.Context, options ...option.ClientOption) (spa
 
 // Create creates a createCall struct for google chat. In order to execute sending
 // the message utilize the `.Do` method found on the createCall.
-func (m *messageCreator) Create(parent string, message *chat.Message) createCall {
+func (m *messageCreator) Create(parent string, message *chat.Message) callCreator {
 	return m.SpacesMessagesService.Create(parent, message)
 }
 
@@ -58,7 +55,7 @@ type Service struct {
 	spaces         []string
 }
 
-// New returns an instance of the google chat notification service
+// New returns an instance of the google chat notification service.
 func New(options ...option.ClientOption) (*Service, error) {
 	ctx := context.Background()
 	svc, err := newMessageCreator(ctx, options...)
@@ -105,7 +102,7 @@ func (s *Service) Send(ctx context.Context, subject, message string) error {
 			return ctx.Err()
 		default:
 			if _, err := s.messageCreator.Create(parent, msg).Do(); err != nil {
-				return errors.Wrapf(err, "failed to send message to the google chat space: %s", space)
+				return fmt.Errorf("send message to the google chat space %q: %w", space, err)
 			}
 		}
 	}

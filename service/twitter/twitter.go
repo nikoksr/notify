@@ -2,13 +2,13 @@ package twitter
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/dghubble/oauth1"
 	"github.com/drswork/go-twitter/twitter"
-	"github.com/pkg/errors"
 )
 
-// Twitter struct holds necessary data to communicate with the Twitter API
+// Twitter struct holds necessary data to communicate with the Twitter API.
 type Twitter struct {
 	client     *twitter.Client
 	twitterIDs []string
@@ -25,7 +25,7 @@ type Twitter struct {
 // used to authenticate OAuth 1.0a API requests.
 // They specify the Twitter account the request is made on behalf of.
 //
-// See https://developer.twitter.com/en/docs/authentication/oauth-1-0a for more details
+// See https://developer.twitter.com/en/docs/authentication/oauth-1-0a for more details.
 type Credentials struct {
 	ConsumerKey       string
 	ConsumerSecret    string
@@ -70,7 +70,8 @@ func (t *Twitter) AddReceivers(twitterIDs ...string) {
 }
 
 // Send takes a message subject and a message body and sends them to all previously set twitterIDs as a DM.
-// See https://developer.twitter.com/en/docs/twitter-api/v1/direct-messages/sending-and-receiving/api-reference/new-event
+// See
+// https://developer.twitter.com/en/docs/twitter-api/v1/direct-messages/sending-and-receiving/api-reference/new-event
 func (t Twitter) Send(ctx context.Context, subject, message string) error {
 	directMessageData := &twitter.DirectMessageData{
 		Text: subject + "\n" + message,
@@ -96,9 +97,8 @@ func (t Twitter) Send(ctx context.Context, subject, message string) error {
 				Event: directMessageEvent,
 			}
 
-			_, _, err := t.client.DirectMessages.EventsNew(directMessageParams)
-			if err != nil {
-				return errors.Wrapf(err, "failed to send direct message to twitter ID '%s'", twitterID)
+			if _, _, err := t.client.DirectMessages.EventsNew(directMessageParams); err != nil {
+				return fmt.Errorf("send message to %q: %w", twitterID, err)
 			}
 		}
 	}

@@ -4,12 +4,11 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
 	"strings"
-
-	"github.com/pkg/errors"
 
 	"github.com/nikoksr/notify"
 )
@@ -42,7 +41,7 @@ type (
 
 	// Service is the main struct of this package. It contains all the information needed to send notifications to a
 	// list of receivers. The receivers are represented by Webhooks and are expected to be valid HTTP endpoints. The
-	// Service also allows
+	// Service also allows.
 	Service struct {
 		client        *http.Client
 		webhooks      []*Webhook
@@ -68,17 +67,20 @@ type defaultMarshaller struct{}
 // format. If the content type is not supported, an error is returned. The default marshaller supports the following
 // content types: application/json, text/plain.
 // NOTE: should we expand the default marshaller to support more content types?
-func (defaultMarshaller) Marshal(contentType string, payload any) (out []byte, err error) {
+func (defaultMarshaller) Marshal(contentType string, payload any) ([]byte, error) {
+	var out []byte
+	var err error
+
 	switch {
 	case strings.HasPrefix(contentType, "application/json"):
 		out, err = json.Marshal(payload)
 		if err != nil {
-			return nil, errors.Wrap(err, "marshal json")
+			return nil, fmt.Errorf("marshal payload: %w", err)
 		}
 	case strings.HasPrefix(contentType, "text/plain"):
 		str, ok := payload.(string)
 		if !ok {
-			return nil, errors.Errorf("payload was expected to be string, but was %T", payload)
+			return nil, fmt.Errorf("payload was expected to be of type string, got %T", payload)
 		}
 		out = []byte(str)
 	default:
@@ -210,7 +212,7 @@ func newRequest(ctx context.Context, hook *Webhook, payload io.Reader) (*http.Re
 func (s *Service) do(req *http.Request) error {
 	// Execute all pre-send hooks in order.
 	if err := s.doPreSendHooks(req); err != nil {
-		return errors.Wrap(err, "pre-send hooks")
+		return fmt.Errorf("pre-send hooks: %w", err)
 	}
 
 	// Actually send the HTTP request.
@@ -222,7 +224,7 @@ func (s *Service) do(req *http.Request) error {
 
 	// Execute all post-send hooks in order.
 	if err = s.doPostSendHooks(req, resp); err != nil {
-		return errors.Wrap(err, "post-send hooks")
+		return fmt.Errorf("post-send hooks: %w", err)
 	}
 
 	// Check if response code is 2xx. Should this be configurable?
@@ -239,7 +241,7 @@ func (s *Service) send(ctx context.Context, webhook *Webhook, payload []byte) er
 	// Create a new HTTP request for the given webhook.
 	req, err := newRequest(ctx, webhook, bytes.NewReader(payload))
 	if err != nil {
-		return errors.Wrapf(err, "create request %q", webhook)
+		return fmt.Errorf("create request: %w", err)
 	}
 	defer func() { _ = req.Body.Close() }()
 
@@ -265,12 +267,12 @@ func (s *Service) Send(ctx context.Context, subject, message string) error {
 			// Marshal the message into a payload.
 			payloadRaw, err := s.Serializer.Marshal(webhook.ContentType, payload)
 			if err != nil {
-				return errors.Wrap(err, "marshal payload")
+				return fmt.Errorf("marshal payload: %w", err)
 			}
 
 			// Send the payload to the webhook.
 			if err = s.send(ctx, webhook, payloadRaw); err != nil {
-				return errors.Wrapf(err, "send request %q", webhook)
+				return fmt.Errorf("send to %s: %w", webhook.URL, err)
 			}
 		}
 	}

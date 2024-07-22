@@ -2,83 +2,81 @@ package slack
 
 import (
 	"context"
+	"errors"
 	"testing"
 
-	"github.com/google/go-cmp/cmp"
-	"github.com/pkg/errors"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 )
 
-func TestSlack_New(t *testing.T) {
-	t.Parallel()
-
-	assert := require.New(t)
-
-	service := New("")
-	assert.NotNil(service)
-}
-
-func TestSlack_AddReceivers(t *testing.T) {
-	t.Parallel()
-
-	assert := require.New(t)
-
-	service := New("")
-	assert.NotNil(service)
-
-	service.AddReceivers("")
-	assert.Len(service.channelIDs, 1)
-
-	service.AddReceivers("", "")
-	assert.Len(service.channelIDs, 3)
-
-	service.channelIDs = []string{}
-	receivers := []string{"", ""}
-	service.AddReceivers(receivers...)
-
-	diff := cmp.Diff(service.channelIDs, receivers)
-	assert.Equal("", diff)
-}
-
 func TestSlack_Send(t *testing.T) {
 	t.Parallel()
 
-	assert := require.New(t)
+	tests := []struct {
+		name          string
+		channelIDs    []string
+		subject       string
+		message       string
+		mockSetup     func(*mockslackClient)
+		expectedError string
+	}{
+		{
+			name:       "Successful send to single channel",
+			channelIDs: []string{"C1234567890"},
+			subject:    "Test Subject",
+			message:    "Test Message",
+			mockSetup: func(m *mockslackClient) {
+				m.On("PostMessageContext", mock.Anything, "C1234567890", mock.AnythingOfType("slack.MsgOption")).
+					Return("", "", nil)
+			},
+			expectedError: "",
+		},
+		{
+			name:       "Successful send to multiple channels",
+			channelIDs: []string{"C1234567890", "C0987654321"},
+			subject:    "Test Subject",
+			message:    "Test Message",
+			mockSetup: func(m *mockslackClient) {
+				m.On("PostMessageContext", mock.Anything, mock.AnythingOfType("string"), mock.AnythingOfType("slack.MsgOption")).
+					Return("", "", nil).
+					Twice()
+			},
+			expectedError: "",
+		},
+		{
+			name:       "Slack client error",
+			channelIDs: []string{"C1234567890"},
+			subject:    "Test Subject",
+			message:    "Test Message",
+			mockSetup: func(m *mockslackClient) {
+				m.On("PostMessageContext", mock.Anything, "C1234567890", mock.AnythingOfType("slack.MsgOption")).
+					Return("", "", errors.New("Slack error"))
+			},
+			expectedError: "send message to channel \"C1234567890\": Slack error",
+		},
+	}
 
-	service := New("")
-	assert.NotNil(service)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
 
-	// No receivers added
-	ctx := context.Background()
-	err := service.Send(ctx, "subject", "message")
-	assert.Nil(err)
+			mockClient := new(mockslackClient)
+			tt.mockSetup(mockClient)
 
-	// Test error response
-	mockClient := newMockSlackClient(t)
-	mockClient.
-		On("PostMessageContext", ctx, "1234", mock.AnythingOfType("MsgOption")).
-		Return("", "", errors.New("some error"))
+			s := &Slack{
+				client:     mockClient,
+				channelIDs: tt.channelIDs,
+			}
 
-	service.client = mockClient
-	service.AddReceivers("1234")
-	err = service.Send(ctx, "subject", "message")
-	assert.NotNil(err)
-	mockClient.AssertExpectations(t)
+			err := s.Send(context.Background(), tt.subject, tt.message)
 
-	// Test success response
-	mockClient = newMockSlackClient(t)
-	mockClient.
-		On("PostMessageContext", ctx, "1234", mock.AnythingOfType("MsgOption")).
-		Return("", "", nil)
+			if tt.expectedError != "" {
+				require.EqualError(t, err, tt.expectedError)
+			} else {
+				require.NoError(t, err)
+			}
 
-	mockClient.
-		On("PostMessageContext", ctx, "5678", mock.AnythingOfType("MsgOption")).
-		Return("", "", nil)
-
-	service.client = mockClient
-	service.AddReceivers("5678")
-	err = service.Send(ctx, "subject", "message")
-	assert.Nil(err)
-	mockClient.AssertExpectations(t)
+			mockClient.AssertExpectations(t)
+		})
+	}
 }

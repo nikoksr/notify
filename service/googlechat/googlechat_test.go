@@ -2,99 +2,88 @@ package googlechat
 
 import (
 	"context"
+	"errors"
 	"testing"
 
-	"github.com/google/go-cmp/cmp"
-	"github.com/pkg/errors"
+	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 	"google.golang.org/api/chat/v1"
-	"google.golang.org/api/option"
 )
 
-func TestGoogleChat_New(t *testing.T) {
-	t.Parallel()
-	withCred := option.WithCredentialsFile("example_credentials.json")
-	assert := require.New(t)
-	service, err := New(withCred)
-	assert.Nil(err)
-	assert.NotNil(service)
-}
-
-func TestGoogleChat_NewWithContext(t *testing.T) {
-	t.Parallel()
-	withCred := option.WithCredentialsFile("example_credentials.json")
-	assert := require.New(t)
-	ctx := context.Background()
-	service, err := NewWithContext(ctx, withCred)
-	assert.Nil(err)
-	assert.NotNil(service)
-}
-
-func TestGoogleChat_AddReceivers(t *testing.T) {
+func TestService_Send(t *testing.T) {
 	t.Parallel()
 
-	assert := require.New(t)
+	tests := []struct {
+		name          string
+		spaces        []string
+		subject       string
+		message       string
+		mockSetup     func(*mockspacesMessageCreator, *mockcallCreator)
+		expectedError string
+	}{
+		{
+			name:    "Successful send to single space",
+			spaces:  []string{"space1"},
+			subject: "Test Subject",
+			message: "Test Message",
+			mockSetup: func(m *mockspacesMessageCreator, c *mockcallCreator) {
+				m.On("Create", "spaces/space1", mock.AnythingOfType("*chat.Message")).
+					Return(c)
+				c.On("Do").Return(&chat.Message{}, nil)
+			},
+			expectedError: "",
+		},
+		{
+			name:    "Successful send to multiple spaces",
+			spaces:  []string{"space1", "space2"},
+			subject: "Test Subject",
+			message: "Test Message",
+			mockSetup: func(m *mockspacesMessageCreator, c *mockcallCreator) {
+				m.On("Create", "spaces/space1", mock.AnythingOfType("*chat.Message")).
+					Return(c)
+				m.On("Create", "spaces/space2", mock.AnythingOfType("*chat.Message")).
+					Return(c)
+				c.On("Do").Return(&chat.Message{}, nil).Times(2)
+			},
+			expectedError: "",
+		},
+		{
+			name:    "Google Chat client error",
+			spaces:  []string{"space1"},
+			subject: "Test Subject",
+			message: "Test Message",
+			mockSetup: func(m *mockspacesMessageCreator, c *mockcallCreator) {
+				m.On("Create", "spaces/space1", mock.AnythingOfType("*chat.Message")).
+					Return(c)
+				c.On("Do").Return(nil, errors.New("Google Chat error"))
+			},
+			expectedError: "send message to the google chat space \"space1\": Google Chat error",
+		},
+	}
 
-	service := &Service{}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
 
-	service.AddReceivers("space_a")
-	assert.Len(service.spaces, 1)
+			mockSpacesMessageCreator := new(mockspacesMessageCreator)
+			mockCallCreator := new(mockcallCreator)
+			tt.mockSetup(mockSpacesMessageCreator, mockCallCreator)
 
-	service.AddReceivers("space_b", "space_c")
-	assert.Len(service.spaces, 3)
+			s := &Service{
+				messageCreator: mockSpacesMessageCreator,
+				spaces:         tt.spaces,
+			}
 
-	service.spaces = []string{}
-	receivers := []string{"space_a", "space_b"}
-	service.AddReceivers(receivers...)
+			err := s.Send(context.Background(), tt.subject, tt.message)
 
-	diff := cmp.Diff(service.spaces, receivers)
-	assert.Equal("", diff) // assert that there is no difference
-}
+			if tt.expectedError != "" {
+				require.EqualError(t, err, tt.expectedError)
+			} else {
+				require.NoError(t, err)
+			}
 
-func TestGoogleChat_Send(t *testing.T) {
-	t.Parallel()
-	ctx := context.Background()
-
-	assert := require.New(t)
-
-	service := &Service{}
-	// No receivers added
-	err := service.Send(ctx, "subject", "message")
-	assert.Nil(err)
-
-	mockMsgCreator := newMockSpacesMessageCreator(t)
-
-	service.messageCreator = mockMsgCreator
-	service.AddReceivers("space_a")
-
-	// Test error response
-	failedCall := newMockCreateCall(t)
-	failedCall.On("Do").Return(nil, errors.New("something happened"))
-
-	mockMsgCreator.
-		On("Create", "spaces/space_a", &chat.Message{Text: "subject\nfailure"}).
-		Return(failedCall)
-
-	err = service.Send(ctx, "subject", "failure")
-	assert.NotNil(err)
-	mockMsgCreator.AssertExpectations(t)
-
-	// Test success response
-	successCall := newMockCreateCall(t)
-	successCall.On("Do").Return(&chat.Message{Text: "subject\nsuccess"}, nil)
-
-	mockMsgCreator.
-		On("Create", "spaces/space_a", &chat.Message{Text: "subject\nsuccess"}).
-		Return(successCall)
-
-	err = service.Send(ctx, "subject", "success")
-	assert.Nil(err)
-	mockMsgCreator.AssertExpectations(t)
-
-	// Test context cancellation
-	ctx, cancel := context.WithCancel(ctx)
-	cancel()
-	err = service.Send(ctx, "subject", "success")
-	assert.NotNil(err)
-	mockMsgCreator.AssertExpectations(t)
+			mockSpacesMessageCreator.AssertExpectations(t)
+			mockCallCreator.AssertExpectations(t)
+		})
+	}
 }

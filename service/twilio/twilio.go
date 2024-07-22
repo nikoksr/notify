@@ -2,18 +2,16 @@ package twilio
 
 import (
 	"context"
+	"fmt"
 	"net/url"
 
 	"github.com/kevinburke/twilio-go"
-	"github.com/pkg/errors"
 )
 
 // Compile-time check that twilio.MessageService satisfies twilioClient interface.
 var _ twilioClient = &twilio.MessageService{}
 
-// twilioClient abstracts twilio-go MessageService for writing unit tests
-//
-//go:generate mockery --name=twilioClient --output=. --case=underscore --inpackage
+// twilioClient abstracts twilio-go MessageService for writing unit tests.
 type twilioClient interface {
 	SendMessage(from, to, body string, mediaURLs []*url.URL) (*twilio.Message, error)
 }
@@ -56,7 +54,7 @@ func (s *Service) Send(ctx context.Context, subject, message string) error {
 
 			_, err := s.client.SendMessage(s.fromPhoneNumber, toPhoneNumber, body, []*url.URL{})
 			if err != nil {
-				return errors.Wrapf(err, "failed to send message to phone number '%s' using Twilio", toPhoneNumber)
+				return fmt.Errorf("send message to recipient %q: %w", toPhoneNumber, err)
 			}
 		}
 	}

@@ -1,12 +1,24 @@
 package notify
 
-import "github.com/pkg/errors"
-
-// Compile-time check to ensure Notify implements Notifier.
-var _ Notifier = (*Notify)(nil)
+import (
+	context "context"
+	"errors"
+)
 
 // ErrSendNotification signals that the notifier failed to send a notification.
 var ErrSendNotification = errors.New("send notification")
+
+// Notifier defines the behavior for notification services.
+//
+// The Send function simply sends a subject and a message string to the internal destination Notifier.
+//
+//	E.g. for telegram.Telegram it sends the message to the specified group chat.
+type Notifier interface {
+	Send(context.Context, string, string) error
+}
+
+// Compile-time check to ensure Notify implements Notifier.
+var _ Notifier = (*Notify)(nil)
 
 // Notify is the central struct for managing notification services and sending messages to them.
 type Notify struct {
@@ -76,6 +88,8 @@ func NewWithServices(services ...Notifier) *Notify {
 }
 
 // Create the package level Notify instance.
+//
+//nolint:gochecknoglobals // I agree with the linter, won't bother fixing this now, will be fixed in v2.
 var std = New()
 
 // Default returns the standard Notify instance used by the package-level send function.

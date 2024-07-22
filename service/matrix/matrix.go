@@ -9,12 +9,17 @@ import (
 	"maunium.net/go/mautrix/id"
 )
 
-//go:generate mockery --name=matrixClient --output=. --case=underscore --inpackage
 type matrixClient interface {
-	SendMessageEvent(roomID id.RoomID, eventType event.Type, contentJSON interface{}, extra ...matrix.ReqSendEvent) (resp *matrix.RespSendEvent, err error)
+	SendMessageEvent(
+		ctx context.Context,
+		roomID id.RoomID,
+		eventType event.Type,
+		contentJSON interface{},
+		extra ...matrix.ReqSendEvent,
+	) (resp *matrix.RespSendEvent, err error)
 }
 
-// Compile time check to ensure that matrix.Client implements the matrixClient interface
+// Compile time check to ensure that matrix.Client implements the matrixClient interface.
 var _ matrixClient = new(matrix.Client)
 
 // New returns a new instance of a Matrix notification service.
@@ -49,7 +54,7 @@ func (s *Matrix) Send(ctx context.Context, _, message string) error {
 	case <-ctx.Done():
 		return ctx.Err()
 	default:
-		_, err := s.client.SendMessageEvent(s.options.roomID, event.EventMessage, &messageBody)
+		_, err := s.client.SendMessageEvent(ctx, s.options.roomID, event.EventMessage, &messageBody)
 		if err != nil {
 			return errors.New("failed to send message to the room using Matrix")
 		}

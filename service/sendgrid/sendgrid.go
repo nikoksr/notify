@@ -2,9 +2,10 @@ package sendgrid
 
 import (
 	"context"
+	"errors"
+	"fmt"
 	"net/http"
 
-	"github.com/pkg/errors"
 	"github.com/sendgrid/sendgrid-go"
 	"github.com/sendgrid/sendgrid-go/helpers/mail"
 )
@@ -60,7 +61,7 @@ func (s SendGrid) Send(ctx context.Context, subject, message string) error {
 	default:
 		resp, err := s.client.Send(mailMessage)
 		if err != nil {
-			return errors.Wrap(err, "failed to send mail using SendGrid service")
+			return fmt.Errorf("send message: %w", err)
 		}
 
 		if resp.StatusCode != http.StatusAccepted {

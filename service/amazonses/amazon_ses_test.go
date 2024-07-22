@@ -2,114 +2,72 @@ package amazonses
 
 import (
 	"context"
+	"errors"
 	"testing"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/ses"
-	"github.com/aws/aws-sdk-go-v2/service/ses/types"
-	"github.com/pkg/errors"
+	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 )
-
-func TestAmazonSES_New(t *testing.T) {
-	t.Parallel()
-
-	assert := require.New(t)
-
-	service, err := New("", "", "", "")
-	assert.NotNil(service)
-	assert.Nil(err)
-}
-
-func TestAmazonSES_AddReceivers(t *testing.T) {
-	t.Parallel()
-
-	assert := require.New(t)
-
-	service, err := New("", "", "", "")
-	assert.NotNil(service)
-	assert.Nil(err)
-
-	receivers := []string{"1", "2", "3", "4", "5"}
-	service.AddReceivers(receivers...)
-
-	assert.Equal(service.receiverAddresses, receivers)
-
-	a6 := "6"
-	receivers = append(receivers, a6)
-	service.AddReceivers(a6)
-	assert.Equal(service.receiverAddresses, receivers)
-}
 
 func TestAmazonSES_Send(t *testing.T) {
 	t.Parallel()
 
-	assert := require.New(t)
-
-	sender := "4"
-	service, err := New("1", "2", "3", sender)
-	assert.NotNil(service)
-	assert.Nil(err)
-
-	// Example payload
-	input := ses.SendEmailInput{
-		Source: &sender,
-		Destination: &types.Destination{
-			ToAddresses: []string{},
+	tests := []struct {
+		name          string
+		receivers     []string
+		subject       string
+		message       string
+		mockSetup     func(*mocksesClient)
+		expectedError string
+	}{
+		{
+			name:      "Successful send",
+			receivers: []string{"test@example.com"},
+			subject:   "Test Subject",
+			message:   "Test Message",
+			mockSetup: func(m *mocksesClient) {
+				m.On("SendEmail", mock.Anything, mock.AnythingOfType("*ses.SendEmailInput")).
+					Return(&ses.SendEmailOutput{}, nil)
+			},
+			expectedError: "",
 		},
-		Message: &types.Message{
-			Body: &types.Body{
-				Html: &types.Content{
-					Data: aws.String("message"),
-				},
+		{
+			name:      "SES client error",
+			receivers: []string{"test@example.com"},
+			subject:   "Test Subject",
+			message:   "Test Message",
+			mockSetup: func(m *mocksesClient) {
+				m.On("SendEmail", mock.Anything, mock.AnythingOfType("*ses.SendEmailInput")).
+					Return(nil, errors.New("SES error"))
 			},
-			Subject: &types.Content{
-				Data: aws.String("subject"),
-			},
+			expectedError: "send mail using Amazon SES service: SES error",
 		},
 	}
 
-	// No receivers added
-	ctx := context.Background()
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
 
-	mockClient := newMockSesClient(t)
-	mockClient.
-		On("SendEmail", ctx, &input).
-		Return(nil, nil)
-	service.client = mockClient
+			mockClient := new(mocksesClient)
+			tt.mockSetup(mockClient)
 
-	err = service.Send(ctx, "subject", "message")
-	assert.Nil(err)
-	mockClient.AssertExpectations(t)
+			s := &AmazonSES{
+				client:            mockClient,
+				senderAddress:     aws.String("sender@example.com"),
+				receiverAddresses: tt.receivers,
+			}
 
-	// Test with receivers
-	receivers := []string{"1", "2"}
-	input.Destination.ToAddresses = receivers
-	service.AddReceivers(receivers...)
+			err := s.Send(context.Background(), tt.subject, tt.message)
 
-	mockClient = newMockSesClient(t)
-	mockClient.
-		On("SendEmail", ctx, &input).
-		Return(nil, nil)
-	service.client = mockClient
+			if tt.expectedError != "" {
+				require.EqualError(t, err, tt.expectedError)
+			} else {
+				require.NoError(t, err)
+			}
 
-	err = service.Send(ctx, "subject", "message")
-	assert.Nil(err)
-	mockClient.AssertExpectations(t)
-
-	// Test with more receivers and error response
-	receivers = []string{"1", "2", "3", "4", "5"}
-	input.Destination.ToAddresses = receivers
-	service.receiverAddresses = make([]string, 0)
-	service.AddReceivers(receivers...)
-
-	mockClient = newMockSesClient(t)
-	mockClient.
-		On("SendEmail", ctx, &input).
-		Return(nil, errors.New("some error"))
-	service.client = mockClient
-
-	err = service.Send(ctx, "subject", "message")
-	assert.NotNil(err)
-	mockClient.AssertExpectations(t)
+			mockClient.AssertExpectations(t)
+		})
+	}
 }

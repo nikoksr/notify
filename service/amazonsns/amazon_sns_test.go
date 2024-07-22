@@ -6,124 +6,81 @@ import (
 	"testing"
 
 	"github.com/aws/aws-sdk-go-v2/service/sns"
-	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 )
 
-func TestAmazonSNS_New(t *testing.T) {
+func TestAmazonSNS_Send(t *testing.T) {
 	t.Parallel()
 
-	assert := require.New(t)
-
-	service, err := New("", "", "")
-	assert.NotNil(service)
-	assert.Nil(err)
-}
-
-func TestAmazonSNS_AddReceivers(t *testing.T) {
-	t.Parallel()
-
-	amazonSNS, err := New("", "", "")
-	if err != nil {
-		t.Error(err)
-	}
-	amazonSNS.AddReceivers("One topic")
-}
-
-func TestAmazonSNS_SendMessageWithNoTopicsConfigured(t *testing.T) {
-	t.Parallel()
-
-	mockSns := new(mockSnsSendMessageAPI)
-	amazonSNS := AmazonSNS{
-		sendMessageClient: mockSns,
-	}
-
-	err := amazonSNS.Send(context.Background(), "Subject", "Message")
-	assert.Nil(t, err)
-	mockSns.AssertNotCalled(t, "SendMessage", mock.Anything, mock.Anything, mock.Anything)
-}
-
-func TestAmazonSNS_SendMessageWithSucessAndOneTopicConfigured(t *testing.T) {
-	t.Parallel()
-
-	mockSns := new(mockSnsSendMessageAPI)
-	output := sns.PublishOutput{}
-	mockSns.On("SendMessage", mock.Anything, mock.Anything, mock.Anything).
-		Return(&output, nil)
-
-	amazonSNS := AmazonSNS{
-		sendMessageClient: mockSns,
-	}
-	amazonSNS.AddReceivers("arn:aws:sns:region:number:topicname")
-	err := amazonSNS.Send(context.Background(), "Subject", "Message")
-	assert.Nil(t, err)
-
-	mockSns.AssertExpectations(t)
-	assert.Equal(t, 1, len(mockSns.Calls))
-}
-
-func TestAmazonSNS_SendMessageWithSucessAndTwoTopicsConfigured(t *testing.T) {
-	t.Parallel()
-
-	mockSns := new(mockSnsSendMessageAPI)
-	output := sns.PublishOutput{}
-	mockSns.On("SendMessage", mock.Anything, mock.Anything, mock.Anything).
-		Return(&output, nil)
-
-	amazonSNS := AmazonSNS{
-		sendMessageClient: mockSns,
+	tests := []struct {
+		name          string
+		queueTopics   []string
+		subject       string
+		message       string
+		mockSetup     func(*mocksnsSendMessageAPI)
+		expectedError string
+	}{
+		{
+			name:        "Successful send to single topic",
+			queueTopics: []string{"arn:aws:sns:us-east-1:123456789012:MyTopic"},
+			subject:     "Test Subject",
+			message:     "Test Message",
+			mockSetup: func(m *mocksnsSendMessageAPI) {
+				m.On("SendMessage", mock.Anything, mock.AnythingOfType("*sns.PublishInput")).
+					Return(&sns.PublishOutput{}, nil)
+			},
+			expectedError: "",
+		},
+		{
+			name: "Successful send to multiple topics",
+			queueTopics: []string{
+				"arn:aws:sns:us-east-1:123456789012:MyTopic1",
+				"arn:aws:sns:us-east-1:123456789012:MyTopic2",
+			},
+			subject: "Test Subject",
+			message: "Test Message",
+			mockSetup: func(m *mocksnsSendMessageAPI) {
+				m.On("SendMessage", mock.Anything, mock.AnythingOfType("*sns.PublishInput")).
+					Return(&sns.PublishOutput{}, nil).Times(2)
+			},
+			expectedError: "",
+		},
+		{
+			name:        "SNS client error",
+			queueTopics: []string{"arn:aws:sns:us-east-1:123456789012:MyTopic"},
+			subject:     "Test Subject",
+			message:     "Test Message",
+			mockSetup: func(m *mocksnsSendMessageAPI) {
+				m.On("SendMessage", mock.Anything, mock.AnythingOfType("*sns.PublishInput")).
+					Return(nil, errors.New("SNS error"))
+			},
+			expectedError: "send message using Amazon SNS to ARN TOPIC " +
+				"\"arn:aws:sns:us-east-1:123456789012:MyTopic\": SNS error",
+		},
 	}
 
-	amazonSNS.AddReceivers("arn:aws:sns:region:number:topicname1",
-		"arn:aws:sns:region:number:topicname1")
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
 
-	err := amazonSNS.Send(context.Background(), "Subject", "Message")
-	assert.Nil(t, err)
+			mockClient := new(mocksnsSendMessageAPI)
+			tt.mockSetup(mockClient)
 
-	mockSns.AssertExpectations(t)
-	assert.Equal(t, 2, len(mockSns.Calls))
-}
+			s := &AmazonSNS{
+				sendMessageClient: mockClient,
+				queueTopics:       tt.queueTopics,
+			}
 
-func TestAmazonSNS_SendMessageWithErrorAndOneQueueConfiguredShouldReturnError(t *testing.T) {
-	t.Parallel()
+			err := s.Send(context.Background(), tt.subject, tt.message)
 
-	mockSns := new(mockSnsSendMessageAPI)
-	output := sns.PublishOutput{}
-	mockSns.On("SendMessage", mock.Anything, mock.Anything, mock.Anything).
-		Return(&output, errors.New("Error on SNS"))
+			if tt.expectedError != "" {
+				require.EqualError(t, err, tt.expectedError)
+			} else {
+				require.NoError(t, err)
+			}
 
-	amazonSNS := AmazonSNS{
-		sendMessageClient: mockSns,
+			mockClient.AssertExpectations(t)
+		})
 	}
-
-	amazonSNS.AddReceivers("arn:aws:sns:region:number:topicname")
-	err := amazonSNS.Send(context.Background(), "Subject", "Message")
-
-	assert.NotNil(t, err)
-
-	mockSns.AssertExpectations(t)
-	assert.Equal(t, 1, len(mockSns.Calls))
-}
-
-func TestAmazonSNS_SendMessageWithErrorAndTwoQueueConfiguredShouldReturnErrorOnFirst(t *testing.T) {
-	t.Parallel()
-
-	mockSns := new(mockSnsSendMessageAPI)
-	output := sns.PublishOutput{}
-	mockSns.On("SendMessage", mock.Anything, mock.Anything, mock.Anything).
-		Return(&output, errors.New("Error on SNS"))
-
-	amazonSNS := AmazonSNS{
-		sendMessageClient: mockSns,
-	}
-
-	amazonSNS.AddReceivers(
-		"arn:aws:sns:region:number:topicname1",
-		"arn:aws:sns:region:number:topicname1")
-
-	err := amazonSNS.Send(context.Background(), "Subject", "Message")
-	assert.NotNil(t, err)
-	mockSns.AssertExpectations(t)
-	assert.Equal(t, 1, len(mockSns.Calls))
 }

@@ -2,18 +2,22 @@ package amazonses
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/credentials"
 	"github.com/aws/aws-sdk-go-v2/service/ses"
 	"github.com/aws/aws-sdk-go-v2/service/ses/types"
-	"github.com/pkg/errors"
 )
 
 //go:generate mockery --name=sesClient --output=. --case=underscore --inpackage
 type sesClient interface {
-	SendEmail(ctx context.Context, params *ses.SendEmailInput, optFns ...func(options *ses.Options)) (*ses.SendEmailOutput, error)
+	SendEmail(
+		ctx context.Context,
+		params *ses.SendEmailInput,
+		optFns ...func(options *ses.Options),
+	) (*ses.SendEmailOutput, error)
 }
 
 // Compile-time check to ensure that ses.Client implements the sesClient interface.
@@ -79,7 +83,7 @@ func (a AmazonSES) Send(ctx context.Context, subject, message string) error {
 
 	_, err := a.client.SendEmail(ctx, input)
 	if err != nil {
-		return errors.Wrap(err, "failed to send mail using Amazon SES service")
+		return fmt.Errorf("send mail using Amazon SES service: %w", err)
 	}
 
 	return nil

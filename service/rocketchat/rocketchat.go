@@ -2,11 +2,11 @@ package rocketchat
 
 import (
 	"context"
+	"fmt"
 	"net/url"
 
 	"github.com/RocketChat/Rocket.Chat.Go.SDK/models"
 	"github.com/RocketChat/Rocket.Chat.Go.SDK/rest"
-	"github.com/pkg/errors"
 )
 
 // RocketChat struct holds necessary data to communicate with the RocketChat API.
@@ -64,9 +64,10 @@ func (r *RocketChat) Send(ctx context.Context, subject, message string) error {
 			}
 			_, err := r.client.PostMessage(&msg)
 			if err != nil {
-				return errors.Wrapf(err, "failed to send message to RocketChat channel '%s'", channelName)
+				return fmt.Errorf("send message to channel %q: %w", channelName, err)
 			}
 		}
 	}
+
 	return nil
 }

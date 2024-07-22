@@ -1,48 +1,34 @@
-name: Test & Lint
-on:
-  push:
-    tags:
-      - "v*.*.*"
-    branches:
-      - main
-  pull_request:
+name: Go-test
+on: [push, pull_request]
+
 jobs:
-  test:
-    strategy:
-      matrix:
-        go-version: [ 1.19.x ]
-        os: [ ubuntu-latest ]
-    runs-on: ${{ matrix.os }}
+  build:
+    runs-on: ubuntu-latest
+
     steps:
-      - name: Install Go
+      - uses: actions/checkout@v4
+      - name: Setup Go
         uses: actions/setup-go@v5
         with:
-          go-version: ${{ matrix.go-version }}
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - uses: actions/cache@v4
-        name: Prepare cache
-        with:
-          # In order:
-          # * Module download cache
-          # * Build cache (Linux)
-          path: |
-            ~/go/pkg/mod
-            ~/.cache/go-build
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
+          go-version: stable
+      - name: Build
+        run: go build -v ./...
+      - name: Test with the Go CLI
+        run: go test ./...
       - name: Test coverage
         run: go test -race -covermode=atomic -coverprofile=coverage.out ./...
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
 
-  lint:
+  golangci:
+    name: lint
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
         with:
-          go-version: 1.19
-      - uses: actions/checkout@v4
-      - name: Lint
+          go-version: stable
+      - name: golangci-lint
         uses: golangci/golangci-lint-action@v6
+        with:
+          version: v1.59

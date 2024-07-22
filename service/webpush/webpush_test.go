@@ -14,13 +14,13 @@ import (
 	"github.com/google/go-cmp/cmp"
 )
 
-// Allows us to simulate an error returned from the server on a per-request basis
+// Allows us to simulate an error returned from the server on a per-request basis.
 const headerTestError = "X-Test-Error"
 
-// checkFunc is a function that checks a request and returns an error if the check fails
+// checkFunc is a function that checks a request and returns an error if the check fails.
 type checkFunc func(r *http.Request) error
 
-// checkMethod returns a checkFunc that checks the request method
+// checkMethod returns a checkFunc that checks the request method.
 func checkMethod(method string) func(r *http.Request) error {
 	return func(r *http.Request) error {
 		if r.Method != method {
@@ -30,7 +30,7 @@ func checkMethod(method string) func(r *http.Request) error {
 	}
 }
 
-// checkHeader returns a checkFunc that checks the request header
+// checkHeader returns a checkFunc that checks the request header.
 func checkHeader(key, value string) func(r *http.Request) error {
 	return func(r *http.Request) error {
 		if r.Header.Get(key) != value {
@@ -40,11 +40,13 @@ func checkHeader(key, value string) func(r *http.Request) error {
 	}
 }
 
-// defaultChecks is the default set of checks used for testing
-var defaultChecks = []checkFunc{
-	checkMethod("POST"),
-	checkHeader("Content-Type", "application/octet-stream"),
-	checkHeader("Content-Encoding", "aes128gcm"),
+// defaultChecks is the default set of checks used for testing.
+func defaultChecks() []checkFunc {
+	return []checkFunc{
+		checkMethod("POST"),
+		checkHeader("Content-Type", "application/octet-stream"),
+		checkHeader("Content-Encoding", "aes128gcm"),
+	}
 }
 
 // newWebpushHandlerWithChecks returns a new http.Handler that checks the request against the given checks and returns
@@ -70,9 +72,10 @@ func newWebpushHandlerWithChecks(checks ...checkFunc) http.Handler {
 	})
 }
 
+//nolint:gochecknoglobals // These are used across tests and read-only.
 var vapidPublicKey, vapidPrivateKey string
 
-// TestMain sets up a test server to handle the requests
+// TestMain sets up a test server to handle the requests.
 func TestMain(m *testing.M) {
 	// Generate a VAPID key pair
 	privateKey, publicKey, err := webpush.GenerateVAPIDKeys()
@@ -86,8 +89,8 @@ func TestMain(m *testing.M) {
 	os.Exit(m.Run())
 }
 
-func getValidSubscription() Subscription {
-	return Subscription{
+func getValidSubscription() webpush.Subscription {
+	return webpush.Subscription{
 		Keys: webpush.Keys{
 			P256dh: "BNNL5ZaTfK81qhXOx23-wewhigUeFb632jN6LvRWCFH1ubQr77FE_9qV1FuojuRmHP42zmf34rXgW80OvUVDgTk",
 			Auth:   "zqbxT6JKstKSY9JKibZLSQ",
@@ -104,6 +107,7 @@ func getInvalidSubscription() Subscription {
 	}
 }
 
+//nolint:tparallel // We need to run the sub-tests sequentially.
 func TestService_Send(t *testing.T) {
 	t.Parallel()
 
@@ -144,7 +148,7 @@ func TestService_Send(t *testing.T) {
 			},
 			handler: newWebpushHandlerWithChecks(
 				append(
-					defaultChecks,
+					defaultChecks(),
 					checkHeader("TTL", "60"),
 					checkHeader("Topic", "test-topic"),
 					checkHeader("Urgency", string(UrgencyHigh)),
@@ -166,7 +170,7 @@ func TestService_Send(t *testing.T) {
 				message: "message",
 				options: webpush.Options{},
 			},
-			handler: newWebpushHandlerWithChecks(defaultChecks...),
+			handler: newWebpushHandlerWithChecks(defaultChecks()...),
 			wantErr: false,
 		},
 		{
@@ -181,7 +185,7 @@ func TestService_Send(t *testing.T) {
 				message: "message",
 				options: webpush.Options{},
 			},
-			handler: newWebpushHandlerWithChecks(defaultChecks...),
+			handler: newWebpushHandlerWithChecks(defaultChecks()...),
 			wantErr: false,
 		},
 		{
@@ -196,7 +200,7 @@ func TestService_Send(t *testing.T) {
 				message: "message",
 				options: webpush.Options{},
 			},
-			handler: newWebpushHandlerWithChecks(defaultChecks...),
+			handler: newWebpushHandlerWithChecks(defaultChecks()...),
 			wantErr: false,
 		},
 		{
@@ -213,7 +217,7 @@ func TestService_Send(t *testing.T) {
 				message: "message",
 				options: webpush.Options{},
 			},
-			handler: newWebpushHandlerWithChecks(defaultChecks...),
+			handler: newWebpushHandlerWithChecks(defaultChecks()...),
 			wantErr: false, // Yes, does not cause an error
 		},
 		{
@@ -230,7 +234,7 @@ func TestService_Send(t *testing.T) {
 				message: "message",
 				options: webpush.Options{},
 			},
-			handler: newWebpushHandlerWithChecks(defaultChecks...),
+			handler: newWebpushHandlerWithChecks(defaultChecks()...),
 			wantErr: false, // Yes, does not cause an error
 		},
 		{
@@ -247,7 +251,7 @@ func TestService_Send(t *testing.T) {
 				message: "message",
 				options: webpush.Options{},
 			},
-			handler: newWebpushHandlerWithChecks(defaultChecks...),
+			handler: newWebpushHandlerWithChecks(defaultChecks()...),
 			wantErr: false, // Yes, does not cause an error
 		},
 		{
@@ -264,12 +268,11 @@ func TestService_Send(t *testing.T) {
 				message: "message",
 				options: webpush.Options{},
 			},
-			handler: newWebpushHandlerWithChecks(defaultChecks...),
+			handler: newWebpushHandlerWithChecks(defaultChecks()...),
 			wantErr: true,
 		},
 	}
 
-	//nolint:paralleltest
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			fakeWebpushServer := httptest.NewServer(tt.handler)
@@ -363,7 +366,6 @@ func TestService_withOptions(t *testing.T) {
 		},
 	}
 	for _, tt := range tests {
-		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 
@@ -423,7 +425,6 @@ func TestNew(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 
@@ -505,7 +506,6 @@ func TestService_AddReceivers(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 
@@ -588,7 +588,6 @@ func Test_ContextBinding(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 
@@ -655,7 +654,6 @@ func Test_payloadFromContext(t *testing.T) {
 	}
 
 	for _, tt := range tests {
-		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 

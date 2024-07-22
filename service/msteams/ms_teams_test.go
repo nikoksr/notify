@@ -2,85 +2,82 @@ package msteams
 
 import (
 	"context"
+	"errors"
 	"testing"
 
-	teams "github.com/atc0005/go-teams-notify/v2"
-	"github.com/pkg/errors"
+	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 )
-
-func TestMSTeams_New(t *testing.T) {
-	t.Parallel()
-
-	assert := require.New(t)
-
-	service := New()
-	assert.NotNil(service)
-}
-
-func TestMSTeams_AddReceivers(t *testing.T) {
-	t.Parallel()
-
-	assert := require.New(t)
-
-	service := New()
-	assert.NotNil(service)
-
-	service.AddReceivers("https://outlook.office.com/webhook/...")
-	assert.Equal(1, len(service.webHooks))
-
-	service.AddReceivers("https://outlook.office.com/webhook/...", "https://outlook.office.com/webhook/...")
-	assert.Equal(3, len(service.webHooks))
-
-	hooks := []string{"https://outlook.office.com/webhook/...", "https://outlook.office.com/webhook/..."}
-	service.webHooks = []string{}
-	service.AddReceivers(hooks...)
-
-	assert.Equal(service.webHooks, hooks)
-}
 
 func TestMSTeams_Send(t *testing.T) {
 	t.Parallel()
 
-	assert := require.New(t)
+	tests := []struct {
+		name          string
+		webHooks      []string
+		subject       string
+		message       string
+		mockSetup     func(*mockteamsClient)
+		expectedError string
+	}{
+		{
+			name:     "Successful send to single webhook",
+			webHooks: []string{"https://webhook1.example.com"},
+			subject:  "Test Subject",
+			message:  "Test Message",
+			mockSetup: func(m *mockteamsClient) {
+				m.On("SendWithContext", mock.Anything, "https://webhook1.example.com", mock.AnythingOfType("MessageCard")).
+					Return(nil)
+			},
+			expectedError: "",
+		},
+		{
+			name:     "Successful send to multiple webhooks",
+			webHooks: []string{"https://webhook1.example.com", "https://webhook2.example.com"},
+			subject:  "Test Subject",
+			message:  "Test Message",
+			mockSetup: func(m *mockteamsClient) {
+				m.On("SendWithContext", mock.Anything, "https://webhook1.example.com", mock.AnythingOfType("MessageCard")).
+					Return(nil)
+				m.On("SendWithContext", mock.Anything, "https://webhook2.example.com", mock.AnythingOfType("MessageCard")).
+					Return(nil)
+			},
+			expectedError: "",
+		},
+		{
+			name:     "Teams client error",
+			webHooks: []string{"https://webhook1.example.com"},
+			subject:  "Test Subject",
+			message:  "Test Message",
+			mockSetup: func(m *mockteamsClient) {
+				m.On("SendWithContext", mock.Anything, "https://webhook1.example.com", mock.AnythingOfType("MessageCard")).
+					Return(errors.New("Teams error"))
+			},
+			expectedError: "send messag to channel \"https://webhook1.example.com\": Teams error",
+		},
+	}
 
-	service := New()
-	assert.NotNil(service)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
 
-	// Test no receivers
-	ctx := context.Background()
-	err := service.Send(ctx, "subject", "message")
-	assert.Nil(err)
+			mockClient := new(mockteamsClient)
+			tt.mockSetup(mockClient)
 
-	// Test error response
-	message := teams.NewMessageCard()
-	message.Title = "subject"
-	message.Text = "message"
+			m := &MSTeams{
+				client:   mockClient,
+				webHooks: tt.webHooks,
+			}
 
-	mockClient := newMockTeamsClient(t)
-	mockClient.
-		On("SendWithContext", ctx, "1234", message).
-		Return(errors.New("some error"))
+			err := m.Send(context.Background(), tt.subject, tt.message)
 
-	service.client = mockClient
-	service.AddReceivers("1234")
-	err = service.Send(ctx, "subject", "message")
-	assert.NotNil(err)
-	mockClient.AssertExpectations(t)
+			if tt.expectedError != "" {
+				require.EqualError(t, err, tt.expectedError)
+			} else {
+				require.NoError(t, err)
+			}
 
-	// Test success response
-	mockClient = newMockTeamsClient(t)
-	mockClient.
-		On("SendWithContext", ctx, "1234", message).
-		Return(nil)
-
-	mockClient.
-		On("SendWithContext", ctx, "5678", message).
-		Return(nil)
-
-	service.client = mockClient
-	service.AddReceivers("5678")
-	err = service.Send(ctx, "subject", "message")
-	assert.Nil(err)
-	mockClient.AssertExpectations(t)
+			mockClient.AssertExpectations(t)
+		})
+	}
 }

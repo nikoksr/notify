@@ -2,9 +2,9 @@ package dingding
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/blinkbean/dingtalk"
-	"github.com/pkg/errors"
 )
 
 // Service encapsulates the DingTalk client.
@@ -26,6 +26,7 @@ func New(cfg *Config) *Service {
 		config: *cfg,
 		client: dt,
 	}
+
 	return &s
 }
 
@@ -38,7 +39,7 @@ func (s *Service) Send(ctx context.Context, subject, content string) error {
 		text := subject + "\n" + content
 		err := s.client.SendTextMessage(text)
 		if err != nil {
-			return errors.Wrapf(err, "failed to send message")
+			return fmt.Errorf("send message: %w", err)
 		}
 	}
 

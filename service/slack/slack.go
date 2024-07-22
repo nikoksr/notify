@@ -2,12 +2,11 @@ package slack
 
 import (
 	"context"
+	"fmt"
 
-	"github.com/pkg/errors"
 	"github.com/slack-go/slack"
 )
 
-//go:generate mockery --name=slackClient --output=. --case=underscore --inpackage
 type slackClient interface {
 	PostMessageContext(ctx context.Context, channelID string, options ...slack.MsgOption) (string, string, error)
 }
@@ -53,13 +52,13 @@ func (s Slack) Send(ctx context.Context, subject, message string) error {
 		case <-ctx.Done():
 			return ctx.Err()
 		default:
-			id, timestamp, err := s.client.PostMessageContext(
+			_, _, err := s.client.PostMessageContext(
 				ctx,
 				channelID,
 				slack.MsgOptionText(fullMessage, false),
 			)
 			if err != nil {
-				return errors.Wrapf(err, "failed to send message to Slack channel '%s' at time '%s'", id, timestamp)
+				return fmt.Errorf("send message to channel %q: %w", channelID, err)
 			}
 		}
 	}

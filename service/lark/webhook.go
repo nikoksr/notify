@@ -50,10 +50,14 @@ func (w *larkClientGoLarkNotificationBot) Send(subject, message string) error {
 	msg := lark.NewMsgBuffer(lark.MsgPost).Post(content)
 	res, err := w.bot.PostNotificationV2(msg.Build())
 	if err != nil {
-		return fmt.Errorf("failed to post webhook message: %w", err)
+		return fmt.Errorf("post webhook message: %w", err)
 	}
 	if res.Code != 0 {
-		return fmt.Errorf("send failed with error code %d, please see https://open.larksuite.com/document/ukTMukTMukTM/ugjM14COyUjL4ITN for details", res.Code)
+		return fmt.Errorf(
+			"send failed with error code %d, please see "+
+				"https://open.larksuite.com/document/ukTMukTMukTM/ugjM14COyUjL4ITN for details",
+			res.Code,
+		)
 	}
 	return nil
 }
