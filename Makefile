@@ -7,12 +7,11 @@ export GOPROXY = https://proxy.golang.org,direct
 
 # Install all the build and lint dependencies
 tools:
-	go mod tidy
 	@go install mvdan.cc/gofumpt@latest
 	@go install github.com/daixiang0/gci@latest
 	@go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
-	@go install github.com/vektra/mockery/v2@latest
-	go install github.com/segmentio/golines@latest
+	@go install github.com/vektra/mockery/v2@v2.44.1
+	@go install github.com/segmentio/golines@latest
 .PHONY: tools
 
 ###############################################################################
