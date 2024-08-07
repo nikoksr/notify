@@ -34,8 +34,8 @@ github.com/antihax/optional v1.0.0 h1:xK2lYat7ZLaVVcIuj82J8kIro4V6kDe0AUDFboUCwc
 github.com/antihax/optional v1.0.0/go.mod h1:uupD/76wgC+ih3iEmQUL+0Ugr19nfwCT1kdvxnR2qWY=
 github.com/appleboy/go-fcm v1.2.1 h1:NhpACabtRuAplYg6bTNfSr3LBwsSuutP55HsphzLU/g=
 github.com/appleboy/go-fcm v1.2.1/go.mod h1:5FzMN+9J2sxnkoys9h3y48GQH8HnI637Q/ro/uP2Qsk=
-github.com/atc0005/go-teams-notify/v2 v2.10.0 h1:eQvRIkyESQgBvlUdQ/iPol/lj3QcRyrdEQM3+c/nXhM=
-github.com/atc0005/go-teams-notify/v2 v2.10.0/go.mod h1:SIeE1UfCcVRYMqP5b+r1ZteHyA/2UAjzWF5COnZ8q0w=
+github.com/atc0005/go-teams-notify/v2 v2.12.0-alpha.1 h1:0km5FZ3RYE3nQn8nnptNJ3DjYIAm1k7+mtoZUByKjJc=
+github.com/atc0005/go-teams-notify/v2 v2.12.0-alpha.1/go.mod h1:WSv9moolRsBcpZbwEf6gZxj7h0uJlJskJq5zkEWKO8Y=
 github.com/aws/aws-sdk-go-v2 v1.30.3 h1:jUeBtG0Ih+ZIFH0F4UkmL9w3cSpaMv9tYYDbzILP8dY=
 github.com/aws/aws-sdk-go-v2 v1.30.3/go.mod h1:nIQjQVp5sfpQcTc9mPSr1B0PaWK5ByX9MOoDadSN4lc=
 github.com/aws/aws-sdk-go-v2/config v1.27.27 h1:HdqgGt1OAP0HkEDDShEl0oSYa9ZZBSOmKpdpsDMdO90=

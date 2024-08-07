@@ -1,4 +1,3 @@
-//nolint:staticcheck // Will fix deprecated dependencies soon.
 package msteams
 
 import (
@@ -6,20 +5,23 @@ import (
 	"fmt"
 
 	teams "github.com/atc0005/go-teams-notify/v2"
+	"github.com/atc0005/go-teams-notify/v2/adaptivecard"
 )
 
 type teamsClient interface {
-	SendWithContext(ctx context.Context, webhookURL string, webhookMessage teams.MessageCard) error
-	SkipWebhookURLValidationOnSend(skip bool) teams.API
+	SendWithContext(ctx context.Context, webhookURL string, message teams.TeamsMessage) error
+	SkipWebhookURLValidationOnSend(skip bool) *teams.TeamsClient
 }
 
 // Compile-time check to ensure that teams.Client implements the teamsClient interface.
-var _ teamsClient = teams.NewClient()
+var _ teamsClient = teams.NewTeamsClient()
 
 // MSTeams struct holds necessary data to communicate with the MSTeams API.
 type MSTeams struct {
 	client   teamsClient
 	webHooks []string
+
+	wrapText bool
 }
 
 // New returns a new instance of a MSTeams notification service.
@@ -27,7 +29,7 @@ type MSTeams struct {
 //
 //	-> https://github.com/atc0005/go-teams-notify#example-basic
 func New() *MSTeams {
-	client := teams.NewClient()
+	client := teams.NewTeamsClient()
 
 	m := &MSTeams{
 		client:   client,
@@ -46,6 +48,11 @@ func (m *MSTeams) DisableWebhookValidation() {
 	m.client.SkipWebhookURLValidationOnSend(true)
 }
 
+// WithWrapText sets the wrapText field to the provided value. This is disabled by default.
+func (m *MSTeams) WithWrapText(wrapText bool) {
+	m.wrapText = wrapText
+}
+
 // AddReceivers takes MSTeams channel web-hooks and adds them to the internal web-hook list. The Send method will send
 // a given message to all those chats.
 func (m *MSTeams) AddReceivers(webHooks ...string) {
@@ -58,18 +65,18 @@ func (m *MSTeams) AddReceivers(webHooks ...string) {
 //
 //	-> https://github.com/atc0005/go-teams-notify#example-basic
 func (m MSTeams) Send(ctx context.Context, subject, message string) error {
-	msgCard := teams.NewMessageCard()
-	msgCard.Title = subject
-	msgCard.Text = message
+	msg, err := adaptivecard.NewSimpleMessage(message, subject, m.wrapText)
+	if err != nil {
+		return fmt.Errorf("create message: %w", err)
+	}
 
 	for _, webHook := range m.webHooks {
 		select {
 		case <-ctx.Done():
 			return ctx.Err()
 		default:
-			err := m.client.SendWithContext(ctx, webHook, msgCard)
-			if err != nil {
-				return fmt.Errorf("send messag to channel %q: %w", webHook, err)
+			if err = m.client.SendWithContext(ctx, webHook, msg); err != nil {
+				return fmt.Errorf("send message to channel %q: %w", webHook, err)
 			}
 		}
 	}
