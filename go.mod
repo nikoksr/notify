@@ -21,7 +21,7 @@ require (
 	github.com/line/line-bot-sdk-go v7.8.0+incompatible
 	github.com/mailgun/mailgun-go/v4 v4.12.0
 	github.com/plivo/plivo-go/v7 v7.51.0
-	github.com/sendgrid/sendgrid-go v3.14.0+incompatible
+	github.com/sendgrid/sendgrid-go v3.15.0+incompatible
 	github.com/silenceper/wechat/v2 v2.1.6
 	github.com/slack-go/slack v0.13.1
 	github.com/stretchr/testify v1.9.0
