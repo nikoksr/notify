@@ -15,6 +15,7 @@
 
 > <p align="center">A dead simple Go library for sending notifications to various messaging services.</p>
 
+> [!NOTE]
 > **[July 2024 Update]**: Notify is back under active maintenance! [Read the full announcement here](https://github.com/nikoksr/notify/discussions/840).
 
 <h1></h1>
@@ -67,8 +68,6 @@ In this example, we use the global `Send()` function. Similar to most logging li
 libraries, we also recommend avoiding the use of global functions as much as possible. Instead, use one of our versatile
 constructor functions to create a new local `Notify` instance and pass it down the stream.
 
-Read the [library docs](https://pkg.go.dev/github.com/nikoksr/notify#section-documentation) for more information.
-
 ## Contributing <a id="contributing"></a>
 
 Yes, please! Contributions of all kinds are very welcome! Feel free to check our [open issues](https://github.com/nikoksr/notify/issues). Please also take a look at the [contribution guidelines](https://github.com/nikoksr/notify/blob/main/CONTRIBUTING.md).
@@ -88,7 +87,7 @@ Yes, please! Contributions of all kinds are very welcome! Feel free to check our
 | [Discord](https://discord.com)                                                    | [service/discord](service/discord)       | [bwmarrin/discordgo](https://github.com/bwmarrin/discordgo)                                     | :heavy_check_mark: |
 | [Email](https://wikipedia.org/wiki/Email)                                         | [service/mail](service/mail)             | [jordan-wright/email](https://github.com/jordan-wright/email)                                   | :heavy_check_mark: |
 | [Firebase Cloud Messaging](https://firebase.google.com/docs/cloud-messaging)      | [service/fcm](service/fcm)               | [appleboy/go-fcm](https://github.com/appleboy/go-fcm)                                           | :heavy_check_mark: |
- | [Google Chat](https://workspace.google.com/intl/en/products/chat/)                | [service/googlechat](service/googlechat) | [googleapis/google-api-go-client](https://google.golang.org/api/chat/v1)                        | :heavy_check_mark: |
+| [Google Chat](https://workspace.google.com/intl/en/products/chat/)                | [service/googlechat](service/googlechat) | [googleapis/google-api-go-client](https://google.golang.org/api/chat/v1)                        | :heavy_check_mark: |
 | [HTTP](https://wikipedia.org/wiki/Hypertext_Transfer_Protocol)                    | [service/http](service/http)             | -                                                                                               | :heavy_check_mark: |
 | [Lark](https://www.larksuite.com/)                                                | [service/lark](service/lark)             | [go-lark/lark](https://github.com/go-lark/lark)                                                 | :heavy_check_mark: |
 | [Line](https://line.me)                                                           | [service/line](service/line)             | [line/line-bot-sdk-go](https://github.com/line/line-bot-sdk-go)                                 | :heavy_check_mark: |
@@ -123,13 +122,10 @@ Yes, please! Contributions of all kinds are very welcome! Feel free to check our
 
 The [logo](https://github.com/MariaLetta/free-gophers-pack) was made by the amazing [MariaLetta](https://github.com/MariaLetta).
 
-## Similar projects <a id="similar_projects"></a>
+## Support <a id="support"></a>
 
-> Just to clarify, Notify was not inspired by any other project. I created it as a tiny subpackage of a larger project and only later decided to make it a standalone project. In this section I just want to mention other great projects.
+If you find this project useful, consider giving it a ⭐️! Your support helps bring more attention to the project, allowing us to enhance it even further.
 
-  - [containrrr/shoutrrr](https://github.com/containrrr/shoutrrr)
-  - [caronc/apprise](https://github.com/caronc/apprise)
+While you're here, feel free to check out my other work:
 
-## Show your support <a id="support"></a>
-
-Please give a ⭐️ if you like the project! It draws more attention to the project, which helps us improve it even faster.
+- [nikoksr/konfetty](https://github.com/nikoksr/konfetty) - Zero-dependency, type-safe and powerful post-processing for your existing config solution in Go.
