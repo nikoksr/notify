@@ -12,11 +12,22 @@ import (
 
 // SendGrid struct holds necessary data to communicate with the SendGrid API.
 type SendGrid struct {
+	usePlainText      bool
 	client            *sendgrid.Client
 	senderAddress     string
 	senderName        string
 	receiverAddresses []string
 }
+
+// BodyType is used to specify the format of the body.
+type BodyType int
+
+const (
+	// PlainText is used to specify that the body is plain text.
+	PlainText BodyType = iota
+	// HTML is used to specify that the body is HTML.
+	HTML
+)
 
 // New returns a new instance of a SendGrid notification service.
 // You will need a SendGrid API key.
@@ -27,6 +38,7 @@ func New(apiKey, senderAddress, senderName string) *SendGrid {
 		senderAddress:     senderAddress,
 		senderName:        senderName,
 		receiverAddresses: []string{},
+		usePlainText:      false,
 	}
 }
 
@@ -36,11 +48,30 @@ func (s *SendGrid) AddReceivers(addresses ...string) {
 	s.receiverAddresses = append(s.receiverAddresses, addresses...)
 }
 
+// BodyFormat can be used to specify the format of the body.
+// Default BodyType is HTML.
+func (s *SendGrid) BodyFormat(format BodyType) {
+	switch format {
+	case PlainText:
+		s.usePlainText = true
+	case HTML:
+		s.usePlainText = false
+	default:
+		s.usePlainText = false
+	}
+}
+
 // Send takes a message subject and a message body and sends them to all previously set chats. Message body supports
 // html as markup language.
 func (s SendGrid) Send(ctx context.Context, subject, message string) error {
 	from := mail.NewEmail(s.senderName, s.senderAddress)
-	content := mail.NewContent("text/html", message)
+	var contentType string
+	if s.usePlainText {
+		contentType = "text/plain"
+	} else {
+		contentType = "text/html"
+	}
+	content := mail.NewContent(contentType, message)
 
 	// Create a new personalization instance to be able to add multiple receiver addresses.
 	personalization := mail.NewPersonalization()
