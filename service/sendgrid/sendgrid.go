@@ -86,18 +86,13 @@ func (s SendGrid) Send(ctx context.Context, subject, message string) error {
 	mailMessage.AddContent(content)
 	mailMessage.SetFrom(from)
 
-	select {
-	case <-ctx.Done():
-		return ctx.Err()
-	default:
-		resp, err := s.client.Send(mailMessage)
-		if err != nil {
-			return fmt.Errorf("send message: %w", err)
-		}
+	resp, err := s.client.SendWithContext(ctx, mailMessage)
+	if err != nil {
+		return fmt.Errorf("send message: %w", err)
+	}
 
-		if resp.StatusCode != http.StatusAccepted {
-			return errors.New("the SendGrid endpoint did not accept the message")
-		}
+	if resp.StatusCode != http.StatusAccepted {
+		return errors.New("the SendGrid endpoint did not accept the message")
 	}
 
 	return nil
