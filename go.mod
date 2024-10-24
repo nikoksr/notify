@@ -19,7 +19,7 @@ require (
 	github.com/dghubble/oauth1 v0.7.3
 	github.com/go-telegram-bot-api/telegram-bot-api v4.6.4+incompatible
 	github.com/line/line-bot-sdk-go v7.8.0+incompatible
-	github.com/mailgun/mailgun-go/v4 v4.15.0
+	github.com/mailgun/mailgun-go/v4 v4.16.0
 	github.com/plivo/plivo-go/v7 v7.51.0
 	github.com/sendgrid/sendgrid-go v3.15.0+incompatible
 	github.com/silenceper/wechat/v2 v2.1.7
@@ -72,6 +72,7 @@ require (
 	github.com/googleapis/enterprise-certificate-proxy v0.3.2 // indirect
 	github.com/googleapis/gax-go/v2 v2.13.0 // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect
+	github.com/mailgun/errors v0.3.0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
