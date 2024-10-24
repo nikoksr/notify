@@ -11,9 +11,6 @@ func TestNotifySend(t *testing.T) {
 	t.Parallel()
 
 	n := New()
-	if n == nil {
-		t.Fatal("New() returned nil")
-	}
 	if n.Disabled {
 		t.Fatal("New() returned disabled Notifier")
 	}

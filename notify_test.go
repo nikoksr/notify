@@ -13,9 +13,7 @@ func TestNew(t *testing.T) {
 	t.Parallel()
 
 	n1 := New()
-	if n1 == nil {
-		t.Fatal("New() returned nil")
-	}
+
 	if n1.Disabled {
 		t.Fatal("New() returned disabled Notifier")
 	}
@@ -56,9 +54,7 @@ func TestDefault(t *testing.T) {
 	t.Parallel()
 
 	n := Default()
-	if n == nil {
-		t.Fatal("Default() returned nil")
-	}
+
 	if n.Disabled {
 		t.Fatal("Default() returned disabled Notifier")
 	}
@@ -71,24 +67,14 @@ func TestDefault(t *testing.T) {
 func TestNewWithServices(t *testing.T) {
 	t.Parallel()
 
-	n1 := NewWithServices()
-	if n1 == nil {
-		t.Fatal("NewWithServices() returned nil")
-	}
-
 	n2 := NewWithServices(nil)
-	if n2 == nil {
-		t.Fatal("NewWithServices(nil) returned nil")
-	}
+
 	if len(n2.notifiers) != 0 {
 		t.Error("NewWithServices(nil) did not return empty Notifier")
 	}
 
 	mailService := mail.New("", "")
 	n3 := NewWithServices(mailService)
-	if n3 == nil {
-		t.Fatal("NewWithServices(mail.New()) returned nil")
-	}
 	if len(n3.notifiers) != 1 {
 		t.Errorf("NewWithServices(mail.New()) was expected to have 1 notifier but had %d", len(n3.notifiers))
 	} else {
