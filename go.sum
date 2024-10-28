@@ -263,8 +263,8 @@ github.com/line/line-bot-sdk-go v7.8.0+incompatible h1:Uf9/OxV0zCVfqyvwZPH8CrdiH
 github.com/line/line-bot-sdk-go v7.8.0+incompatible/go.mod h1:0RjLjJEAU/3GIcHkC3av6O4jInAbt25nnZVmOFUgDBg=
 github.com/mailgun/errors v0.4.0 h1:6LFBvod6VIW83CMIOT9sYNp28TCX0NejFPP4dSX++i8=
 github.com/mailgun/errors v0.4.0/go.mod h1:xGBaaKdEdQT0/FhwvoXv4oBaqqmVZz9P1XEnvD/onc0=
-github.com/mailgun/mailgun-go/v4 v4.17.0 h1:tFgWyIYfYV0nci8ij20fifqsgdvOGA9T+2HTlWxuMec=
-github.com/mailgun/mailgun-go/v4 v4.17.0/go.mod h1:0ood70bQR/SffQ9NxIsAY06H+HG0hrvMVApfUp9TihI=
+github.com/mailgun/mailgun-go/v4 v4.17.1 h1:J81Wm/cQdKbDSwTl9CntVNPA6urdXgYzV+nh+JfhYiw=
+github.com/mailgun/mailgun-go/v4 v4.17.1/go.mod h1:0ood70bQR/SffQ9NxIsAY06H+HG0hrvMVApfUp9TihI=
 github.com/mattn/go-colorable v0.1.13 h1:fFA4WZxdEF4tXPZVKMLwD8oUnCTTo08duU7wxecdEvA=
 github.com/mattn/go-colorable v0.1.13/go.mod h1:7S9/ev0klgBDR4GtXTXX8a3vIGJpMovkB8vQcUbaXHg=
 github.com/mattn/go-isatty v0.0.16/go.mod h1:kYGgaQfpe5nmfYZH+SKPsOc2e4SrIfOl2e/yFXSvRLM=
