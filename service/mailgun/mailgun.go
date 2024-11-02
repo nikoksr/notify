@@ -40,7 +40,7 @@ func (m *Mailgun) AddReceivers(addresses ...string) {
 // Send takes a message subject and a message body and sends them to all previously set chats. Message body supports
 // html as markup language.
 func (m Mailgun) Send(ctx context.Context, subject, message string) error {
-	mailMessage := m.client.NewMessage(m.senderAddress, subject, message, m.receiverAddresses...)
+	mailMessage := mailgun.NewMessage(m.senderAddress, subject, message, m.receiverAddresses...)
 
 	_, _, err := m.client.Send(ctx, mailMessage)
 	if err != nil {

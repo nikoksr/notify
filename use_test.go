@@ -10,9 +10,6 @@ func TestUseServices(t *testing.T) {
 	t.Parallel()
 
 	n := New()
-	if n == nil {
-		t.Fatal("New() returned nil")
-	}
 	if len(n.notifiers) != 0 {
 		t.Fatalf("Expected len(n.notifiers) == 0, got %d", len(n.notifiers))
 	}
