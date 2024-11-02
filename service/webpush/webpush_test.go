@@ -615,7 +615,6 @@ func Test_payloadFromContext(t *testing.T) {
 	t.Parallel()
 
 	type args struct {
-		ctx     context.Context
 		subject string
 		message string
 		data    map[string]interface{}
@@ -629,7 +628,6 @@ func Test_payloadFromContext(t *testing.T) {
 		{
 			name: "Payload with only subject and message",
 			args: args{
-				ctx:     context.Background(),
 				subject: "test",
 				message: "test",
 			},
@@ -638,7 +636,6 @@ func Test_payloadFromContext(t *testing.T) {
 		{
 			name: "Payload with subject, message and data",
 			args: args{
-				ctx:     context.Background(),
 				subject: "test",
 				message: "test",
 				data: map[string]interface{}{
@@ -657,11 +654,13 @@ func Test_payloadFromContext(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 
+			ctx := context.Background()
+
 			if tt.args.data != nil {
-				tt.args.ctx = WithData(tt.args.ctx, tt.args.data)
+				ctx = WithData(ctx, tt.args.data)
 			}
 
-			got, err := payloadFromContext(tt.args.ctx, tt.args.subject, tt.args.message)
+			got, err := payloadFromContext(ctx, tt.args.subject, tt.args.message)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("payloadFromContext() error = %v, wantErr %v", err, tt.wantErr)
 				return
