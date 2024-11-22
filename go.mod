@@ -46,7 +46,7 @@ require (
 	firebase.google.com/go/v4 v4.14.1
 	github.com/caarlos0/go-reddit/v3 v3.0.1
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
-	google.golang.org/api v0.208.0
+	google.golang.org/api v0.209.0
 )
 
 require (
