@@ -24,7 +24,7 @@ require (
 	github.com/sendgrid/sendgrid-go v3.16.0+incompatible
 	github.com/silenceper/wechat/v2 v2.1.7
 	github.com/slack-go/slack v0.15.0
-	github.com/stretchr/testify v1.9.0
+	github.com/stretchr/testify v1.10.0
 	github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.23575
 	github.com/utahta/go-linenotify v0.5.0
 	golang.org/x/sync v0.9.0
