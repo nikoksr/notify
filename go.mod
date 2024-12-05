@@ -43,7 +43,7 @@ require (
 require github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 
 require (
-	firebase.google.com/go/v4 v4.14.1
+	firebase.google.com/go/v4 v4.15.1
 	github.com/caarlos0/go-reddit/v3 v3.0.1
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	google.golang.org/api v0.210.0
@@ -76,7 +76,7 @@ require (
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
-	github.com/golang-jwt/jwt/v4 v4.5.0 // indirect
+	github.com/golang-jwt/jwt/v4 v4.5.1 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/google/s2a-go v0.1.8 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.3.4 // indirect
