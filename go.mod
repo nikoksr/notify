@@ -31,7 +31,7 @@ require (
 )
 
 require (
-	github.com/SherClockHolmes/webpush-go v1.3.0
+	github.com/SherClockHolmes/webpush-go v1.4.0
 	github.com/appleboy/go-fcm v1.2.1
 	github.com/drswork/go-twitter v0.0.0-20221107160839-dea1b6ed53d7
 	github.com/go-lark/lark v1.15.0
@@ -39,8 +39,6 @@ require (
 	github.com/kevinburke/twilio-go v0.0.0-20240716172313-813590983ccc
 	maunium.net/go/mautrix v0.22.1
 )
-
-require github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 
 require (
 	firebase.google.com/go/v4 v4.15.1
@@ -77,6 +75,7 @@ require (
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/golang-jwt/jwt/v4 v4.5.1 // indirect
+	github.com/golang-jwt/jwt/v5 v5.2.1 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/google/s2a-go v0.1.8 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.3.4 // indirect
