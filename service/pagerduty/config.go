@@ -1,6 +1,7 @@
 package pagerduty
 
 import (
+	"errors"
 	"fmt"
 	"net/mail"
 
@@ -33,7 +34,7 @@ func NewConfig() *Config {
 // It returns an error if the configuration is invalid.
 func (c *Config) OK() error {
 	if c.FromAddress == "" {
-		return fmt.Errorf("from address is required")
+		return errors.New("from address is required")
 	}
 
 	_, err := mail.ParseAddress(c.FromAddress)
@@ -42,11 +43,11 @@ func (c *Config) OK() error {
 	}
 
 	if len(c.Receivers) == 0 {
-		return fmt.Errorf("at least one receiver is required")
+		return errors.New("at least one receiver is required")
 	}
 
 	if c.NotificationType == "" {
-		return fmt.Errorf("notification type is required")
+		return errors.New("notification type is required")
 	}
 
 	return nil

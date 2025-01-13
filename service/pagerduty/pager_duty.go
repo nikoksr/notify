@@ -2,6 +2,7 @@ package pagerduty
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/PagerDuty/go-pagerduty"
@@ -9,7 +10,7 @@ import (
 )
 
 type Client interface {
-	CreateIncidentWithContext(ctx context.Context, from string, options *pagerduty.CreateIncidentOptions) (*pagerduty.Incident, error)
+	CreateIncidentWithContext(ctx context.Context, from string, options *pagerduty.CreateIncidentOptions) (*pagerduty.Incident, error) //nolint:lll // acceptable in this case, alternative makes the interface even less readable
 }
 
 // Compile-time check to verify that the PagerDuty type implements the notifier.Notifier interface.
@@ -22,7 +23,7 @@ type PagerDuty struct {
 
 func New(token string, clientOptions ...pagerduty.ClientOptions) (*PagerDuty, error) {
 	if token == "" {
-		return nil, fmt.Errorf("access token is required")
+		return nil, errors.New("access token is required")
 	}
 
 	pagerDuty := &PagerDuty{
@@ -46,7 +47,7 @@ func (s *PagerDuty) Send(ctx context.Context, subject, message string) error {
 
 		_, err := s.Client.CreateIncidentWithContext(ctx, s.Config.FromAddress, incident)
 		if err != nil {
-			return fmt.Errorf("failed to create pager duty incident: %w", err)
+			return fmt.Errorf("create pager duty incident: %w", err)
 		}
 	}
 

@@ -1,7 +1,6 @@
 package pagerduty_test
 
 import (
-	"fmt"
 	"testing"
 
 	gopagerduty "github.com/PagerDuty/go-pagerduty"
@@ -23,13 +22,13 @@ func TestConfig_NewConfig(t *testing.T) {
 	require.Equal(t, want, config)
 }
 
-func TestConfig_OK(t *testing.T) {
+func TestConfig_OK(t *testing.T) { //nolint:funlen
 	t.Parallel()
 
 	tests := []struct {
 		name    string
 		config  *pagerduty.Config
-		wantErr error
+		wantErr string
 	}{
 		{
 			name: "ok_basic_config",
@@ -38,7 +37,7 @@ func TestConfig_OK(t *testing.T) {
 				Receivers:        []string{"AB1234", "CD5678"},
 				NotificationType: "incident",
 			},
-			wantErr: nil,
+			wantErr: "",
 		},
 		{
 			name: "ok_complete_config",
@@ -49,14 +48,14 @@ func TestConfig_OK(t *testing.T) {
 				PriorityID:       "P1234",
 				NotificationType: "incident",
 			},
-			wantErr: nil,
+			wantErr: "",
 		},
 		{
 			name: "missing_from_address",
 			config: &pagerduty.Config{
 				Receivers: []string{"AB1234", "CD5678"},
 			},
-			wantErr: fmt.Errorf("from address is required"),
+			wantErr: "from address is required",
 		},
 		{
 			name: "invalid_from_address",
@@ -64,14 +63,14 @@ func TestConfig_OK(t *testing.T) {
 				FromAddress: "senderdomain.com",
 				Receivers:   []string{"AB1234", "CD5678"},
 			},
-			wantErr: fmt.Errorf("from address is invalid: mail: missing '@' or angle-addr"),
+			wantErr: "from address is invalid: mail: missing '@' or angle-addr",
 		},
 		{
 			name: "missing_receivers",
 			config: &pagerduty.Config{
 				FromAddress: "sender@domain.com",
 			},
-			wantErr: fmt.Errorf("at least one receiver is required"),
+			wantErr: "at least one receiver is required",
 		},
 		{
 			name: "missing_notification_type",
@@ -79,7 +78,7 @@ func TestConfig_OK(t *testing.T) {
 				FromAddress: "sender@domain.com",
 				Receivers:   []string{"AB1234", "CD5678"},
 			},
-			wantErr: fmt.Errorf("notification type is required"),
+			wantErr: "notification type is required",
 		},
 	}
 
@@ -88,12 +87,12 @@ func TestConfig_OK(t *testing.T) {
 			t.Parallel()
 
 			err := test.config.OK()
-			if test.wantErr == nil {
+			if test.wantErr == "" {
 				require.NoError(t, err)
 				return
 			}
 
-			require.EqualError(t, err, test.wantErr.Error())
+			require.EqualError(t, err, test.wantErr)
 		})
 	}
 }

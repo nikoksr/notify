@@ -2,7 +2,7 @@ package pagerduty_test
 
 import (
 	"context"
-	"fmt"
+	"errors"
 	"testing"
 
 	gopagerduty "github.com/PagerDuty/go-pagerduty"
@@ -29,7 +29,7 @@ func (m *mockClient) CreateIncidentWithContext(
 
 	incident, isIncident := args.Get(0).(*gopagerduty.Incident)
 	if !isIncident {
-		return nil, fmt.Errorf("unexpected type for first argument")
+		return nil, errors.New("unexpected type for first argument")
 	}
 
 	return incident, nil
@@ -49,7 +49,7 @@ func TestPagerDuty_New(t *testing.T) {
 	assert.Equal(t, want, service)
 }
 
-func TestPagerDuty_Send(t *testing.T) {
+func TestPagerDuty_Send(t *testing.T) { //nolint:funlen
 	t.Parallel()
 
 	tests := []struct {
@@ -89,7 +89,7 @@ func TestPagerDuty_Send(t *testing.T) {
 			message: "Test Message",
 			mockSetup: func(m *mockClient) {
 				m.On("CreateIncidentWithContext", mock.Anything, "sender@domain.com", mock.Anything).
-					Return(nil, fmt.Errorf("invalid configuration: at least one receiver is required"))
+					Return(nil, errors.New("invalid configuration: at least one receiver is required"))
 			},
 			expectedError: "invalid configuration: at least one receiver is required",
 		},
