@@ -38,18 +38,29 @@ func (m *mockClient) CreateIncidentWithContext(
 func TestPagerDuty_New(t *testing.T) {
 	t.Parallel()
 
-	service, err := pagerduty.New("fake_token")
-	require.NoError(t, err)
+	t.Run("successful_new", func(t *testing.T) {
+		t.Parallel()
 
-	want := &pagerduty.PagerDuty{
-		Config: pagerduty.NewConfig(),
-		Client: gopagerduty.NewClient("fake_token"),
-	}
+		service, err := pagerduty.New("fake_token")
+		require.NoError(t, err)
 
-	assert.Equal(t, want, service)
+		want := &pagerduty.PagerDuty{
+			Config: pagerduty.NewConfig(),
+			Client: gopagerduty.NewClient("fake_token"),
+		}
+
+		assert.Equal(t, want, service)
+	})
+
+	t.Run("fail_new_invalid_token", func(t *testing.T) {
+		t.Parallel()
+
+		_, err := pagerduty.New("")
+		require.EqualError(t, err, "access token is required")
+	})
 }
 
-func TestPagerDuty_Send(t *testing.T) { //nolint:funlen
+func TestPagerDuty_Send(t *testing.T) {
 	t.Parallel()
 
 	tests := []struct {
@@ -82,6 +93,18 @@ func TestPagerDuty_Send(t *testing.T) { //nolint:funlen
 				m.On("CreateIncidentWithContext", mock.Anything, "sender@domain.com", mock.Anything).
 					Return(&gopagerduty.Incident{}, nil)
 			},
+		},
+		{
+			name:         "unsuccessful_send",
+			receivers:    []string{"AB1234"},
+			subject:      "Test Subject",
+			message:      "Test Message",
+			expectedCall: true,
+			mockSetup: func(m *mockClient) {
+				m.On("CreateIncidentWithContext", mock.Anything, "sender@domain.com", mock.Anything).
+					Return(nil, errors.New("failed to create incident"))
+			},
+			expectedError: "create pager duty incident: failed to create incident",
 		},
 		{
 			name:    "fail_send_no_receivers",

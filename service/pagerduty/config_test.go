@@ -22,7 +22,7 @@ func TestConfig_NewConfig(t *testing.T) {
 	require.Equal(t, want, config)
 }
 
-func TestConfig_OK(t *testing.T) { //nolint:funlen
+func TestConfig_OK(t *testing.T) {
 	t.Parallel()
 
 	tests := []struct {
