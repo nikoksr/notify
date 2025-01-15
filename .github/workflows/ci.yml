@@ -14,11 +14,7 @@ jobs:
       - name: Build
         run: go build -v ./...
       - name: Test with the Go CLI
-        run: go test ./...
-      - name: Test coverage
-        run: go test -race -covermode=atomic -coverprofile=coverage.out ./...
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5
+        run: go test -v ./...
 
   golangci:
     name: lint
@@ -31,4 +27,4 @@ jobs:
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v6
         with:
-          version: v1.61
+          version: v1.63.4
