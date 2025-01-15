@@ -3,14 +3,21 @@ package msteams
 import (
 	"context"
 	"fmt"
+	"net/http"
 
 	teams "github.com/atc0005/go-teams-notify/v2"
 	"github.com/atc0005/go-teams-notify/v2/adaptivecard"
 )
 
 type teamsClient interface {
+	// https://pkg.go.dev/github.com/atc0005/go-teams-notify/v2#TeamsClient.SendWithContext
 	SendWithContext(ctx context.Context, webhookURL string, message teams.TeamsMessage) error
+	// https://pkg.go.dev/github.com/atc0005/go-teams-notify/v2#TeamsClient.SkipWebhookURLValidationOnSend
 	SkipWebhookURLValidationOnSend(skip bool) *teams.TeamsClient
+	// https://pkg.go.dev/github.com/atc0005/go-teams-notify/v2#TeamsClient.SetHTTPClient
+	SetHTTPClient(httpClient *http.Client) *teams.TeamsClient
+	// https://pkg.go.dev/github.com/atc0005/go-teams-notify/v2#TeamsClient.SetUserAgent
+	SetUserAgent(userAgent string) *teams.TeamsClient
 }
 
 // Compile-time check to ensure that teams.Client implements the teamsClient interface.
@@ -57,6 +64,16 @@ func (m *MSTeams) WithWrapText(wrapText bool) {
 // a given message to all those chats.
 func (m *MSTeams) AddReceivers(webHooks ...string) {
 	m.webHooks = append(m.webHooks, webHooks...)
+}
+
+// SetUseragent allows the user to set a custom user agent.
+func (m *MSTeams) SetUseragent(userAgent string) {
+	m.client = m.client.SetUserAgent(userAgent)
+}
+
+// SetHTTPClient allows the user to set a custom http client.
+func (m *MSTeams) SetHTTPClient(httpClient *http.Client) {
+	m.client = m.client.SetHTTPClient(httpClient)
 }
 
 // Send accepts a subject and a message body and sends them to all previously specified channels. Message body supports
