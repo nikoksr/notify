@@ -24,53 +24,6 @@ func (_m *mockteamsClient) EXPECT() *mockteamsClient_Expecter {
 	return &mockteamsClient_Expecter{mock: &_m.Mock}
 }
 
-// HTTPClient provides a mock function with no fields
-func (_m *mockteamsClient) HTTPClient() *http.Client {
-	ret := _m.Called()
-
-	if len(ret) == 0 {
-		panic("no return value specified for HTTPClient")
-	}
-
-	var r0 *http.Client
-	if rf, ok := ret.Get(0).(func() *http.Client); ok {
-		r0 = rf()
-	} else {
-		if ret.Get(0) != nil {
-			r0 = ret.Get(0).(*http.Client)
-		}
-	}
-
-	return r0
-}
-
-// mockteamsClient_HTTPClient_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'HTTPClient'
-type mockteamsClient_HTTPClient_Call struct {
-	*mock.Call
-}
-
-// HTTPClient is a helper method to define mock.On call
-func (_e *mockteamsClient_Expecter) HTTPClient() *mockteamsClient_HTTPClient_Call {
-	return &mockteamsClient_HTTPClient_Call{Call: _e.mock.On("HTTPClient")}
-}
-
-func (_c *mockteamsClient_HTTPClient_Call) Run(run func()) *mockteamsClient_HTTPClient_Call {
-	_c.Call.Run(func(args mock.Arguments) {
-		run()
-	})
-	return _c
-}
-
-func (_c *mockteamsClient_HTTPClient_Call) Return(_a0 *http.Client) *mockteamsClient_HTTPClient_Call {
-	_c.Call.Return(_a0)
-	return _c
-}
-
-func (_c *mockteamsClient_HTTPClient_Call) RunAndReturn(run func() *http.Client) *mockteamsClient_HTTPClient_Call {
-	_c.Call.Return(run)
-	return _c
-}
-
 // SendWithContext provides a mock function with given fields: ctx, webhookURL, message
 func (_m *mockteamsClient) SendWithContext(ctx context.Context, webhookURL string, message goteamsnotify.TeamsMessage) error {
 	ret := _m.Called(ctx, webhookURL, message)

@@ -4,17 +4,19 @@ import (
 	"context"
 	"fmt"
 	"net/http"
-	"net/url"
 
 	teams "github.com/atc0005/go-teams-notify/v2"
 	"github.com/atc0005/go-teams-notify/v2/adaptivecard"
 )
 
 type teamsClient interface {
+	// https://pkg.go.dev/github.com/atc0005/go-teams-notify/v2#TeamsClient.SendWithContext
 	SendWithContext(ctx context.Context, webhookURL string, message teams.TeamsMessage) error
+	// https://pkg.go.dev/github.com/atc0005/go-teams-notify/v2#TeamsClient.SkipWebhookURLValidationOnSend
 	SkipWebhookURLValidationOnSend(skip bool) *teams.TeamsClient
+	// https://pkg.go.dev/github.com/atc0005/go-teams-notify/v2#TeamsClient.SetHTTPClient
 	SetHTTPClient(httpClient *http.Client) *teams.TeamsClient
-	HTTPClient() *http.Client
+	// https://pkg.go.dev/github.com/atc0005/go-teams-notify/v2#TeamsClient.SetUserAgent
 	SetUserAgent(userAgent string) *teams.TeamsClient
 }
 
@@ -64,18 +66,8 @@ func (m *MSTeams) AddReceivers(webHooks ...string) {
 	m.webHooks = append(m.webHooks, webHooks...)
 }
 
-// SetProxy allows the user to set a custom proxy.
-func (m *MSTeams) SetProxy(url *url.URL) {
-	// https://github.com/atc0005/go-teams-notify/blob/master/examples/adaptivecard/proxy/main.go
-	client := m.client.HTTPClient()
-	if transport, ok := client.Transport.(*http.Transport); ok {
-		transport.Proxy = http.ProxyURL(url)
-	}
-}
-
 // SetUseragent allows the user to set a custom user agent.
 func (m *MSTeams) SetUseragent(userAgent string) {
-	// https://github.com/atc0005/go-teams-notify/blob/master/examples/adaptivecard/custom-user-agent/main.go
 	m.client = m.client.SetUserAgent(userAgent)
 }
 
