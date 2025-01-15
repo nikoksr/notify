@@ -6,6 +6,7 @@ import (
 	"fmt"
 
 	"github.com/PagerDuty/go-pagerduty"
+
 	"github.com/nikoksr/notify"
 )
 
