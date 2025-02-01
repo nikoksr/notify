@@ -142,8 +142,8 @@ github.com/frankban/quicktest v1.14.6/go.mod h1:4ptaffx2x8+WTWXmUCuVU6aPUX1/Mz7z
 github.com/fsnotify/fsnotify v1.4.7/go.mod h1:jwhsz4b93w/PPRr/qN1Yymfu8t87LnFCMoQvtojpjFo=
 github.com/fsnotify/fsnotify v1.4.9 h1:hsms1Qyu0jgnwNXIxa+/V/PDsU6CfLf6CNO8H7IWoS4=
 github.com/fsnotify/fsnotify v1.4.9/go.mod h1:znqG4EE+3YCdAaPaxE2ZRY/06pZUdp0tY4IgpuI1SZQ=
-github.com/go-chi/chi/v5 v5.1.0 h1:acVI1TYaD+hhedDJ3r54HyA6sExp3HfXq7QWEEY/xMw=
-github.com/go-chi/chi/v5 v5.1.0/go.mod h1:DslCQbL2OYiznFReuXYUmQ2hGd1aDpCnlMNITLSKoi8=
+github.com/go-chi/chi/v5 v5.2.0 h1:Aj1EtB0qR2Rdo2dG4O94RIU35w2lvQSj6BRA4+qwFL0=
+github.com/go-chi/chi/v5 v5.2.0/go.mod h1:DslCQbL2OYiznFReuXYUmQ2hGd1aDpCnlMNITLSKoi8=
 github.com/go-lark/lark v1.15.1 h1:fo6PQKBJht/71N9Zn3/xjknOYx0TmdVuP+VP8NrUCsI=
 github.com/go-lark/lark v1.15.1/go.mod h1:6ltbSztPZRT6IaO9ZIQyVaY5pVp/KeMizDYtfZkU+vM=
 github.com/go-logr/logr v1.2.2/go.mod h1:jdQByPbusPIv2/zmleS9BjJVeZ6kBagPoEUsqbVz/1A=
@@ -255,8 +255,8 @@ github.com/line/line-bot-sdk-go v7.8.0+incompatible h1:Uf9/OxV0zCVfqyvwZPH8CrdiH
 github.com/line/line-bot-sdk-go v7.8.0+incompatible/go.mod h1:0RjLjJEAU/3GIcHkC3av6O4jInAbt25nnZVmOFUgDBg=
 github.com/mailgun/errors v0.4.0 h1:6LFBvod6VIW83CMIOT9sYNp28TCX0NejFPP4dSX++i8=
 github.com/mailgun/errors v0.4.0/go.mod h1:xGBaaKdEdQT0/FhwvoXv4oBaqqmVZz9P1XEnvD/onc0=
-github.com/mailgun/mailgun-go/v4 v4.21.0 h1:l9SvJDdFvQxB5J1/jCz6g3GELKJ5k2iCelShDuphv94=
-github.com/mailgun/mailgun-go/v4 v4.21.0/go.mod h1:768NjUvsxW8Ga8fHIPITmr5f/U8qmnQqnZ3/cs3StUc=
+github.com/mailgun/mailgun-go/v4 v4.22.0 h1:U6vFhMwnqQ1bm0hMyiftfTZwUp9Nq7tgKTjavl+f8Jc=
+github.com/mailgun/mailgun-go/v4 v4.22.0/go.mod h1:JA2xbLTkEWrX2TO+RUiJQALZus6WLLoXym2i8a8F5sE=
 github.com/mattn/go-colorable v0.1.13/go.mod h1:7S9/ev0klgBDR4GtXTXX8a3vIGJpMovkB8vQcUbaXHg=
 github.com/mattn/go-colorable v0.1.14 h1:9A9LHSqF/7dyVVX6g0U9cwm9pG3kP9gSzcuIPHPsaIE=
 github.com/mattn/go-colorable v0.1.14/go.mod h1:6LmQG8QLFO4G5z1gPvYEzlUgJ2wF+stgPZH1UqBm1s8=
