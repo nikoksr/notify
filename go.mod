@@ -35,7 +35,7 @@ require (
 	github.com/appleboy/go-fcm v1.2.2
 	github.com/drswork/go-twitter v0.0.0-20221107160839-dea1b6ed53d7
 	github.com/go-lark/lark v1.16.0
-	github.com/google/go-cmp v0.6.0
+	github.com/google/go-cmp v0.7.0
 	github.com/kevinburke/twilio-go v0.0.0-20240716172313-813590983ccc
 	maunium.net/go/mautrix v0.23.0
 )
