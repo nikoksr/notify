@@ -1,8 +1,8 @@
 module github.com/nikoksr/notify
 
-go 1.22.7
+go 1.23.0
 
-toolchain go1.23.6
+toolchain go1.24.1
 
 require (
 	github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20240116134246-a8cbe886bab0
@@ -27,7 +27,7 @@ require (
 	github.com/stretchr/testify v1.10.0
 	github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.23575
 	github.com/utahta/go-linenotify v0.5.0
-	golang.org/x/sync v0.11.0
+	golang.org/x/sync v0.12.0
 )
 
 require (
