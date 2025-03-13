@@ -70,8 +70,7 @@ func TestNtfy_send(t *testing.T) {
 
 	remURL, _ := url.Parse("https://filesrv.lan/space.jpg")
 	clickURL, _ := url.Parse("https://homecamera.lan/xasds1h2xsSsa/")
-	// actionLink, _ := url.Parse("https://filesrv.lan/admin")
-	// actions := []gotfy.ViewAction{{Label: "Admin panel", Link: actionLink}}
+
 	content := gotfy.Message{
 		Message:           "Disk space is low at 5.1 GB",
 		Title:             "Low disk space alert",
@@ -80,7 +79,6 @@ func TestNtfy_send(t *testing.T) {
 		AttachURL:         remURL,
 		AttachURLFilename: "diskspace.jpg",
 		ClickURL:          clickURL,
-		// Actions:           actions,
 	}
 
 	defaultServer, _ := url.Parse(defaultServerURL)
@@ -96,12 +94,6 @@ func TestNtfy_send(t *testing.T) {
 	pub, _ = gotfy.NewPublisher(&url.URL{Host: "xyz.com"}, http.DefaultClient)
 	err = service.send(ctx, pub, topic, "sample_body")
 	assert.Error(err)
-
-	// content = gotfy.Message{
-	// 	Message:  "Disk space is low at 5.1 GB",
-	// 	Title:    "Low disk space alert",
-	// 	Priority: gotfy.UnspecifiedPriority,
-	// }
 
 	err = service.send(ctx, pub, topic, "Disk space is low at 5.1 GB")
 	assert.Error(err)
