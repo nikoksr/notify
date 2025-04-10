@@ -16,10 +16,15 @@ const (
 	VisibilityDirect   = "direct"
 )
 
+//go:generate mockery --name=mastodonClient --output=. --case=underscore --inpackage
+type mastodonClient interface {
+	PostStatus(ctx context.Context, toot *mastodon.Toot) (*mastodon.Status, error)
+}
+
 type Mastodon struct {
 	accessToken string
 	visibility  string
-	client      *mastodon.Client
+	client      mastodonClient
 }
 
 type Config struct {
