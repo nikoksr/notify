@@ -11,7 +11,11 @@ import (
 )
 
 type Client interface {
-	CreateIncidentWithContext(ctx context.Context, from string, options *pagerduty.CreateIncidentOptions) (*pagerduty.Incident, error) //nolint:lll // acceptable in this case, alternative makes the interface even less readable
+	CreateIncidentWithContext(
+		ctx context.Context,
+		from string,
+		options *pagerduty.CreateIncidentOptions,
+	) (*pagerduty.Incident, error) //nolint:lll // acceptable in this case, alternative makes the interface even less readable
 }
 
 // Compile-time check to verify that the PagerDuty type implements the notifier.Notifier interface.

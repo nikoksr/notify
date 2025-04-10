@@ -45,6 +45,7 @@ require (
 	github.com/PagerDuty/go-pagerduty v1.8.0
 	github.com/caarlos0/go-reddit/v3 v3.0.1
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
+	github.com/mattn/go-mastodon v0.0.9
 	google.golang.org/api v0.215.0
 )
 
@@ -88,6 +89,7 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/planetscale/vtprotobuf v0.6.1-0.20240319094008-0393e58bdf10 // indirect
 	github.com/rs/zerolog v1.33.0 // indirect
+	github.com/tomnomnom/linkheader v0.0.0-20180905144013-02ca5825eb80 // indirect
 	go.mau.fi/util v0.8.4 // indirect
 	go.opencensus.io v0.24.0 // indirect
 	go.opentelemetry.io/contrib/detectors/gcp v1.32.0 // indirect
