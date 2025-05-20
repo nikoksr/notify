@@ -32,7 +32,7 @@ require (
 
 require (
 	github.com/SherClockHolmes/webpush-go v1.4.0
-	github.com/appleboy/go-fcm v1.2.2
+	github.com/appleboy/go-fcm v1.2.6
 	github.com/drswork/go-twitter v0.0.0-20221107160839-dea1b6ed53d7
 	github.com/go-lark/lark v1.16.0
 	github.com/google/go-cmp v0.6.0
