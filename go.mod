@@ -1,6 +1,6 @@
 module github.com/nikoksr/notify
 
-go 1.22.7
+go 1.23.0
 
 toolchain go1.23.6
 
@@ -27,7 +27,7 @@ require (
 	github.com/stretchr/testify v1.10.0
 	github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.23575
 	github.com/utahta/go-linenotify v0.5.0
-	golang.org/x/sync v0.11.0
+	golang.org/x/sync v0.16.0
 )
 
 require (
@@ -36,7 +36,7 @@ require (
 	github.com/drswork/go-twitter v0.0.0-20221107160839-dea1b6ed53d7
 	github.com/go-lark/lark v1.16.0
 	github.com/google/go-cmp v0.6.0
-	github.com/kevinburke/twilio-go v0.0.0-20240716172313-813590983ccc
+	github.com/kevinburke/twilio-go v0.0.0-20250718182727-5fe7adc01f29
 	maunium.net/go/mautrix v0.23.0
 )
 
@@ -135,7 +135,7 @@ require (
 	github.com/gregdel/pushover v1.3.1
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/kevinburke/go-types v0.0.0-20240719050749-165e75e768f7 // indirect
-	github.com/kevinburke/rest v0.0.0-20240617045629-3ed0ad3487f0 // indirect
+	github.com/kevinburke/rest v0.0.0-20250718180114-1a15e4f2364f // indirect
 	github.com/mileusna/viber v1.0.1
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
@@ -151,11 +151,11 @@ require (
 	github.com/tidwall/sjson v1.2.5 // indirect
 	github.com/ttacon/builder v0.0.0-20170518171403-c099f663e1c2 // indirect
 	github.com/ttacon/libphonenumber v1.2.1 // indirect
-	golang.org/x/crypto v0.32.0 // indirect
-	golang.org/x/net v0.34.0 // indirect
+	golang.org/x/crypto v0.40.0 // indirect
+	golang.org/x/net v0.42.0 // indirect
 	golang.org/x/oauth2 v0.25.0 // indirect
-	golang.org/x/sys v0.29.0 // indirect
-	golang.org/x/text v0.21.0 // indirect
+	golang.org/x/sys v0.34.0 // indirect
+	golang.org/x/text v0.27.0 // indirect
 	google.golang.org/protobuf v1.36.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
