@@ -9,7 +9,7 @@ import (
 
 func TestService_Send(t *testing.T) {
 	mock := &MockClient{
-		PublishFunc: func(ctx context.Context, channel string, data []byte) (centrifuge.PublishResult, error) {
+		PublishFunc: func(_ context.Context, channel string, data []byte) (centrifuge.PublishResult, error) {
 			if channel != "test-channel" {
 				t.Errorf("expected channel 'test-channel', got '%s'", channel)
 			}
@@ -20,7 +20,7 @@ func TestService_Send(t *testing.T) {
 		},
 	}
 	svc := NewWithClient(mock, "test-channel")
-	ctx := context.Background()
+	ctx := t.Context()
 	subject := "Test Subject"
 	msg := "Hello, Centrifugo!"
 	if err := svc.Send(ctx, subject, msg); err != nil {
