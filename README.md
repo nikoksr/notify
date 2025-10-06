@@ -111,6 +111,7 @@ Yes, please! Contributions of all kinds are very welcome! Feel free to check our
 | [Viber](https://www.viber.com)                                                    | [service/viber](service/viber)           | [mileusna/viber](https://github.com/mileusna/viber)                                             | :heavy_check_mark: |
 | [WeChat](https://www.wechat.com)                                                  | [service/wechat](service/wechat)         | [silenceper/wechat](https://github.com/silenceper/wechat)                                       | :heavy_check_mark: |
 | [Webpush Notification](https://developer.mozilla.org/en-US/docs/Web/API/Push_API) | [service/webpush](service/webpush)       | [SherClockHolmes/webpush-go](https://github.com/SherClockHolmes/webpush-go/)                    | :heavy_check_mark: |
+| [Centrifugo](https://centrifugal.dev/)                                            | [service/centrifugo](service/centrifugo) | [centrifugal/centrifuge-go](https://github.com/centrifugal/centrifuge-go)                       | :heavy_check_mark: |
 | [WhatsApp](https://www.whatsapp.com)                                              | [service/whatsapp](service/whatsapp)     | [Rhymen/go-whatsapp](https://github.com/Rhymen/go-whatsapp)                                     |        :x:         |
 
 ## Special Thanks <a id="special_thanks"></a>
