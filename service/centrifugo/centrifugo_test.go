@@ -20,7 +20,7 @@ func TestService_Send(t *testing.T) {
 		},
 	}
 	svc := NewWithClient(mock, "test-channel")
-	ctx := t.Context()
+	ctx := context.Background()
 	subject := "Test Subject"
 	msg := "Hello, Centrifugo!"
 	if err := svc.Send(ctx, subject, msg); err != nil {
