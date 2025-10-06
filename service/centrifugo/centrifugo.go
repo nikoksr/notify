@@ -18,11 +18,11 @@ type Service struct {
 // channel: Channel to publish messages to.
 // token: Optional JWT for authentication (empty string if not used).
 func New(url, channel, token string) (*Service, error) {
-	cfg := centrifuge.DefaultConfig()
+	cfg := centrifuge.Config{}
 	if token != "" {
 		cfg.Token = token
 	}
-	client := centrifuge.New(url, cfg)
+	client := centrifuge.NewJsonClient(url, cfg)
 	if err := client.Connect(); err != nil {
 		return nil, fmt.Errorf("centrifugo connect error: %w", err)
 	}
