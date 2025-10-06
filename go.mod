@@ -44,6 +44,7 @@ require (
 	firebase.google.com/go/v4 v4.15.1
 	github.com/PagerDuty/go-pagerduty v1.8.0
 	github.com/caarlos0/go-reddit/v3 v3.0.1
+	github.com/centrifugal/centrifuge-go v0.10.0
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	google.golang.org/api v0.215.0
 )
@@ -66,6 +67,7 @@ require (
 	github.com/MicahParks/keyfunc v1.9.0 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.12.2 // indirect
 	github.com/census-instrumentation/opencensus-proto v0.4.1 // indirect
+	github.com/centrifugal/protocol v0.10.0 // indirect
 	github.com/cncf/xds/go v0.0.0-20240905190251-b4127c9b8d78 // indirect
 	github.com/envoyproxy/go-control-plane v0.13.1 // indirect
 	github.com/envoyproxy/protoc-gen-validate v1.1.0 // indirect
@@ -81,13 +83,19 @@ require (
 	github.com/google/s2a-go v0.1.8 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.3.4 // indirect
 	github.com/googleapis/gax-go/v2 v2.14.1 // indirect
+	github.com/josharian/intern v1.0.0 // indirect
+	github.com/jpillora/backoff v1.0.0 // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect
 	github.com/mailgun/errors v0.4.0 // indirect
+	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/planetscale/vtprotobuf v0.6.1-0.20240319094008-0393e58bdf10 // indirect
 	github.com/rs/zerolog v1.33.0 // indirect
+	github.com/segmentio/asm v1.2.0 // indirect
+	github.com/segmentio/encoding v0.3.6 // indirect
+	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	go.mau.fi/util v0.8.4 // indirect
 	go.opencensus.io v0.24.0 // indirect
 	go.opentelemetry.io/contrib/detectors/gcp v1.32.0 // indirect
