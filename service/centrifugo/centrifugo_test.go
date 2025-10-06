@@ -3,21 +3,23 @@ package centrifugo
 import (
 	"context"
 	"testing"
+
+	centrifuge "github.com/centrifugal/centrifuge-go"
 )
 
 func TestService_Send(t *testing.T) {
-	// NOTE: This test requires a running Centrifugo server and a valid channel.
-	// Adjust the URL, channel, and token as needed for your environment.
-	url := "ws://localhost:8000/connection/websocket"
-	channel := "test-channel"
-	token := "" // Set JWT if required
-
-	svc, err := New(url, channel, token)
-	if err != nil {
-		t.Fatalf("failed to create centrifugo service: %v", err)
+	mock := &MockClient{
+		PublishFunc: func(ctx context.Context, channel string, data []byte) (centrifuge.PublishResult, error) {
+			if channel != "test-channel" {
+				t.Errorf("expected channel 'test-channel', got '%s'", channel)
+			}
+			if string(data) != "Test Subject\nHello, Centrifugo!" {
+				t.Errorf("unexpected message: %s", string(data))
+			}
+			return centrifuge.PublishResult{}, nil
+		},
 	}
-	defer svc.Close()
-
+	svc := NewWithClient(mock, "test-channel")
 	ctx := context.Background()
 	subject := "Test Subject"
 	msg := "Hello, Centrifugo!"

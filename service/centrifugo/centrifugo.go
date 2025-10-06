@@ -8,8 +8,13 @@ import (
 )
 
 // Service represents a Centrifugo notification service.
+type publisher interface {
+	Publish(ctx context.Context, channel string, data []byte) (centrifuge.PublishResult, error)
+	Close()
+}
+
 type Service struct {
-	client  *centrifuge.Client
+	client  publisher
 	channel string
 }
 
@@ -27,6 +32,11 @@ func New(url, channel, token string) (*Service, error) {
 		return nil, fmt.Errorf("centrifugo connect error: %w", err)
 	}
 	return &Service{client: client, channel: channel}, nil
+}
+
+// NewWithClient allows injecting a mock client for testing.
+func NewWithClient(client publisher, channel string) *Service {
+	return &Service{client: client, channel: channel}
 }
 
 // Send sends a subject and message to the Centrifugo channel.
