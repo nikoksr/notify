@@ -43,6 +43,20 @@ func (d *Discord) authenticate(token string) error {
 	return nil
 }
 
+// SetAuthenticatedClient sets a pre-authenticated discord client.
+// For more info, see here: https://pkg.go.dev/github.com/bwmarrin/discordgo@v0.22.1#Session
+func (d *Discord) SetAuthenticatedClient(client *discordgo.Session) error {
+	if client == nil {
+		return fmt.Errorf("discord client is nil")
+	}
+
+	client.Identify.Intents = discordgo.IntentsGuildMessageTyping
+
+	d.client = client
+
+	return nil
+}
+
 // AuthenticateWithBotToken authenticates you as a bot to Discord via the given access token.
 // For more info, see here: https://pkg.go.dev/github.com/bwmarrin/discordgo@v0.22.1#New
 func (d *Discord) AuthenticateWithBotToken(token string) error {
