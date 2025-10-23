@@ -8,33 +8,25 @@ import (
 )
 
 func TestNew(t *testing.T) {
-	service := New()
+	cfg := &Config{
+		Token:  "test-token",
+		Secret: "test-secret",
+	}
+	service := New(cfg)
 	assert.NotNil(t, service)
 	assert.NotNil(t, service.client)
+	assert.Equal(t, "test-token", service.config.Token)
+	assert.Equal(t, "test-secret", service.config.Secret)
 }
 
-func TestAddReceivers(t *testing.T) {
-	service := New()
+func TestSend(t *testing.T) {
+	cfg := &Config{
+		Token:  "invalid-token",
+		Secret: "invalid-secret",
+	}
+	service := New(cfg)
 	
-	service.AddReceivers("webhook1", "webhook2")
-	assert.Len(t, service.webhookURLs, 2)
-	assert.Contains(t, service.webhookURLs, "webhook1")
-	assert.Contains(t, service.webhookURLs, "webhook2")
-}
-
-func TestSendNoReceivers(t *testing.T) {
-	service := New()
-	
-	err := service.Send(context.Background(), "Test", "Message")
+	// This will fail with invalid credentials, which is expected
+	err := service.Send(context.Background(), "Test Subject", "Test Message")
 	assert.Error(t, err)
-	assert.Contains(t, err.Error(), "no webhook URLs")
-}
-
-func TestSendWithReceivers(t *testing.T) {
-	service := New()
-	service.AddReceivers("https://oapi.dingtalk.com/robot/send?access_token=test")
-	
-	// This will fail with network error, but tests the flow
-	err := service.Send(context.Background(), "Test", "Message")
-	assert.Error(t, err) // Expected network error
 }

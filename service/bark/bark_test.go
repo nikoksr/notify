@@ -1,31 +1,27 @@
 package bark
 
 import (
-	"context"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
 func TestNew(t *testing.T) {
-	service := New("https://api.day.app/test")
+	service := New("test-device-key")
 	assert.NotNil(t, service)
-	assert.Equal(t, "https://api.day.app/test", service.endpoint)
+	assert.Equal(t, "test-device-key", service.deviceKey)
+	assert.NotNil(t, service.client)
 }
 
-func TestSend(t *testing.T) {
-	service := New("https://api.day.app/test")
-	
-	// Test successful send (mock would be better)
-	err := service.Send(context.Background(), "Test Subject", "Test Message")
-	// Since we can't mock easily here, we expect this to fail with network error
-	// In a real implementation, we'd use dependency injection for HTTP client
-	assert.Error(t, err) // Expected to fail without real endpoint
+func TestNewWithServers(t *testing.T) {
+	service := NewWithServers("test-key", "https://custom.server.com")
+	assert.NotNil(t, service)
+	assert.Len(t, service.serverURLs, 1)
+	assert.Contains(t, service.serverURLs, "https://custom.server.com/")
 }
 
-func TestSendEmptyMessage(t *testing.T) {
-	service := New("https://api.day.app/test")
-	
-	err := service.Send(context.Background(), "", "")
-	assert.Error(t, err)
+func TestAddReceivers(t *testing.T) {
+	service := New("test-key")
+	service.AddReceivers("server1.com", "server2.com")
+	assert.Len(t, service.serverURLs, 3) // Default + 2 added
 }
