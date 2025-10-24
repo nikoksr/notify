@@ -20,7 +20,7 @@ require (
 	github.com/go-telegram-bot-api/telegram-bot-api v4.6.4+incompatible
 	github.com/line/line-bot-sdk-go v7.8.0+incompatible
 	github.com/mailgun/mailgun-go/v4 v4.22.1
-	github.com/plivo/plivo-go/v7 v7.57.1
+	github.com/plivo/plivo-go/v7 v7.59.2
 	github.com/sendgrid/sendgrid-go v3.16.0+incompatible
 	github.com/silenceper/wechat/v2 v2.1.7
 	github.com/slack-go/slack v0.16.0
