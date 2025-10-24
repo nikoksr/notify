@@ -1,0 +1,16 @@
+name: Coverage
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-go@v4
+      with:
+        go-version: '1.21'
+    - name: Test with coverage
+      run: go test -coverprofile=coverage.txt ./...
+    - uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage.txt
