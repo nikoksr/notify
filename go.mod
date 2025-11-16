@@ -37,7 +37,7 @@ require (
 	github.com/go-lark/lark v1.16.0
 	github.com/google/go-cmp v0.6.0
 	github.com/kevinburke/twilio-go v0.0.0-20240716172313-813590983ccc
-	maunium.net/go/mautrix v0.23.0
+	maunium.net/go/mautrix v0.26.0
 )
 
 require (
