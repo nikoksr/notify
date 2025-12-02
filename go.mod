@@ -2,7 +2,7 @@ module github.com/nikoksr/notify
 
 go 1.22.7
 
-toolchain go1.23.6
+toolchain go1.25.5
 
 require (
 	github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20240116134246-a8cbe886bab0
