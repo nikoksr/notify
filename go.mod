@@ -23,7 +23,7 @@ require (
 	github.com/silenceper/wechat/v2 v2.1.11
 	github.com/slack-go/slack v0.17.3
 	github.com/stretchr/testify v1.11.1
-	github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.23575
+	github.com/textmagic/textmagic-rest-go-v2/v2 v2.0.43822
 	github.com/utahta/go-linenotify v0.5.0
 	golang.org/x/sync v0.19.0
 )
