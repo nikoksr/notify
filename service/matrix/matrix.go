@@ -14,7 +14,7 @@ type matrixClient interface {
 		ctx context.Context,
 		roomID id.RoomID,
 		eventType event.Type,
-		contentJSON interface{},
+		contentJSON any,
 		extra ...matrix.ReqSendEvent,
 	) (resp *matrix.RespSendEvent, err error)
 }

@@ -25,7 +25,7 @@ func (_m *mockmatrixClient) EXPECT() *mockmatrixClient_Expecter {
 }
 
 // SendMessageEvent provides a mock function with given fields: ctx, roomID, eventType, contentJSON, extra
-func (_m *mockmatrixClient) SendMessageEvent(ctx context.Context, roomID id.RoomID, eventType event.Type, contentJSON interface{}, extra ...mautrix.ReqSendEvent) (*mautrix.RespSendEvent, error) {
+func (_m *mockmatrixClient) SendMessageEvent(ctx context.Context, roomID id.RoomID, eventType event.Type, contentJSON any, extra ...mautrix.ReqSendEvent) (*mautrix.RespSendEvent, error) {
 	_va := make([]interface{}, len(extra))
 	for _i := range extra {
 		_va[_i] = extra[_i]
@@ -41,10 +41,10 @@ func (_m *mockmatrixClient) SendMessageEvent(ctx context.Context, roomID id.Room
 
 	var r0 *mautrix.RespSendEvent
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, id.RoomID, event.Type, interface{}, ...mautrix.ReqSendEvent) (*mautrix.RespSendEvent, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, id.RoomID, event.Type, any, ...mautrix.ReqSendEvent) (*mautrix.RespSendEvent, error)); ok {
 		return rf(ctx, roomID, eventType, contentJSON, extra...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, id.RoomID, event.Type, interface{}, ...mautrix.ReqSendEvent) *mautrix.RespSendEvent); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, id.RoomID, event.Type, any, ...mautrix.ReqSendEvent) *mautrix.RespSendEvent); ok {
 		r0 = rf(ctx, roomID, eventType, contentJSON, extra...)
 	} else {
 		if ret.Get(0) != nil {
@@ -52,7 +52,7 @@ func (_m *mockmatrixClient) SendMessageEvent(ctx context.Context, roomID id.Room
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, id.RoomID, event.Type, interface{}, ...mautrix.ReqSendEvent) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, id.RoomID, event.Type, any, ...mautrix.ReqSendEvent) error); ok {
 		r1 = rf(ctx, roomID, eventType, contentJSON, extra...)
 	} else {
 		r1 = ret.Error(1)
@@ -70,14 +70,14 @@ type mockmatrixClient_SendMessageEvent_Call struct {
 //   - ctx context.Context
 //   - roomID id.RoomID
 //   - eventType event.Type
-//   - contentJSON interface{}
+//   - contentJSON any
 //   - extra ...mautrix.ReqSendEvent
-func (_e *mockmatrixClient_Expecter) SendMessageEvent(ctx interface{}, roomID interface{}, eventType interface{}, contentJSON interface{}, extra ...interface{}) *mockmatrixClient_SendMessageEvent_Call {
+func (_e *mockmatrixClient_Expecter) SendMessageEvent(ctx any, roomID any, eventType any, contentJSON any, extra ...interface{}) *mockmatrixClient_SendMessageEvent_Call {
 	return &mockmatrixClient_SendMessageEvent_Call{Call: _e.mock.On("SendMessageEvent",
 		append([]interface{}{ctx, roomID, eventType, contentJSON}, extra...)...)}
 }
 
-func (_c *mockmatrixClient_SendMessageEvent_Call) Run(run func(ctx context.Context, roomID id.RoomID, eventType event.Type, contentJSON interface{}, extra ...mautrix.ReqSendEvent)) *mockmatrixClient_SendMessageEvent_Call {
+func (_c *mockmatrixClient_SendMessageEvent_Call) Run(run func(ctx context.Context, roomID id.RoomID, eventType event.Type, contentJSON any, extra ...mautrix.ReqSendEvent)) *mockmatrixClient_SendMessageEvent_Call {
 	_c.Call.Run(func(args mock.Arguments) {
 		variadicArgs := make([]mautrix.ReqSendEvent, len(args)-4)
 		for i, a := range args[4:] {
@@ -95,7 +95,7 @@ func (_c *mockmatrixClient_SendMessageEvent_Call) Return(resp *mautrix.RespSendE
 	return _c
 }
 
-func (_c *mockmatrixClient_SendMessageEvent_Call) RunAndReturn(run func(context.Context, id.RoomID, event.Type, interface{}, ...mautrix.ReqSendEvent) (*mautrix.RespSendEvent, error)) *mockmatrixClient_SendMessageEvent_Call {
+func (_c *mockmatrixClient_SendMessageEvent_Call) RunAndReturn(run func(context.Context, id.RoomID, event.Type, any, ...mautrix.ReqSendEvent) (*mautrix.RespSendEvent, error)) *mockmatrixClient_SendMessageEvent_Call {
 	_c.Call.Return(run)
 	return _c
 }

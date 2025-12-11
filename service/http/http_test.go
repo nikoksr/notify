@@ -410,7 +410,7 @@ func Test_defaultMarshaller_Marshal(t *testing.T) {
 			name: "test marshal valid json",
 			args: args{
 				contentType: "application/json",
-				payload:     map[string]interface{}{"test": "test"},
+				payload:     map[string]any{"test": "test"},
 			},
 			wantOut: []byte(`{"test":"test"}`),
 			wantErr: require.NoError,
@@ -419,7 +419,7 @@ func Test_defaultMarshaller_Marshal(t *testing.T) {
 			name: "test marshal invalid json",
 			args: args{
 				contentType: "application/json",
-				payload:     map[string]interface{}{"test": make(chan int)},
+				payload:     map[string]any{"test": make(chan int)},
 			},
 			wantOut: nil,
 			wantErr: require.Error,
@@ -437,7 +437,7 @@ func Test_defaultMarshaller_Marshal(t *testing.T) {
 			name: "test marshal invalid text",
 			args: args{
 				contentType: "text/plain",
-				payload:     map[string]interface{}{"test": "test"},
+				payload:     map[string]any{"test": "test"},
 			},
 			wantOut: nil,
 			wantErr: require.Error,
@@ -446,7 +446,7 @@ func Test_defaultMarshaller_Marshal(t *testing.T) {
 			name: "test marshal invalid content type",
 			args: args{
 				contentType: "invalid",
-				payload:     map[string]interface{}{"test": "test"},
+				payload:     map[string]any{"test": "test"},
 			},
 			wantOut: nil,
 			wantErr: require.Error,
