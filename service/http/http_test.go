@@ -116,7 +116,7 @@ func TestService_AddReceivers(t *testing.T) {
 			t.Parallel()
 
 			tt.service.AddReceiversURLs(tt.urls...)
-			assert.Equal(t, len(tt.urls), len(tt.service.webhooks), "webhooks should be equal")
+			assert.Len(t, tt.service.webhooks, len(tt.urls), "webhooks should be equal")
 
 			for i, hook := range tt.urls {
 				assert.Equal(t, hook, tt.service.webhooks[i].URL, "webhooks should be equal")
@@ -200,7 +200,7 @@ func TestService_Hooks(t *testing.T) {
 	// hooks.
 	service.PreSend(func(req *http.Request) error {
 		assert.Equal(t, "test-header-2", req.Header.Get("X-Test-2"), "header should be equal")
-		assert.Equal(t, "", req.Header.Get("X-Test-1"), "header should be equal")
+		assert.Empty(t, req.Header.Get("X-Test-1"), "header should be equal")
 
 		// Modifying the headers one last time to verify that the post-send hook works as expected
 		req.Header.Set("X-Test-3", "test-header-3")
@@ -231,7 +231,7 @@ func TestService_Hooks(t *testing.T) {
 	// Add a third post-send hook. We'll check if the header has been correctly modified by the first two hooks.
 	service.PostSend(func(_ *http.Request, res *http.Response) error {
 		assert.Equal(t, "test-header-2", res.Header.Get("X-Test-2"), "header should be equal")
-		assert.Equal(t, "", res.Header.Get("X-Test-1"), "header should be equal")
+		assert.Empty(t, res.Header.Get("X-Test-1"), "header should be equal")
 
 		return nil
 	})
