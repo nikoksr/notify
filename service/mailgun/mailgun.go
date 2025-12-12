@@ -4,12 +4,13 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/mailgun/mailgun-go/v4"
+	"github.com/mailgun/mailgun-go/v5"
 )
 
 // Mailgun struct holds necessary data to communicate with the Mailgun API.
 type Mailgun struct {
-	client            mailgun.Mailgun
+	client            *mailgun.Client
+	domain            string
 	senderAddress     string
 	receiverAddresses []string
 }
@@ -19,7 +20,8 @@ type Mailgun struct {
 // See https://documentation.mailgun.com/en/latest/
 func New(domain, apiKey, senderAddress string, opts ...Option) *Mailgun {
 	m := &Mailgun{
-		client:            mailgun.NewMailgun(domain, apiKey),
+		client:            mailgun.NewMailgun(apiKey),
+		domain:            domain,
 		senderAddress:     senderAddress,
 		receiverAddresses: []string{},
 	}
@@ -40,9 +42,9 @@ func (m *Mailgun) AddReceivers(addresses ...string) {
 // Send takes a message subject and a message body and sends them to all previously set chats. Message body supports
 // html as markup language.
 func (m Mailgun) Send(ctx context.Context, subject, message string) error {
-	mailMessage := mailgun.NewMessage(m.senderAddress, subject, message, m.receiverAddresses...)
+	mailMessage := mailgun.NewMessage(m.domain, m.senderAddress, subject, message, m.receiverAddresses...)
 
-	_, _, err := m.client.Send(ctx, mailMessage)
+	_, err := m.client.Send(ctx, mailMessage)
 	if err != nil {
 		return fmt.Errorf("send message: %w", err)
 	}
