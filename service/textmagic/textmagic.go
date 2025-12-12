@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	textMagic "github.com/textmagic/textmagic-rest-go-v2/v2"
+	textMagic "github.com/textmagic/textmagic-rest-go-v2/v3"
 )
 
 // Service allow you to configure a TextMagic SDK client.
@@ -42,10 +42,14 @@ func (s *Service) Send(ctx context.Context, subject, message string) error {
 	})
 
 	text := subject + "\n" + message
-	_, _, err := s.client.TextMagicApi.SendMessage(auth, textMagic.SendMessageInputObject{
-		Text:   text,
-		Phones: strings.Join(s.phoneNumbers, ","),
-	})
+	phones := strings.Join(s.phoneNumbers, ",")
+
+	_, _, err := s.client.TextMagicAPI.SendMessage(auth).
+		SendMessageInputObject(textMagic.SendMessageRequest{
+			Text:   &text,
+			Phones: &phones,
+		}).
+		Execute()
 	if err != nil {
 		return fmt.Errorf("send message: %w", err)
 	}
