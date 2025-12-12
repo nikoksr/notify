@@ -236,7 +236,7 @@ func TestService_Send(t *testing.T) {
 				options: webpush.Options{},
 			},
 			handler: newWebpushHandlerWithChecks(defaultChecks()...),
-			wantErr: false, // Yes, does not cause an error
+			wantErr: true, // Empty VAPID private key causes parse error
 		},
 		{
 			name: "Send a message with no vapid keys",
@@ -253,7 +253,7 @@ func TestService_Send(t *testing.T) {
 				options: webpush.Options{},
 			},
 			handler: newWebpushHandlerWithChecks(defaultChecks()...),
-			wantErr: false, // Yes, does not cause an error
+			wantErr: true, // Empty VAPID keys cause parse error
 		},
 		{
 			name: "Send a message with invalid subscription",
