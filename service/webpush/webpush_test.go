@@ -3,7 +3,7 @@ package webpush
 import (
 	"context"
 	"fmt"
-	"log"
+	"log/slog"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -80,7 +80,8 @@ func TestMain(m *testing.M) {
 	// Generate a VAPID key pair
 	privateKey, publicKey, err := webpush.GenerateVAPIDKeys()
 	if err != nil {
-		log.Fatal(err)
+		slog.Error("failed to generate VAPID keys", "error", err) //nolint:sloglint // Test setup, context not available
+		os.Exit(1)
 	}
 
 	vapidPublicKey = publicKey

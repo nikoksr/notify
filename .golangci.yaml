@@ -63,7 +63,7 @@ linters:
     - exptostd # detects functions from golang.org/x/exp/ that can be replaced by std functions
     - fatcontext # detects nested contexts in loops
     - forbidigo # forbids identifiers
-    - funcorder # checks the order of functions, methods, and constructors
+    #- funcorder # checks the order of functions, methods, and constructors # DISABLED: too opinionated
     - funlen # tool for detection of long functions
     - gocheckcompilerdirectives # validates go compiler directive comments (//go:)
     - gochecknoglobals # checks that no global variables exist
@@ -103,7 +103,7 @@ linters:
     - promlinter # checks Prometheus metrics naming via promlint
     - protogetter # reports direct reads from proto message fields when getters should be used
     - reassign # checks that package variables are not reassigned
-    - recvcheck # checks for receiver type consistency
+    #- recvcheck # checks for receiver type consistency # DISABLED: mixed receivers are sometimes intentional
     - revive # fast, configurable, extensible, flexible, and beautiful linter for Go, drop-in replacement of golint
     - rowserrcheck # checks whether Err of rows is checked successfully
     - sloglint # ensure consistent code style when using log/slog
@@ -112,7 +112,7 @@ linters:
     - staticcheck # is a go vet on steroids, applying a ton of static analysis checks
     - testableexamples # checks if examples are testable (have an expected output)
     - testifylint # checks usage of github.com/stretchr/testify
-    - testpackage # makes you use a separate _test package
+    #- testpackage # makes you use a separate _test package # DISABLED: we need access to internal/unexported items in tests
     - tparallel # detects inappropriate usage of t.Parallel() method in your Go test codes
     - unconvert # removes unnecessary type conversions
     - unparam # reports unused function parameters
@@ -459,6 +459,10 @@ linters:
       - text: 'comment on exported \S+ \S+ should be of the form ".+"'
         source: '// ?(nolint|TODO)'
         linters: [ revive, staticcheck ]
+      - path: 'service/http/'
+        text: 'var-naming: avoid package names that conflict with Go standard library package names'
+        linters:
+          - revive
       - path: '_test\.go'
         linters:
           - bodyclose

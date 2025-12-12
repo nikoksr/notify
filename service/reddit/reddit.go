@@ -1,4 +1,3 @@
-// Package reddit implements a Reddit notifier, allowing messages to be sent to multiple recipients
 package reddit
 
 import (

@@ -23,6 +23,7 @@ var _ notify.Notifier = &PagerDuty{}
 
 type PagerDuty struct {
 	*Config
+
 	Client Client
 }
 

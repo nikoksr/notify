@@ -1,5 +1,3 @@
-// Package googlechat provides message notification integration sent to multiple
-// spaces within a Google Chat Application.
 package googlechat
 
 import (
