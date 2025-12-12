@@ -45,6 +45,7 @@ mock:
 ###############################################################################
 
 fmt:
+	@goimports -w .
 	@golines --shorten-comments -m 120 -w .
 	@gofumpt -w -l .
 	@gci write -s standard -s default -s "prefix(github.com/nikoksr/notify)" .

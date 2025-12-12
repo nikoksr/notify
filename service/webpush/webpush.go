@@ -24,9 +24,9 @@ type (
 
 	// messagePayload is the JSON payload that is sent to the webpush endpoint.
 	messagePayload struct {
-		Subject string                 `json:"subject"`
-		Message string                 `json:"message"`
-		Data    map[string]interface{} `json:"data,omitempty"`
+		Subject string         `json:"subject"`
+		Message string         `json:"message"`
+		Data    map[string]any `json:"data,omitempty"`
 	}
 
 	msgDataKey    struct{}
@@ -106,17 +106,17 @@ func optionsFromContext(ctx context.Context) Options {
 }
 
 // WithData binds the data to the context so that it will be used by the Service.Send method automatically. Data is a
-// map[string]interface{} and acts as a metadata field that is sent along with the message payload.
-func WithData(ctx context.Context, data map[string]interface{}) context.Context {
+// map[string]any and acts as a metadata field that is sent along with the message payload.
+func WithData(ctx context.Context, data map[string]any) context.Context {
 	return context.WithValue(ctx, dataKey, data)
 }
 
-func dataFromContext(ctx context.Context) map[string]interface{} {
-	if data, ok := ctx.Value(dataKey).(map[string]interface{}); ok {
+func dataFromContext(ctx context.Context) map[string]any {
+	if data, ok := ctx.Value(dataKey).(map[string]any); ok {
 		return data
 	}
 
-	return map[string]interface{}{}
+	return map[string]any{}
 }
 
 // payloadFromContext returns a json encoded byte array of the messagePayload payload that is ready to be sent to the

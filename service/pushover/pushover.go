@@ -1,5 +1,3 @@
-// Package pushover implements a Pushover notifier, allowing messages to be sent to multiple recipients and supports
-// both users and groups.
 package pushover
 
 import (

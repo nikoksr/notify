@@ -7,13 +7,13 @@ import (
 	"github.com/utahta/go-linenotify"
 )
 
-// Line Notify struct holds info about client and destination token for communicating with line API.
+// Notify holds info about client and destination token for communicating with line API.
 type Notify struct {
 	client         *linenotify.Client
 	receiverTokens []string
 }
 
-// New creates a new instance of Line notify service
+// NewNotify creates a new instance of Line notify service.
 // For more info about line notify api:
 // -> https://notify-bot.line.me/doc/en/
 func NewNotify() *Notify {

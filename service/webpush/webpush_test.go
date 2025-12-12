@@ -3,7 +3,7 @@ package webpush
 import (
 	"context"
 	"fmt"
-	"log"
+	"log/slog"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -80,7 +80,8 @@ func TestMain(m *testing.M) {
 	// Generate a VAPID key pair
 	privateKey, publicKey, err := webpush.GenerateVAPIDKeys()
 	if err != nil {
-		log.Fatal(err)
+		slog.Error("failed to generate VAPID keys", "error", err) //nolint:sloglint // Test setup, context not available
+		os.Exit(1)
 	}
 
 	vapidPublicKey = publicKey
@@ -526,7 +527,7 @@ func Test_ContextBinding(t *testing.T) {
 		ctx context.Context
 	}
 	type args struct {
-		data    map[string]interface{}
+		data    map[string]any
 		options Options
 	}
 	tests := []struct {
@@ -540,7 +541,7 @@ func Test_ContextBinding(t *testing.T) {
 				ctx: context.Background(),
 			},
 			args: args{
-				data: map[string]interface{}{
+				data: map[string]any{
 					"title": "Test",
 				},
 			},
@@ -564,7 +565,7 @@ func Test_ContextBinding(t *testing.T) {
 				ctx: context.Background(),
 			},
 			args: args{
-				data: map[string]interface{}{
+				data: map[string]any{
 					"title": "Test",
 				},
 				options: Options{
@@ -617,7 +618,7 @@ func Test_payloadFromContext(t *testing.T) {
 	type args struct {
 		subject string
 		message string
-		data    map[string]interface{}
+		data    map[string]any
 	}
 	tests := []struct {
 		name    string
@@ -638,7 +639,7 @@ func Test_payloadFromContext(t *testing.T) {
 			args: args{
 				subject: "test",
 				message: "test",
-				data: map[string]interface{}{
+				data: map[string]any{
 					"title": "Test",
 				},
 			},
