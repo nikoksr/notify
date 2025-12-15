@@ -22,6 +22,9 @@ type Discord struct {
 }
 
 // New returns a new instance of a Discord notification service.
+// The instance is created with a default Discord session. For advanced configuration
+// such as proxy support or custom timeouts, use SetClient to provide a custom session
+// before calling the authentication methods.
 func New() *Discord {
 	return &Discord{
 		client:     &discordgo.Session{},
@@ -29,8 +32,21 @@ func New() *Discord {
 	}
 }
 
-// authenticate will try and authenticate to discord.
+// authenticate will configure authentication on the existing Discord session.
+// If a custom session was set via SetClient, it preserves all custom configuration
+// (HTTP client, proxy settings, etc.) while setting the authentication token.
 func (d *Discord) authenticate(token string) error {
+	// If we have an existing session, configure it in-place
+	if d.client != nil {
+		if session, ok := d.client.(*discordgo.Session); ok {
+			session.Token = token
+			session.Identify.Token = token
+			session.Identify.Intents = discordgo.IntentsGuildMessageTyping
+			return nil
+		}
+	}
+
+	// Fallback: create new session (only if client is nil or not a Session)
 	client, err := discordgo.New(token)
 	if err != nil {
 		return err
@@ -41,6 +57,49 @@ func (d *Discord) authenticate(token string) error {
 	d.client = client
 
 	return nil
+}
+
+// DefaultSession returns a new Discord session with default configuration.
+// This allows configuring a custom session without importing the discordgo package.
+// The session is created with Discord's standard defaults and can be customized before
+// passing it to SetClient.
+//
+// Example - Configure proxy without importing discordgo:
+//
+//	session := discord.DefaultSession()
+//	session.Client = &http.Client{
+//	    Transport: &http.Transport{Proxy: http.ProxyURL(proxyURL)},
+//	}
+//	d := discord.New()
+//	d.SetClient(session)
+//	d.AuthenticateWithBotToken(token)
+func DefaultSession() *discordgo.Session {
+	// Use discordgo.New with empty token to get proper defaults
+	session, _ := discordgo.New("")
+	return session
+}
+
+// SetClient sets a custom Discord session, allowing full control over the
+// session configuration including HTTP client, proxy settings, intents, and
+// other Discord session options.
+//
+// This is useful for advanced use cases like proxy configuration or custom timeouts.
+// After calling SetClient, you can still use the AuthenticateWith* methods to set
+// the authentication token while preserving your custom configuration.
+//
+// Use DefaultSession() to get a session instance without importing discordgo.
+//
+// Example - Configure proxy, then authenticate:
+//
+//	session := discord.DefaultSession()
+//	session.Client = &http.Client{
+//	    Transport: &http.Transport{Proxy: http.ProxyURL(proxyURL)},
+//	}
+//	d := discord.New()
+//	d.SetClient(session)
+//	d.AuthenticateWithBotToken(token)  // Preserves proxy configuration
+func (d *Discord) SetClient(client *discordgo.Session) {
+	d.client = client
 }
 
 // AuthenticateWithBotToken authenticates you as a bot to Discord via the given access token.
