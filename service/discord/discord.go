@@ -2,6 +2,7 @@ package discord
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/bwmarrin/discordgo"
@@ -47,7 +48,7 @@ func (d *Discord) authenticate(token string) error {
 // For more info, see here: https://pkg.go.dev/github.com/bwmarrin/discordgo@v0.22.1#Session
 func (d *Discord) SetAuthenticatedClient(client *discordgo.Session) error {
 	if client == nil {
-		return fmt.Errorf("discord client is nil")
+		return errors.New("discord client is nil")
 	}
 
 	client.Identify.Intents = discordgo.IntentsGuildMessageTyping

@@ -163,6 +163,7 @@ func TestDiscord_SetAuthenticatedClient_Integration(t *testing.T) {
 
 	// Test that SetAuthenticatedClient works with actual Discord operations
 	t.Run("Can send message after setting authenticated client", func(t *testing.T) {
+		t.Parallel()
 		// Create a Discord instance
 		d := New()
 
