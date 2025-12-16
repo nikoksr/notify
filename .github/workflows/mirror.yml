@@ -1,0 +1,21 @@
+name: Mirror to Codeberg
+
+on:
+  push:
+    branches: ["main"]
+  delete:
+  create:
+  workflow_dispatch:
+
+jobs:
+  mirror-repo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: yesolutions/mirror-action@master
+        with:
+          REMOTE: "https://codeberg.org/nikoksr/notify.git"
+          GIT_USERNAME: "nikoksr"
+          GIT_PASSWORD: ${{ secrets.CODEBERG_TOKEN }}
