@@ -6,8 +6,8 @@ require (
 	github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20250718055228-285ecf400b48
 	github.com/atc0005/go-teams-notify/v2 v2.14.0
 	github.com/aws/aws-sdk-go-v2 v1.41.0
-	github.com/aws/aws-sdk-go-v2/config v1.32.5
-	github.com/aws/aws-sdk-go-v2/credentials v1.19.5
+	github.com/aws/aws-sdk-go-v2/config v1.32.6
+	github.com/aws/aws-sdk-go-v2/credentials v1.19.6
 	github.com/aws/aws-sdk-go-v2/service/ses v1.34.17
 	github.com/aws/aws-sdk-go-v2/service/sns v1.39.10
 	github.com/blinkbean/dingtalk v1.1.3
@@ -32,7 +32,7 @@ require (
 	github.com/go-lark/lark v1.16.0
 	github.com/google/go-cmp v0.7.0
 	github.com/kevinburke/twilio-go v0.0.0-20250718182727-5fe7adc01f29
-	maunium.net/go/mautrix v0.26.0
+	maunium.net/go/mautrix v0.26.1
 )
 
 require (
@@ -40,9 +40,9 @@ require (
 	github.com/PagerDuty/go-pagerduty v1.8.0
 	github.com/caarlos0/go-reddit/v3 v3.0.1
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
-	github.com/mailgun/mailgun-go/v5 v5.8.1
+	github.com/mailgun/mailgun-go/v5 v5.9.0
 	github.com/textmagic/textmagic-rest-go-v2/v3 v3.0.43885
-	google.golang.org/api v0.257.0
+	google.golang.org/api v0.258.0
 )
 
 require (
@@ -86,7 +86,7 @@ require (
 	github.com/planetscale/vtprotobuf v0.6.1-0.20240319094008-0393e58bdf10 // indirect
 	github.com/rs/zerolog v1.34.0 // indirect
 	github.com/spiffe/go-spiffe/v2 v2.6.0 // indirect
-	go.mau.fi/util v0.9.3 // indirect
+	go.mau.fi/util v0.9.4 // indirect
 	go.opentelemetry.io/auto/sdk v1.2.1 // indirect
 	go.opentelemetry.io/contrib/detectors/gcp v1.39.0 // indirect
 	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.64.0 // indirect
@@ -101,7 +101,7 @@ require (
 	google.golang.org/appengine/v2 v2.0.6 // indirect
 	google.golang.org/genproto v0.0.0-20251202230838-ff82c1b0f217 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20251202230838-ff82c1b0f217 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20251202230838-ff82c1b0f217 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20251213004720-97cd9d5aeac2 // indirect
 	google.golang.org/grpc v1.77.0 // indirect
 	gopkg.in/go-playground/validator.v9 v9.31.0 // indirect
 )
@@ -112,7 +112,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.7.16 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/ini v1.8.4 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.13.16 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sso v1.30.7 // indirect
+	github.com/aws/aws-sdk-go-v2/service/sso v1.30.8 // indirect
 	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.35.12 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sts v1.41.5 // indirect
 	github.com/aws/smithy-go v1.24.0 // indirect
@@ -153,6 +153,6 @@ require (
 	golang.org/x/oauth2 v0.34.0 // indirect
 	golang.org/x/sys v0.39.0 // indirect
 	golang.org/x/text v0.32.0 // indirect
-	google.golang.org/protobuf v1.36.10 // indirect
+	google.golang.org/protobuf v1.36.11 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
