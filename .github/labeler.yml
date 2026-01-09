@@ -3,43 +3,42 @@
 # Area labels
 area/ci:
   - changed-files:
-    - any-glob-to-any-file:
-      - '.github/**/*'
-      - '.golangci.yaml'
-      - 'Makefile'
+      - any-glob-to-any-file:
+          - ".github/**/*"
+          - ".golangci.yaml"
+          - "Makefile"
 
 area/testing:
   - changed-files:
-    - any-glob-to-any-file:
-      - '**/*_test.go'
-      - '**/testdata/**/*'
+      - any-glob-to-any-file:
+          - "**/*_test.go"
+          - "**/testdata/**/*"
 
 area/dependencies:
   - changed-files:
-    - any-glob-to-any-file:
-      - 'go.mod'
-      - 'go.sum'
-      - 'renovate.json'
+      - any-glob-to-any-file:
+          - "go.mod"
+          - "go.sum"
+          - "renovate.json"
 
 area/documentation:
   - changed-files:
-    - any-glob-to-any-file:
-      - 'README.md'
-      - 'LICENSE'
-      - 'CONTRIBUTING.md'
-      - 'CODE_OF_CONDUCT.md'
-      - 'SECURITY.md'
-      - 'GEMINI.md'
-      - '**/*.md'
+      - any-glob-to-any-file:
+          - "README.md"
+          - "LICENSE"
+          - "CONTRIBUTING.md"
+          - "CODE_OF_CONDUCT.md"
+          - "SECURITY.md"
+          - "**/*.md"
 
 area/api:
   - changed-files:
-    - any-glob-to-any-file:
-      - 'notify.go'
-      - 'send.go'
-      - 'use.go'
+      - any-glob-to-any-file:
+          - "notify.go"
+          - "send.go"
+          - "use.go"
 
 area/services:
   - changed-files:
-    - any-glob-to-any-file:
-      - 'service/**/*'
+      - any-glob-to-any-file:
+          - "service/**/*"
