@@ -37,9 +37,6 @@ Usage:
 	    // Optional: Set body format (default is HTML).
 	    nylasService.BodyFormat(nylas.HTML)
 
-	    // Optional: Use a different region (e.g., EU).
-	    // nylasService.WithBaseURL("https://api.eu.nylas.com")
-
 	    // Tell our notifier to use the Nylas service.
 	    notify.UseServices(nylasService)
 
@@ -53,6 +50,21 @@ Usage:
 	        log.Fatalf("Failed to send notification: %v", err)
 	    }
 	}
+
+Regional Configuration:
+
+For EU region or other Nylas API regions, use NewWithRegion():
+
+	// Create a Nylas service for the EU region
+	nylasService := nylas.NewWithRegion(
+	    "your_api_key",
+	    "your_grant_id",
+	    "[email protected]",
+	    "Your Name",
+	    nylas.RegionEU,
+	)
+
+Supported regions: nylas.RegionUS (default), nylas.RegionEU
 
 For more information about Nylas API v3, see:
   - Getting Started: https://developer.nylas.com/docs/v3/getting-started/

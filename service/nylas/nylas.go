@@ -38,9 +38,23 @@ const (
 	HTML
 )
 
+// Region represents a Nylas API region.
+type Region string
+
 const (
-	// DefaultBaseURL is the default Nylas API v3 base URL for US region.
-	DefaultBaseURL = "https://api.us.nylas.com"
+	// RegionUS represents the United States region.
+	RegionUS Region = "US"
+	// RegionEU represents the European Union region.
+	RegionEU Region = "EU"
+)
+
+const (
+	// BaseURLUS is the Nylas API v3 base URL for the US region.
+	BaseURLUS = "https://api.us.nylas.com"
+	// BaseURLEU is the Nylas API v3 base URL for the EU region.
+	BaseURLEU = "https://api.eu.nylas.com"
+	// DefaultBaseURL is the default Nylas API v3 base URL (US region).
+	DefaultBaseURL = BaseURLUS
 	// DefaultTimeout is the recommended timeout for Nylas API requests (150 seconds).
 	DefaultTimeout = 150 * time.Second
 )
@@ -77,6 +91,8 @@ type errorResponse struct {
 //   - senderAddress: The email address to send from
 //   - senderName: The display name for the sender (optional, can be empty)
 //
+// By default, this uses the US region. For other regions, use NewWithRegion().
+//
 // See https://developer.nylas.com/docs/v3/getting-started/ for more information.
 func New(apiKey, grantID, senderAddress, senderName string) *Nylas {
 	return &Nylas{
@@ -91,6 +107,37 @@ func New(apiKey, grantID, senderAddress, senderName string) *Nylas {
 		receiverAddresses: []string{},
 		usePlainText:      false,
 	}
+}
+
+// NewWithRegion returns a new instance of a Nylas notification service for API v3
+// configured for a specific region.
+//
+// Parameters:
+//   - apiKey: Your Nylas API key for authentication
+//   - grantID: The Grant ID for the email account you want to send from
+//   - senderAddress: The email address to send from
+//   - senderName: The display name for the sender (optional, can be empty)
+//   - region: The Nylas API region (RegionUS or RegionEU)
+//
+// Example:
+//
+//	nylasService := nylas.NewWithRegion(apiKey, grantID, email, name, nylas.RegionEU)
+//
+// See https://developer.nylas.com/docs/v3/getting-started/ for more information.
+func NewWithRegion(apiKey, grantID, senderAddress, senderName string, region Region) *Nylas {
+	n := New(apiKey, grantID, senderAddress, senderName)
+
+	switch region {
+	case RegionEU:
+		n.baseURL = BaseURLEU
+	case RegionUS:
+		n.baseURL = BaseURLUS
+	default:
+		// Default to US region if unknown region is provided
+		n.baseURL = BaseURLUS
+	}
+
+	return n
 }
 
 // WithBaseURL allows setting a custom base URL (e.g., for EU region: https://api.eu.nylas.com).

@@ -24,9 +24,54 @@ func TestNew(t *testing.T) {
 	assert.Equal(t, "[email protected]", n.senderAddress)
 	assert.Equal(t, "Test Sender", n.senderName)
 	assert.Equal(t, DefaultBaseURL, n.baseURL)
+	assert.Equal(t, BaseURLUS, n.baseURL) // Should default to US region
 	assert.False(t, n.usePlainText)
 	assert.Empty(t, n.receiverAddresses)
 	assert.NotNil(t, n.client)
+}
+
+func TestNewWithRegion(t *testing.T) {
+	t.Parallel()
+
+	tests := []struct {
+		name            string
+		region          Region
+		expectedBaseURL string
+	}{
+		{
+			name:            "US region",
+			region:          RegionUS,
+			expectedBaseURL: BaseURLUS,
+		},
+		{
+			name:            "EU region",
+			region:          RegionEU,
+			expectedBaseURL: BaseURLEU,
+		},
+		{
+			name:            "Unknown region defaults to US",
+			region:          Region("UNKNOWN"),
+			expectedBaseURL: BaseURLUS,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
+			n := NewWithRegion("test-api-key", "test-grant-id", "[email protected]", "Test Sender", tt.region)
+
+			assert.NotNil(t, n)
+			assert.Equal(t, "test-api-key", n.apiKey)
+			assert.Equal(t, "test-grant-id", n.grantID)
+			assert.Equal(t, "[email protected]", n.senderAddress)
+			assert.Equal(t, "Test Sender", n.senderName)
+			assert.Equal(t, tt.expectedBaseURL, n.baseURL)
+			assert.False(t, n.usePlainText)
+			assert.Empty(t, n.receiverAddresses)
+			assert.NotNil(t, n.client)
+		})
+	}
 }
 
 func TestNylas_WithBaseURL(t *testing.T) {
