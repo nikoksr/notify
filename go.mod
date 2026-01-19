@@ -16,7 +16,7 @@ require (
 	github.com/dghubble/oauth1 v0.7.3
 	github.com/go-telegram-bot-api/telegram-bot-api v4.6.4+incompatible
 	github.com/line/line-bot-sdk-go v7.8.0+incompatible
-	github.com/plivo/plivo-go/v7 v7.59.2
+	github.com/plivo/plivo-go/v7 v7.59.3
 	github.com/sendgrid/sendgrid-go v3.16.1+incompatible
 	github.com/silenceper/wechat/v2 v2.1.11
 	github.com/slack-go/slack v0.17.3
@@ -32,7 +32,7 @@ require (
 	github.com/go-lark/lark v1.16.0
 	github.com/google/go-cmp v0.7.0
 	github.com/kevinburke/twilio-go v0.0.0-20250718182727-5fe7adc01f29
-	maunium.net/go/mautrix v0.26.1
+	maunium.net/go/mautrix v0.26.2
 )
 
 require (
@@ -40,9 +40,9 @@ require (
 	github.com/PagerDuty/go-pagerduty v1.8.0
 	github.com/caarlos0/go-reddit/v3 v3.0.1
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
-	github.com/mailgun/mailgun-go/v5 v5.10.0
+	github.com/mailgun/mailgun-go/v5 v5.10.1
 	github.com/textmagic/textmagic-rest-go-v2/v3 v3.0.43885
-	google.golang.org/api v0.259.0
+	google.golang.org/api v0.260.0
 )
 
 require (
@@ -75,10 +75,9 @@ require (
 	github.com/golang-jwt/jwt/v4 v4.5.2 // indirect
 	github.com/golang-jwt/jwt/v5 v5.3.0 // indirect
 	github.com/google/s2a-go v0.1.9 // indirect
-	github.com/googleapis/enterprise-certificate-proxy v0.3.7 // indirect
+	github.com/googleapis/enterprise-certificate-proxy v0.3.9 // indirect
 	github.com/googleapis/gax-go/v2 v2.16.0 // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect
-	github.com/mailgun/errors v0.4.0 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/oapi-codegen/runtime v1.1.2 // indirect
@@ -86,7 +85,7 @@ require (
 	github.com/planetscale/vtprotobuf v0.6.1-0.20240319094008-0393e58bdf10 // indirect
 	github.com/rs/zerolog v1.34.0 // indirect
 	github.com/spiffe/go-spiffe/v2 v2.6.0 // indirect
-	go.mau.fi/util v0.9.4 // indirect
+	go.mau.fi/util v0.9.5 // indirect
 	go.opentelemetry.io/auto/sdk v1.2.1 // indirect
 	go.opentelemetry.io/contrib/detectors/gcp v1.39.0 // indirect
 	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.64.0 // indirect
@@ -96,7 +95,7 @@ require (
 	go.opentelemetry.io/otel/sdk v1.39.0 // indirect
 	go.opentelemetry.io/otel/sdk/metric v1.39.0 // indirect
 	go.opentelemetry.io/otel/trace v1.39.0 // indirect
-	golang.org/x/exp v0.0.0-20251209150349-8475f28825e9 // indirect
+	golang.org/x/exp v0.0.0-20260112195511-716be5621a96 // indirect
 	golang.org/x/time v0.14.0 // indirect
 	google.golang.org/appengine/v2 v2.0.6 // indirect
 	google.golang.org/genproto v0.0.0-20251222181119-0a764e51fe1b // indirect
@@ -148,11 +147,11 @@ require (
 	github.com/tidwall/sjson v1.2.5 // indirect
 	github.com/ttacon/builder v0.0.0-20170518171403-c099f663e1c2 // indirect
 	github.com/ttacon/libphonenumber v1.2.1 // indirect
-	golang.org/x/crypto v0.46.0 // indirect
-	golang.org/x/net v0.48.0 // indirect
+	golang.org/x/crypto v0.47.0 // indirect
+	golang.org/x/net v0.49.0 // indirect
 	golang.org/x/oauth2 v0.34.0 // indirect
-	golang.org/x/sys v0.39.0 // indirect
-	golang.org/x/text v0.32.0 // indirect
+	golang.org/x/sys v0.40.0 // indirect
+	golang.org/x/text v0.33.0 // indirect
 	google.golang.org/protobuf v1.36.11 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
