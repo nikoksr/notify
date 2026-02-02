@@ -40,9 +40,9 @@ require (
 	github.com/PagerDuty/go-pagerduty v1.8.0
 	github.com/caarlos0/go-reddit/v3 v3.0.1
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
-	github.com/mailgun/mailgun-go/v5 v5.11.0
+	github.com/mailgun/mailgun-go/v5 v5.12.0
 	github.com/textmagic/textmagic-rest-go-v2/v3 v3.0.43885
-	google.golang.org/api v0.262.0
+	google.golang.org/api v0.264.0
 )
 
 require (
@@ -100,7 +100,7 @@ require (
 	google.golang.org/appengine/v2 v2.0.6 // indirect
 	google.golang.org/genproto v0.0.0-20251222181119-0a764e51fe1b // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20251222181119-0a764e51fe1b // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20260120174246-409b4a993575 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20260122232226-8e98ce8d340d // indirect
 	google.golang.org/grpc v1.78.0 // indirect
 	gopkg.in/go-playground/validator.v9 v9.31.0 // indirect
 )
