@@ -13,3 +13,9 @@ func WithEurope() Option {
 		_ = m.client.SetAPIBase(mailgun.APIBaseEU)
 	}
 }
+
+func WithHTML() Option {
+	return func(m *Mailgun) {
+		m.mode = mailgunModeHTML
+	}
+}
