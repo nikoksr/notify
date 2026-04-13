@@ -48,8 +48,8 @@ func (m *Mailgun) AddReceivers(addresses ...string) {
 	m.receiverAddresses = append(m.receiverAddresses, addresses...)
 }
 
-// Send takes a message subject and a message body and sends them to all previously set chats. Message body supports
-// html as markup language.
+// Send takes a message subject and a message body and sends them to all previously added email receivers.
+// The body is sent as plain text by default, or as HTML when the service is configured with WithHTML().
 func (m Mailgun) Send(ctx context.Context, subject, message string) error {
 	var mailMessage *mailgun.PlainMessage
 	switch m.mode {
