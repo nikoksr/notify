@@ -1,14 +1,31 @@
 # WhatsApp
 
-## IMPORTANT
+WhatsApp notification service using [tulir/whatsmeow](https://github.com/tulir/whatsmeow).
 
-### Broken state; see [#274](https://github.com/nikoksr/notify/issues/274)
+## Usage
 
-Since our previous WhatsApp client library was abandoned, we had to switch to a new one. Unfortunately, the new library
-is not yet ready for production use. We are working on a solution, but it will take some time.
+```go
+wa := whatsapp.New()
+wa.AddReceivers("628123456789@s.whatsapp.net")
 
-The broken client library caused our CI pipeline to break and for that reason we decided to turn the WhatsApp service
-into a no-op service. This means that the WhatsApp service will not send any notifications, but it will not return any
-errors either. This is a temporary solution until we have a working client library. We chose no-op over a hard error to
-prevent breaking existing applications.
+ctx := context.Background()
 
+// Login via QR code (scan with WhatsApp mobile app)
+if err := wa.LoginWithQRCode(ctx, "whatsapp.db"); err != nil {
+    log.Fatal(err)
+}
+defer wa.Disconnect()
+
+// Or login via 8-digit pairing code
+// if err := wa.LoginWithPairingCode(ctx, "628123456789", "whatsapp.db"); err != nil {
+//     log.Fatal(err)
+// }
+
+notifier := notify.New()
+notifier.UseServices(wa)
+notifier.Send(ctx, "Subject", "Message body")
+JID Format
+Personal chat: 628123456789@s.whatsapp.net
+Group chat: 1234567890-1234567890@g.us
+Session
+Session data is stored in a SQLite database file. Re-authentication is only needed once per device.

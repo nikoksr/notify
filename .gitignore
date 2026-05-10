@@ -11,3 +11,5 @@ tmp/
 .env
 coverage.out
 cover.html
+whatsmeow.db
+*.db
