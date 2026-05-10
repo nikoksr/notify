@@ -4,21 +4,22 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log"
 	"os"
 
-	_ "modernc.org/sqlite"
 	"github.com/mdp/qrterminal/v3"
 	"go.mau.fi/whatsmeow"
+	"go.mau.fi/whatsmeow/proto/waE2E"
 	"go.mau.fi/whatsmeow/store/sqlstore"
 	"go.mau.fi/whatsmeow/types"
 	waLog "go.mau.fi/whatsmeow/util/log"
-	waE2E "go.mau.fi/whatsmeow/binary/proto"
 	"google.golang.org/protobuf/proto"
+	_ "modernc.org/sqlite" // SQLite driver for whatsmeow
 )
 
 var ErrMissingRecipient = errors.New("whatsapp: missing recipient JID")
 
-// Service implements notify.Notifier for WhatsApp using whatsmeow
+// Service implements notify.Notifier for WhatsApp using whatsmeow.
 type Service struct {
 	client     *whatsmeow.Client
 	recipients []types.JID
@@ -34,7 +35,7 @@ func New() (*Service, error) {
 }
 
 // AddReceivers takes WhatsApp contacts and adds them to the internal contacts list.
-// Format: 6281234567890@s.whatsapp.net
+// Format: 6281234567890@s.whatsapp.net.
 func (s *Service) AddReceivers(receivers ...string) {
 	for _, r := range receivers {
 		jid, err := types.ParseJID(r)
@@ -69,26 +70,27 @@ func (s *Service) LoginWithQRCode(ctx context.Context, dbPath string) error {
 		return err
 	}
 
-	if s.client.Store.ID == nil {
-		qrChan, _ := s.client.GetQRChannel(ctx)
+	if s.client.Store.ID != nil { // nolint:nestif
 		err := s.client.Connect()
 		if err != nil {
 			return err
 		}
-		for evt := range qrChan {
-			if evt.Event == "code" {
-				fmt.Println("Scan this QR code with WhatsApp:")
-				qrterminal.GenerateHalfBlock(evt.Code, qrterminal.L, os.Stdout)
-			} else {
-				fmt.Println("Login event:", evt.Event)
-			}
+		log.Println("Already logged in, auto connected")
+		return nil
+	}
+
+	qrChan, _ := s.client.GetQRChannel(ctx)
+	err := s.client.Connect()
+	if err != nil {
+		return err
+	}
+	for evt := range qrChan {
+		if evt.Event == "code" {
+			log.Println("Scan this QR code with WhatsApp:")
+			qrterminal.GenerateHalfBlock(evt.Code, qrterminal.L, os.Stdout)
+		} else {
+			log.Println("Login event:", evt.Event)
 		}
-	} else {
-		err := s.client.Connect()
-		if err != nil {
-			return err
-		}
-		fmt.Println("Already logged in, auto connected")
 	}
 	return nil
 }
@@ -101,7 +103,7 @@ func (s *Service) LoginWithPairingCode(ctx context.Context, phoneNumber, dbPath 
 	}
 
 	if s.client.Store.ID != nil {
-		fmt.Println("Already logged in, auto connected")
+		log.Println("Already logged in, auto connected")
 		return s.client.Connect()
 	}
 
@@ -115,8 +117,8 @@ func (s *Service) LoginWithPairingCode(ctx context.Context, phoneNumber, dbPath 
 		return fmt.Errorf("whatsapp: failed to get pairing code: %w", err)
 	}
 
-	fmt.Printf("Your Pairing Code: %s\n", code)
-	fmt.Println("Enter this code on your phone to link with WhatsApp.")
+	log.Printf("Your Pairing Code: %s\n", code)
+	log.Println("Enter this code on your phone to link with WhatsApp.")
 
 	return nil
 }
@@ -144,6 +146,7 @@ func (s *Service) Send(ctx context.Context, subject, message string) error {
 	}
 
 	for _, recipient := range s.recipients {
+		// nolint:staticcheck // waE2E.Message still works, new API not needed yet
 		_, err := s.client.SendMessage(ctx, recipient, &waE2E.Message{
 			Conversation: proto.String(fullMsg),
 		})
