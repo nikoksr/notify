@@ -4,16 +4,15 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"log/slog"
 	"os"
 
-	_ "modernc.org/sqlite" // SQLite driver for whatsmeow
+	_ "modernc.org/sqlite"
 	"github.com/mdp/qrterminal/v3"
 	"go.mau.fi/whatsmeow"
-	"go.mau.fi/whatsmeow/proto/waE2E"
 	"go.mau.fi/whatsmeow/store/sqlstore"
 	"go.mau.fi/whatsmeow/types"
 	waLog "go.mau.fi/whatsmeow/util/log"
+	waE2E "go.mau.fi/whatsmeow/binary/proto"
 	"google.golang.org/protobuf/proto"
 )
 
@@ -70,13 +69,8 @@ func (s *Service) LoginWithQRCode(ctx context.Context, dbPath string) error {
 		return err
 	}
 
-	if s.client.Store.ID != nil { //nolint:nestif
-		err := s.client.Connect()
-		if err != nil {
-			return err
-		}
-		slog.Info("Already logged in, auto connected")
-		return nil
+	if s.client.Store.ID != nil {
+		return s.client.Connect()
 	}
 
 	qrChan, _ := s.client.GetQRChannel(ctx)
@@ -86,10 +80,7 @@ func (s *Service) LoginWithQRCode(ctx context.Context, dbPath string) error {
 	}
 	for evt := range qrChan {
 		if evt.Event == "code" {
-			slog.Info("Scan this QR code with WhatsApp:")
 			qrterminal.GenerateHalfBlock(evt.Code, qrterminal.L, os.Stdout)
-		} else {
-			slog.Info("Login event:", "event", evt.Event)
 		}
 	}
 	return nil
@@ -97,30 +88,26 @@ func (s *Service) LoginWithQRCode(ctx context.Context, dbPath string) error {
 
 // LoginWithPairingCode authenticates using an 8-digit pairing code.
 // It will block until the code is entered on a phone or context timeout.
-func (s *Service) LoginWithPairingCode(ctx context.Context, phoneNumber, dbPath string) error {
+func (s *Service) LoginWithPairingCode(ctx context.Context, phoneNumber, dbPath string) (string, error) {
 	if err := s.initClient(ctx, dbPath); err != nil {
-		return err
+		return "", err
 	}
 
 	if s.client.Store.ID != nil {
-		slog.Info("Already logged in, auto connected")
-		return s.client.Connect()
+		return "", s.client.Connect()
 	}
 
 	err := s.client.Connect()
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	code, err := s.client.PairPhone(ctx, phoneNumber, true, whatsmeow.PairClientChrome, "Chrome (Linux)")
 	if err != nil {
-		return fmt.Errorf("whatsapp: failed to get pairing code: %w", err)
+		return "", fmt.Errorf("whatsapp: failed to get pairing code: %w", err)
 	}
 
-	slog.Info("Your Pairing Code", "code", code)
-	slog.Info("Enter this code on your phone to link with WhatsApp.")
-
-	return nil
+	return code, nil
 }
 
 // Disconnect closes the connection to the WhatsApp servers.
@@ -146,7 +133,6 @@ func (s *Service) Send(ctx context.Context, subject, message string) error {
 	}
 
 	for _, recipient := range s.recipients {
-		//nolint:staticcheck // waE2E.Message still works, new API not needed yet
 		_, err := s.client.SendMessage(ctx, recipient, &waE2E.Message{
 			Conversation: proto.String(fullMsg),
 		})
