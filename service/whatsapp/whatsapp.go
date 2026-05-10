@@ -4,9 +4,10 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"log"
+	"log/slog"
 	"os"
 
+	_ "modernc.org/sqlite" // SQLite driver for whatsmeow
 	"github.com/mdp/qrterminal/v3"
 	"go.mau.fi/whatsmeow"
 	"go.mau.fi/whatsmeow/proto/waE2E"
@@ -14,7 +15,6 @@ import (
 	"go.mau.fi/whatsmeow/types"
 	waLog "go.mau.fi/whatsmeow/util/log"
 	"google.golang.org/protobuf/proto"
-	_ "modernc.org/sqlite" // SQLite driver for whatsmeow
 )
 
 var ErrMissingRecipient = errors.New("whatsapp: missing recipient JID")
@@ -70,12 +70,12 @@ func (s *Service) LoginWithQRCode(ctx context.Context, dbPath string) error {
 		return err
 	}
 
-	if s.client.Store.ID != nil { // nolint:nestif
+	if s.client.Store.ID != nil { //nolint:nestif
 		err := s.client.Connect()
 		if err != nil {
 			return err
 		}
-		log.Println("Already logged in, auto connected")
+		slog.Info("Already logged in, auto connected")
 		return nil
 	}
 
@@ -86,10 +86,10 @@ func (s *Service) LoginWithQRCode(ctx context.Context, dbPath string) error {
 	}
 	for evt := range qrChan {
 		if evt.Event == "code" {
-			log.Println("Scan this QR code with WhatsApp:")
+			slog.Info("Scan this QR code with WhatsApp:")
 			qrterminal.GenerateHalfBlock(evt.Code, qrterminal.L, os.Stdout)
 		} else {
-			log.Println("Login event:", evt.Event)
+			slog.Info("Login event:", "event", evt.Event)
 		}
 	}
 	return nil
@@ -103,7 +103,7 @@ func (s *Service) LoginWithPairingCode(ctx context.Context, phoneNumber, dbPath 
 	}
 
 	if s.client.Store.ID != nil {
-		log.Println("Already logged in, auto connected")
+		slog.Info("Already logged in, auto connected")
 		return s.client.Connect()
 	}
 
@@ -117,8 +117,8 @@ func (s *Service) LoginWithPairingCode(ctx context.Context, phoneNumber, dbPath 
 		return fmt.Errorf("whatsapp: failed to get pairing code: %w", err)
 	}
 
-	log.Printf("Your Pairing Code: %s\n", code)
-	log.Println("Enter this code on your phone to link with WhatsApp.")
+	slog.Info("Your Pairing Code", "code", code)
+	slog.Info("Enter this code on your phone to link with WhatsApp.")
 
 	return nil
 }
@@ -146,7 +146,7 @@ func (s *Service) Send(ctx context.Context, subject, message string) error {
 	}
 
 	for _, recipient := range s.recipients {
-		// nolint:staticcheck // waE2E.Message still works, new API not needed yet
+		//nolint:staticcheck // waE2E.Message still works, new API not needed yet
 		_, err := s.client.SendMessage(ctx, recipient, &waE2E.Message{
 			Conversation: proto.String(fullMsg),
 		})
