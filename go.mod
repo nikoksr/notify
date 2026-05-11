@@ -18,8 +18,8 @@ require (
 	github.com/line/line-bot-sdk-go v7.8.0+incompatible
 	github.com/plivo/plivo-go/v7 v7.59.7
 	github.com/sendgrid/sendgrid-go v3.16.1+incompatible
-	github.com/silenceper/wechat/v2 v2.1.12
-	github.com/slack-go/slack v0.23.0
+	github.com/silenceper/wechat/v2 v2.1.13
+	github.com/slack-go/slack v0.23.1
 	github.com/stretchr/testify v1.11.1
 	github.com/utahta/go-linenotify v0.5.0
 	golang.org/x/sync v0.20.0
@@ -42,7 +42,7 @@ require (
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	github.com/mailgun/mailgun-go/v5 v5.15.0
 	github.com/textmagic/textmagic-rest-go-v2/v3 v3.0.43885
-	google.golang.org/api v0.277.0
+	google.golang.org/api v0.278.0
 )
 
 require (
