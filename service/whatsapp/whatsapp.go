@@ -8,47 +8,43 @@ import (
 
 	"github.com/mdp/qrterminal/v3"
 	"go.mau.fi/whatsmeow"
-	waProto "go.mau.fi/whatsmeow/binary/proto"
+	"go.mau.fi/whatsmeow/proto/waE2E"
 	"go.mau.fi/whatsmeow/store/sqlstore"
 	"go.mau.fi/whatsmeow/types"
 	waLog "go.mau.fi/whatsmeow/util/log"
 	"google.golang.org/protobuf/proto"
-	_ "modernc.org/sqlite" // Import pure Go SQLite driver for whatsmeow store.
+	_ "modernc.org/sqlite" // SQLite driver required by whatsmeow store; imported for side-effects only.
 )
 
+// ErrMissingRecipient is returned when Send is called with no recipients configured.
 var ErrMissingRecipient = errors.New("whatsapp: missing recipient JID")
 
 // Service implements notify.Notifier for WhatsApp using whatsmeow.
 type Service struct {
 	client     *whatsmeow.Client
 	recipients []types.JID
-	logger     waLog.Logger
-	dbPath     string
 }
 
 // New returns a new instance of a WhatsApp notification service.
-func New() (*Service, error) {
-	return &Service{
-		logger: waLog.Noop,
-	}, nil
+func New() *Service {
+	return &Service{}
 }
 
-// AddReceivers takes WhatsApp contacts and adds them to the internal contacts list.
-// Format: 6281234567890@s.whatsapp.net.
+// AddReceivers takes WhatsApp JID strings and appends them to the internal recipient list.
+// The expected format is: 6281234567890@s.whatsapp.net.
 func (s *Service) AddReceivers(receivers ...string) {
 	for _, r := range receivers {
 		jid, err := types.ParseJID(r)
 		if err != nil {
 			continue
 		}
+
 		s.recipients = append(s.recipients, jid)
 	}
 }
 
 func (s *Service) initClient(ctx context.Context, dbPath string) error {
-	s.dbPath = dbPath
-	dbLog := waLog.Stdout("Database", "INFO", true)
-	container, err := sqlstore.New(ctx, "sqlite", "file:"+dbPath+"?_foreign_keys=on", dbLog)
+	container, err := sqlstore.New(ctx, "sqlite", "file:"+dbPath+"?_foreign_keys=on", waLog.Noop)
 	if err != nil {
 		return fmt.Errorf("whatsapp: failed to init store: %w", err)
 	}
@@ -58,23 +54,20 @@ func (s *Service) initClient(ctx context.Context, dbPath string) error {
 		return fmt.Errorf("whatsapp: failed to get device: %w", err)
 	}
 
-	s.client = whatsmeow.NewClient(deviceStore, s.logger)
+	s.client = whatsmeow.NewClient(deviceStore, waLog.Noop)
+
 	return nil
 }
 
-// LoginWithQRCode authenticates using QR code on terminal.
-// It will block until QR is scanned or context timeout.
+// LoginWithQRCode authenticates via QR code printed to the terminal.
+// It blocks until the QR code is scanned or the context is cancelled.
 func (s *Service) LoginWithQRCode(ctx context.Context, dbPath string) error {
 	if err := s.initClient(ctx, dbPath); err != nil {
 		return err
 	}
 
 	if s.client.Store.ID != nil {
-		if err := s.client.Connect(); err != nil {
-			return err
-		}
-		s.logger.Infof("Already logged in, auto connected")
-		return nil
+		return s.client.Connect()
 	}
 
 	qrChan, _ := s.client.GetQRChannel(ctx)
@@ -85,36 +78,38 @@ func (s *Service) LoginWithQRCode(ctx context.Context, dbPath string) error {
 	for evt := range qrChan {
 		if evt.Event == "code" {
 			qrterminal.GenerateHalfBlock(evt.Code, qrterminal.L, os.Stdout)
-		} else {
-			s.logger.Infof("Login event: %s", evt.Event)
 		}
 	}
+
 	return nil
 }
 
-// LoginWithPairingCode authenticates using an 8-digit pairing code.
-// It will block until the code is generated; pairing completion is handled via events.
-func (s *Service) LoginWithPairingCode(ctx context.Context, phoneNumber, dbPath string) error {
+// LoginWithPairingCode authenticates using an 8-digit pairing code sent to phoneNumber.
+// It blocks until the pairing code is generated; completion is signalled via WhatsApp events.
+func (s *Service) LoginWithPairingCode(ctx context.Context, phoneNumber, dbPath string) (string, error) {
 	if err := s.initClient(ctx, dbPath); err != nil {
-		return err
+		return "", err
 	}
 
 	if s.client.Store.ID != nil {
-		s.logger.Infof("Already logged in, auto connected")
-		return s.client.Connect()
+		return "", s.client.Connect()
 	}
 
 	if err := s.client.Connect(); err != nil {
-		return err
+		return "", err
 	}
 
 	code, err := s.client.PairPhone(ctx, phoneNumber, true, whatsmeow.PairClientChrome, "Chrome (Linux)")
 	if err != nil {
-		return fmt.Errorf("whatsapp: failed to get pairing code: %w", err)
+		return "", fmt.Errorf("whatsapp: failed to get pairing code: %w", err)
 	}
 
-	s.logger.Infof("Your Pairing Code: %s", code)
-	return nil
+	return code, nil
+}
+
+// IsConnected reports whether the client is currently connected to WhatsApp.
+func (s *Service) IsConnected() bool {
+	return s.client != nil && s.client.IsConnected()
 }
 
 // Disconnect closes the connection to the WhatsApp servers.
@@ -124,28 +119,30 @@ func (s *Service) Disconnect() {
 	}
 }
 
-// Send takes a message subject and a message body and sends them to all previously set contacts.
-// Subject will be formatted as bold text.
+// Send delivers subject and message to all configured recipients.
+// The subject is rendered as bold text followed by a blank line before the message body.
 func (s *Service) Send(ctx context.Context, subject, message string) error {
-	if s.client == nil || !s.client.IsConnected() {
-		return errors.New("whatsapp: client not connected, call LoginWithQRCode() or LoginWithPairingCode() first")
+	if !s.IsConnected() {
+		return errors.New("whatsapp: client not connected, call LoginWithQRCode or LoginWithPairingCode first")
 	}
+
 	if len(s.recipients) == 0 {
 		return ErrMissingRecipient
 	}
 
-	fullMsg := message
+	body := message
 	if subject != "" {
-		fullMsg = fmt.Sprintf("*%s*\n\n%s", subject, message)
+		body = fmt.Sprintf("*%s*\n\n%s", subject, message)
 	}
 
 	for _, recipient := range s.recipients {
-		_, err := s.client.SendMessage(ctx, recipient, &waProto.Message{
-			Conversation: proto.String(fullMsg),
+		_, err := s.client.SendMessage(ctx, recipient, &waE2E.Message{
+			Conversation: proto.String(body),
 		})
 		if err != nil {
 			return fmt.Errorf("whatsapp: failed to send to %s: %w", recipient, err)
 		}
 	}
+
 	return nil
 }
