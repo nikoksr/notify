@@ -7,8 +7,9 @@ package mattermost
 import (
 	"context"
 
-	"github.com/nikoksr/notify/service/http"
 	mock "github.com/stretchr/testify/mock"
+
+	"github.com/nikoksr/notify/service/http"
 )
 
 // newMockhttpClient creates a new instance of mockhttpClient. It also registers a testing interface on the mock and a cleanup function to assert the mocks expectations.

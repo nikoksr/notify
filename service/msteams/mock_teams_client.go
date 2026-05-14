@@ -8,7 +8,7 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/atc0005/go-teams-notify/v2"
+	goteamsnotify "github.com/atc0005/go-teams-notify/v2"
 	mock "github.com/stretchr/testify/mock"
 )
 
