@@ -18,8 +18,8 @@ require (
 	github.com/line/line-bot-sdk-go v7.8.0+incompatible
 	github.com/plivo/plivo-go/v7 v7.59.7
 	github.com/sendgrid/sendgrid-go v3.16.1+incompatible
-	github.com/silenceper/wechat/v2 v2.1.12
-	github.com/slack-go/slack v0.23.0
+	github.com/silenceper/wechat/v2 v2.1.13
+	github.com/slack-go/slack v0.23.1
 	github.com/stretchr/testify v1.11.1
 	github.com/utahta/go-linenotify v0.5.0
 	golang.org/x/sync v0.20.0
@@ -31,7 +31,7 @@ require (
 	github.com/drswork/go-twitter v0.0.0-20221107160839-dea1b6ed53d7
 	github.com/go-lark/lark v1.16.0
 	github.com/google/go-cmp v0.7.0
-	github.com/kevinburke/twilio-go v0.0.0-20260403151241-cfa32240af25
+	github.com/kevinburke/twilio-go v0.0.0-20260504164244-2e3e7dddbc33
 	maunium.net/go/mautrix v0.27.0
 )
 
