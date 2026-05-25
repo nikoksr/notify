@@ -6,8 +6,8 @@ require (
 	github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20250718055228-285ecf400b48
 	github.com/atc0005/go-teams-notify/v2 v2.14.0
 	github.com/aws/aws-sdk-go-v2 v1.41.7
-	github.com/aws/aws-sdk-go-v2/config v1.32.17
-	github.com/aws/aws-sdk-go-v2/credentials v1.19.16
+	github.com/aws/aws-sdk-go-v2/config v1.32.18
+	github.com/aws/aws-sdk-go-v2/credentials v1.19.17
 	github.com/aws/aws-sdk-go-v2/service/ses v1.34.24
 	github.com/aws/aws-sdk-go-v2/service/sns v1.39.17
 	github.com/blinkbean/dingtalk v1.1.3
@@ -19,7 +19,7 @@ require (
 	github.com/plivo/plivo-go/v7 v7.59.7
 	github.com/sendgrid/sendgrid-go v3.16.1+incompatible
 	github.com/silenceper/wechat/v2 v2.1.13
-	github.com/slack-go/slack v0.23.1
+	github.com/slack-go/slack v0.24.0
 	github.com/stretchr/testify v1.11.1
 	github.com/utahta/go-linenotify v0.5.0
 	golang.org/x/sync v0.20.0
@@ -41,8 +41,8 @@ require (
 	github.com/caarlos0/go-reddit/v3 v3.0.1
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	github.com/mailgun/mailgun-go/v5 v5.15.0
-	github.com/textmagic/textmagic-rest-go-v2/v3 v3.0.43885
-	google.golang.org/api v0.279.0
+	github.com/textmagic/textmagic-rest-go-v2/v3 v3.0.50044
+	google.golang.org/api v0.280.0
 )
 
 require (
@@ -112,7 +112,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.7.23 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.13.23 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sso v1.30.17 // indirect
-	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.35.21 // indirect
+	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.36.0 // indirect
 	github.com/aws/aws-sdk-go-v2/service/sts v1.42.1 // indirect
 	github.com/aws/smithy-go v1.25.1 // indirect
 	github.com/bradfitz/gomemcache v0.0.0-20250403215159-8d39553ac7cf // indirect
