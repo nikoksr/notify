@@ -5,11 +5,11 @@ go 1.25.10
 require (
 	github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20250718055228-285ecf400b48
 	github.com/atc0005/go-teams-notify/v2 v2.14.0
-	github.com/aws/aws-sdk-go-v2 v1.41.9
-	github.com/aws/aws-sdk-go-v2/config v1.32.20
-	github.com/aws/aws-sdk-go-v2/credentials v1.19.19
-	github.com/aws/aws-sdk-go-v2/service/ses v1.34.26
-	github.com/aws/aws-sdk-go-v2/service/sns v1.39.19
+	github.com/aws/aws-sdk-go-v2 v1.41.12
+	github.com/aws/aws-sdk-go-v2/config v1.32.23
+	github.com/aws/aws-sdk-go-v2/credentials v1.19.22
+	github.com/aws/aws-sdk-go-v2/service/ses v1.35.1
+	github.com/aws/aws-sdk-go-v2/service/sns v1.40.0
 	github.com/blinkbean/dingtalk v1.1.3
 	github.com/bwmarrin/discordgo v0.29.0
 	github.com/cschomburg/go-pushbullet v0.0.0-20171206132031-67759df45fbb
@@ -19,7 +19,7 @@ require (
 	github.com/plivo/plivo-go/v7 v7.59.7
 	github.com/sendgrid/sendgrid-go v3.16.1+incompatible
 	github.com/silenceper/wechat/v2 v2.1.13
-	github.com/slack-go/slack v0.24.0
+	github.com/slack-go/slack v0.25.0
 	github.com/stretchr/testify v1.11.1
 	github.com/utahta/go-linenotify v0.5.0
 	golang.org/x/sync v0.20.0
@@ -40,9 +40,9 @@ require (
 	github.com/PagerDuty/go-pagerduty v1.8.0
 	github.com/caarlos0/go-reddit/v3 v3.0.1
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
-	github.com/mailgun/mailgun-go/v5 v5.15.0
+	github.com/mailgun/mailgun-go/v5 v5.16.0
 	github.com/textmagic/textmagic-rest-go-v2/v3 v3.0.50044
-	google.golang.org/api v0.282.0
+	google.golang.org/api v0.283.0
 )
 
 require (
@@ -61,9 +61,9 @@ require (
 	github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/metric v0.56.0 // indirect
 	github.com/GoogleCloudPlatform/opentelemetry-operations-go/internal/resourcemapping v0.56.0 // indirect
 	github.com/MicahParks/keyfunc v1.9.0 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/v4a v1.4.26 // indirect
-	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.13.10 // indirect
-	github.com/aws/aws-sdk-go-v2/service/signin v1.1.1 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/v4a v1.4.29 // indirect
+	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.13.12 // indirect
+	github.com/aws/aws-sdk-go-v2/service/signin v1.1.4 // indirect
 	github.com/cncf/xds/go v0.0.0-20260202195803-dba9d589def2 // indirect
 	github.com/envoyproxy/go-control-plane/envoy v1.37.0 // indirect
 	github.com/envoyproxy/protoc-gen-validate v1.3.3 // indirect
@@ -81,7 +81,7 @@ require (
 	github.com/leodido/go-urn v1.4.0 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
-	github.com/oapi-codegen/runtime v1.3.1 // indirect
+	github.com/oapi-codegen/runtime v1.4.1 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/planetscale/vtprotobuf v0.6.1-0.20240319094008-0393e58bdf10 // indirect
 	github.com/rs/zerolog v1.35.1 // indirect
@@ -107,14 +107,14 @@ require (
 )
 
 require (
-	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.18.25 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/configsources v1.4.25 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.7.25 // indirect
-	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.13.25 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sso v1.30.19 // indirect
-	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.36.2 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sts v1.42.3 // indirect
-	github.com/aws/smithy-go v1.26.0 // indirect
+	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.18.28 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/configsources v1.4.28 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.7.28 // indirect
+	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.13.28 // indirect
+	github.com/aws/aws-sdk-go-v2/service/sso v1.31.2 // indirect
+	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.36.5 // indirect
+	github.com/aws/aws-sdk-go-v2/service/sts v1.43.2 // indirect
+	github.com/aws/smithy-go v1.27.1 // indirect
 	github.com/bradfitz/gomemcache v0.0.0-20250403215159-8d39553ac7cf // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
@@ -129,12 +129,9 @@ require (
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/gorilla/websocket v1.5.3 // indirect
 	github.com/gregdel/pushover v1.4.0
-	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/kevinburke/go-types v0.0.0-20240719050749-165e75e768f7 // indirect
 	github.com/kevinburke/rest v0.0.0-20250718180114-1a15e4f2364f // indirect
 	github.com/mileusna/viber v1.0.1
-	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
-	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/sendgrid/rest v2.6.9+incompatible // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
