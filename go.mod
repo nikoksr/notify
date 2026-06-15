@@ -5,24 +5,24 @@ go 1.25.10
 require (
 	github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20250718055228-285ecf400b48
 	github.com/atc0005/go-teams-notify/v2 v2.14.0
-	github.com/aws/aws-sdk-go-v2 v1.41.12
-	github.com/aws/aws-sdk-go-v2/config v1.32.23
-	github.com/aws/aws-sdk-go-v2/credentials v1.19.22
-	github.com/aws/aws-sdk-go-v2/service/ses v1.35.1
-	github.com/aws/aws-sdk-go-v2/service/sns v1.40.0
+	github.com/aws/aws-sdk-go-v2 v1.42.0
+	github.com/aws/aws-sdk-go-v2/config v1.32.25
+	github.com/aws/aws-sdk-go-v2/credentials v1.19.24
+	github.com/aws/aws-sdk-go-v2/service/ses v1.35.2
+	github.com/aws/aws-sdk-go-v2/service/sns v1.40.1
 	github.com/blinkbean/dingtalk v1.1.3
 	github.com/bwmarrin/discordgo v0.29.0
 	github.com/cschomburg/go-pushbullet v0.0.0-20171206132031-67759df45fbb
 	github.com/dghubble/oauth1 v0.7.3
 	github.com/go-telegram-bot-api/telegram-bot-api v4.6.4+incompatible
 	github.com/line/line-bot-sdk-go v7.8.0+incompatible
-	github.com/plivo/plivo-go/v7 v7.59.7
+	github.com/plivo/plivo-go/v7 v7.60.2
 	github.com/sendgrid/sendgrid-go v3.16.1+incompatible
 	github.com/silenceper/wechat/v2 v2.1.13
-	github.com/slack-go/slack v0.25.0
+	github.com/slack-go/slack v0.26.0
 	github.com/stretchr/testify v1.11.1
 	github.com/utahta/go-linenotify v0.5.0
-	golang.org/x/sync v0.20.0
+	golang.org/x/sync v0.21.0
 )
 
 require (
@@ -42,7 +42,7 @@ require (
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	github.com/mailgun/mailgun-go/v5 v5.16.0
 	github.com/textmagic/textmagic-rest-go-v2/v3 v3.0.50044
-	google.golang.org/api v0.283.0
+	google.golang.org/api v0.284.0
 )
 
 require (
@@ -61,9 +61,9 @@ require (
 	github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/metric v0.56.0 // indirect
 	github.com/GoogleCloudPlatform/opentelemetry-operations-go/internal/resourcemapping v0.56.0 // indirect
 	github.com/MicahParks/keyfunc v1.9.0 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/v4a v1.4.29 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/v4a v1.4.30 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.13.12 // indirect
-	github.com/aws/aws-sdk-go-v2/service/signin v1.1.4 // indirect
+	github.com/aws/aws-sdk-go-v2/service/signin v1.2.0 // indirect
 	github.com/cncf/xds/go v0.0.0-20260202195803-dba9d589def2 // indirect
 	github.com/envoyproxy/go-control-plane/envoy v1.37.0 // indirect
 	github.com/envoyproxy/protoc-gen-validate v1.3.3 // indirect
@@ -107,13 +107,13 @@ require (
 )
 
 require (
-	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.18.28 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/configsources v1.4.28 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.7.28 // indirect
-	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.13.28 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sso v1.31.2 // indirect
-	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.36.5 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sts v1.43.2 // indirect
+	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.18.29 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/configsources v1.4.29 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.7.29 // indirect
+	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.13.29 // indirect
+	github.com/aws/aws-sdk-go-v2/service/sso v1.31.3 // indirect
+	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.36.6 // indirect
+	github.com/aws/aws-sdk-go-v2/service/sts v1.43.3 // indirect
 	github.com/aws/smithy-go v1.27.1 // indirect
 	github.com/bradfitz/gomemcache v0.0.0-20250403215159-8d39553ac7cf // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
