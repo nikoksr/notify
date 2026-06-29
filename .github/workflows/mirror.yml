@@ -14,7 +14,7 @@ jobs:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
         with:
           fetch-depth: 0
-      - uses: yesolutions/mirror-action@master
+      - uses: yesolutions/mirror-action@662fce0eced8996f64d7fa264d76cddd84827f33 # master
         with:
           REMOTE: "https://codeberg.org/nikoksr/notify.git"
           GIT_USERNAME: "nikoksr"
