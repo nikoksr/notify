@@ -48,8 +48,8 @@ github.com/alicebob/gopher-json v0.0.0-20200520072559-a9ecdc9d1d3a h1:HbKu58rmZp
 github.com/alicebob/gopher-json v0.0.0-20200520072559-a9ecdc9d1d3a/go.mod h1:SGnFV6hVsYE877CKEZ6tDNTjaSXYUk6QqoIK6PrAtcc=
 github.com/alicebob/miniredis/v2 v2.30.0 h1:uA3uhDbCxfO9+DI/DuGeAMr9qI+noVWwGPNTFuKID5M=
 github.com/alicebob/miniredis/v2 v2.30.0/go.mod h1:84TWKZlxYkfgMucPBf5SOQBYJceZeQRFIaQgNMiCX6Q=
-github.com/appleboy/go-fcm v1.2.10 h1:vOFLreJF4QmbV8VwtlczdBNm0Vzaw/4WNOBMYfw4CCQ=
-github.com/appleboy/go-fcm v1.2.10/go.mod h1:TVKSknWBz2N63uZjigxi/dudL+jZ7KQ9tfQwF3dkyyU=
+github.com/appleboy/go-fcm v1.2.11 h1:JK0kQOyM7xYGxykKKwEoNyNnWkrbIX3HswKDug/AcX4=
+github.com/appleboy/go-fcm v1.2.11/go.mod h1:TVKSknWBz2N63uZjigxi/dudL+jZ7KQ9tfQwF3dkyyU=
 github.com/atc0005/go-teams-notify/v2 v2.14.0 h1:7N+xw+COnYANLREaAveQ65rsNQ12nIZJED9nMLyscCo=
 github.com/atc0005/go-teams-notify/v2 v2.14.0/go.mod h1:EECsWM2b0Hvoz7O+QdlsvyN2KCUOFQCGj8bUBXv3A3Q=
 github.com/aws/aws-sdk-go-v2 v1.42.0 h1:XvXMJTkFQtpBKIWZnmr9ZEOc2InWM2yldjXEJ/bymhA=
@@ -282,8 +282,8 @@ github.com/silenceper/wechat/v2 v2.1.13/go.mod h1:7Iu3EhQYVtDUJAj+ZVRy8yom75ga7a
 github.com/sirupsen/logrus v1.9.0/go.mod h1:naHLuLoDiP4jHNo9R0sCBMtWGeIprob74mVsIT4qYEQ=
 github.com/sirupsen/logrus v1.9.3 h1:dueUQJ1C2q9oE3F7wvmSGAaVtTmUizReu6fjN8uqzbQ=
 github.com/sirupsen/logrus v1.9.3/go.mod h1:naHLuLoDiP4jHNo9R0sCBMtWGeIprob74mVsIT4qYEQ=
-github.com/slack-go/slack v0.26.0 h1:hx5Iy1t89tSw2zLEHu5YFFTDDFGmvhYCUh73ptHQ2Ls=
-github.com/slack-go/slack v0.26.0/go.mod h1:UEe+jmo9WLlwHB04qsOrTDvqM7Aa4rQL3O5wF3n0hx4=
+github.com/slack-go/slack v0.27.0 h1:VWOpUzOK6UAPCCQlFxl79jhv8a/b+GOSJMnWziDJ8B8=
+github.com/slack-go/slack v0.27.0/go.mod h1:UEe+jmo9WLlwHB04qsOrTDvqM7Aa4rQL3O5wF3n0hx4=
 github.com/sony/sonyflake v1.0.0 h1:MpU6Ro7tfXwgn2l5eluf9xQvQJDROTBImNCfRXn/YeM=
 github.com/sony/sonyflake v1.0.0/go.mod h1:Jv3cfhf/UFtolOTTRd3q4Nl6ENqM+KfyZ5PseKfZGF4=
 github.com/spf13/cast v1.4.1/go.mod h1:Qx5cxh0v+4UWYiBimWS+eyWzqEqokIECu5etghLkUJE=
