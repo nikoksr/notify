@@ -19,7 +19,7 @@ require (
 	github.com/plivo/plivo-go/v7 v7.60.2
 	github.com/sendgrid/sendgrid-go v3.16.1+incompatible
 	github.com/silenceper/wechat/v2 v2.1.13
-	github.com/slack-go/slack v0.26.0
+	github.com/slack-go/slack v0.27.0
 	github.com/stretchr/testify v1.11.1
 	github.com/utahta/go-linenotify v0.5.0
 	golang.org/x/sync v0.21.0
@@ -27,7 +27,7 @@ require (
 
 require (
 	github.com/SherClockHolmes/webpush-go v1.4.0
-	github.com/appleboy/go-fcm v1.2.10
+	github.com/appleboy/go-fcm v1.2.11
 	github.com/drswork/go-twitter v0.0.0-20221107160839-dea1b6ed53d7
 	github.com/go-lark/lark v1.16.0
 	github.com/google/go-cmp v0.7.0
