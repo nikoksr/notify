@@ -29,6 +29,8 @@ const (
 	// generated value must be exactly 12 ASCII characters.
 	gcmIVRandomBytes = 9
 	gcmIVLength      = 12
+
+	defaultSound = "alarm.caf"
 )
 
 // Service allow you to configure Bark service.
@@ -136,10 +138,9 @@ func isASCII(value string) bool {
 	return true
 }
 
-// postData is the plaintext Bark parameter object. DeviceKey stays on the
-// outer request when encryption is enabled.
+// postData is the plaintext Bark /push request.
 type postData struct {
-	DeviceKey string `json:"device_key,omitempty"`
+	DeviceKey string `json:"device_key"`
 	Title     string `json:"title"`
 	Body      string `json:"body,omitempty"`
 	Badge     int    `json:"badge,omitempty"`
@@ -147,6 +148,18 @@ type postData struct {
 	Icon      string `json:"icon,omitempty"`
 	Group     string `json:"group,omitempty"`
 	URL       string `json:"pushURL,omitempty"`
+}
+
+// notificationParams is the Bark parameter object encrypted inside ciphertext.
+// device_key stays on the outer request.
+type notificationParams struct {
+	Title string `json:"title"`
+	Body  string `json:"body,omitempty"`
+	Badge int    `json:"badge,omitempty"`
+	Sound string `json:"sound,omitempty"`
+	Icon  string `json:"icon,omitempty"`
+	Group string `json:"group,omitempty"`
+	URL   string `json:"pushURL,omitempty"`
 }
 
 // encryptedPostData is the Bark /push wire format used when AES-GCM is enabled.
@@ -197,16 +210,13 @@ func (s *Service) send(ctx context.Context, serverURL, subject, content string) 
 }
 
 func (s *Service) marshalRequest(subject, content string) ([]byte, error) {
-	message := &postData{
-		Title: subject,
-		Body:  content,
-		Sound: "alarm.caf",
-	}
-
 	if len(s.encryptionKey) == 0 {
-		message.DeviceKey = s.deviceKey
-
-		messageJSON, err := json.Marshal(message)
+		messageJSON, err := json.Marshal(&postData{
+			DeviceKey: s.deviceKey,
+			Title:     subject,
+			Body:      content,
+			Sound:     defaultSound,
+		})
 		if err != nil {
 			return nil, fmt.Errorf("marshal message: %w", err)
 		}
@@ -214,7 +224,11 @@ func (s *Service) marshalRequest(subject, content string) ([]byte, error) {
 		return messageJSON, nil
 	}
 
-	plaintext, err := json.Marshal(message)
+	plaintext, err := json.Marshal(notificationParams{
+		Title: subject,
+		Body:  content,
+		Sound: defaultSound,
+	})
 	if err != nil {
 		return nil, fmt.Errorf("marshal plaintext message: %w", err)
 	}

@@ -179,6 +179,23 @@ func TestSendPlaintext(t *testing.T) {
 	assert.Empty(t, got.IV)
 }
 
+func TestSendPlaintextKeepsEmptyDeviceKey(t *testing.T) {
+	t.Parallel()
+
+	var raw []byte
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var err error
+		raw, err = io.ReadAll(r.Body)
+		assert.NoError(t, err)
+		w.WriteHeader(http.StatusOK)
+	}))
+	t.Cleanup(server.Close)
+
+	svc := NewWithServers("", server.URL)
+	require.NoError(t, svc.Send(context.Background(), "Title", "Body"))
+	assert.Contains(t, string(raw), `"device_key":""`)
+}
+
 func TestSendEncryptsCompletePayloadAndRotatesIV(t *testing.T) {
 	t.Parallel()
 
@@ -215,7 +232,7 @@ func TestSendEncryptsCompletePayloadAndRotatesIV(t *testing.T) {
 	assert.Equal(t, ivs[1], requests[1].IV)
 	assert.NotEqual(t, requests[0].Ciphertext, requests[1].Ciphertext)
 
-	expectedPlaintext := postData{
+	expectedPlaintext := notificationParams{
 		Title: title,
 		Body:  body,
 		Sound: "alarm.caf",
@@ -313,7 +330,7 @@ func captureEncryptedRequest(t *testing.T, got chan<- encryptedPostData) http.Ha
 	}
 }
 
-func decryptPostData(t *testing.T, key string, payload encryptedPostData) postData {
+func decryptPostData(t *testing.T, key string, payload encryptedPostData) notificationParams {
 	t.Helper()
 
 	block, err := aes.NewCipher([]byte(key))
@@ -326,7 +343,13 @@ func decryptPostData(t *testing.T, key string, payload encryptedPostData) postDa
 	plaintext, err := gcm.Open(nil, []byte(payload.IV), raw, nil)
 	require.NoError(t, err)
 
-	var message postData
-	require.NoError(t, json.Unmarshal(plaintext, &message))
-	return message
+	var params notificationParams
+	require.NoError(t, json.Unmarshal(plaintext, &params))
+
+	var envelope map[string]any
+	require.NoError(t, json.Unmarshal(plaintext, &envelope))
+	_, hasDeviceKey := envelope["device_key"]
+	assert.False(t, hasDeviceKey)
+
+	return params
 }
