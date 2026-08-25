@@ -18,9 +18,6 @@ import (
 )
 
 const (
-	// DefaultServerURL is the default server to use for the bark service.
-	DefaultServerURL = "https://api.day.app/"
-
 	aesKeyLen128 = 16
 	aesKeyLen192 = 24
 	aesKeyLen256 = 32
@@ -29,8 +26,6 @@ const (
 	// generated value must be exactly 12 ASCII characters.
 	gcmIVRandomBytes = 9
 	gcmIVLength      = 12
-
-	defaultSound = "alarm.caf"
 )
 
 // Service allow you to configure Bark service.
@@ -47,6 +42,9 @@ func defaultHTTPClient() *http.Client {
 		Timeout: 5 * time.Second, //nolint: mnd // 5 seconds is a reasonable timeout for a push notification
 	}
 }
+
+// DefaultServerURL is the default server to use for the bark service.
+const DefaultServerURL = "https://api.day.app/"
 
 // normalizeServerURL normalizes the server URL. It prefixes it with https:// if it's not already and appends a slash
 // if it's not already there. If the serverURL is empty, the DefaultServerURL is used. We're not validating the url here
@@ -210,13 +208,15 @@ func (s *Service) send(ctx context.Context, serverURL, subject, content string) 
 }
 
 func (s *Service) marshalRequest(subject, content string) ([]byte, error) {
+	message := &postData{
+		DeviceKey: s.deviceKey,
+		Title:     subject,
+		Body:      content,
+		Sound:     "alarm.caf",
+	}
+
 	if len(s.encryptionKey) == 0 {
-		messageJSON, err := json.Marshal(&postData{
-			DeviceKey: s.deviceKey,
-			Title:     subject,
-			Body:      content,
-			Sound:     defaultSound,
-		})
+		messageJSON, err := json.Marshal(message)
 		if err != nil {
 			return nil, fmt.Errorf("marshal message: %w", err)
 		}
@@ -225,9 +225,9 @@ func (s *Service) marshalRequest(subject, content string) ([]byte, error) {
 	}
 
 	plaintext, err := json.Marshal(notificationParams{
-		Title: subject,
-		Body:  content,
-		Sound: defaultSound,
+		Title: message.Title,
+		Body:  message.Body,
+		Sound: message.Sound,
 	})
 	if err != nil {
 		return nil, fmt.Errorf("marshal plaintext message: %w", err)
