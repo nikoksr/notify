@@ -3,6 +3,10 @@ package bark
 import (
 	"bytes"
 	"context"
+	"crypto/aes"
+	"crypto/cipher"
+	"crypto/rand"
+	"encoding/base64"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -10,13 +14,30 @@ import (
 	"net/http"
 	"strings"
 	"time"
+	"unicode"
+)
+
+const (
+	// DefaultServerURL is the default server to use for the bark service.
+	DefaultServerURL = "https://api.day.app/"
+
+	aesKeyLen128 = 16
+	aesKeyLen192 = 24
+	aesKeyLen256 = 32
+
+	// Bark rebuilds the GCM nonce from the IV string as raw ASCII bytes, so the
+	// generated value must be exactly 12 ASCII characters.
+	gcmIVRandomBytes = 9
+	gcmIVLength      = 12
 )
 
 // Service allow you to configure Bark service.
 type Service struct {
-	deviceKey  string
-	client     *http.Client
-	serverURLs []string
+	deviceKey     string
+	client        *http.Client
+	serverURLs    []string
+	encryptionKey []byte
+	generateIV    func() (string, error)
 }
 
 func defaultHTTPClient() *http.Client {
@@ -24,9 +45,6 @@ func defaultHTTPClient() *http.Client {
 		Timeout: 5 * time.Second, //nolint: mnd // 5 seconds is a reasonable timeout for a push notification
 	}
 }
-
-// DefaultServerURL is the default server to use for the bark service.
-const DefaultServerURL = "https://api.day.app/"
 
 // normalizeServerURL normalizes the server URL. It prefixes it with https:// if it's not already and appends a slash
 // if it's not already there. If the serverURL is empty, the DefaultServerURL is used. We're not validating the url here
@@ -65,6 +83,7 @@ func NewWithServers(deviceKey string, serverURLs ...string) *Service {
 		deviceKey:  deviceKey,
 		client:     defaultHTTPClient(),
 		serverURLs: make([]string, 0),
+		generateIV: generateBarkIV,
 	}
 
 	if len(serverURLs) == 0 {
@@ -83,9 +102,44 @@ func New(deviceKey string) *Service {
 	return NewWithServers(deviceKey)
 }
 
-// postData is the data to send to the bark server.
+// SetEncryptionKey enables AES-GCM encryption for subsequent notifications.
+// The key must be a raw ASCII string of 16, 24, or 32 characters, matching the
+// key configured in the Bark app. An empty key disables encryption.
+func (s *Service) SetEncryptionKey(key string) error {
+	if key == "" {
+		s.encryptionKey = nil
+		return nil
+	}
+
+	if !isASCII(key) {
+		return errors.New("bark encryption key must contain only ASCII characters")
+	}
+
+	switch len(key) {
+	case aesKeyLen128, aesKeyLen192, aesKeyLen256:
+	default:
+		return errors.New("bark encryption key must contain exactly 16, 24, or 32 ASCII characters")
+	}
+
+	s.encryptionKey = []byte(key)
+
+	return nil
+}
+
+func isASCII(value string) bool {
+	for _, r := range value {
+		if r > unicode.MaxASCII {
+			return false
+		}
+	}
+
+	return true
+}
+
+// postData is the plaintext Bark parameter object. DeviceKey stays on the
+// outer request when encryption is enabled.
 type postData struct {
-	DeviceKey string `json:"device_key"`
+	DeviceKey string `json:"device_key,omitempty"`
 	Title     string `json:"title"`
 	Body      string `json:"body,omitempty"`
 	Badge     int    `json:"badge,omitempty"`
@@ -95,22 +149,21 @@ type postData struct {
 	URL       string `json:"pushURL,omitempty"`
 }
 
+// encryptedPostData is the Bark /push wire format used when AES-GCM is enabled.
+type encryptedPostData struct {
+	DeviceKey  string `json:"device_key"`
+	Ciphertext string `json:"ciphertext"`
+	IV         string `json:"iv"`
+}
+
 func (s *Service) send(ctx context.Context, serverURL, subject, content string) error {
 	if serverURL == "" {
 		return errors.New("server url is empty")
 	}
 
-	// Marshal the message to post
-	message := &postData{
-		DeviceKey: s.deviceKey,
-		Title:     subject,
-		Body:      content,
-		Sound:     "alarm.caf",
-	}
-
-	messageJSON, err := json.Marshal(message)
+	messageJSON, err := s.marshalRequest(subject, content)
 	if err != nil {
-		return fmt.Errorf("marshal message: %w", err)
+		return err
 	}
 
 	pushURL := serverURL + "push"
@@ -141,6 +194,87 @@ func (s *Service) send(ctx context.Context, serverURL, subject, content string) 
 	}
 
 	return nil
+}
+
+func (s *Service) marshalRequest(subject, content string) ([]byte, error) {
+	message := &postData{
+		Title: subject,
+		Body:  content,
+		Sound: "alarm.caf",
+	}
+
+	if len(s.encryptionKey) == 0 {
+		message.DeviceKey = s.deviceKey
+
+		messageJSON, err := json.Marshal(message)
+		if err != nil {
+			return nil, fmt.Errorf("marshal message: %w", err)
+		}
+
+		return messageJSON, nil
+	}
+
+	plaintext, err := json.Marshal(message)
+	if err != nil {
+		return nil, fmt.Errorf("marshal plaintext message: %w", err)
+	}
+
+	ciphertext, iv, err := s.encryptBytes(plaintext)
+	if err != nil {
+		return nil, errors.New("encrypt payload")
+	}
+
+	encrypted := &encryptedPostData{
+		DeviceKey:  s.deviceKey,
+		Ciphertext: ciphertext,
+		IV:         iv,
+	}
+
+	messageJSON, err := json.Marshal(encrypted)
+	if err != nil {
+		return nil, fmt.Errorf("marshal encrypted message: %w", err)
+	}
+
+	return messageJSON, nil
+}
+
+func (s *Service) encryptBytes(plaintext []byte) (string, string, error) {
+	generateIV := s.generateIV
+	if generateIV == nil {
+		generateIV = generateBarkIV
+	}
+
+	iv, err := generateIV()
+	if err != nil {
+		return "", "", fmt.Errorf("generate AES-GCM IV: %w", err)
+	}
+
+	if len(iv) != gcmIVLength || !isASCII(iv) {
+		return "", "", errors.New("bark generated an incompatible AES-GCM IV")
+	}
+
+	block, err := aes.NewCipher(s.encryptionKey)
+	if err != nil {
+		return "", "", fmt.Errorf("create AES cipher: %w", err)
+	}
+
+	gcm, err := cipher.NewGCM(block)
+	if err != nil {
+		return "", "", fmt.Errorf("create AES-GCM cipher: %w", err)
+	}
+
+	combined := gcm.Seal(nil, []byte(iv), plaintext, nil)
+
+	return base64.StdEncoding.EncodeToString(combined), iv, nil
+}
+
+func generateBarkIV() (string, error) {
+	random := make([]byte, gcmIVRandomBytes)
+	if _, err := rand.Read(random); err != nil {
+		return "", fmt.Errorf("generate Bark AES-GCM IV: %w", err)
+	}
+
+	return base64.RawURLEncoding.EncodeToString(random), nil
 }
 
 // Send takes a message subject and a message content and sends them to bark application.

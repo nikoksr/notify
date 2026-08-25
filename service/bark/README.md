@@ -15,6 +15,10 @@ barkService = bark.New("your bark device key")
 // Add more servers
 barkService.AddReceivers("https://your-bark-server.com")
 
+// Optionally encrypt the notification with AES-GCM. The key must be the same
+// 16, 24, or 32 ASCII characters configured in the Bark app.
+_ = barkService.SetEncryptionKey("1234567890123456")
+
 // Tell our notifier to use the bark service.
 notify.UseServices(barkService)
 
