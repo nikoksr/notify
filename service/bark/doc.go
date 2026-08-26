@@ -23,6 +23,8 @@ Usage:
 
 	    // Optionally encrypt the notification with AES-GCM. The key must be the
 	    // same 16, 24, or 32 ASCII characters configured in the Bark app.
+	    // The app's saved initial IV is only a receiver-side fallback: every
+	    // encrypted push carries a fresh 12-character IV that overrides it.
 	    _ = barkService.SetEncryptionKey("1234567890123456")
 
 	    // Tell our notifier to use the bark service.

@@ -152,6 +152,31 @@ func TestEncryptBytesRejectsIncompatibleIV(t *testing.T) {
 	require.EqualError(t, err, "bark generated an incompatible AES-GCM IV")
 }
 
+func TestEncryptBytesAppendsAuthenticationTag(t *testing.T) {
+	t.Parallel()
+
+	const key = "kkkkkkkkkkkkkkkk"
+	svc := New("device-key")
+	require.NoError(t, svc.SetEncryptionKey(key))
+	svc.generateIV = func() (string, error) {
+		return "fixed-iv-123", nil
+	}
+
+	ciphertext, iv, err := svc.encryptBytes([]byte(`{"body":"authenticated"}`))
+	require.NoError(t, err)
+	combined, err := base64.StdEncoding.DecodeString(ciphertext)
+	require.NoError(t, err)
+	require.NotEmpty(t, combined)
+	combined[len(combined)-1] ^= 0xff
+
+	block, err := aes.NewCipher([]byte(key))
+	require.NoError(t, err)
+	gcm, err := cipher.NewGCM(block)
+	require.NoError(t, err)
+	_, err = gcm.Open(nil, []byte(iv), combined, nil)
+	require.Error(t, err)
+}
+
 func TestSendPlaintext(t *testing.T) {
 	t.Parallel()
 

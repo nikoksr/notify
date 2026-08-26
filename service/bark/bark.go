@@ -104,7 +104,9 @@ func New(deviceKey string) *Service {
 
 // SetEncryptionKey enables AES-GCM encryption for subsequent notifications.
 // The key must be a raw ASCII string of 16, 24, or 32 characters, matching the
-// key configured in the Bark app. An empty key disables encryption.
+// key configured in the Bark app. Bark's configured initial IV is only a
+// receiver-side fallback; every encrypted push carries a fresh 12-character IV
+// that overrides it. An empty key disables encryption.
 func (s *Service) SetEncryptionKey(key string) error {
 	if key == "" {
 		s.encryptionKey = nil
