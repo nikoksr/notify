@@ -489,6 +489,11 @@ linters:
               text: "var-naming: avoid package names that conflict with Go standard library package names"
               linters:
                   - revive
+            # Deprecated device-token fields; FID migration is planned for v2.
+            - path: service/fcm/fcm\.go
+              text: 'SA1019: \(firebase\.google\.com/go/v4/messaging\.(Multicast)?Message\)\.Tokens? is deprecated'
+              linters:
+                  - staticcheck
             - path: '_test\.go'
               linters:
                   - bodyclose
