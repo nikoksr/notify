@@ -100,7 +100,7 @@ func (s *Service) Send(ctx context.Context, subject, message string) error {
 
 	if len(s.deviceTokens) == 1 {
 		msg := &messaging.Message{
-			Token: s.deviceTokens[0],
+			Token: s.deviceTokens[0], //nolint:staticcheck // Token is deprecated in favor of FIDs; migration planned for v2.
 			Notification: &messaging.Notification{
 				Title: subject,
 				Body:  message,
@@ -113,7 +113,7 @@ func (s *Service) Send(ctx context.Context, subject, message string) error {
 		}
 	} else {
 		msg := &messaging.MulticastMessage{
-			Tokens: s.deviceTokens,
+			Tokens: s.deviceTokens, //nolint:staticcheck // Tokens is deprecated in favor of FIDs; migration planned for v2.
 			Notification: &messaging.Notification{
 				Title: subject,
 				Body:  message,
