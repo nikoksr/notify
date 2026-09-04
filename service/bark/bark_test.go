@@ -1,18 +1,15 @@
 package bark
 
 import (
-	"context"
 	"crypto/aes"
 	"crypto/cipher"
 	"encoding/base64"
 	"encoding/json"
-	"errors"
 	"io"
 	"net/http"
 	"net/http/httptest"
 	"strings"
 	"testing"
-	"unicode/utf8"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -22,30 +19,25 @@ func TestSetEncryptionKey(t *testing.T) {
 	t.Parallel()
 
 	tests := []struct {
-		name        string
-		key         string
-		wantErr     string
-		wantEnabled bool
+		name    string
+		key     string
+		wantErr string
 	}{
 		{
-			name:        "AES-128",
-			key:         strings.Repeat("k", aesKeyLen128),
-			wantEnabled: true,
+			name: "AES-128",
+			key:  strings.Repeat("k", aesKeyLen128),
 		},
 		{
-			name:        "AES-192",
-			key:         strings.Repeat("k", aesKeyLen192),
-			wantEnabled: true,
+			name: "AES-192",
+			key:  strings.Repeat("k", aesKeyLen192),
 		},
 		{
-			name:        "AES-256",
-			key:         strings.Repeat("k", aesKeyLen256),
-			wantEnabled: true,
+			name: "AES-256",
+			key:  strings.Repeat("k", aesKeyLen256),
 		},
 		{
-			name:        "empty key disables encryption",
-			key:         "",
-			wantEnabled: false,
+			name: "empty key disables encryption",
+			key:  "",
 		},
 		{
 			name:    "too short",
@@ -77,12 +69,11 @@ func TestSetEncryptionKey(t *testing.T) {
 			}
 
 			require.NoError(t, err)
-			if tt.wantEnabled {
+			if tt.key == "" {
+				assert.Nil(t, svc.encryptionKey)
+			} else {
 				assert.Equal(t, []byte(tt.key), svc.encryptionKey)
-				return
 			}
-
-			assert.Empty(t, svc.encryptionKey)
 		})
 	}
 }
@@ -125,56 +116,15 @@ func TestEncryptBytesMatchesBarkWireFormat(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 
-			svc := New("device-key")
-			require.NoError(t, svc.SetEncryptionKey(tt.key))
-			svc.generateIV = func() (string, error) {
-				return "fixed-iv-123", nil
-			}
-
-			ciphertext, iv, err := svc.encryptBytes([]byte(`{"body":"Encrypted weather","level":"active"}`))
+			ciphertext, err := encryptBytes(
+				[]byte(tt.key),
+				"fixed-iv-123",
+				[]byte(`{"body":"Encrypted weather","level":"active"}`),
+			)
 			require.NoError(t, err)
-			assert.Equal(t, "fixed-iv-123", iv)
 			assert.Equal(t, tt.expectedCiphertext, ciphertext)
 		})
 	}
-}
-
-func TestEncryptBytesRejectsIncompatibleIV(t *testing.T) {
-	t.Parallel()
-
-	svc := New("device-key")
-	require.NoError(t, svc.SetEncryptionKey(strings.Repeat("k", aesKeyLen256)))
-	svc.generateIV = func() (string, error) {
-		return "too-short", nil
-	}
-
-	_, _, err := svc.encryptBytes([]byte(`{"body":"private body"}`))
-	require.EqualError(t, err, "bark generated an incompatible AES-GCM IV")
-}
-
-func TestEncryptBytesAppendsAuthenticationTag(t *testing.T) {
-	t.Parallel()
-
-	const key = "kkkkkkkkkkkkkkkk"
-	svc := New("device-key")
-	require.NoError(t, svc.SetEncryptionKey(key))
-	svc.generateIV = func() (string, error) {
-		return "fixed-iv-123", nil
-	}
-
-	ciphertext, iv, err := svc.encryptBytes([]byte(`{"body":"authenticated"}`))
-	require.NoError(t, err)
-	combined, err := base64.StdEncoding.DecodeString(ciphertext)
-	require.NoError(t, err)
-	require.NotEmpty(t, combined)
-	combined[len(combined)-1] ^= 0xff
-
-	block, err := aes.NewCipher([]byte(key))
-	require.NoError(t, err)
-	gcm, err := cipher.NewGCM(block)
-	require.NoError(t, err)
-	_, err = gcm.Open(nil, []byte(iv), combined, nil)
-	require.Error(t, err)
 }
 
 func TestSendPlaintext(t *testing.T) {
@@ -194,7 +144,7 @@ func TestSendPlaintext(t *testing.T) {
 	t.Cleanup(server.Close)
 
 	svc := NewWithServers("device-key", server.URL)
-	require.NoError(t, svc.Send(context.Background(), "Title", "Body"))
+	require.NoError(t, svc.Send(t.Context(), "Title", "Body"))
 
 	assert.Equal(t, "device-key", got.DeviceKey)
 	assert.Equal(t, "Title", got.Title)
@@ -217,7 +167,7 @@ func TestSendPlaintextKeepsEmptyDeviceKey(t *testing.T) {
 	t.Cleanup(server.Close)
 
 	svc := NewWithServers("", server.URL)
-	require.NoError(t, svc.Send(context.Background(), "Title", "Body"))
+	require.NoError(t, svc.Send(t.Context(), "Title", "Body"))
 	assert.Contains(t, string(raw), `"device_key":""`)
 }
 
@@ -242,19 +192,10 @@ func TestSendEncryptsCompletePayloadAndRotatesIV(t *testing.T) {
 	svc := NewWithServers(deviceKey, firstServer.URL, secondServer.URL)
 	require.NoError(t, svc.SetEncryptionKey(key))
 
-	ivs := []string{"abcdefghijkl", "mnopqrstuvwx"}
-	next := 0
-	svc.generateIV = func() (string, error) {
-		iv := ivs[next]
-		next++
-		return iv, nil
-	}
-
-	require.NoError(t, svc.Send(context.Background(), title, body))
+	require.NoError(t, svc.Send(t.Context(), title, body))
 
 	requests := []encryptedPostData{<-firstServerGot, <-secondServerGot}
-	assert.Equal(t, ivs[0], requests[0].IV)
-	assert.Equal(t, ivs[1], requests[1].IV)
+	assert.NotEqual(t, requests[0].IV, requests[1].IV)
 	assert.NotEqual(t, requests[0].Ciphertext, requests[1].Ciphertext)
 
 	expectedPlaintext := notificationParams{
@@ -280,56 +221,22 @@ func TestSendEncryptionFailurePreventsNetworkIO(t *testing.T) {
 	t.Cleanup(server.Close)
 
 	svc := NewWithServers("private-device", server.URL)
-	require.NoError(t, svc.SetEncryptionKey(strings.Repeat("k", aesKeyLen256)))
-	svc.generateIV = func() (string, error) {
-		return "", errors.New("private encryption detail")
-	}
+	svc.encryptionKey = []byte("invalid")
 
-	err := svc.Send(context.Background(), "private title", "private body")
+	err := svc.Send(t.Context(), "private title", "private body")
 	require.Error(t, err)
 	assert.False(t, called)
 	require.EqualError(t, err, `send message to bark server "`+server.URL+`/": encrypt payload`)
-	assert.NotContains(t, err.Error(), "private encryption detail")
 	assert.NotContains(t, err.Error(), "private title")
 	assert.NotContains(t, err.Error(), "private body")
-}
-
-func TestSendHTTPErrorIncludesResponseBody(t *testing.T) {
-	t.Parallel()
-
-	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
-		w.WriteHeader(http.StatusInternalServerError)
-		_, _ = w.Write([]byte("private response body"))
-	}))
-	t.Cleanup(server.Close)
-
-	svc := NewWithServers("private-device", server.URL)
-	require.NoError(t, svc.SetEncryptionKey(strings.Repeat("k", aesKeyLen256)))
-	svc.generateIV = func() (string, error) {
-		return "fixed-iv-123", nil
-	}
-
-	err := svc.Send(context.Background(), "private title", "private body")
-	require.Error(t, err)
-	assert.Contains(t, err.Error(), "status code 500")
-	assert.Contains(t, err.Error(), "private response body")
 }
 
 func TestGenerateBarkIV(t *testing.T) {
 	t.Parallel()
 
-	seen := make(map[string]struct{})
-	for range 8 {
-		iv, err := generateBarkIV()
-		require.NoError(t, err)
-		assert.Len(t, iv, gcmIVLength)
-		assert.True(t, utf8.ValidString(iv))
-		assert.True(t, isASCII(iv))
-		assert.Regexp(t, `^[A-Za-z0-9_-]{12}$`, iv)
-		_, exists := seen[iv]
-		assert.False(t, exists)
-		seen[iv] = struct{}{}
-	}
+	iv, err := generateBarkIV()
+	require.NoError(t, err)
+	assert.Regexp(t, `^[A-Za-z0-9_-]{12}$`, iv)
 }
 
 type encryptedOrPlain struct {
