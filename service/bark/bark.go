@@ -108,8 +108,10 @@ func (s *Service) SetEncryptionKey(key string) error {
 		return nil
 	}
 
-	if !isASCII(key) {
-		return errors.New("bark encryption key must contain only ASCII characters")
+	for _, r := range key {
+		if r > unicode.MaxASCII {
+			return errors.New("bark encryption key must contain only ASCII characters")
+		}
 	}
 
 	switch len(key) {
@@ -121,16 +123,6 @@ func (s *Service) SetEncryptionKey(key string) error {
 	s.encryptionKey = []byte(key)
 
 	return nil
-}
-
-func isASCII(value string) bool {
-	for _, r := range value {
-		if r > unicode.MaxASCII {
-			return false
-		}
-	}
-
-	return true
 }
 
 // notificationParams is the Bark parameter object encrypted inside ciphertext.
@@ -223,7 +215,13 @@ func (s *Service) marshalRequest(subject, content string) ([]byte, error) {
 		return nil, fmt.Errorf("marshal plaintext message: %w", err)
 	}
 
-	iv := generateBarkIV()
+	// Nine random bytes encode to 12 unpadded Base64URL characters.
+	// Bark uses those ASCII bytes directly as the GCM nonce, without decoding them.
+	const entropyBytes = 9
+	random := make([]byte, entropyBytes)
+	_, _ = rand.Read(random)
+	iv := base64.RawURLEncoding.EncodeToString(random)
+
 	ciphertext, err := encryptBytes(s.encryptionKey, iv, plaintext)
 	if err != nil {
 		return nil, fmt.Errorf("encrypt payload: %w", err)
@@ -257,16 +255,6 @@ func encryptBytes(key []byte, iv string, plaintext []byte) (string, error) {
 	combined := gcm.Seal(nil, []byte(iv), plaintext, nil)
 
 	return base64.StdEncoding.EncodeToString(combined), nil
-}
-
-func generateBarkIV() string {
-	// Nine random bytes encode to 12 unpadded Base64URL characters.
-	// Bark uses those ASCII bytes directly as the GCM nonce, without decoding them.
-	const entropyBytes = 9
-	random := make([]byte, entropyBytes)
-	_, _ = rand.Read(random)
-
-	return base64.RawURLEncoding.EncodeToString(random)
 }
 
 // Send takes a message subject and a message content and sends them to bark application.

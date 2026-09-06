@@ -247,13 +247,6 @@ func TestSendEncryptionFailurePreventsNetworkIO(t *testing.T) {
 	assert.NotContains(t, err.Error(), "private body")
 }
 
-func TestGenerateBarkIV(t *testing.T) {
-	t.Parallel()
-
-	iv := generateBarkIV()
-	assert.Regexp(t, `^[A-Za-z0-9_-]{12}$`, iv)
-}
-
 func captureEncryptedRequest(t *testing.T, got chan<- encryptedPostData) http.HandlerFunc {
 	t.Helper()
 
