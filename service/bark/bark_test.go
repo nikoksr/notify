@@ -212,10 +212,10 @@ func TestSendEncryptsCompletePayloadAndRotatesIV(t *testing.T) {
 	assert.NotEqual(t, requests[0].IV, requests[1].IV)
 	assert.NotEqual(t, requests[0].Ciphertext, requests[1].Ciphertext)
 
-	expectedPlaintext := notificationParams{
-		Title: title,
-		Body:  body,
-		Sound: "alarm.caf",
+	expectedPlaintext := map[string]string{
+		"title": title,
+		"body":  body,
+		"sound": "alarm.caf",
 	}
 	for _, request := range requests {
 		assert.Equal(t, deviceKey, request.DeviceKey)
@@ -268,7 +268,7 @@ func captureEncryptedRequest(t *testing.T, got chan<- encryptedPostData) http.Ha
 	}
 }
 
-func decryptPostData(t *testing.T, key string, payload encryptedPostData) notificationParams {
+func decryptPostData(t *testing.T, key string, payload encryptedPostData) map[string]string {
 	t.Helper()
 
 	block, err := aes.NewCipher([]byte(key))
@@ -281,13 +281,8 @@ func decryptPostData(t *testing.T, key string, payload encryptedPostData) notifi
 	plaintext, err := gcm.Open(nil, []byte(payload.IV), raw, nil)
 	require.NoError(t, err)
 
-	var params notificationParams
+	var params map[string]string
 	require.NoError(t, json.Unmarshal(plaintext, &params))
-
-	var envelope map[string]any
-	require.NoError(t, json.Unmarshal(plaintext, &envelope))
-	_, hasDeviceKey := envelope["device_key"]
-	assert.False(t, hasDeviceKey)
 
 	return params
 }
