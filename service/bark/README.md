@@ -15,6 +15,11 @@ barkService = bark.New("your bark device key")
 // Add more servers
 barkService.AddReceivers("https://your-bark-server.com")
 
+// Optional: use the encryption key configured in the Bark app.
+if err := barkService.SetEncryptionKey("1234567890123456"); err != nil {
+    log.Fatal(err)
+}
+
 // Tell our notifier to use the bark service.
 notify.UseServices(barkService)
 
@@ -26,3 +31,5 @@ _ = notify.Send(
 )
 ```
 
+See [SetEncryptionKey](https://pkg.go.dev/github.com/nikoksr/notify/service/bark#Service.SetEncryptionKey)
+for key requirements and configuration behavior.
