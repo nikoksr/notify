@@ -1,15 +1,15 @@
 module github.com/nikoksr/notify
 
-go 1.25.10
+go 1.26.0
 
 require (
 	github.com/RocketChat/Rocket.Chat.Go.SDK v0.0.0-20250718055228-285ecf400b48
 	github.com/atc0005/go-teams-notify/v2 v2.14.0
-	github.com/aws/aws-sdk-go-v2 v1.45.1
-	github.com/aws/aws-sdk-go-v2/config v1.33.1
-	github.com/aws/aws-sdk-go-v2/credentials v1.20.1
-	github.com/aws/aws-sdk-go-v2/service/ses v1.39.1
-	github.com/aws/aws-sdk-go-v2/service/sns v1.44.1
+	github.com/aws/aws-sdk-go-v2 v1.46.0
+	github.com/aws/aws-sdk-go-v2/config v1.33.3
+	github.com/aws/aws-sdk-go-v2/credentials v1.20.3
+	github.com/aws/aws-sdk-go-v2/service/ses v1.41.0
+	github.com/aws/aws-sdk-go-v2/service/sns v1.46.0
 	github.com/blinkbean/dingtalk v1.1.3
 	github.com/bwmarrin/discordgo v0.29.0
 	github.com/cschomburg/go-pushbullet v0.0.0-20171206132031-67759df45fbb
@@ -29,7 +29,6 @@ require (
 	github.com/SherClockHolmes/webpush-go v1.4.0
 	github.com/appleboy/go-fcm v1.2.11
 	github.com/drswork/go-twitter v0.0.0-20221107160839-dea1b6ed53d7
-	github.com/go-lark/lark/v2 v2.0.1
 	github.com/google/go-cmp v0.7.0
 	github.com/kevinburke/twilio-go v0.0.0-20260522200016-74f727d55757
 	maunium.net/go/mautrix v0.30.0
@@ -43,7 +42,7 @@ require (
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	github.com/mailgun/mailgun-go/v5 v5.19.3
 	github.com/textmagic/textmagic-rest-go-v2/v3 v3.0.50044
-	google.golang.org/api v0.295.0
+	google.golang.org/api v0.297.0
 )
 
 require (
@@ -62,9 +61,9 @@ require (
 	github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/metric v0.56.0 // indirect
 	github.com/GoogleCloudPlatform/opentelemetry-operations-go/internal/resourcemapping v0.56.0 // indirect
 	github.com/MicahParks/keyfunc v1.9.0 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/v4a v1.5.1 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/v4a v1.5.2 // indirect
 	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.13.19 // indirect
-	github.com/aws/aws-sdk-go-v2/service/signin v1.7.1 // indirect
+	github.com/aws/aws-sdk-go-v2/service/signin v1.9.0 // indirect
 	github.com/cncf/xds/go v0.0.0-20260202195803-dba9d589def2 // indirect
 	github.com/envoyproxy/go-control-plane/envoy v1.37.0 // indirect
 	github.com/envoyproxy/protoc-gen-validate v1.3.3 // indirect
@@ -79,6 +78,7 @@ require (
 	github.com/google/s2a-go v0.1.9 // indirect
 	github.com/googleapis/enterprise-certificate-proxy v0.3.20 // indirect
 	github.com/googleapis/gax-go/v2 v2.24.0 // indirect
+	github.com/joho/godotenv v1.5.1 // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
@@ -109,13 +109,13 @@ require (
 )
 
 require (
-	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.19.1 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/configsources v1.5.1 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.8.1 // indirect
-	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.14.1 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sso v1.35.1 // indirect
-	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.40.1 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sts v1.47.1 // indirect
+	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.19.2 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/configsources v1.5.2 // indirect
+	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.8.2 // indirect
+	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.14.2 // indirect
+	github.com/aws/aws-sdk-go-v2/service/sso v1.37.0 // indirect
+	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.42.0 // indirect
+	github.com/aws/aws-sdk-go-v2/service/sts v1.49.0 // indirect
 	github.com/aws/smithy-go v1.28.1 // indirect
 	github.com/bradfitz/gomemcache v0.0.0-20250403215159-8d39553ac7cf // indirect
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
