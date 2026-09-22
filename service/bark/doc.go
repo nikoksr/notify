@@ -21,6 +21,11 @@ Usage:
 	    // Or use `bark.New` to create a service with the default server.
 	    barkService = bark.New("your bark device key")
 
+	    // Optional: use the encryption key configured in the Bark app.
+	    if err := barkService.SetEncryptionKey("1234567890123456"); err != nil {
+	        log.Fatal(err)
+	    }
+
 	    // Tell our notifier to use the bark service.
 	    notify.UseServices(barkService)
 
