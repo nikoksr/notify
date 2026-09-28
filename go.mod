@@ -39,6 +39,7 @@ require (
 	github.com/PagerDuty/go-pagerduty v1.8.0
 	github.com/caarlos0/go-reddit/v3 v3.0.1
 	github.com/go-lark/lark v1.16.0
+	github.com/go-lark/lark/v2 v2.0.1
 	github.com/jordan-wright/email v4.0.1-0.20210109023952-943e75fe5223+incompatible
 	github.com/mailgun/mailgun-go/v5 v5.19.3
 	github.com/textmagic/textmagic-rest-go-v2/v3 v3.0.50044
