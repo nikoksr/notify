@@ -13,3 +13,10 @@ func WithEurope() Option {
 		_ = m.client.SetAPIBase(mailgun.APIBaseEU)
 	}
 }
+
+// WithHTML sets the message mode to HTML. By default, the message mode is text.
+func WithHTML() Option {
+	return func(m *Mailgun) {
+		m.mode = mailgunModeHTML
+	}
+}
