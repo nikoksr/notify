@@ -1,0 +1,85 @@
+package client
+
+import (
+	"fmt"
+	"testing"
+	"time"
+
+	"github.com/stretchr/testify/require"
+)
+
+func TestWithBaseURL(t *testing.T) {
+	t.Parallel()
+
+	assert := require.New(t)
+
+	urls := []string{
+		"https://localhost:5000",
+		"https://zulip.com",
+		"https://test.domain.co",
+	}
+
+	for i, url := range urls {
+		client, _ := NewClient(WithBaseURL(url), WithCreds("<email>", "<apiKey>"))
+		assert.Equal(
+			client.baseURL,
+			url,
+			fmt.Sprintf("TEST %d: WithBaseURL hook failed", i),
+		)
+	}
+}
+
+func TestWithCreds(t *testing.T) {
+	t.Parallel()
+
+	assert := require.New(t)
+
+	creds := []struct {
+		email  string
+		apiKey string
+	}{
+		{email: "test@gmail.com", apiKey: "<apikey#1>"},
+		{email: "zulip@gmail.com", apiKey: "<apikey#2>"},
+		{email: "notify@gmail.com", apiKey: "<apikey#3>"},
+	}
+
+	for i, cred := range creds {
+		client, err := NewClient(WithCreds(cred.email, cred.apiKey))
+		if err != nil {
+			t.Errorf("TEST %d: WithCreds hook errored", i)
+		} else {
+			assert.Equal(
+				client.email,
+				cred.email,
+				fmt.Sprintf("TEST %d: WithCreds hook failed for email", i),
+			)
+			assert.Equal(
+				client.apiKey,
+				cred.apiKey,
+				fmt.Sprintf("TEST %d: WithCreds hook failed for apiKey", i),
+			)
+		}
+	}
+}
+
+func TestWithTimeout(t *testing.T) {
+	t.Parallel()
+
+	assert := require.New(t)
+
+	timeouts := []time.Duration{
+		1 * time.Minute,
+		50 * time.Second,
+		200 * time.Millisecond,
+	}
+
+	for i, timeout := range timeouts {
+		client, _ := NewClient(WithTimeout(timeout), WithCreds("<email>", "<apiKey>"))
+
+		assert.Equal(
+			client.timeout,
+			timeout,
+			fmt.Sprintf("TEST %d: WithTimeout hook failed", i),
+		)
+	}
+}
